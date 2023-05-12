@@ -1,5 +1,5 @@
 package com.bandi.novel.service;
 
-public class SampleRepository {
-
+public interface SampleRepository {
+	
 }
