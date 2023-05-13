@@ -10,6 +10,10 @@ spring:
     view:
       prefix: /WEB-INF/view
       suffix: .jsp
+#  servlet:
+#    multipart:
+#      max-file-size: 20MB
+#      max-request-size: 20MB   
   datasource:
     url: jdbc:h2:mem:testdb;MODE=MySQL
     driver-class-name: org.h2.Driver
