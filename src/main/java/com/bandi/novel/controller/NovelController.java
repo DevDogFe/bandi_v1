@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.ServiceType;
@@ -30,7 +31,10 @@ public class NovelController {
 	@Autowired
 	private NovelService novelService;
 	
-	
+	/**
+	 * @param model
+	 * @return 작품 등록 페이지
+	 */
 	@GetMapping("/registration")
 	public String getRegistration(Model model) {
 		
@@ -43,6 +47,11 @@ public class NovelController {
 		return "/novel/registrationForm";
 	}
 	
+	/**
+	 * 작품 등록 프로세스
+	 * @param novel
+	 * @return 
+	 */
 	@PostMapping("/registration")
 	public String registrationProc(Novel novel) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
@@ -50,6 +59,31 @@ public class NovelController {
 		novelService.insertNovel(novel);
 		
 		return "redirect:/registration";
+	}
+	
+	/**
+	 * 유료소설 목록 띄우기
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/pay")
+	public String getPayList(Model model) {
+		
+		 List<NovelDto> payNovelList = novelService.selectPayNovelList();
+		 model.addAttribute("novelList", payNovelList);
+		 model.addAttribute("serviceType", "유료");
+		
+		return "/novel/novelList";
+	}
+	
+	@GetMapping("/novel/detail")
+	public String getNovelDetail(Model model) {
+		
+		List<NovelDto> payNovelList = novelService.selectPayNovelList();
+		model.addAttribute("novelList", payNovelList);
+		model.addAttribute("serviceType", "유료");
+		
+		return "/novel/novelList";
 	}
 	
 }

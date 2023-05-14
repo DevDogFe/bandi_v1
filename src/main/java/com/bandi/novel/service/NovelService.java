@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.ServiceType;
@@ -37,12 +38,23 @@ public class NovelService {
 	
 	@Transactional
 	public void insertNovel(Novel novel) {
+		Novel novelEntity = novelRepository.selectNovelByUserIdAndTitle(novel);
+		if(novelEntity != null) {
+			throw new IllegalArgumentException("작가님의 작품 중 같은 제목의 작품이 이미 있습니다.");
+		}
+		
 		int result = novelRepository.insertNovel(novel);
 		
 		if(result != 1) {
 			// 던지기
 			System.out.println("insertNovelResult: " + result);
 		}
+	}
+	
+	@Transactional
+	public List<NovelDto> selectPayNovelList(){
+		
+		return novelRepository.selectPayNovels();
 	}
 	
 	
