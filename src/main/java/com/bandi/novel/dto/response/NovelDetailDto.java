@@ -10,6 +10,7 @@ public class NovelDetailDto {
 	private int id;
 	private int userId;
 	private int serviceTypeId;
+	private String serviceTypeName;
 	private String title;
 	private String overview;
 	private String serialCycle;

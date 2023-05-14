@@ -19,15 +19,15 @@
 		WHERE n.service_type_id = 1
 	</select>
 	
-	<select id="selectNovelDetailByNovelId" resultType="com.bandi.novel.dto.response.NovelDto">
-		SELECT n.id, n.title, n.created_At, n.cover, n.overview, n.serial_cycle, n.user_id, u.username, g.name AS genre_name  
+	<select id="selectNovelDetailByNovelId" resultType="com.bandi.novel.dto.response.NovelDetailDto">
+		SELECT n.id, n.title, n.service_type_id, n.created_At, n.cover, n.overview, n.serial_cycle, n.user_id, u.username, g.name AS genre_name, s.name AS service_type_name 
 		FROM novel_tb AS n
 		LEFT JOIN user_tb AS u
 		ON n.user_id = u.id
 		LEFT JOIN genre_tb AS g
 		ON n.genre_id = g.id
 		LEFT JOIN service_type_tb AS s
-		ON n.service_type_id = id
+		ON n.service_type_id = s.id
 		WHERE n.id = #{id}
 	</select>
 

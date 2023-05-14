@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -14,6 +15,11 @@ import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.NovelRepository;
 import com.bandi.novel.repository.ServiceTypeRepository;
 
+/**
+ * 소설 관련 서비스
+ * @author 김지현
+ *
+ */
 @Service
 public class NovelService {
 
@@ -36,6 +42,10 @@ public class NovelService {
 		return serviceTypeRepository.selectAll();
 	}
 	
+	/**
+	 * 소설 등록
+	 * @param novel
+	 */
 	@Transactional
 	public void insertNovel(Novel novel) {
 		Novel novelEntity = novelRepository.selectNovelByUserIdAndTitle(novel);
@@ -51,11 +61,25 @@ public class NovelService {
 		}
 	}
 	
+	/**
+	 * 유료소설 리스트
+	 * @return
+	 */
 	@Transactional
 	public List<NovelDto> selectPayNovelList(){
 		
 		return novelRepository.selectPayNovels();
 	}
 	
+	/**
+	 * 소설 조회
+	 * @param id
+	 * @return
+	 */
+	@Transactional
+	public NovelDetailDto selectNovelDetailById(Integer id) {
+		
+		return novelRepository.selectNovelDetailByNovelId(id);
+	}
 	
 }

@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -76,14 +78,14 @@ public class NovelController {
 		return "/novel/novelList";
 	}
 	
-	@GetMapping("/novel/detail")
-	public String getNovelDetail(Model model) {
+	@GetMapping("/novel/detail/{id}")
+	public String getNovelDetail(Model model, @PathVariable Integer id) {
 		
-		List<NovelDto> payNovelList = novelService.selectPayNovelList();
-		model.addAttribute("novelList", payNovelList);
-		model.addAttribute("serviceType", "유료");
+		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(id);
+		model.addAttribute("selectionList", null);
+		model.addAttribute("detail", novelDetailDto);
 		
-		return "/novel/novelList";
+		return "/novel/novelDetail";
 	}
 	
 }

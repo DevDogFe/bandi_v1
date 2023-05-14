@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Novel;
 
@@ -21,5 +22,7 @@ public interface NovelRepository {
 	Novel selectNovelByUserIdAndTitle(Novel novel);
 	
 	List<NovelDto> selectPayNovels();
+	
+	NovelDetailDto selectNovelDetailByNovelId(Integer id);
 
 }

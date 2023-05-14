@@ -8,6 +8,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <style type="text/css">
+
+
 .list--link {
 	text-decoration: none;
 	color: #black;
@@ -22,25 +24,25 @@
 	<section>
 		<article>
 			<h1>소설 제목</h1>
-			<div class="novel--header">
+			<div class="novel--header row align--items--start">
 				<div>
-					<img alt="/assets/images/noimg.jpg" src="이미지 없음">
+					<img alt="이미지 없음" src="/assets/images/noimg.jpg">
 				</div>
 				<div>
 					<table>
 						<tr>
 							<td>제목</td>
-							<td>단종이 너무 강함</td>
+							<td>${detail.title}</td>
 						</tr>
 						<tr>
 							<td>장르</td>
-							<td>대체 역사</td>
+							<td>${detail.genreName}</td>
 							<td>작가</td>
-							<td>단종</td>
+							<td>${detail.username}</td>
 						</tr>
 						<tr>
 							<td>작품 등록일</td>
-							<td>2023.05.12</td>
+							<td>${detail.createdAt}</td>
 						</tr>
 						<tr>
 							<td>즐겨찾기</td>
@@ -50,6 +52,7 @@
 				</div>
 			</div>
 
+			<button onclick="location.href='#'" class="btn btn-primary">글 쓰기</button>
 			<c:choose>
 				<c:when test="${empty sectionList}">
 					<h3>아직 글이 없습니다.</h3>

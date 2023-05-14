@@ -31,7 +31,7 @@
 				<tbody>
 					<c:forEach items="${novelList}" var="novel">
 						<tr>
-							<td><a href="#" class="list--link">${novel.title}</a></td>
+							<td><a href="/novel/detail/${novel.id}" class="list--link">${novel.title}</a></td>
 							<td><a href="#" class="list--link">${novel.username}</a></td>
 						</tr>
 					</c:forEach>
