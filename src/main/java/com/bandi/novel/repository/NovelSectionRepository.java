@@ -14,4 +14,6 @@ public interface NovelSectionRepository {
 	
 	int insert(NovelSection novelSection);
 	
+	NovelSection selectById(Integer id);
+	
 }

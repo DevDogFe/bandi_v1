@@ -96,6 +96,10 @@ public class NovelService {
 		return novelSectionRepository.selectListByNovelId(novelId);
 	}
 	
+	/**
+	 * 회차 등록
+	 * @param novelSection
+	 */
 	@Transactional
 	public void insertNovelSelection(NovelSection novelSection) {
 		int result = novelSectionRepository.insert(novelSection);
@@ -103,6 +107,16 @@ public class NovelService {
 		if(result != 1) {
 			throw new IllegalArgumentException("요청을 처리하지 못함.");
 		}
+	}
+	
+	/**
+	 * 회차 조회
+	 * @param id
+	 * @return
+	 */
+	@Transactional
+	public NovelSection selectNovelSectionById(Integer id) {
+		return novelSectionRepository.selectById(id);
 	}
 	
 }

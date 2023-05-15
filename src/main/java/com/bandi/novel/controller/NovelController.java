@@ -122,4 +122,13 @@ public class NovelController {
 		return "/novel/novelDetail";
 	}
 	
+	@GetMapping("/section/read/{sectionId}")
+	public String getReadSection(Model model, @PathVariable Integer sectionId) {
+		
+		NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
+		model.addAttribute("section", novelSection);
+		
+		return "/novel/readSection";
+	}
+	
 }

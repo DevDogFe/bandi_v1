@@ -13,5 +13,10 @@
 		INSERT INTO novel_section_tb (novel_id, title, content, list_price, current_price)
 		VALUES (#{novelId}, #{title}, #{content}, #{listPrice}, #{currentPrice});
 	</insert>
+	
+	<select id="selectById" resultType="com.bandi.novel.model.NovelSection">
+		SELECT * FROM novel_section_tb
+		WHERE id = #{id}
+	</select>
 
 </mapper>

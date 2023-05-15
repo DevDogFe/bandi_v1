@@ -49,40 +49,14 @@
 					</table>
 				</div>
 			</div>
-			<c:if test="${detail.userId == principal.id}">
-			<button onclick="location.href='/section/registration/${detail.id}'" class="btn btn-primary">글 쓰기</button>
-			</c:if>
-			<c:choose>
-				<c:when test="${empty sectionList}">
-					<h3>아직 글이 없습니다.</h3>
-				</c:when>
-				<c:otherwise>
-					<table class="table">
-						<thead>
-							<tr class="table-secondary">
-								<td>번호</td>
-								<td>제목</td>
-								<td>등록일</td>
-								<td>조회수</td>
-								<td>평점</td>
-							</tr>
-						</thead>
-						<tbody>
-							<c:set var="count" value="${sectionList.size()}"></c:set>
-							<c:forEach items="${sectionList}" var="section">
-								<tr>
-									<td>${count}</td>
-									<td><a href="/section/read/${section.id}" class="list--link">${section.title}</a></td>
-									<td>${section.createdAt()}</td>
-									<td>${section.views}</td>
-									<td>4.5</td>
-									<c:set var="count" value="${count - 1}"></c:set>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</c:otherwise>
-			</c:choose>
+			<div>
+				<div class="section--title">
+					${section.title}
+				</div>
+				<div class="section--content">
+					${section.content}
+				</div>
+			</div>
 		</article>
 	</section>
 </body>
