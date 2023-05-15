@@ -173,44 +173,23 @@ CREATE TABLE novel_tb(
     FOREIGN KEY(service_type_id) REFERENCES service_type_tb(id) ON DELETE CASCADE
 );
 
--- 무료 게시판
-CREATE TABLE free_novel_tb(
+-- 소설 각 회차 
+CREATE TABLE novel_section_tb(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    genre_id INT NOT NULL,
-    user_id INT NOT NULL,
     novel_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     recommend INT DEFAULT 0,
     favorite INT DEFAULT 0,
-    view INT DEFAULT 0,
-    FOREIGN KEY (genre_id) REFERENCES genre_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+    views INT DEFAULT 0,
+    list_price INT NOT NULL DEFAULT 0 COMMENT '정가',
+    current_price INT NOT NULL DEFAULT 0 COMMENT '현재가',
     FOREIGN KEY (novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE
 );
 
--- 유료 게시판
-CREATE TABLE pay_novel_tb(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    genre_id INT NOT NULL,
-    user_id INT NOT NULL,
-    novel_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    recommend INT DEFAULT 0,
-    favorite INT DEFAULT 0,
-    view INT DEFAULT 0,
-    list_price INT NOT NULL,
-    current_price INT NOT NULL,
-    FOREIGN KEY (genre_id) REFERENCES genre_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY (novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE
-);
-
--- 무료 게시판 댓글
-CREATE TABLE  free_novel_reply_tb(
+-- 회차 댓글
+CREATE TABLE  novel_reply_tb(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     board_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -220,27 +199,17 @@ CREATE TABLE  free_novel_reply_tb(
     FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );
 
--- 유료 게시판 댓글
-CREATE TABLE pay_novel_reply_tb(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    board_id INT NOT NULL,
-    user_id INT NOT NULL,
-    content VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY(board_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE
-);
 
 -- 평점
 CREATE TABLE score_tb(
 	user_id INT,
-	board_id INT,
+	section_id INT,
     service_type_id INT,
     score INT NOT NULL,
-    PRIMARY KEY(user_id,board_id),
-    FOREIGN KEY(user_id)REFERENCES user_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY(board_id)REFERENCES novel_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY(service_type_id)REFERENCES service_type_tb(id) ON DELETE CASCADE
+    PRIMARY KEY(user_id, section_id),
+    FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY(section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY(service_type_id) REFERENCES service_type_tb(id) ON DELETE CASCADE
 );
 
 
@@ -270,4 +239,22 @@ CREATE TABLE contest_novel_tb(
     FOREIGN KEY(genre_id) REFERENCES genre_tb(id),
     FOREIGN KEY(user_id) REFERENCES user_tb(id),
     FOREIGN KEY(contest_id) REFERENCES contest_tb(id)
+);
+
+-- 즐겨찾기
+CREATE TABLE user_favorite_tb(
+	user_id INT NOT NULL,
+	novel_id INT NOT NULL,
+	PRIMARY KEY (user_id, novel_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id),
+	FOREIGN KEY (novel_id) REFERENCES novel_tb(id)
+);
+
+-- 유저가 결제한 회차
+CREATE TABLE user_library_tb(
+	user_id INT NOT NULL,
+	section_id INT NOT NULL,
+	PRIMARY KEY (user_id, section_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id),
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
 );

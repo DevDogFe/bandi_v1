@@ -35,7 +35,9 @@
 			</c:when>
 			<c:otherwise>
 				<h3>로그인 되었습니다.</h3>
-				<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>		
+				<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
+				<a href="/novel/registration">소설 등록</a>		
+				<a href="/pay">작품 목록</a>		
 			</c:otherwise>
 		</c:choose>
 	</div>
