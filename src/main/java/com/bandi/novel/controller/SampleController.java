@@ -12,4 +12,35 @@ public class SampleController {
 		return "/index";
 	}
 
+	// 템플릿 예시
+	@GetMapping("/main")
+	public String main() {
+		
+		return "/main";
+	}
+	
+	@GetMapping("/profile")
+	public String profile() {
+		
+		return "/profile";
+	}
+	
+	@GetMapping("/streams")
+	public String streams() {
+		
+		return "/streams";
+	}
+	
+	@GetMapping("/details")
+	public String details() {
+		
+		return "/details";
+	}
+	
+	@GetMapping("/browse")
+	public String browse() {
+		
+		return "/browse";
+	}
+	
 }
