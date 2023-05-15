@@ -2,6 +2,8 @@ package com.bandi.novel.dto.response;
 
 import java.sql.Timestamp;
 
+import com.bandi.novel.utils.TimestampFormat;
+
 import lombok.Data;
 
 @Data
@@ -18,4 +20,8 @@ public class NovelDetailDto {
 	private Timestamp createdAt;
 	private String username;
 	private String genreName;
+	
+	public String createdAt() {
+		return TimestampFormat.format(createdAt);
+	}
 }

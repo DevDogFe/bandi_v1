@@ -30,5 +30,11 @@
 		ON n.service_type_id = s.id
 		WHERE n.id = #{id}
 	</select>
+	
+	<select id="selectNovelByUserIdAndTitle" resultType="com.bandi.novel.model.Novel">
+		SELECT * FROM novel_tb
+		WHERE user_id = #{userId}
+		AND title = #{title}
+	</select>
 
 </mapper>

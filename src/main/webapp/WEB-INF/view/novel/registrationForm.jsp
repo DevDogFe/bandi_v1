@@ -12,7 +12,7 @@
 	<section>
 		<article>
 			<h1>작품 등록</h1>
-			<form action="/registration" method="post">
+			<form action="/novel/registration" method="post">
 				<div class="form-group">
 					<label for="title" class="form-label">제목</label> <input type="text" id="title" name="title" class="form-control" required="required" value="단종이 너무너무강함">
 				</div>

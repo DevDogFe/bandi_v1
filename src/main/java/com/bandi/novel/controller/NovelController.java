@@ -15,6 +15,7 @@ import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
+import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.NovelService;
@@ -37,7 +38,7 @@ public class NovelController {
 	 * @param model
 	 * @return 작품 등록 페이지
 	 */
-	@GetMapping("/registration")
+	@GetMapping("/novel/registration")
 	public String getRegistration(Model model) {
 		
 		List<Genre> genreList = novelService.selectGenreList();
@@ -48,19 +49,45 @@ public class NovelController {
 		
 		return "/novel/registrationForm";
 	}
+	/**
+	 * @param model
+	 * @return 회차 등록 페이지
+	 */
+	@GetMapping("/section/registration/{novelId}")
+	public String getSectionRegistration(Model model, @PathVariable Integer novelId) {
+		
+		
+		model.addAttribute("novelId", novelId);
+		
+		
+		return "/novel/sectionRegistrationForm";
+	}
 	
 	/**
 	 * 작품 등록 프로세스
 	 * @param novel
 	 * @return 
 	 */
-	@PostMapping("/registration")
+	@PostMapping("/novel/registration")
 	public String registrationProc(Novel novel) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		novel.setUserId(principal.getId());
 		novelService.insertNovel(novel);
 		
 		return "redirect:/registration";
+	}
+	/**
+	 * 회차 등록 프로세스
+	 * @param novel
+	 * @return 
+	 */
+	@PostMapping("/section/registration")
+	public String selectionRegistrationProc(NovelSection novelSection) {
+		novelSection.setCurrentPrice(novelSection.getListPrice());
+		
+		novelService.insertNovelSelection(novelSection);
+		
+		return "redirect:/novel/detail/" + novelSection.getNovelId();
 	}
 	
 	/**
@@ -78,11 +105,18 @@ public class NovelController {
 		return "/novel/novelList";
 	}
 	
-	@GetMapping("/novel/detail/{id}")
-	public String getNovelDetail(Model model, @PathVariable Integer id) {
+	/**
+	 * 소설 조회
+	 * @param model
+	 * @param novelId
+	 * @return
+	 */
+	@GetMapping("/novel/detail/{novelId}")
+	public String getNovelDetail(Model model, @PathVariable Integer novelId) {
 		
-		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(id);
-		model.addAttribute("selectionList", null);
+		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		List<NovelSection> sectionList = novelService.selectNovelSectionListByNovelId(novelId);
+		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("detail", novelDetailDto);
 		
 		return "/novel/novelDetail";

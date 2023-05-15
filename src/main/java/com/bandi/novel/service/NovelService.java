@@ -10,15 +10,16 @@ import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
+import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
 import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.NovelRepository;
+import com.bandi.novel.repository.NovelSectionRepository;
 import com.bandi.novel.repository.ServiceTypeRepository;
 
 /**
  * 소설 관련 서비스
  * @author 김지현
- *
  */
 @Service
 public class NovelService {
@@ -29,6 +30,8 @@ public class NovelService {
 	private ServiceTypeRepository serviceTypeRepository;
 	@Autowired
 	private NovelRepository novelRepository;
+	@Autowired
+	private NovelSectionRepository novelSectionRepository;
 	
 	@Transactional
 	public List<Genre> selectGenreList(){
@@ -80,6 +83,26 @@ public class NovelService {
 	public NovelDetailDto selectNovelDetailById(Integer id) {
 		
 		return novelRepository.selectNovelDetailByNovelId(id);
+	}
+	
+	/**
+	 * 소설 회차 리스트 불러오기
+	 * @param novelId
+	 * @return
+	 */
+	@Transactional
+	public List<NovelSection> selectNovelSectionListByNovelId(Integer novelId){
+		
+		return novelSectionRepository.selectListByNovelId(novelId);
+	}
+	
+	@Transactional
+	public void insertNovelSelection(NovelSection novelSection) {
+		int result = novelSectionRepository.insert(novelSection);
+		
+		if(result != 1) {
+			throw new IllegalArgumentException("요청을 처리하지 못함.");
+		}
 	}
 	
 }
