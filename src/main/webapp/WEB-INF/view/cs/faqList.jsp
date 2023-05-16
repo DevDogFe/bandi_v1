@@ -4,7 +4,12 @@
 
 
 
-	<h1>FAQ</h1>
+<section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>FAQ</h1>
 	<div>
 		<div>자주 묻는 질문</div>
 		<ul>
@@ -24,8 +29,16 @@
 			</c:forEach>
 		</ul>
 	</div>
+            </div>
+        </div>
+    </div>
+    
+  
+</section>
+	
 
 
 
 
-  <%@include file="../layout/footer.jsp"%>
+
+<%@include file="../layout/footer.jsp"%>

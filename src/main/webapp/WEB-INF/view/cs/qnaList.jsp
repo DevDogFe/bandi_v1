@@ -1,12 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../layout/header.jsp"%>
+
+<section>
+
 	<table>
 		<thead>
 			<tr>
@@ -18,13 +15,20 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<c:forEach var="qna" items="${qnaList}">
+				<td>${qna.id}</td>
+				<td>${qna.faqCategoryId}</td>
+				<td>${qna.title}</td>
+				<td>${qna.questContent}</td>
+				<td>${qna.questcreatedAt}</td>
+				<!-- 답변 -->
+				<td>${qna.ansContent}</td>
+				<td>${qna.anscreatedAt}</td>
+				
+				</c:forEach>
 			</tr>
 		</tbody>
 	</table>
-
-</body>
-</html>
+	
+	</section>
+<%@include file="../layout/footer.jsp"%>

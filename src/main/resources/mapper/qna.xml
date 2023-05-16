@@ -11,7 +11,7 @@
 		on q.id = a.question_id
 	</select>
 
-	<!-- Qna user별 전체조회 -->
+	<!-- Qna userId 전체조회 -->
 	<select id="findByUserId" resultType="com.bandi.novel.dto.QnaDto">
 		select q.*, a.content, a.created_at
 		from question_tb as q
@@ -21,7 +21,8 @@
 	</select>
 	
 	<insert id="insert">
-	
+		insert into question_tb(user_id, title, content, faq_category_id)
+		VALUES (#{userId}, #{title}, #{content}, #{faqCategoryId})
 	</insert>
 
 
