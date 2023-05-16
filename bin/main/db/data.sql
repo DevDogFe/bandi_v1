@@ -3,9 +3,9 @@
 insert into test_tb values
 (1);
 
-insert into user_tb(username, password, user_role) values
-('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user'),
-('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user');
+insert into user_tb(username, password, user_role, nick_name, email, birth_date, gender, external) values
+('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨', 'aa@sample.com', '1997-01-11', '남성', false),
+('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨', 'user@sample.com', '1992-12-12', '여성', false);
 
 insert into genre_tb(name) values
 ('무협'), ('판타지'), ('로맨스'), ('SF'), ('대체역사');

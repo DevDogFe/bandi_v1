@@ -8,4 +8,10 @@
 		WHERE username = #{username}
 	</select>
 
+	<insert id="insertUser">
+		INSERT INTO user_tb(username, password, nick_name, email, birth_date, gender, external) 
+		VALUES
+		(#{username}, #{password}, #{nickName}, #{email}, #{birthDate}, #{gender}, #{external})
+	</insert>
+
 </mapper>

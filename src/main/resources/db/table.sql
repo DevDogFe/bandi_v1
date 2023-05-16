@@ -7,9 +7,14 @@ create table test_tb(
 -- 회원
 CREATE TABLE user_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(20) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
-    user_role VARCHAR(10) NOT NULL
+    user_role VARCHAR(10) NOT NULL DEFAULT 'user',
+    nick_name VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL,
+    gender VARCHAR(2) NOT NULL,
+    external boolean NOT NULL
 );
 
 -- 게시판 종류
