@@ -100,15 +100,23 @@ CREATE TABLE event_notice_file_tb(
     file_type VARCHAR(5) NOT NULL
 );
 
+-- faq 카테고리
+CREATE TABLE faq_category_tb(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- 1:1 문의(질문)
 CREATE TABLE question_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(100) NOT NULL,
     content TEXT NOT NULL,
+    faq_category_id INT NOT NULL,
     proceed INT NOT NULL DEFAULT 0 COMMENT '답장여부 확인안하면 0 확인하면 1',
     created_at TIMESTAMP NOT NULL DEFAULT now(),
-    FOREIGN KEY(user_id) REFERENCES user_tb(id)
+    FOREIGN KEY(user_id) REFERENCES user_tb(id),
+    FOREIGN KEY(faq_category_id) REFERENCES faq_category_tb(id)
 );
 
 -- 1:1 문의(답)
@@ -116,15 +124,13 @@ CREATE TABLE answer_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     content TEXT NOT NULL,
+    question_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
-	FOREIGN KEY(user_id) REFERENCES user_tb(id)
+	FOREIGN KEY(user_id) REFERENCES user_tb(id),
+	FOREIGN KEY(question_id) REFERENCES question_tb(id)
 );
 
--- faq 카테고리
-CREATE TABLE faq_category_tb(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    category_name VARCHAR(50) NOT NULL UNIQUE
-);
+
 
 -- faq
 CREATE TABLE faq_tb(
@@ -139,6 +145,7 @@ CREATE TABLE faq_tb(
 CREATE TABLE application_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    title VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
     filename VARCHAR(150) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),

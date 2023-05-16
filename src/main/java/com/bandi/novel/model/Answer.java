@@ -7,9 +7,10 @@ import lombok.Data;
 @Data
 public class Answer {
 	
-	private int id;
-	private int userId;
+	private Integer id;
+	private Integer userId;
 	private String content;
+	private Integer questionId;
 	private Timestamp createdAt;
 
 }

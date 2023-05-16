@@ -9,6 +9,7 @@ public class Application {
 	
 	private int id;
 	private int userId;
+	private String title;
 	private String content;
 	private String filename;
 	private Timestamp createdAt;

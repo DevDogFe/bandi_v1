@@ -22,3 +22,20 @@ INSERT INTO novel_section_tb (novel_id, title, content, list_price, current_pric
 VALUES 
 (1, '프롤로그', '단종은 너무 강했다. 거기서 부터 시작하는 이야기', 100, 100),
 (1, '1화 세조의 슬픔', '세조는 반역을 계획중이다.', 100, 100);
+
+insert into faq_category_tb(category_name)
+values('고객'), 
+	  ('작가'),
+	  ('포인트'),
+	  ('이벤트'),
+	  ('공모전'),
+	  ('기타' );
+	  
+insert into faq_tb(faq_category_id, question, answer)
+values (1, '고객', '무료'),	
+	   (2, '작가될래요', '신청하세요'),	  
+	   (3, '공짜는 없나요', '무료'),	  
+	   (4, '이벤트언제합니까', '내일'),
+	   (5, '공모전언제합니까', '내일') ,
+	   (6, '기타기타', '내일');	  
+	  
