@@ -31,7 +31,9 @@
 						<input type="checkbox" class="form-check-input" id="exampleCheck1"> <label class="form-check-label" for="exampleCheck1">Check me out</label>
 					</div>
 					<button type="submit" class="btn btn-primary">Submit</button>
+					<a href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code">카카오로 로그인</a>
 				</form>
+				<a href="/user">회원가입</a>
 			</c:when>
 			<c:otherwise>
 				<h3>로그인 되었습니다.</h3>
