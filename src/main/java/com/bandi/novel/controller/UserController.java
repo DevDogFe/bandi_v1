@@ -1,7 +1,5 @@
 package com.bandi.novel.controller;
 
-import java.util.UUID;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.bandi.novel.dto.OAuthToken;
@@ -25,8 +22,6 @@ import com.bandi.novel.dto.OAuthUserInfo;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 /**
  * 유저 관련 로직 컨트롤러
@@ -61,6 +56,7 @@ public class UserController {
 	 */
 	@GetMapping("/logout")
 	public String logoutProc() {
+			
 		session.invalidate();
 		
 		return "redirect:/index";
@@ -84,8 +80,6 @@ public class UserController {
 	public String joinProc(User user) {
 		
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
-		System.out.println(user);
-		user.setExternal(false);
 		userService.insertUser(user);
 		
 		return "redirect:/index";
@@ -109,16 +103,15 @@ public class UserController {
 		HttpEntity<MultiValueMap<String, String>> kakaoReqEntity = new HttpEntity<MultiValueMap<String,String>>(params, httpHeaders);
 		ResponseEntity<OAuthToken> responseToken = restTemplate.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST, kakaoReqEntity, OAuthToken.class);
 		String username = requestKakaoUserInfo(responseToken.getBody().getAccessToken());
-		System.out.println(username);
 		User user = new User();
 		user.setUsername(username);
-		
 		user.setPassword(bandiKey);
 		User principal = userService.loginByKakao(user);
 		if(principal.getEmail() == null) {
 			model.addAttribute("user", user);
 			return "/user/joinFormForKakao";
 		}
+		System.out.println("principal: " + principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
 		return "redirect:/index";

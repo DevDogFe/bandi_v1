@@ -8,16 +8,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <style type="text/css">
-.form--container{
+.form--container {
 	width: 300px;
-	
 }
 </style>
 </head>
 <body>
 	<h1>index</h1>
 	<div class="form--container">
-		
+
 		<c:choose>
 			<c:when test="${empty principal}">
 				<form action="/login" method="post">
@@ -37,9 +36,16 @@
 			</c:when>
 			<c:otherwise>
 				<h3>로그인 되었습니다.</h3>
-				<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
-				<a href="/novel/registration">소설 등록</a>		
-				<a href="/pay">작품 목록</a>		
+				<c:choose>
+					<c:when test="${principal.external == true }">
+						<button onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://localhost/logout'" class="btn btn-primary">로그아웃</button>
+					</c:when>
+					<c:otherwise>
+						<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
+					</c:otherwise>
+				</c:choose>
+				<a href="/novel/registration">소설 등록</a>
+				<a href="/pay">작품 목록</a>
 			</c:otherwise>
 		</c:choose>
 	</div>
