@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bandi.novel.dto.QuestionUpdateFormDto;
 import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.model.Question;
+import com.bandi.novel.model.User;
 import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.QnaService;
 

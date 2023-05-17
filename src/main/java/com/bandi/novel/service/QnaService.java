@@ -60,6 +60,11 @@ public class QnaService {
 		return questionEntity;		
 	}
 	
+	/**
+	 * Question 수정
+	 * @param questionUpdateFormDto
+	 * @param principalId
+	 */
 	public void updateQuestion(QuestionUpdateFormDto questionUpdateFormDto ,Integer principalId) {
 		
 		Question questionEntity = qnaRepository.findById(questionUpdateFormDto.getId());
@@ -74,6 +79,10 @@ public class QnaService {
 		}		
 	}
 	
+	/**
+	 * Question 삭제
+	 * @param id
+	 */
 	public void deleteQuestion(Integer id) {
 		
 		int resultRowCount = qnaRepository.deleteById(id);
