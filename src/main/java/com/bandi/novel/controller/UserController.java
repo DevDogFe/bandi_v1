@@ -14,7 +14,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,7 +47,7 @@ public class UserController {
 		
 		User principal = userService.loginByUsernameAndPassword(user);
 		session.setAttribute("principal", principal);
-		return "redirect:/main";
+		return "redirect:/index";
 	}
 	
 	/**
@@ -60,7 +59,7 @@ public class UserController {
 			
 		session.invalidate();
 		
-		return "redirect:/main";
+		return "redirect:/index";
 	}
 	
 	/**
@@ -115,7 +114,7 @@ public class UserController {
 		System.out.println("principal: " + principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
-		return "redirect:/main";
+		return "redirect:/index";
 	}
 	
 	// accessToken에서 사용자 정보 뽑아내는 메서드

@@ -203,11 +203,11 @@ CREATE TABLE novel_section_tb(
 -- 회차 댓글
 CREATE TABLE  novel_reply_tb(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    board_id INT NOT NULL,
+    section_id INT NOT NULL,
     user_id INT NOT NULL,
     content VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY(board_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY(section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE,
     FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );
 

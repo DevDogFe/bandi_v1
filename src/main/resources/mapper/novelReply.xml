@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.NovelReplyRepository">
+
+	<insert id="insert">
+		INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES
+		(#{sectionId}, #{userId}, #{content})
+	</insert>
+	
+	<select id="selectBySectionId" resultType="com.bandi.novel.dto.response.NovelReplyListDto">
+		SELECT nr.*, u.username 
+		FROM novel_reply_tb AS nr
+		LEFT JOIN user_tb AS u
+		ON nr.user_id = u.id
+		WHERE section_id = #{id}
+	</select>
+
+</mapper>
