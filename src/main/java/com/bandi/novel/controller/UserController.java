@@ -14,6 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,7 +48,7 @@ public class UserController {
 		
 		User principal = userService.loginByUsernameAndPassword(user);
 		session.setAttribute("principal", principal);
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 	
 	/**
@@ -59,7 +60,7 @@ public class UserController {
 			
 		session.invalidate();
 		
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 	
 	/**
@@ -114,9 +115,10 @@ public class UserController {
 		System.out.println("principal: " + principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 	
+	// accessToken에서 사용자 정보 뽑아내는 메서드
 	private String requestKakaoUserInfo(String oAuthToken) {
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -131,6 +133,19 @@ public class UserController {
 		System.out.println(response.getBody().getProperties().getNickname());
 		
 		return response.getBody().getProperties().getNickname() + response.getBody().getId();
+	}
+	
+	/**
+	 * 유저 정보 업데이트 폼
+	 * @param model
+	 * @return updateForm.jsp
+	 */
+	@GetMapping("/update")
+	private String getUpdateForm(Model model) {
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		model.addAttribute("principal", principal);
+		
+		return "/user/updateForm";
 	}
 	
 	
