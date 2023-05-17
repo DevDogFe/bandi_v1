@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/qna/write-proc" method="post">
+	<form action="/qna/write" method="post">
 		<input type="text" name="title">
 		<br>
 		<select name="faqCategoryId" >
@@ -18,7 +18,7 @@
 			</c:forEach>
 		</select>
 		<br>
-		<textarea rows="5" cols="10"></textarea>
+		<textarea rows="50" cols="50" name="content"></textarea>
 		<br>
 		<button type="submit">질문하기</button>
 	</form>

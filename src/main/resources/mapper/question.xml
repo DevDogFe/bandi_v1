@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bandi.novel.repository.QuestionRepository">
+
+	<!-- Question 전체조회 (관리자) -->
+	<select id="findAll" resultType="com.bandi.novel.model.Question">
+		select q.*, u.username, fc.category_name
+		from question_tb as q
+		inner join user_tb as u
+		on q.user_id = u.id
+		INNER join faq_category_tb as fc
+		on q.faq_category_id = fc.id
+	</select>
+
+	<!-- Question userId 전체조회 (마이페이지) -->
+	<select id="findByUserId" resultType="com.bandi.novel.model.Question">
+		select q.*, a.content, a.created_at, fc.category_name
+		from question_tb as q
+		left join answer_tb as a
+		on q.id = a.question_id
+		inner join faq_category_tb as fc
+		on q.faq_category_id = fc.id
+		where q.user_id = #{userId}
+	</select>
+
+	<!-- 1:1 문의 -->
+	<insert id="insert">
+		insert into question_tb(user_id, title, content, faq_category_id)
+		values (#{userId}, #{title}, #{content}, #{faqCategoryId})
+	</insert>
+
+	<select id="findById" resultType="com.bandi.novel.model.Question">
+		select q.*, u.username, fc.category_name
+		from question_tb as q
+		inner join user_tb as u
+		on q.user_id = u.id
+		INNER join faq_category_tb as fc
+		on q.faq_category_id =
+		fc.id
+		where q.id = #{id}
+	</select>
+
+	<update id="updateById">
+		update question_tb
+		set title = #{title}, content = #{content}, faq_category_id = #{faqCategoryId}
+		where id = #{id}
+	</update>
+
+	<delete id="deleteById">
+		delete from question_tb where id = #{id}
+	</delete>
+
+
+</mapper>

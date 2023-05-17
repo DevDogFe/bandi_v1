@@ -2,22 +2,28 @@ package com.bandi.novel.dto;
 
 import java.sql.Timestamp;
 
+import com.bandi.novel.utils.TimestampFormat;
+
 import lombok.Data;
 
 @Data
 public class QnaDto {
 	
-	// question
 	private Integer id;
 	private Integer userId;
 	private String title;
-	private String questContent;
+	private String content;
 	private Integer faqCategoryId;
 	private Integer proceed;
-	private Timestamp questcreatedAt; 
+	private Timestamp createdAt;
 	
-	// answer
-	private String ansContent;
-	private Timestamp anscreatedAt;
+	private String username;
+	private String CategoryName;
+	
+	public String createdAt() {
+		
+		return TimestampFormat.dateFormat(createdAt);
+	}
+	
 
 }

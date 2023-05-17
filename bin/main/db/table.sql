@@ -127,7 +127,7 @@ CREATE TABLE answer_tb(
     question_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
 	FOREIGN KEY(user_id) REFERENCES user_tb(id),
-	FOREIGN KEY(question_id) REFERENCES question_tb(id)
+	FOREIGN KEY(question_id) REFERENCES question_tb(id) on update cascade on delete cascade
 );
 
 

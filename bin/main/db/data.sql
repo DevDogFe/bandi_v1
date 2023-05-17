@@ -23,6 +23,7 @@ VALUES
 (1, '프롤로그', '단종은 너무 강했다. 거기서 부터 시작하는 이야기', 100, 100),
 (1, '1화 세조의 슬픔', '세조는 반역을 계획중이다.', 100, 100);
 
+-- FAQ category 
 insert into faq_category_tb(category_name)
 values('고객'), 
 	  ('작가'),
@@ -31,6 +32,7 @@ values('고객'),
 	  ('공모전'),
 	  ('기타' );
 	  
+-- FAQ  	  
 insert into faq_tb(faq_category_id, question, answer)
 values (1, '고객', '무료'),	
 	   (2, '작가될래요', '신청하세요'),	  
@@ -61,3 +63,9 @@ insert into board_category_tb(board_type_id ,category_name) values
 ('4', '일러스트'),
 ('4', '카툰'),
 ('4', '기타');
+
+-- Question 
+insert into question_tb(user_id, title, content, faq_category_id) values
+(1, '제목', '내용', '1' ),
+(2, '질문', '질문입니다', '2'),
+(1, '제목이요', '내용입니다', '3');
