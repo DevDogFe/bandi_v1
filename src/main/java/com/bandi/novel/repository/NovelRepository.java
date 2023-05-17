@@ -21,6 +21,19 @@ public interface NovelRepository {
 	// insert 전에 같은 작가의 같은 제목 있나 확인
 	Novel selectNovelByUserIdAndTitle(Novel novel);
 	
+	/**
+	 * @auth 김경은
+	 * 모델을 활용한 Novel 조회
+	 * contestService 소설 등록에 활용
+	 */
+	Integer selectNovelIdByModel(Novel novel);
+	/**
+	 * @auth 김경은
+	 * 공모전 id를 활용한 삭제 처리
+	 * contestService delete에 사용
+	 */
+	int deleteNovelByContestId(int contestId);
+	
 	List<NovelDto> selectPayNovels();
 	
 	NovelDetailDto selectNovelDetailByNovelId(Integer id);

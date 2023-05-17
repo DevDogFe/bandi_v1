@@ -1,7 +1,6 @@
 package com.bandi.novel.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -48,7 +47,9 @@ public class NovelController {
 		
 		List<Genre> genreList = novelService.selectGenreList();
 		List<ServiceType> serviceTypeList = novelService.selectServiceTypeList();
-		// 현재 신청 가능한 공모전 리스트 조회
+		/**
+		 * @auth 김경은
+		 */
 		List<Contest> contestList = contestService.selectContestByDate();
 		
 		model.addAttribute("genreList", genreList);
@@ -81,7 +82,13 @@ public class NovelController {
 		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		novel.setUserId(principal.getId());
-		novelService.insertNovel(novel);
+		/**
+		 * @auth 김경은
+		 * novelService의 insertNovel 수정함
+		 */
+		if(contestId != 0) {
+			novelService.insertNovel(novel,contestId);
+		}
 		
 		return "redirect:/pay";
 	}

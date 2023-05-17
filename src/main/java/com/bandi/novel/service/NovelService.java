@@ -12,6 +12,7 @@ import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
+import com.bandi.novel.repository.ContestNovelRepository;
 import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.NovelRepository;
 import com.bandi.novel.repository.NovelSectionRepository;
@@ -32,6 +33,8 @@ public class NovelService {
 	private NovelRepository novelRepository;
 	@Autowired
 	private NovelSectionRepository novelSectionRepository;
+	@Autowired
+	private ContestNovelRepository contestNovelRepository;
 	
 	@Transactional
 	public List<Genre> selectGenreList(){
@@ -50,13 +53,21 @@ public class NovelService {
 	 * @param novel
 	 */
 	@Transactional
-	public void insertNovel(Novel novel) {
+	public void insertNovel(Novel novel,int contestId) {
 		Novel novelEntity = novelRepository.selectNovelByUserIdAndTitle(novel);
 		if(novelEntity != null) {
 			throw new IllegalArgumentException("작가님의 작품 중 같은 제목의 작품이 이미 있습니다.");
 		}
 		
 		int result = novelRepository.insertNovel(novel);
+		
+		/**
+		 * @auth 김경은
+		 * novel모델로 id 조회해서 공모전 게시판에 등록
+		 */
+		int novelId = novelRepository.selectNovelIdByModel(novel);
+		contestNovelRepository.insertContestNovel(novelId,contestId);
+		
 		
 		if(result != 1) {
 			// 던지기

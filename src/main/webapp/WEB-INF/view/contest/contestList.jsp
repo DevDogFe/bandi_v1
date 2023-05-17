@@ -51,17 +51,13 @@
               <div class="heading-section">
                 <h4><em class="text-decoration-none">작품</em> 리스트</h4>
               </div>
-              <c:forEach var="contest" items="${contestList}" >
+              <c:forEach var="contestNovel" items="${contestNovelList}" >
               	<div class="item">
                 	<ul>
-                  		<li><h4>${contest.title}</h4></li>
-                  		<li><h4>${contest.content}</h4></li>
-                  		<li><h4>${contest.beginCreatedAt}</h4></li>
-                  		<li><h4>${contest.endCreatedAt}</h4></li>
-                  		<li class="text-center"><button type="button" class="btn btn-primary"
-                  		data-bs-toggle="modal" data-bs-target="#Modal${vs.index+1}">보기</button></li>
-                  		<li class="text-center"><button onclick="location.href='/contest/delete/${contest.id}'"
-						type="button" class="btn btn-danger m-1">삭제</button></li>
+                  		<li><h4>${contestNovel.title}</h4></li>
+                  		<li><h4>${contestNovel.username}</h4></li>
+                  		<li><h4>${contestNovel.genreName}</h4></li>
+                  		<li><h4>${contestNovel.contestName}</h4></li>
                 	</ul>
               	</div>
               </c:forEach>
@@ -70,6 +66,7 @@
           <!-- ***** Most Popular End ***** -->
       </div>
     </div>
+  </div>
   </div>
   
   <!-- Modal -->
@@ -108,10 +105,8 @@
 							</div>
 							</div>
 							<div class="modal-footer">
-								<%-- <c:if test="${isPersonnel}"> --%>
 								<input type="hidden" name="id" value="${contest.id}">
 								<button type="submit" class="btn btn-primary m-1">수정</button>
-								<%-- </c:if> --%>
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal">닫기</button>
 							</div>

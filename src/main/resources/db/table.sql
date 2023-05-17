@@ -221,7 +221,7 @@ CREATE TABLE contest_tb(
     end_created_at TIMESTAMP NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES user_tb(id)
+    FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );
 
 -- 공모전 게시판
@@ -229,8 +229,8 @@ CREATE TABLE contest_novel_tb(
     novel_id INT NOT NULL,
     contest_id INT NOT NULL,
     PRIMARY KEY (novel_id, contest_id),
-    FOREIGN KEY(novel_id) REFERENCES novel_tb(id),
-    FOREIGN KEY(contest_id) REFERENCES contest_tb(id)
+    FOREIGN KEY(novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY(contest_id) REFERENCES contest_tb(id) ON DELETE CASCADE
 );
 
 -- 즐겨찾기

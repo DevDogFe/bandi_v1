@@ -1,15 +1,17 @@
 package com.bandi.novel.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.model.Contest;
+import com.bandi.novel.model.ContestNovel;
+import com.bandi.novel.repository.ContestNovelRepository;
 import com.bandi.novel.repository.ContestRepository;
+import com.bandi.novel.repository.NovelRepository;
 
 /**
  * 
@@ -20,17 +22,10 @@ public class ContestService {
 	
 	@Autowired
 	private ContestRepository contestRepository;
-	
-	@Transactional
-	public List<Contest> selectContestListByLimit(){
-		
-		List<Contest> contestList = contestRepository.selectContestList();
-		if(contestList == null) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
-		}
-		
-		return contestList;
-	}
+	@Autowired
+	private ContestNovelRepository contestNovelRepository;
+	@Autowired
+	private NovelRepository novelRepository;
 	
 	@Transactional
 	public void insertContest(Contest contest) {
@@ -47,25 +42,31 @@ public class ContestService {
 		}
 	}
 	
+	/**
+	 * 공모전 조회
+	 * @return 공모전 리스트
+	 */
 	@Transactional
-	public void deleteContestById(int id) {
+	public List<Contest> selectContestByDate() {
 		
-		int result = contestRepository.deleteContestById(id);
+		List<Contest> contest = contestRepository.selectContestListByDate();
 		
-		if(result != 1) {
+		return contest;
+	}
+	
+	@Transactional
+	public List<Contest> selectContestListByLimit(){
+		
+		List<Contest> contestList = contestRepository.selectContestList();
+		if(contestList == null) {
 			throw new IllegalArgumentException("요청을 처리하지 못함.");
 		}
+		
+		return contestList;
 	}
 	
 	@Transactional
 	public void updateContest(Contest contest) {
-		
-		System.out.println("=========================");
-		System.out.println(contest.getTitle());
-		System.out.println(contest.getContent());
-		System.out.println(contest.getBeginCreatedAt());
-		System.out.println(contest.getEndCreatedAt());
-		System.out.println("=========================");
 		
 		int result = contestRepository.updateContestByModel(contest);
 		
@@ -75,10 +76,40 @@ public class ContestService {
 	}
 	
 	@Transactional
-	public List<Contest> selectContestByDate() {
+	public void deleteContestById(int contestId) {
 		
-		List<Contest> contest = contestRepository.selectContestListByDate();
+		int novelResult = novelRepository.deleteNovelByContestId(contestId);
 		
-		return contest;
+		// contest에서 삭제
+		int contestResult = contestRepository.deleteContestById(contestId);
+		System.out.println(novelResult + contestResult);
+		if(contestResult != 1) {
+			throw new IllegalArgumentException("요청을 처리하지 못함.");
+		}
 	}
+	
+	/**
+	 * 공모전 게시판 아이디 조회
+	 * @return 공모전 
+	 */
+	@Transactional
+	public ContestNovel selectContestByNovelId(int id) {
+		
+		ContestNovel contestNovel = contestNovelRepository.selectContestByNovelId(id);
+		
+		return contestNovel;
+	}
+	
+	/**
+	 * 공모전 게시판 리스트 조회
+	 * @return 공모전 
+	 */
+	@Transactional
+	public List<ContestNovelDto> selectContestNovelList() {
+		
+		List<ContestNovelDto> contestNovelList = contestNovelRepository.selectContestNovelList();
+		
+		return contestNovelList;
+	}
+	
 }
