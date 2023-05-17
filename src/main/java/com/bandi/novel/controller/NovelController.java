@@ -1,6 +1,7 @@
 package com.bandi.novel.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
+import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
 import com.bandi.novel.model.User;
+import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.utils.Define;
 
@@ -33,6 +36,8 @@ public class NovelController {
 	private HttpSession session;
 	@Autowired
 	private NovelService novelService;
+	@Autowired
+	private ContestService contestService;
 	
 	/**
 	 * @param model
@@ -43,9 +48,12 @@ public class NovelController {
 		
 		List<Genre> genreList = novelService.selectGenreList();
 		List<ServiceType> serviceTypeList = novelService.selectServiceTypeList();
+		// 현재 신청 가능한 공모전 리스트 조회
+		List<Contest> contestList = contestService.selectContestByDate();
 		
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("serviceTypeList", serviceTypeList);
+		model.addAttribute("contestList",contestList);
 		
 		return "/novel/registrationForm";
 	}
@@ -69,12 +77,13 @@ public class NovelController {
 	 * @return 
 	 */
 	@PostMapping("/novel/registration")
-	public String registrationProc(Novel novel) {
+	public String registrationProc(Integer contestId, Novel novel) {
+		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		novel.setUserId(principal.getId());
 		novelService.insertNovel(novel);
 		
-		return "redirect:/registration";
+		return "redirect:/pay";
 	}
 	/**
 	 * 회차 등록 프로세스

@@ -226,18 +226,10 @@ CREATE TABLE contest_tb(
 
 -- 공모전 게시판
 CREATE TABLE contest_novel_tb(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    genre_id INT NOT NULL,
-    user_id INT NOT NULL,
+    novel_id INT NOT NULL,
     contest_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    recommend INT NOT NULL DEFAULT '0',
-    favorite INT NOT NULL DEFAULT '0',
-    view INT NOT NULL DEFAULT '0',
-    FOREIGN KEY(genre_id) REFERENCES genre_tb(id),
-    FOREIGN KEY(user_id) REFERENCES user_tb(id),
+    PRIMARY KEY (novel_id, contest_id),
+    FOREIGN KEY(novel_id) REFERENCES novel_tb(id),
     FOREIGN KEY(contest_id) REFERENCES contest_tb(id)
 );
 

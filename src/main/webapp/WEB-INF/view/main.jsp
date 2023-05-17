@@ -2,6 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="layout/header.jsp"%>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script src="/assets/js/isotope.min.js"></script>
+<script src="/assets/js/owl-carousel.js"></script>
+<script src="/assets/js/tabs.js"></script>
+<script src="/assets/js/popup.js"></script>
+<script src="/assets/js/custom.js"></script>
+
+
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -141,7 +151,7 @@
                   <li><h4>Date Added</h4><span>24/08/2036</span></li>
                   <li><h4>Hours Played</h4><span>634 H 22 Mins</span></li>
                   <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                  <li><div class="main-border-button border-no-active"><a href="">Donwloaded</a></div></li>
                 </ul>
               </div>
               <div class="item">
@@ -151,7 +161,7 @@
                   <li><h4>Date Added</h4><span>22/06/2036</span></li>
                   <li><h4>Hours Played</h4><span>740 H 52 Mins</span></li>
                   <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button"><a href="#">Donwload</a></div></li>
+                  <li><div class="main-border-button"><a href="">Donwload</a></div></li>
                 </ul>
               </div>
               <div class="item last-item">
@@ -161,7 +171,7 @@
                   <li><h4>Date Added</h4><span>21/04/2036</span></li>
                   <li><h4>Hours Played</h4><span>892 H 14 Mins</span></li>
                   <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                  <li><div class="main-border-button border-no-active"><a href="">Donwloaded</a></div></li>
                 </ul>
               </div>
             </div>
