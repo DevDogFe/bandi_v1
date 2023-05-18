@@ -75,6 +75,10 @@ public class ContestService {
 		}
 	}
 	
+	/**
+	 * 공모전 삭제
+	 * @return 공모전 
+	 */
 	@Transactional
 	public void deleteContestById(int contestId) {
 		
@@ -95,7 +99,7 @@ public class ContestService {
 	@Transactional
 	public ContestNovel selectContestByNovelId(int id) {
 		
-		ContestNovel contestNovel = contestNovelRepository.selectContestByNovelId(id);
+		ContestNovel contestNovel = contestNovelRepository.selectContestNovelByNovelId(id);
 		
 		return contestNovel;
 	}
@@ -112,4 +116,17 @@ public class ContestService {
 		return contestNovelList;
 	}
 	
+	/**
+	 * 공모전 게시글 삭제
+	 * @return 공모전 
+	 */
+	@Transactional
+	public void deleteContestNovelById(int id) {
+		
+		int result = novelRepository.deleteNovelById(id);
+		
+		if(result != 1) {
+			throw new IllegalArgumentException("요청을 처리하지 못함.");
+		}
+	}
 }

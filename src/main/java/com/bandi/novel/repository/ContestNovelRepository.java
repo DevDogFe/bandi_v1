@@ -16,9 +16,9 @@ import com.bandi.novel.model.ContestNovel;
 public interface ContestNovelRepository {
 	
 	int insertContestNovel(@Param("novelId")int novelId,@Param("contestId")int contestId);
-	int deleteContestNovelById(int id);
+	int deleteContestNovelByNovelId(int novelId);
 	
+	ContestNovel selectContestNovelByNovelId(int novelId);
 	List<ContestNovelDto> selectContestNovelList();
-	ContestNovel selectContestByNovelId(int novelId);
-	List<ContestNovel> selectContestByContestId(int contestId);
+	List<ContestNovel> selectContestNovelListByContestId(int contestId);
 }

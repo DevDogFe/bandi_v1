@@ -24,7 +24,7 @@ public interface NovelRepository {
 	/**
 	 * @auth 김경은
 	 * 모델을 활용한 Novel 조회
-	 * contestService 소설 등록에 활용
+	 * NovelService 소설 등록 과정에 활용
 	 */
 	Integer selectNovelIdByModel(Novel novel);
 	/**
@@ -33,6 +33,7 @@ public interface NovelRepository {
 	 * contestService delete에 사용
 	 */
 	int deleteNovelByContestId(int contestId);
+	int deleteNovelById(int id);
 	
 	List<NovelDto> selectPayNovels();
 	

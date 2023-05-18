@@ -9,16 +9,17 @@
 		( #{novelId}, #{contestId})
 	</insert>
 	
-	<select id="selectContestByNovelId" resultType="com.bandi.novel.model.ContestNovel">
+	<select id="selectContestNovelByNovelId" resultType="com.bandi.novel.model.ContestNovel">
 		SELECT * FROM contest_novel_tb
 		where novel_id = #{novelId}
 	</select>
 	
-	<select id="selectContestByContestId" resultType="com.bandi.novel.model.ContestNovel">
+	<select id="selectContestNovelListByContestId" resultType="com.bandi.novel.model.ContestNovel">
 		SELECT * FROM contest_novel_tb
 		where contest_id = #{contestId}
 	</select>
 	
+	<!-- 서비스타입이 공모전인 소설 조회 -->
 	<select id="selectContestNovelList" resultType="com.bandi.novel.dto.response.ContestNovelDto">
 		SELECT n.id, n.title, n.user_id, u.username, g.name AS genre_name, c.title as contest_name
 		FROM novel_tb AS n
@@ -33,7 +34,8 @@
 		WHERE n.service_type_id = 3
 	</select>
 	
-	<delete id="deleteContestNovelById">
+	
+	<delete id="deleteContestNovelByNovelId">
 		delete from contest_novel_tb where novel_id = #{novelId}
 	</delete>
 	

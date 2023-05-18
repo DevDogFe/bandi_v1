@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.bandi.novel.dto.response.ContestNovelDto;
+import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.ContestNovel;
+import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
+import com.bandi.novel.service.NovelService;
 import com.bandi.novel.utils.Define;
 
 /**
@@ -29,10 +32,11 @@ public class ContestController {
 
 	@Autowired
 	private HttpSession session;
-
 	@Autowired
 	private ContestService contestService;
-
+	@Autowired
+	private NovelService novelService;
+	
 	/**
 	 * @param model
 	 * @return 공모전 상세 페이지
@@ -88,7 +92,6 @@ public class ContestController {
 
 	/**
 	 * 공모전 삭제 프로세스
-	 * 
 	 * @return
 	 */
 	@GetMapping("/contest/delete/{id}")
@@ -104,7 +107,6 @@ public class ContestController {
 
 	/**
 	 * 공모전 수정 프로세스
-	 * 
 	 * @return
 	 */
 	@PostMapping("/contest/update")
@@ -118,4 +120,52 @@ public class ContestController {
 		return "redirect:/contest/list";
 	}
 
+	/**
+	 * 공모전 소설 삭제 프로세스
+	 * @return
+	 */
+	@GetMapping("/contest/novel/delete/{id}")
+	public String deleteContestNovelProc(@PathVariable Integer id) {
+
+		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		// contest.setUserId(principal.getId());
+
+		contestService.deleteContestNovelById(id);
+
+		return "redirect:/contest/list";
+	}
+	
+	/**
+	 * 공모전 소설 각 회차 리스트 조회 페이지
+	 * @return model
+	 */
+	@GetMapping("/contest/novel/detail/{novelId}")
+	public String getContestDetail(@PathVariable Integer novelId,Model model) {
+
+		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		// contest.setUserId(principal.getId());
+		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		List<NovelSection> novelSectionList = novelService.selectNovelSectionListByNovelId(novelId);
+		System.out.println(novelSectionList.toString());
+		model.addAttribute("detail", novelDetailDto);
+		model.addAttribute("novelSectionList",novelSectionList);
+		
+		return "/contest/contestNovelDetail";
+	}
+	
+	/**
+	 * 공모전 소설 회차 조회 페이지
+	 * @return model
+	 */
+	@GetMapping("/contest/novel/read/{novelId}")
+	public String getContestReadSection(@PathVariable Integer novelId,Model model) {
+
+		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		// contest.setUserId(principal.getId());
+		
+		NovelDetailDto novel = novelService.selectNovelDetailById(novelId);
+		model.addAttribute("novel", novel);
+
+		return "/contest/contestNovelReadSection";
+	}
 }

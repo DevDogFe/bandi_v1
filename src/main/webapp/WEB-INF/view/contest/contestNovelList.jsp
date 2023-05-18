@@ -52,7 +52,7 @@
                 <h4><em class="text-decoration-none">작품</em> 리스트</h4>
               </div>
               <c:forEach var="contestNovel" items="${contestNovelList}" >
-              	<div class="item" onclick="location.href ='/contest/novel/detail/${contestNovel.id}'">
+              	<div class="item" onclick="location.href ='/contest/novel/list/${contestNovel.id}'">
                 	<ul>
                   		<li><h4>${contestNovel.title}</h4></li>
                   		<li><h4>${contestNovel.username}</h4></li>
