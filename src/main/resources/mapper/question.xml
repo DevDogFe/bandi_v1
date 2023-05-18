@@ -13,6 +13,18 @@
 		on q.faq_category_id = fc.id
 	</select>
 
+	<select id="findByProceed" resultType="com.bandi.novel.model.Question">
+		select q.*, u.username, fc.category_name
+		from question_tb as q
+		inner join user_tb as u
+		on q.user_id = u.id
+		INNER join faq_category_tb as fc
+		on q.faq_category_id = fc.id
+		where proceed = #{proceed}
+	
+		
+	</select>
+
 	<!-- Question userId 전체조회 (마이페이지) -->
 	<select id="findByUserId" resultType="com.bandi.novel.model.Question">
 		select q.*, a.content, a.created_at, fc.category_name
@@ -23,7 +35,7 @@
 		on q.faq_category_id = fc.id
 		where q.user_id = #{userId}
 	</select>
-
+	
 	<!-- 1:1 문의 -->
 	<insert id="insert">
 		insert into question_tb(user_id, title, content, faq_category_id)
@@ -36,8 +48,7 @@
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
-		on q.faq_category_id =
-		fc.id
+		on q.faq_category_id = fc.id
 		where q.id = #{id}
 	</select>
 
@@ -50,6 +61,8 @@
 	<delete id="deleteById">
 		delete from question_tb where id = #{id}
 	</delete>
+
+
 
 
 </mapper>

@@ -12,5 +12,7 @@ public class Answer {
 	private String content;
 	private Integer questionId;
 	private Timestamp createdAt;
+	
+	
 
 }

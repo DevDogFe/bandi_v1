@@ -3,7 +3,7 @@ package com.bandi.novel.dto;
 import lombok.Data;
 
 @Data
-public class QuestionUpdateFormDto {
+public class QuestionUpdateDto {
 	
 	private int id;
 	private int userId;

@@ -3,8 +3,32 @@
 
 <mapper namespace="com.bandi.novel.repository.AnswerRepository">
 
-	<select id="findAll">
+	<select id="findAll" resultType="com.bandi.novel.model.Answer">
 		select * from answer_tb
 	</select>
+
+	<insert id="insert">
+		insert into answer_tb(user_id, content, question_id)
+		VALUES ( #{userId}, #{content}, #{questionId})
+	</insert>
+
+	<select id="findByQuestionId" resultType="com.bandi.novel.model.Answer">
+		select * from answer_tb where question_id = #{questionId}
+	</select>
+
+	<select id="findById" resultType="com.bandi.novel.model.Answer">
+		select * from answer_tb where id = #{id}
+	</select>
+
+	<update id="updateByQuestionId">
+		update answer_tb
+		set content = #{content}
+		where question_id = #{questionId}
+	</update>
+	
+	<delete id="deleteByQuestionId">
+		delete from answer_tb where question_id = #{questionId}
+	</delete>
+
 
 </mapper>
