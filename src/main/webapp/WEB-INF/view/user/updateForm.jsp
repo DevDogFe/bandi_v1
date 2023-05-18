@@ -42,9 +42,6 @@
 	<script type="text/javascript">
 		$(document).ready(() => {
 			$("#updateBtn").on("click", () =>{
-				// MIME TYPE => application/json
-				// js -> json 문자열로 변경하는 방법
-				// object -> json 문자열로 변경
 				if($("#password").val() == $("#passwordCheck").val()){
 					let data = {
 							beforePassword: $("#beforePassword").val(),

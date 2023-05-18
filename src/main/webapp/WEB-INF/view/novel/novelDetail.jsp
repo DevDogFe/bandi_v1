@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style type="text/css">
 .list--link {
 	text-decoration: none;
@@ -19,6 +20,7 @@
 </style>
 </head>
 <body>
+	<input type="hidden" id="novelId" value="${detail.id}">
 	<section>
 		<article>
 			<h1>소설 제목</h1>
@@ -46,11 +48,22 @@
 							<td>즐겨찾기</td>
 							<td>12</td>
 						</tr>
+
 					</table>
+					<c:if test="${principal != null }">
+						<c:choose>
+							<c:when test="${isFavorite }">
+								<button type="button" class="btn btn-secondary" id="unfavorite">즐겨찾기 해제</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn-success" id="favorite">즐겨찾기 추가</button>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
 				</div>
 			</div>
 			<c:if test="${detail.userId == principal.id}">
-			<button onclick="location.href='/section/registration/${detail.id}'" class="btn btn-primary">글 쓰기</button>
+				<button onclick="location.href='/section/registration/${detail.id}'" class="btn btn btn-secondary">글 쓰기</button>
 			</c:if>
 			<c:choose>
 				<c:when test="${empty sectionList}">
@@ -85,5 +98,36 @@
 			</c:choose>
 		</article>
 	</section>
+	<script type="text/javascript">
+	$(document).ready(() => {
+			$("#unfavorite").on("click", () =>{
+				$.ajax({
+					type: "DELETE",
+					url: "/api/unfavorite/" + $("#novelId").val()
+				}).done((response) => {
+					console.log(response);
+					console.log(typeof response);
+					location.href='/novel/detail/' + $("#novelId").val();
+				}).fail((error) => {
+					console.log(error);
+					alert("요청을 처리할 수 없습니다.");
+				});
+			});
+			
+			$("#favorite").on("click", () =>{
+				$.ajax({
+					type: "POST",
+					url: "/api/favorite/" + $("#novelId").val()
+				}).done((response) => {
+					console.log(response);
+					console.log(typeof response);
+					location.href='/novel/detail/' + $("#novelId").val();
+				}).fail((error) => {
+					console.log(error);
+					alert("요청을 처리할 수 없습니다.");
+				});
+			});
+		});
+	</script>
 </body>
 </html>

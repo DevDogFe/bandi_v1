@@ -38,7 +38,7 @@ public class UserController {
 	private String bandiKey;
 	
 	/**
-	 * 임시 로그인
+	 * 로그인
 	 * @param user model
 	 * @return index페이지
 	 */
@@ -122,14 +122,11 @@ public class UserController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
-		// Bearer 다음 반드시 한칸 띄어 쓰기
 		httpHeaders.add("Authorization", "Bearer " + oAuthToken);
 		httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
-		// 바디 생략
 		HttpEntity<String> profileReqEntity = new HttpEntity<>(httpHeaders);
 		ResponseEntity<OAuthUserInfo> response = restTemplate.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.GET, profileReqEntity, OAuthUserInfo.class);
-		System.out.println(response.getBody().getProperties().getNickname());
 		
 		return response.getBody().getProperties().getNickname() + response.getBody().getId();
 	}
