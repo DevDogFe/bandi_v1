@@ -12,6 +12,7 @@ import com.bandi.novel.model.ContestNovel;
 import com.bandi.novel.repository.ContestNovelRepository;
 import com.bandi.novel.repository.ContestRepository;
 import com.bandi.novel.repository.NovelRepository;
+import com.bandi.novel.repository.NovelSectionRepository;
 
 /**
  * 
@@ -26,6 +27,8 @@ public class ContestService {
 	private ContestNovelRepository contestNovelRepository;
 	@Autowired
 	private NovelRepository novelRepository;
+	@Autowired
+	private NovelSectionRepository novelSectionRepository;
 	
 	@Transactional
 	public void insertContest(Contest contest) {
@@ -117,13 +120,27 @@ public class ContestService {
 	}
 	
 	/**
-	 * 공모전 게시글 삭제
+	 * 공모전 소설 삭제
 	 * @return 공모전 
 	 */
 	@Transactional
 	public void deleteContestNovelById(int id) {
 		
 		int result = novelRepository.deleteNovelById(id);
+		
+		if(result != 1) {
+			throw new IllegalArgumentException("요청을 처리하지 못함.");
+		}
+	}
+	
+	/**
+	 * 공모전 소설 회차 삭제
+	 * @return 공모전 
+	 */
+	@Transactional
+	public void deleteContestNovelSectionById(int id) {
+		
+		int result = novelSectionRepository.deleteNovelSectionById(id);
 		
 		if(result != 1) {
 			throw new IllegalArgumentException("요청을 처리하지 못함.");
