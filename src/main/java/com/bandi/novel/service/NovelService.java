@@ -20,6 +20,7 @@ import com.bandi.novel.repository.ServiceTypeRepository;
 
 /**
  * 소설 관련 서비스
+ * 
  * @author 김지현
  */
 @Service
@@ -35,93 +36,99 @@ public class NovelService {
 	private NovelSectionRepository novelSectionRepository;
 	@Autowired
 	private ContestNovelRepository contestNovelRepository;
-	
+
 	@Transactional
-	public List<Genre> selectGenreList(){
-		
+	public List<Genre> selectGenreList() {
+
 		return genreRepository.selectAll();
 	}
-	
+
 	@Transactional
-	public List<ServiceType> selectServiceTypeList(){
-		
+	public List<ServiceType> selectServiceTypeList() {
+
 		return serviceTypeRepository.selectAll();
 	}
-	
+
 	/**
 	 * 소설 등록
+	 * 
 	 * @param novel
 	 */
 	@Transactional
-	public void insertNovel(Novel novel,int contestId) {
+	public void insertNovel(Novel novel, Integer contestId) {
 		Novel novelEntity = novelRepository.selectNovelByUserIdAndTitle(novel);
-		if(novelEntity != null) {
+		if (novelEntity != null) {
 			throw new IllegalArgumentException("작가님의 작품 중 같은 제목의 작품이 이미 있습니다.");
 		}
-		
+
 		int result = novelRepository.insertNovel(novel);
-		
+
 		/**
-		 * @auth 김경은
-		 * novel모델로 id 조회해서 공모전 게시판에 등록
+		 * @auth 김경은 novel모델로 id 조회해서 공모전 게시판에 등록
 		 */
-		int novelId = novelRepository.selectNovelIdByModel(novel);
-		contestNovelRepository.insertContestNovel(novelId,contestId);
-		
-		
-		if(result != 1) {
+		if (contestId != 0) {
+			int novelId = novelRepository.selectNovelIdByModel(novel);
+			contestNovelRepository.insertContestNovel(novelId, contestId);
+		}
+
+		if (result != 1) {
 			// 던지기
 			System.out.println("insertNovelResult: " + result);
 		}
 	}
-	
+
 	/**
 	 * 유료소설 리스트
+	 * 
 	 * @return
 	 */
 	@Transactional
-	public List<NovelDto> selectPayNovelList(){
-		
+	public List<NovelDto> selectPayNovelList() {
+
 		return novelRepository.selectPayNovels();
 	}
-	
+
 	/**
 	 * 소설 조회
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@Transactional
 	public NovelDetailDto selectNovelDetailById(Integer id) {
-		
+
 		return novelRepository.selectNovelDetailByNovelId(id);
 	}
-	
+
 	/**
 	 * 소설 회차 리스트 불러오기
+	 * 
 	 * @param novelId
 	 * @return
 	 */
 	@Transactional
-	public List<NovelSection> selectNovelSectionListByNovelId(Integer novelId){
-		
+	public List<NovelSection> selectNovelSectionListByNovelId(Integer novelId) {
+
 		return novelSectionRepository.selectListByNovelId(novelId);
 	}
-	
+
 	/**
 	 * 회차 등록
+	 * 
 	 * @param novelSection
 	 */
 	@Transactional
 	public void insertNovelSelection(NovelSection novelSection) {
 		int result = novelSectionRepository.insert(novelSection);
-		
-		if(result != 1) {
+
+		if (result != 1) {
 			throw new IllegalArgumentException("요청을 처리하지 못함.");
 		}
 	}
-	
+
 	/**
 	 * 회차 조회
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -129,5 +136,5 @@ public class NovelService {
 	public NovelSection selectNovelSectionById(Integer id) {
 		return novelSectionRepository.selectById(id);
 	}
-	
+
 }
