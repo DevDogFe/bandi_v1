@@ -36,5 +36,26 @@
 		WHERE user_id = #{userId}
 		AND title = #{title}
 	</select>
-
+	
+	<!-- @author 경은 -->
+	<select id="selectNovelIdByModel" resultType="Integer">
+		SELECT id FROM novel_tb
+		WHERE user_id = #{userId}
+		AND genre_id = #{genreId} AND service_type_id = #{serviceTypeId}
+		AND title = #{title} AND overview = #{overview}
+		AND serial_cycle = #{serialCycle} 	 
+	</select>
+	
+	<delete id="deleteNovelByContestId">
+		delete 
+		from novel_tb 
+		where id in(select novel_id from contest_novel_tb where contest_id = #{contestId})
+	</delete>
+	
+	<delete id="deleteNovelById">
+		delete 
+		from novel_tb 
+		where id = #{id}
+	</delete>
+	<!--  -->
 </mapper>

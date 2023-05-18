@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
+import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.NovelReply;
@@ -22,6 +23,7 @@ import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.NovelReplyService;
+import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.NovelReplyPageUtil;
@@ -40,6 +42,9 @@ public class NovelController {
 	private NovelService novelService;
 	@Autowired
 	private NovelReplyService novelReplyService;
+	@Autowired
+	private ContestService contestService;
+
 	
 	/**
 	 * @param model
@@ -50,9 +55,14 @@ public class NovelController {
 		
 		List<Genre> genreList = novelService.selectGenreList();
 		List<ServiceType> serviceTypeList = novelService.selectServiceTypeList();
+		/**
+		 * @auth 김경은
+		 */
+		List<Contest> contestList = contestService.selectContestByDate();
 		
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("serviceTypeList", serviceTypeList);
+		model.addAttribute("contestList",contestList);
 		
 		return "/novel/registrationForm";
 	}
@@ -76,12 +86,19 @@ public class NovelController {
 	 * @return 
 	 */
 	@PostMapping("/novel/registration")
-	public String registrationProc(Novel novel) {
+	public String registrationProc(Integer contestId, Novel novel) {
+		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		novel.setUserId(principal.getId());
-		novelService.insertNovel(novel);
+		/**
+		 * @auth 김경은
+		 * novelService의 insertNovel 수정함
+		 */
+		if(contestId != 0) {
+			novelService.insertNovel(novel,contestId);
+		}
 		
-		return "redirect:/registration";
+		return "redirect:/pay";
 	}
 	/**
 	 * 회차 등록 프로세스
