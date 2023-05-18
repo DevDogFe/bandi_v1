@@ -20,52 +20,23 @@
               </div>
             </div>
           </div>
-          <div class="main-button float-end m-2">
-                    <a href="/contest/registration">공모전 작성</a>
-          </div>
-          <!-- ***** Banner End ***** -->
-		  <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-                <h4><em class="text-decoration-none">공모전</em> 리스트</h4>
-              </div>
-              <c:forEach var="contest" items="${contestList}" >
-              	<div class="item">
-                	<ul>
-                  		<li><h4>${contest.title}</h4></li>
-                  		<li><h4>${contest.content}</h4></li>
-                  		<li><h4>${contest.beginCreatedAt}</h4></li>
-                  		<li><h4>${contest.endCreatedAt}</h4></li>
-                  		<li class="text-center"><button type="button" class="btn btn-primary"
-                  		data-bs-toggle="modal" data-bs-target="#Modal${vs.index+1}">보기</button></li>
-                  		<li class="text-center"><button onclick="location.href='/contest/delete/${contest.id}'"
-						type="button" class="btn btn-danger m-1">삭제</button></li>
-                	</ul>
-              	</div>
-              </c:forEach>
-          	</div>
-          </div>
-          <!-- ***** Most Popular Start ***** -->
           <div class="gaming-library">
             <div class="col-lg-12">
               <div class="heading-section">
                 <h4><em class="text-decoration-none">작품</em> 리스트</h4>
               </div>
               <c:forEach var="contestNovel" items="${contestNovelList}" >
-              	<div class="item" onclick="location.href ='/contest/novel/list/${contestNovel.id}'">
+              	<div class="item" onclick="location.href ='/contest/novel/detail/${contestNovel.id}'">
                 	<ul>
                   		<li><h4>${contestNovel.title}</h4></li>
                   		<li><h4>${contestNovel.username}</h4></li>
                   		<li><h4>${contestNovel.genreName}</h4></li>
                   		<li><h4>${contestNovel.contestName}</h4></li>
-                  		<%-- <li class="text-center"><button onclick="location.href='/contest/novel/delete/${contestNovel.id}'"
-						type="button" class="btn btn-danger m-1">삭제</button></li> --%>
                 	</ul>
               	</div>
               </c:forEach>
           	</div>
           </div>
-          <!-- ***** Most Popular End ***** -->
       </div>
     </div>
   </div>

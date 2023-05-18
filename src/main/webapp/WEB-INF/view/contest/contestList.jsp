@@ -49,7 +49,7 @@
           <div class="gaming-library">
             <div class="col-lg-12">
               <div class="heading-section">
-                <h4><em class="text-decoration-none">작품</em> 리스트</h4>
+                <h4 onclick="location.href ='/contest/novel/list'"><em class="text-decoration-none">작품</em> 리스트</h4>
               </div>
               <c:forEach var="contestNovel" items="${contestNovelList}" >
               	<div class="item" onclick="location.href ='/contest/novel/detail/${contestNovel.id}'">

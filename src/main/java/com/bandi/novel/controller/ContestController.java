@@ -91,11 +91,11 @@ public class ContestController {
 	}
 
 	/**
-	 * 공모전 삭제 프로세스
+	 * 공모전 삭제
 	 * @return
 	 */
 	@GetMapping("/contest/delete/{id}")
-	public String deleteContestProc(@PathVariable Integer id) {
+	public String deleteContest(@PathVariable Integer id) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
@@ -119,28 +119,28 @@ public class ContestController {
 
 		return "redirect:/contest/list";
 	}
-
+	
 	/**
-	 * 공모전 소설 삭제 프로세스
-	 * @return
+	 * 공모전 소설 리스트 조회 페이지
+	 * @return model
 	 */
-	@GetMapping("/contest/novel/delete/{id}")
-	public String deleteContestNovelProc(@PathVariable Integer id) {
+	@GetMapping("/contest/novel/list")
+	public String getContestNovelList(Model model) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
-
-		contestService.deleteContestNovelById(id);
-
-		return "redirect:/contest/list";
+		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
+		model.addAttribute("contestNovelList", contestNovelList);
+		
+		return "/contest/contestNovelList";
 	}
-	
+
 	/**
 	 * 공모전 소설 각 회차 리스트 조회 페이지
 	 * @return model
 	 */
 	@GetMapping("/contest/novel/detail/{novelId}")
-	public String getContestDetail(@PathVariable Integer novelId,Model model) {
+	public String getContestNovelDetail(@PathVariable Integer novelId,Model model) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
@@ -158,7 +158,7 @@ public class ContestController {
 	 * @return model
 	 */
 	@GetMapping("/contest/novel/read/{novelId}")
-	public String getContestReadSection(@PathVariable Integer novelId,Model model) {
+	public String getContestNovelReadSection(@PathVariable Integer novelId,Model model) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
@@ -167,5 +167,20 @@ public class ContestController {
 		model.addAttribute("novel", novel);
 
 		return "/contest/contestNovelReadSection";
+	}
+	
+	/**
+	 * 공모전 소설 삭제
+	 * @return
+	 */
+	@GetMapping("/contest/novel/delete/{id}")
+	public String deleteContestNovel(@PathVariable Integer id) {
+
+		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		// contest.setUserId(principal.getId());
+
+		contestService.deleteContestNovelById(id);
+
+		return "redirect:/contest/list";
 	}
 }
