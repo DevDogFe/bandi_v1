@@ -17,7 +17,7 @@
 	color: #333;
 }
 
-ul{
+ul {
 	list-style: none;
 }
 </style>
@@ -40,16 +40,30 @@ ul{
 			</div>
 		</article>
 		<article>
-			<form action="/novel/reply" method="post">
-				<div class="mb-3 ps-3">
-					<label for="content" class="form-label">댓글 등록</label>
-					<textarea class="form-control" id="content" name="content" rows="3" placeholder="작가나 작품에 대한 비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
-					<input type="hidden" name="sectionId" value="${section.id}">
-				</div>
-				<div class="mb-3 ps-3">
-					<button type="submit" class="btn btn-secondary">등록</button>
-				</div>
-			</form>
+			<c:choose>
+				<c:when test="${empty principal.id }">
+						<div class="mb-3 ps-3">
+							<label for="content" class="form-label">댓글 등록</label>
+							<textarea class="form-control" id="content" name="content" rows="3" placeholder="댓글을 등록하려면 로그인해야합니다." readonly="readonly"></textarea>
+							<input type="hidden" name="sectionId" value="${section.id}">
+						</div>
+						<div class="mb-3 ps-3">
+							<button type="button" class="btn btn-secondary">등록</button>
+						</div>
+				</c:when>
+				<c:otherwise>
+					<form action="/novel/reply" method="post">
+						<div class="mb-3 ps-3">
+							<label for="content" class="form-label">댓글 등록</label>
+							<textarea class="form-control" id="content" name="content" rows="3" placeholder="작가나 작품에 대한 비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
+							<input type="hidden" name="sectionId" value="${section.id}">
+						</div>
+						<div class="mb-3 ps-3">
+							<button type="submit" class="btn btn-secondary">등록</button>
+						</div>
+					</form>
+				</c:otherwise>
+			</c:choose>
 			<div class="ps-3">
 				<table class="table">
 					<thead>
@@ -61,7 +75,7 @@ ul{
 						</tr>
 					</thead>
 					<tbody>
-						
+						<c:if test="${!empty replyList.content }"></c:if>
 						<c:forEach items="${replyList.content }" var="reply">
 							<tr>
 								<td>${reply.username }</td>
@@ -75,21 +89,18 @@ ul{
 					</tbody>
 				</table>
 				<div class="col-sm-12 col-md-7">
-					<div class="" id="">
+					<div>
 						<ul class="d-flex">
 							<!-- Previous 시작 -->
-							<li class=" <c:if test='${currentPage == 1}'>d-none</c:if>" id="">
-								<a href="/section/read/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a>
-							</li>
+							<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/section/read/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
 							<!-- Previous 끝 -->
 							<!-- Page번호 시작 -->
 							<c:forEach var="pNo" begin="${replyList.startPage }" end="${replyList.endPage }" step="1">
-								<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.id}?currentPage=${pNo}"  class="page-link">${pNo}</a></li>
+								<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 							</c:forEach>
 							<!-- Page번호 끝 -->
 							<!-- Next 시작 -->
-							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id="">
-							<a href="/section/read/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
+							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/section/read/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
 							<!-- Next 끝 -->
 						</ul>
 					</div>

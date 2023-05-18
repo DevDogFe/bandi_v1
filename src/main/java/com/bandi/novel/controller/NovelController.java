@@ -140,11 +140,10 @@ public class NovelController {
 		
 		NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
-		System.out.println(replyList);
+		System.out.println(replyList.size());
 		model.addAttribute("section", novelSection);
 		
-		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 10, replyList); 
-		System.out.println(pageUtil.getContent());
+		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList); 
 		model.addAttribute("replyList", pageUtil);
 		
 		return "/novel/readSection";
