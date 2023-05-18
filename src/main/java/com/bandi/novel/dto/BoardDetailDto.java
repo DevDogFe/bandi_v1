@@ -5,12 +5,11 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class BoardDto {
+public class BoardDetailDto {
 	private int id;
 	private int userId;
-	private String username;
 	private int boardTypeId;
-	private String boardName;
+	private String username;
 	private String title;
 	private String content;
 	private int categoryId;

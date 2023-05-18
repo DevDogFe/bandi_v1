@@ -41,11 +41,11 @@ values (1, '고객', '무료'),
 	  
 
 -- 게시판 종류 sample data
-insert into board_type_tb(board_name) values
-('자유'),
-('추천'),
-('홍보'),
-('팬아트');
+insert into board_type_tb(board_name) 
+values ('자유'),
+	   ('추천'),
+	   ('팬아트'),
+	   ('홍보');
 
 -- 게시판 카테고리 sample data
 insert into board_category_tb(board_type_id ,category_name) values
@@ -56,8 +56,8 @@ insert into board_category_tb(board_type_id ,category_name) values
 ('1', '토론'),
 ('2', '공지'),
 ('2', '추천'),
-('3', '공지'),
-('3', '홍보'),
-('4', '일러스트'),
-('4', '카툰'),
-('4', '기타');
+('3', '일러스트'),
+('3', '카툰'),
+('3', '기타'),
+('4', '공지'),
+('4', '홍보');
