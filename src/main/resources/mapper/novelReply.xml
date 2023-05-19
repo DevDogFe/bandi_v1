@@ -7,13 +7,18 @@
 		INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES
 		(#{sectionId}, #{userId}, #{content})
 	</insert>
-	
+
 	<select id="selectBySectionId" resultType="com.bandi.novel.dto.response.NovelReplyListDto">
-		SELECT nr.*, u.username 
+		SELECT nr.*, u.username
 		FROM novel_reply_tb AS nr
 		LEFT JOIN user_tb AS u
 		ON nr.user_id = u.id
 		WHERE section_id = #{id}
 	</select>
+
+	<delete id="deleteById">
+		DELETE FROM novel_reply_tb
+		WHERE id = #{id}
+	</delete>
 
 </mapper>

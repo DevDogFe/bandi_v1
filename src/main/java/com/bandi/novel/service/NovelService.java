@@ -90,6 +90,17 @@ public class NovelService {
 
 		return novelRepository.selectPayNovels();
 	}
+	
+	/**
+	 * 무료소설 리스트
+	 * 
+	 * @return
+	 */
+	@Transactional
+	public List<NovelDto> selectFreeNovelList() {
+		
+		return novelRepository.selectFreeNovels();
+	}
 
 	/**
 	 * 소설 조회
@@ -138,6 +149,14 @@ public class NovelService {
 	@Transactional
 	public NovelSection selectNovelSectionById(Integer id) {
 		return novelSectionRepository.selectById(id);
+	}
+	
+	/**
+	 * 소설 회차 조회수 증가 
+	 */
+	@Transactional
+	public void sectionViewsPlus(Integer sectionId) {
+		novelSectionRepository.updateViewsById(sectionId);
 	}
 
 	/**

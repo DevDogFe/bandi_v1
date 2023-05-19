@@ -10,7 +10,9 @@ import com.bandi.novel.model.NovelReply;
 @Mapper
 public interface NovelReplyRepository {
 
-	int insert(NovelReply novelReply);
+	Integer insert(NovelReply novelReply);
 	
 	List<NovelReplyListDto> selectBySectionId(Integer id);
+	
+	Integer deleteById(Integer id);
 }

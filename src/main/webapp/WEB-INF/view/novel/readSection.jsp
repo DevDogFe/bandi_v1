@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style type="text/css">
 .list--link {
 	text-decoration: none;
@@ -32,6 +33,7 @@ ul {
 				</div>
 			</div>
 			<div>
+				<input type="hidden" id="sectionId" value="${section.id}">
 				<div class="section--title mb-3">${section.title}</div>
 				<div class="section--content mb-3">${section.content}</div>
 			</div>
@@ -42,14 +44,14 @@ ul {
 		<article>
 			<c:choose>
 				<c:when test="${empty principal.id }">
-						<div class="mb-3 ps-3">
-							<label for="content" class="form-label">댓글 등록</label>
-							<textarea class="form-control" id="content" name="content" rows="3" placeholder="댓글을 등록하려면 로그인해야합니다." readonly="readonly"></textarea>
-							<input type="hidden" name="sectionId" value="${section.id}">
-						</div>
-						<div class="mb-3 ps-3">
-							<button type="button" class="btn btn-secondary">등록</button>
-						</div>
+					<div class="mb-3 ps-3">
+						<label for="content" class="form-label">댓글 등록</label>
+						<textarea class="form-control" id="content" name="content" rows="3" placeholder="댓글을 등록하려면 로그인해야합니다." readonly="readonly"></textarea>
+						<input type="hidden" name="sectionId" value="${section.id}">
+					</div>
+					<div class="mb-3 ps-3">
+						<button type="button" class="btn btn-secondary">등록</button>
+					</div>
 				</c:when>
 				<c:otherwise>
 					<form action="/novel/reply" method="post">
@@ -82,7 +84,7 @@ ul {
 								<td>${reply.content }</td>
 								<td>${reply.createdAt() }</td>
 								<td><c:if test="${principal.id == reply.userId }">
-										<button onclick="#">삭제</button>
+										<button class="delete--btn" onclick="deleteReply(${reply.id})">삭제</button>
 									</c:if></td>
 							</tr>
 						</c:forEach>
@@ -108,5 +110,24 @@ ul {
 			</div>
 		</article>
 	</section>
+	<script type="text/javascript">
+	
+	function deleteReply(replyId) {
+		$.ajax({
+			type: "DELETE",
+			url: "/api/reply/" + replyId
+		}).done((response) => {
+			console.log(response);
+			console.log(typeof response);
+			location.href='/section/read/' + $("#sectionId").val();
+		}).fail((error) => {
+			console.log(error);
+			alert("요청을 처리할 수 없습니다.");
+		});
+	}
+	$(document).ready(() => {
+		
+	});
+	</script>
 </body>
 </html>

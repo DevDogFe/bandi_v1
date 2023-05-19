@@ -1,7 +1,11 @@
 package com.bandi.novel.controller;
 
+import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.dto.response.NovelDetailDto;
@@ -23,9 +26,8 @@ import com.bandi.novel.model.NovelReply;
 import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
 import com.bandi.novel.model.User;
-import com.bandi.novel.model.UserFavorite;
-import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.ContestService;
+import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.utils.Define;
@@ -64,10 +66,10 @@ public class NovelController {
 		 * @auth 김경은
 		 */
 		List<Contest> contestList = contestService.selectContestByDate();
-		
+
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("serviceTypeList", serviceTypeList);
-		model.addAttribute("contestList",contestList);
+		model.addAttribute("contestList", contestList);
 
 		return "/novel/registrationForm";
 	}
@@ -92,25 +94,23 @@ public class NovelController {
 	 */
 	@PostMapping("/novel/registration")
 	public String registrationProc(Integer contestId, Novel novel) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novel.setUserId(principal.getId());
 		/**
-		 * @auth 김경은
-		 * novelService의 insertNovel 수정함
+		 * @auth 김경은 novelService의 insertNovel 수정함
 		 */
-		
-		novelService.insertNovel(novel,contestId);
-		
-		if(novel.getServiceTypeId() == 1) {
+
+		novelService.insertNovel(novel, contestId);
+
+		if (novel.getServiceTypeId() == 1) {
 			return "redirect:/pay";
 		}
-		if(novel.getServiceTypeId() == 2) {
+		if (novel.getServiceTypeId() == 2) {
 			return "redirect:/free";
 		}
-		
+
 		return "redirect:/contest/list";
-		
 
 	}
 
@@ -141,6 +141,22 @@ public class NovelController {
 		List<NovelDto> payNovelList = novelService.selectPayNovelList();
 		model.addAttribute("novelList", payNovelList);
 		model.addAttribute("serviceType", "유료");
+
+		return "/novel/novelList";
+	}
+
+	/**
+	 * 유료소설 목록 띄우기
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/free")
+	public String getFreeList(Model model) {
+
+		List<NovelDto> freeNovelList = novelService.selectFreeNovelList();
+		model.addAttribute("novelList", freeNovelList);
+		model.addAttribute("serviceType", "무료");
 
 		return "/novel/novelList";
 	}
@@ -179,15 +195,51 @@ public class NovelController {
 	 * @return
 	 */
 	@GetMapping("/section/read/{sectionId}")
-	public String getReadSection(Model model, @PathVariable Integer sectionId,
-			@RequestParam(defaultValue = "1") Integer currentPage) {
+	public String getReadSection(HttpServletRequest request, HttpServletResponse response, Model model,
+			@PathVariable Integer sectionId, @RequestParam(defaultValue = "1") Integer currentPage) {
 
 		NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
-		System.out.println(replyList.size());
-		model.addAttribute("section", novelSection);
-
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
+		
+		// 조회수 올리기(쿠키에 userId와 sectionId 담아서 중복방지)
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		Integer userId = -1;
+		if(principal != null) {
+			userId = principal.getId();
+		} else {
+			userId = -1;
+		}
+
+		Cookie[] cookies = request.getCookies();
+		boolean isSectionCookie = false;
+		if(cookies != null) {
+			for (Cookie cookie : cookies) {
+				if(cookie.getName().equals("sectionCookie")) {
+					isSectionCookie = true;
+					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
+						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
+						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
+						cookie.setMaxAge(60 * 60 * 24);
+						response.addCookie(cookie);
+						novelService.sectionViewsPlus(sectionId);
+						novelSection.setViews(novelSection.getViews() + 1);
+					}
+				}
+			}
+		}
+		
+		if(!isSectionCookie) {
+			Cookie sectionCookie = new Cookie("sectionCookie", "[" + userId + "_" + sectionId + "]");
+			sectionCookie.setMaxAge(60 * 60 * 24);
+			sectionCookie.setPath("/");
+			response.addCookie(sectionCookie);
+			novelService.sectionViewsPlus(sectionId);
+			novelSection.setViews(novelSection.getViews() + 1);
+		}
+		// 조회수 up 여기까지
+		
+		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
 
 		return "/novel/readSection";
@@ -207,7 +259,5 @@ public class NovelController {
 
 		return "redirect:/section/read/" + novelReply.getSectionId();
 	}
-
-	
 
 }
