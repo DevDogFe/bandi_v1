@@ -37,3 +37,6 @@ mybatis:
   - classpath:mapper/**.xml
   configuration:
     map-underscore-to-camel-case: true
+    
+bandi:
+  key: ebd2b233338452ce2e25fba736575dbe

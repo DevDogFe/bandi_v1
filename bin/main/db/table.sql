@@ -7,9 +7,14 @@ create table test_tb(
 -- 회원
 CREATE TABLE user_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(20) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
-    user_role VARCHAR(10) NOT NULL
+    user_role VARCHAR(10) NOT NULL DEFAULT 'user',
+    nick_name VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL,
+    gender VARCHAR(2) NOT NULL,
+    external boolean NOT NULL
 );
 
 -- 게시판 종류
@@ -198,11 +203,11 @@ CREATE TABLE novel_section_tb(
 -- 회차 댓글
 CREATE TABLE  novel_reply_tb(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    board_id INT NOT NULL,
+    section_id INT NOT NULL,
     user_id INT NOT NULL,
     content VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY(board_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY(section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE,
     FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );
 
@@ -228,24 +233,16 @@ CREATE TABLE contest_tb(
     end_created_at TIMESTAMP NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES user_tb(id)
+    FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );
 
 -- 공모전 게시판
 CREATE TABLE contest_novel_tb(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    genre_id INT NOT NULL,
-    user_id INT NOT NULL,
+    novel_id INT NOT NULL,
     contest_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    recommend INT NOT NULL DEFAULT '0',
-    favorite INT NOT NULL DEFAULT '0',
-    view INT NOT NULL DEFAULT '0',
-    FOREIGN KEY(genre_id) REFERENCES genre_tb(id),
-    FOREIGN KEY(user_id) REFERENCES user_tb(id),
-    FOREIGN KEY(contest_id) REFERENCES contest_tb(id)
+    PRIMARY KEY (novel_id, contest_id),
+    FOREIGN KEY(novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY(contest_id) REFERENCES contest_tb(id) ON DELETE CASCADE
 );
 
 -- 즐겨찾기

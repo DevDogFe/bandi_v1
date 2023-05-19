@@ -3,9 +3,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.UserRepository">
 
+	<select id="selectByUserId" resultType="com.bandi.novel.model.User">
+		SELECT * FROM user_tb
+		WHERE id = #{id}
+	</select>
+	
 	<select id="selectByUsername" resultType="com.bandi.novel.model.User">
 		SELECT * FROM user_tb
 		WHERE username = #{username}
 	</select>
+
+	<insert id="insertUser">
+		INSERT INTO user_tb(username, password, nick_name, email, birth_date, gender, external)
+		VALUES
+		(#{username}, #{password}, #{nickName}, #{email}, #{birthDate}, #{gender}, #{external})
+	</insert>
+
+	<update id="updateUser">
+		UPDATE user_tb SET
+		password = #{password},
+		nick_name = #{nickName},
+		email = #{email}
+		WHERE id = #{id};
+	</update>
 
 </mapper>
