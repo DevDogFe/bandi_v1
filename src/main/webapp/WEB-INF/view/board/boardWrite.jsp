@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 		$(document)
 				.ready(
 						function() {
@@ -80,28 +80,19 @@
 												}
 											});
 						});
-	</script>
+	</script> -->
 
 	<h1>글쓰기</h1>
-	<form action="/board/write" method="post">
+	<form action="/board/write/${boardTypeId}" method="post">
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">제목</label> <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
 		</div>
-		종류 <select class="form-select" aria-label="Default select example" id="boardTypeSelect" name="boardTypeId">
-			<option value="0" selected>분류</option>
-			<c:forEach var="boardType" items="${boardType}">
-				<option value="${boardType.id}" name="boardType">${boardType.boardName}</option>
+		<input type="hidden" name="boardTypeId" value="${boardTypeId }">
+		<select class="form-select" name="categoryId">
+			<c:forEach items="${categoryList }" var="category">
+				<option value="${category.id }">${category.categoryName }</option>
 			</c:forEach>
-		</select> <br>
-		<c:forEach var="boardType" items="${boardType}">
-			<select class="form-select" aria-label="Default select example" id="categoryTypeSelect" name="categoryId" style="display: none;">
-				<c:forEach var="categorylist" items="${categorylist}">
-					<c:if test="${boardType.id == categorylist.boardTypeId }">
-						<option value="${categorylist.id}" name="categoryId">${categorylist.categoryName}</option>
-					</c:if>
-				</c:forEach>
-			</select>
-		</c:forEach>
+		</select>
 		<br>
 		<div class="mb-3">
 			<label for="exampleFormControlTextarea1" class="form-label">내용</label>

@@ -265,3 +265,12 @@ CREATE TABLE user_library_tb(
 	FOREIGN KEY (user_id) REFERENCES user_tb(id),
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
 );
+
+-- 게시물 좋아요
+CREATE TABLE like_tb(
+	user_id INT NOT NULL,
+	board_id INT NOT NULL,
+	primary key (user_id, board_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id),
+	FOREIGN KEY (board_id) REFERENCES board_tb(id)
+);

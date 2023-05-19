@@ -38,7 +38,7 @@
 				<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
 				<a href="/novel/registration">소설 등록</a>		
 				<a href="/pay">작품 목록</a>
-				<a href="/board/write">게시판 등록</a>	
+				<a href="/board/list">게시판</a>	
 			</c:otherwise>
 		</c:choose>
 	</div>

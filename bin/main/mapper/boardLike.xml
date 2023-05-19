@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.BoardLikeRepository">
+
+	<insert id="insert">
+		insert into like_tb values
+		(#{userId}, #{boardId})
+	</insert>
+
+	<select id="selectByUserIdAndBoardId" resultType="com.bandi.novel.model.Like">
+		select * from like_tb
+		where user_id = #{userId} and board_id = #{boardId}
+	</select>
+
+	<delete id="delete">
+		delete from like_tb
+		where user_id = #{userId} and board_id = #{boardId}
+	</delete>
+
+</mapper>

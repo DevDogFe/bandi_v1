@@ -15,6 +15,9 @@
 		</div>
 		<label for="exampleFormControlInput1" class="form-label">작성자 ${boardDetail.username} </label> <label for="exampleFormControlInput1" class="form-label">등록일 ${boardDetail.createdAt} </label> <label
 			for="exampleFormControlInput1" class="form-label">카테고리 ${boardDetail.categoryName} </label>
+		<select class="form-select">
+			<option></option>
+		</select>
 		<div class="mb-3">
 			<label for="exampleFormControlTextarea1" class="form-label">내용</label>
 			<textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content">${boardDetail.content}</textarea>

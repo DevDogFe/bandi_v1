@@ -9,29 +9,12 @@
 		#{content});
 	</insert>
 
-	<select id="selectCategory" resultType="com.bandi.novel.dto.CategorySelectDto">
-		select * from board_category_tb;
-	</select>
-
 	<select id="selectBoardType" resultType="com.bandi.novel.dto.BoardTypeDto">
 		select * from board_type_tb;
 	</select>
-
-<!-- 	<select id="selectBoardList" resultType="com.bandi.novel.dto.BoardDto">
-		select b.id, b.title, b.user_id, u.username, b.created_at, bc.category_name as category_name, bt.board_name as board_name
-		from
-		board_tb as b
-		left join user_tb as u
-		on b.user_id = u.id
-		left join board_type_tb as bt
-		on b.board_type_id = bt.id
-		left join board_category_tb as bc
-		on b.category_id = bc.id
-		where b.board_type_id = 1
-	</select> -->
 	
-	<select id="selectBoardList" resultType="com.bandi.novel.dto.BoardDto">
-		select b.id, b.title, b.user_id, u.username, b.created_at, bc.category_name as category_name, bt.board_name as board_name
+	<select id="selectBoardListByBoardTypeId" resultType="com.bandi.novel.dto.BoardDto">
+		select b.id, b.title, b.user_id, u.username, b.created_at, b.category_id, bc.category_name as category_name, bt.board_name as board_name
 		from
 		board_tb as b
 		left join user_tb as u
@@ -40,7 +23,20 @@
 		on b.board_type_id = bt.id
 		left join board_category_tb as bc
 		on b.category_id = bc.id
-		where bt.board_name like #{boardName}
+		where b.board_type_id = #{boardTypeId}
+	</select>
+	
+	<select id="selectBoardListByCategoryId" resultType="com.bandi.novel.dto.BoardDto">
+		select b.id, b.title, b.user_id, u.username, b.created_at, b.category_id, bc.category_name as category_name, bt.board_name as board_name
+		from
+		board_tb as b
+		left join user_tb as u
+		on b.user_id = u.id
+		left join board_type_tb as bt
+		on b.board_type_id = bt.id
+		left join board_category_tb as bc
+		on b.category_id = bc.id
+		where b.category_id = #{categoryId}
 	</select>
 
 	<select id="selectBoardDetailById" resultType="com.bandi.novel.dto.BoardDetailDto">

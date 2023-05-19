@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <style>
 .nav-item a {
@@ -19,27 +20,14 @@
 }
 </style>
 <body>
-	<%-- <ul class="nav justify-content-center">
-		<c:forEach var="boardType" items="${boardType}">
-			<li class="nav-item"><a class="nav-link" href="/board/list/${boardType.id}">${boardType.boardName}</a></li>
-		</c:forEach>
-	</ul> --%>
 	<div class="category-list-table">
 		<table>
 			<tr>
-				<td class="category-list">
-					<button type="submit" name="boardName" value="자유" onclick="location.href='/board/list?type=자유'">자유</button>
-				</td>
-				<td class="category-list">
-					<button type="submit" name="boardName" value="추천" onclick="location.href='/board/list?type=추천'">추천</button>
-				</td>
-				<td class="category-list">
-					<button type="submit" name="boardName" value="팬아트" onclick="location.href='/board/list?type=팬아트'">팬아트</button>
-				</td>
-				<td class="category-list">
-					<button type="submit" name="boardName" value="홍보" onclick="location.href='/board/list?type=홍보'">홍보</button>
-				</td>
-
+				<c:forEach items="${boardTypeList }" var="type">
+					<td class="category-list">
+						<button type="submit" onclick="location.href='/board/list/${type.id}'">${type.boardName}</button>
+					</td>
+				</c:forEach>
 			</tr>
 		</table>
 	</div>
@@ -54,7 +42,7 @@
 			</tr>
 		</thead>
 		<c:forEach var="list" items="${list}">
-			<tbody>
+			<tbody id="boardList" class="category">
 				<tr>
 					<td>${list.id}</td>
 					<td>${list.username}</td>
@@ -65,6 +53,54 @@
 			</tbody>
 		</c:forEach>
 	</table>
-	<button type="button" class="btn btn-primary" onclick="location.href='/board/write'">글쓰기</button>
+	<button type="button" class="btn btn-primary" onclick="location.href='/board/write/${boardTypeId}'">글쓰기</button>
+	<div class="categoryId">
+		<select name="categoryId" id="categoryId">
+			<c:forEach items="${categoryList }" var="category">
+				<option value="${category.id }">${category.categoryName }</option>
+			</c:forEach>
+		</select>
+	</div>
+	<div>
+		<input type="text">
+		<button type="button">검색</button>
+	</div>
+	<!-- <form id="form1" action="/board/list/2" method="get">
+		<input type="hidden" name="c1" value="">
+		<input type="hidden" name="c2" value="">
+		<input type="hidden" name="c3" value="">
+	</form> -->
+
+	<script type="text/javascript">
+	     $(document).ready(function () {
+	         $(".categoryId").on("change", () => {
+	             let selectBox = document.getElementById("categoryId");
+	             let value = selectBox.options[selectBox.selectedIndex].value;
+	            
+	             $.ajax({
+	                 type: "get",
+	                 url: "/api/list/" + value,
+	                 contentType: "application/json"
+	             }).done(function (response) {
+	                 
+	                 $.each(response, function (index, item) {
+	                	  for(i = 0; i < response.length;i++){ 
+	                		   $(".category").empty(); 
+	                     var newRow = "<tr>" +
+	                         "<td>" + item.id + "</td>" +
+	                         "<td>" + item.username + "</td>" +
+	                         "<td><a href='/board/detail/" + item.id + "' style='text-decoration: none; color: black;'>" + item.title + "</a></td>" +
+	                         "<td>" + item.categoryName + "</td>" +
+	                         "<td>" + item.createdAt + "</td>" +
+	                         "</tr>";
+	                      $("#boardList").append(newRow); 
+	                	  }
+	                 });
+	             }).fail(function (error) {
+	                 alert("서버오류");
+	             });
+	         });
+	     });
+	</script>
 </body>
 </html>

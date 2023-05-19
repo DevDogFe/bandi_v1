@@ -10,13 +10,20 @@ import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardTypeDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.model.BoardType;
+import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.BoardRepository;
+import com.bandi.novel.repository.BoardTypeRepository;
 
 @Service
 public class BoardService {
 	
 	@Autowired
 	private BoardRepository boardRepository;
+	@Autowired
+	private BoardTypeRepository boardTypeRepository;
+	@Autowired
+	private BoardCategoryRepository boardCategoryRepository;
 
 	// 게시물 등록
 	@Transactional
@@ -30,33 +37,33 @@ public class BoardService {
 	
 	// 게시물 카테고리 리스트 불러오기
 	@Transactional
-	public List<CategorySelectDto> selectCategory() {
-		List<CategorySelectDto> list = boardRepository.selectCategory();
+	public List<CategorySelectDto> selectCategory(Integer boardTypeId) {
+		List<CategorySelectDto> list = boardCategoryRepository.selectCategory(boardTypeId);
 		return list;
 	}
 	
 	// 게시물 종류 리스트 불러오기
 	@Transactional
-	public List<BoardTypeDto> selectBoardType() {
-		List<BoardTypeDto> list = boardRepository.selectBoardType();
+	public List<BoardType> selectBoardType() {
+		List<BoardType> list = boardTypeRepository.selectBoardTypeAll();
 		return list;
 	}
 	
-	// 게시물 리스트 불러오기
-//	@Transactional
-//	public List<BoardDto> selectBoardList() {
-//		List<BoardDto> list = boardRepository.selectBoardList();
-//		return list;
-//	}
-	public List<BoardDto> selectBoardList(String boardName) {
-		//boardName = "%" + boardName + "%";
-		List<BoardDto> list = boardRepository.selectBoardList(boardName);
+	// 게시판 종류 별 게시물 리스트 불러오기
+	@Transactional
+	public List<BoardDto> selectBoardList(Integer boardTypeId) {
+		List<BoardDto> list = boardRepository.selectBoardListByBoardTypeId(boardTypeId);
+		return list;
+	}
+	
+	public List<BoardDto> selectBoardListByCategoryId(Integer categoryId) {
+		List<BoardDto> list = boardRepository.selectBoardListByCategoryId(categoryId);
 		return list;
 	}
 	
 	// 게시물 상세보기
 	@Transactional
-	public BoardDetailDto selectBoardDetailById(int id) {
+	public BoardDetailDto selectBoardDetailById(Integer id) {
 		
 		return boardRepository.selectBoardDetailById(id);
 	}
@@ -72,7 +79,7 @@ public class BoardService {
 	}
 	
 	// 게시물 삭제하기
-	public int deleteBoard(int id) {
+	public int deleteBoard(Integer id) {
 		int resultRowCount = boardRepository.deleteById(id);
 		if(resultRowCount != 1) {
 			System.out.println("삭제 실패");
