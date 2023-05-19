@@ -3,6 +3,7 @@ package com.bandi.novel.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
@@ -38,8 +39,11 @@ public interface NovelRepository {
 
 	List<NovelDto> selectFreeNovels();
 
-	NovelDetailDto selectNovelDetailByNovelId(Integer id);
+	List<NovelDto> selectPayNovelsByGenreIdAndName(@Param("genreId") Integer genreId,@Param("search") String search);
 	
+	List<NovelDto> selectFreeNovelsByGenreIdAndName(@Param("genreId")Integer genreId,@Param("search") String search);
+	
+	NovelDetailDto selectNovelDetailByNovelId(Integer id);
 
 
 }

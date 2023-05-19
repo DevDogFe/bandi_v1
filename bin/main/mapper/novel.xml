@@ -3,34 +3,105 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.NovelRepository">
 
+	<select id="selectPayNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
+		<if test="genreId != null and search != null">
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.service_type_id = 1
+			AND g.id = #{genreId}
+			AND n.title LIKE CONCAT('%', #{search}, '%')
+		</if>
+		<if test='genreId != null and search == null'>
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.service_type_id = 1
+			AND g.id = #{genreId}
+		</if>
+		<if test="genreId == null and search != null">
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.service_type_id = 1
+			AND n.title LIKE CONCAT('%', #{search}, '%')
+		</if>
+	</select>
+	
+	<select id="selectFreeNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
+		<if test="genreId != null and search != null">
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.service_type_id = 2
+			AND g.id = #{genreId}
+			AND n.title LIKE CONCAT('%', #{search}, '%')
+		</if>
+		<if test='genreId != null and search == null'>
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.service_type_id = 2
+			AND g.id = #{genreId}
+		</if>
+		<if test="genreId == null and search != null">
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.service_type_id = 2
+			AND n.title LIKE CONCAT('%', #{search}, '%')
+		</if>
+	</select>
+
 	<insert id="insertNovel">
 		INSERT INTO novel_tb (user_id, genre_id, service_type_id, title, overview, serial_cycle)
 		VALUES
 		(#{userId}, #{genreId}, #{serviceTypeId}, #{title}, #{overview}, #{serialCycle})
 	</insert>
-	
+
 	<select id="selectPayNovels" resultType="com.bandi.novel.dto.response.NovelDto">
-		SELECT n.id, n.title, n.user_id, u.username, g.name AS genre_name 
+		SELECT n.id, n.title, n.user_id, u.username, g.name AS genre_name
 		FROM novel_tb AS n
 		LEFT JOIN user_tb AS u
 		ON n.user_id = u.id
 		LEFT JOIN genre_tb AS g
-		ON n.genre_id = g.id
+		ON
+		n.genre_id = g.id
 		WHERE n.service_type_id = 1
 	</select>
-	
+
 	<select id="selectFreeNovels" resultType="com.bandi.novel.dto.response.NovelDto">
-		SELECT n.id, n.title, n.user_id, u.username, g.name AS genre_name 
+		SELECT n.id, n.title, n.user_id, u.username, g.name AS genre_name
 		FROM novel_tb AS n
 		LEFT JOIN user_tb AS u
 		ON n.user_id = u.id
 		LEFT JOIN genre_tb AS g
-		ON n.genre_id = g.id
+		ON
+		n.genre_id = g.id
 		WHERE n.service_type_id = 2
 	</select>
-	
+
 	<select id="selectNovelDetailByNovelId" resultType="com.bandi.novel.dto.response.NovelDetailDto">
-		SELECT n.id, n.title, n.service_type_id, n.created_At, n.cover, n.overview, n.serial_cycle, n.user_id, u.username, g.name AS genre_name, s.name AS service_type_name 
+		SELECT n.id, n.title, n.service_type_id, n.created_At, n.cover, n.overview, n.serial_cycle, n.user_id, u.username, g.name AS genre_name,
+		s.name AS service_type_name
 		FROM novel_tb AS n
 		LEFT JOIN user_tb AS u
 		ON n.user_id = u.id
@@ -38,34 +109,36 @@
 		ON n.genre_id = g.id
 		LEFT JOIN service_type_tb AS s
 		ON n.service_type_id = s.id
-		WHERE n.id = #{id}
+		WHERE n.id =
+		#{id}
 	</select>
-	
+
 	<select id="selectNovelByUserIdAndTitle" resultType="com.bandi.novel.model.Novel">
 		SELECT * FROM novel_tb
 		WHERE user_id = #{userId}
 		AND title = #{title}
 	</select>
-	
+
 	<!-- @author 경은 -->
 	<select id="selectNovelIdByModel" resultType="Integer">
 		SELECT id FROM novel_tb
 		WHERE user_id = #{userId}
 		AND genre_id = #{genreId} AND service_type_id = #{serviceTypeId}
-		AND title = #{title} AND overview = #{overview}
-		AND serial_cycle = #{serialCycle} 	 
+		AND title = #{title} AND overview =
+		#{overview}
+		AND serial_cycle = #{serialCycle}
 	</select>
-	
+
 	<delete id="deleteNovelByContestId">
-		delete 
-		from novel_tb 
+		delete
+		from novel_tb
 		where id in(select novel_id from contest_novel_tb where contest_id = #{contestId})
 	</delete>
-	
+
 	<delete id="deleteNovelById">
-		delete 
-		from novel_tb 
+		delete
+		from novel_tb
 		where id = #{id}
 	</delete>
-	<!--  -->
+	<!-- -->
 </mapper>

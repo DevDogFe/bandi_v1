@@ -3,12 +3,13 @@ package com.bandi.novel.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
 
 import lombok.Data;
 
 @Data
-public class NovelReplyPageUtil {
+public class NovelPageUtil {
 
 	private int total;
 	private int currentPage;
@@ -16,22 +17,22 @@ public class NovelReplyPageUtil {
 	private int startPage;
 	private int endPage;
 	private int pagingCount;
-	private List<NovelReplyListDto> content;
+	private List<NovelDto> content;
 
-	public NovelReplyPageUtil(int total, int size, int currentPage, int pagingCount,
-			List<NovelReplyListDto> replyList) {
+	public NovelPageUtil(int total, int size, int currentPage, int pagingCount,
+			List<NovelDto> novelList) {
 		this.total = total;
 		this.currentPage = currentPage;
 		this.pagingCount = pagingCount;
 		this.content = new ArrayList<>();
 		int count = (currentPage - 1) * size;
-		if (replyList.size() != 0) {
+		if (novelList.size() != 0) {
 			for (int i = count; i < count + size; i++) {
 
-				if (i == replyList.size()) {
+				if (i == novelList.size()) {
 					break;
 				}
-				content.add(replyList.get(i));
+				content.add(novelList.get(i));
 			}
 		}
 		if (total == 0) {

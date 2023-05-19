@@ -86,8 +86,12 @@ public class NovelService {
 	 * @return
 	 */
 	@Transactional
-	public List<NovelDto> selectPayNovelList() {
+	public List<NovelDto> selectPayNovelList(Integer genreId, String search) {
 
+		if(genreId != null || search != null) {
+			return novelRepository.selectPayNovelsByGenreIdAndName(genreId, search);
+		}
+		
 		return novelRepository.selectPayNovels();
 	}
 	
@@ -97,7 +101,11 @@ public class NovelService {
 	 * @return
 	 */
 	@Transactional
-	public List<NovelDto> selectFreeNovelList() {
+	public List<NovelDto> selectFreeNovelList(Integer genreId, String search) {
+		
+		if(genreId != null || search != null) {
+			return novelRepository.selectFreeNovelsByGenreIdAndName(genreId, search);
+		}
 		
 		return novelRepository.selectFreeNovels();
 	}

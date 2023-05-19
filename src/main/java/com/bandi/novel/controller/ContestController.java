@@ -25,6 +25,7 @@ import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.utils.Define;
+import com.bandi.novel.utils.NovelPageUtil;
 import com.bandi.novel.utils.NovelReplyPageUtil;
 
 /**
@@ -138,6 +139,8 @@ public class ContestController {
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
 		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
+		
+		
 		model.addAttribute("contestNovelList", contestNovelList);
 		
 		return "/contest/contestNovelList";

@@ -1,6 +1,5 @@
 package com.bandi.novel.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -31,6 +30,7 @@ import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.utils.Define;
+import com.bandi.novel.utils.NovelPageUtil;
 import com.bandi.novel.utils.NovelReplyPageUtil;
 
 /**
@@ -136,27 +136,40 @@ public class NovelController {
 	 * @return
 	 */
 	@GetMapping("/pay")
-	public String getPayList(Model model) {
-
-		List<NovelDto> payNovelList = novelService.selectPayNovelList();
-		model.addAttribute("novelList", payNovelList);
+	public String getPayList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
+		System.out.println(genreId + "/" + search);
+		if("".equals(search)) {
+			search = null;
+		}
+		List<NovelDto> payNovelList = novelService.selectPayNovelList(genreId, search);
+		List<Genre> genreList = novelService.selectGenreList();
+		NovelPageUtil novelPageUtil = new NovelPageUtil(payNovelList.size(), 20, currentPage, 5, payNovelList);
+		model.addAttribute("novelList", novelPageUtil);
 		model.addAttribute("serviceType", "유료");
-
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("map", "pay");
 		return "/novel/novelList";
 	}
 
 	/**
-	 * 유료소설 목록 띄우기
+	 * 무료소설 목록 띄우기
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/free")
-	public String getFreeList(Model model) {
-
-		List<NovelDto> freeNovelList = novelService.selectFreeNovelList();
-		model.addAttribute("novelList", freeNovelList);
+	public String getFreeList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,  @RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
+		System.out.println(genreId+ "/" + search);
+		if("".equals(search)) {
+			search = null;
+		}
+		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search);
+		List<Genre> genreList = novelService.selectGenreList();
+		NovelPageUtil novelPageUtil = new NovelPageUtil(freeNovelList.size(), 20, currentPage, 5, freeNovelList);
+		model.addAttribute("novelList", novelPageUtil);
 		model.addAttribute("serviceType", "무료");
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("map", "free");
 
 		return "/novel/novelList";
 	}
