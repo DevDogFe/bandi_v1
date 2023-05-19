@@ -26,6 +26,7 @@
 		) as unr
 		ON ns.id = unr.section_id
 		WHERE ns.novel_id = #{novelId}
+		order by ns.id DESC
 	</select>
 	
 	<select id="selectLastNovelRecord" resultType="com.bandi.novel.dto.response.LastNovelRecordDto">

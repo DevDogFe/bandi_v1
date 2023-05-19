@@ -35,7 +35,8 @@ INSERT INTO novel_section_tb (novel_id, title, content, list_price, current_pric
 VALUES 
 (1, '1화 세조의 슬픔', '세조는 반역을 계획중이다.', 100, 100),
 (3, '프롤로그', '거실 조명은 꺼짐', 100, 100),
-(3, '영약 광산의 주인', '나는 형이 운전하는 차의 보조석에 앉아', 100, 100);
+(3, '영약 광산의 주인', '나는 형이 운전하는 차의 보조석에 앉아', 100, 100),
+(3, '약팔이', '나는 형이 운전하는 차의 보조석에 앉아라', 100, 100);
 
 insert into faq_category_tb(category_name)
 values('고객'), 
@@ -148,5 +149,6 @@ INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES
 -- 소설 조회 기록
 INSERT INTO user_novel_record_tb(user_id,novel_id,section_id) VALUES
 (1,1,1),
-(1,3,2);
+(1,3,2),
+(1,3,3);
 
