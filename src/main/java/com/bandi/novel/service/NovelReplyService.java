@@ -21,6 +21,7 @@ public class NovelReplyService {
 	@Autowired
 	private NovelReplyRepository novelReplyRepository;
 	
+	// 댓글 등록
 	@Transactional
 	public void insertNovelReply(NovelReply novelReply) {
 		
@@ -28,11 +29,19 @@ public class NovelReplyService {
 		// todo 예외처리
 	}
 	
+	// 댓글 불러오기
 	@Transactional
 	public List<NovelReplyListDto> selectNovelReplyListBySectionId(Integer id){
 		List<NovelReplyListDto> replyList = novelReplyRepository.selectBySectionId(id);
 		
 		return replyList;
+	}
+	
+	// 댓글 삭제
+	@Transactional
+	public void deleteNovelReplyById(Integer id) {
+		int result = novelReplyRepository.deleteById(id);
+		// todo 예외처리
 	}
 	
 }

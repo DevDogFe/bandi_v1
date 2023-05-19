@@ -201,6 +201,8 @@ public class NovelController {
 		NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
+		
+		// 조회수 올리기(쿠키에 userId와 sectionId 담아서 중복방지)
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		Integer userId = -1;
 		if(principal != null) {
@@ -208,20 +210,17 @@ public class NovelController {
 		} else {
 			userId = -1;
 		}
-		
-		
 
 		Cookie[] cookies = request.getCookies();
 		boolean isSectionCookie = false;
 		if(cookies != null) {
 			for (Cookie cookie : cookies) {
 				if(cookie.getName().equals("sectionCookie")) {
-					System.out.println("1111111111111111");
 					isSectionCookie = true;
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
-						cookie.setMaxAge(60 * 60 * 3);
+						cookie.setMaxAge(60 * 60 * 24);
 						response.addCookie(cookie);
 						novelService.sectionViewsPlus(sectionId);
 						novelSection.setViews(novelSection.getViews() + 1);
@@ -238,7 +237,7 @@ public class NovelController {
 			novelService.sectionViewsPlus(sectionId);
 			novelSection.setViews(novelSection.getViews() + 1);
 		}
-		
+		// 조회수 up 여기까지
 		
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
