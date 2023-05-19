@@ -129,7 +129,7 @@ insert into board_category_tb(board_type_id ,category_name) values
 ('4', '카툰'),
 ('4', '기타');
 
-<<<<<<< HEAD
+
 -- Question 
 insert into question_tb(user_id, title, content, faq_category_id, proceed) values
 (1, '제목', '내용', '1', 1 ),
@@ -141,7 +141,7 @@ insert into question_tb(user_id, title, content, faq_category_id, proceed) value
 insert into answer_tb(user_id, content,  question_id) values
 (1, '답1', 1),
 (2, '답2', 2);
-=======
+
 INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES 
 (1, 1, '너무 재밌어요1'),
 (1, 2, '그저그래요2'),
