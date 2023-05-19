@@ -49,7 +49,6 @@ public class NovelApiController {
 	
 	@DeleteMapping("/api/reply/{replyId}")
 	public Integer deleteNovelReplyProc(@PathVariable Integer replyId) {
-		System.out.println("replyId: " + replyId);
 		novelReplyService.deleteNovelReplyById(replyId);
 		
 		return replyId;
