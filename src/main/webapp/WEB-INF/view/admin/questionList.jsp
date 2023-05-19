@@ -11,10 +11,6 @@
 </head>
 <body>
 	<h2>질문(관리자)</h2>
-
-	<!-- 	<button id="btn-qna-list-all" onclick="abcf(-1);" class="btn" value="-1">전체</button>
-	<button id="btn-qna-list-incomplete" class="btn" value="0">미처리</button>
-	<button id="btn-qna-list-incomplete" class="btn" value="1">처리완료</button> -->
 	<button class="btn--qnaList" value="-1">전체</button>
 	<button class="btn--qnaList" value="0">미처리</button>
 	<button class="btn--qnaList" value="1">처리완료</button>

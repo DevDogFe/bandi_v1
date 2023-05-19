@@ -20,7 +20,6 @@ import com.bandi.novel.service.QnaService;
 
 /**
  * 관리자 페이지
- * 
  * @author 효린
  *
  */

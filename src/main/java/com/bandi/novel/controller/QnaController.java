@@ -42,6 +42,7 @@ public class QnaController {
 
 		// List<Question> questionList = qnaService.readQuestionByUserId(principal.getId);
 		List<Question> questionList = qnaService.readQuestionByUserId(1);
+		System.out.println(questionList);
 		model.addAttribute("questionList", questionList);		
 
 		return "/cs/qnaList";
@@ -122,6 +123,16 @@ public class QnaController {
 		qnaService.deleteQuestion(id);
 
 		return "redirect:/qna/list";
+	}
+	
+	@GetMapping("/answer/{questionId}")
+	public String getAnswer(@PathVariable Integer questionId, Model model) {
+		
+		Answer answer = qnaService.readAnswerByQuestionId(questionId);
+		model.addAttribute("answer", answer);
+		
+		return "/cs/answerDetail";
+		
 	}
 
 }
