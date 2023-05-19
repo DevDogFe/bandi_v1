@@ -2,12 +2,14 @@ package com.bandi.novel.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
+import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.NovelSection;
@@ -56,6 +58,7 @@ public class NovelService {
 	 */
 	@Transactional
 	public void insertNovel(Novel novel, Integer contestId) {
+
 		Novel novelEntity = novelRepository.selectNovelByUserIdAndTitle(novel);
 		if (novelEntity != null) {
 			throw new IllegalArgumentException("작가님의 작품 중 같은 제목의 작품이 이미 있습니다.");
@@ -135,6 +138,31 @@ public class NovelService {
 	@Transactional
 	public NovelSection selectNovelSectionById(Integer id) {
 		return novelSectionRepository.selectById(id);
+	}
+
+	/**
+	 * 회차 조회(다음 이전 구현)
+	 * 
+	 * @author 김경은
+	 * @return
+	 */
+	@Transactional
+	public SectionDto selectNovelReadSection(int novelId,int sectionId) {
+
+		SectionDto novelSection = novelSectionRepository.selectNovelByPage(novelId, sectionId);
+		return novelSection;
+	}
+
+	/**
+	 * section의 전체 회차 수(count) 조회
+	 * @author 김경은
+	 * @param id
+	 * @return
+	 */
+	@Transactional
+	public int selectSectionCount(Integer novelId) {
+
+		return novelSectionRepository.selectNovelSectionCount(novelId);
 	}
 
 }

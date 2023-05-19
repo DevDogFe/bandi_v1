@@ -10,17 +10,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
+import com.bandi.novel.dto.response.NovelReplyListDto;
+import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.model.Contest;
-import com.bandi.novel.model.ContestNovel;
+import com.bandi.novel.model.NovelReply;
 import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
+import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.utils.Define;
+import com.bandi.novel.utils.NovelReplyPageUtil;
 
 /**
  * 공모전 컨트롤러
@@ -28,6 +33,7 @@ import com.bandi.novel.utils.Define;
  * @author 김경은
  */
 @Controller
+@RequestMapping("/contest")
 public class ContestController {
 
 	@Autowired
@@ -36,12 +42,14 @@ public class ContestController {
 	private ContestService contestService;
 	@Autowired
 	private NovelService novelService;
+	@Autowired
+	private NovelReplyService novelReplyService;
 	
 	/**
 	 * @param model
 	 * @return 공모전 상세 페이지
 	 */
-	@GetMapping("/contest/detail/{id}")
+	@GetMapping("/detail/{id}")
 	public String getContestEntry(@PathVariable Integer id, Model model) {
 
 		return "/contest/contestDetail";
@@ -51,7 +59,7 @@ public class ContestController {
 	 * 
 	 * @return 공모전 목록 페이지
 	 */
-	@GetMapping("/contest/list")
+	@GetMapping("/list")
 	public String getContestList(Model model) {
 
 		List<Contest> contestList = contestService.selectContestListByLimit();
@@ -67,7 +75,7 @@ public class ContestController {
 	 * 
 	 * @return 공모전 등록 페이지
 	 */
-	@GetMapping("/contest/registration")
+	@GetMapping("/registration")
 	public String getContestRegistration() {
 
 		return "/contest/contestRegistration";
@@ -79,7 +87,7 @@ public class ContestController {
 	 * @param contest
 	 * @return
 	 */
-	@PostMapping("/contest/registration")
+	@PostMapping("/registration")
 	public String registrationProc(Contest contest) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -94,7 +102,7 @@ public class ContestController {
 	 * 공모전 삭제
 	 * @return
 	 */
-	@GetMapping("/contest/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteContest(@PathVariable Integer id) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
@@ -109,7 +117,7 @@ public class ContestController {
 	 * 공모전 수정 프로세스
 	 * @return
 	 */
-	@PostMapping("/contest/update")
+	@PostMapping("/update")
 	public String updateContestProc(Contest contest) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
@@ -124,7 +132,7 @@ public class ContestController {
 	 * 공모전 소설 리스트 조회 페이지
 	 * @return model
 	 */
-	@GetMapping("/contest/novel/list")
+	@GetMapping("/novel/list")
 	public String getContestNovelList(Model model) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
@@ -139,14 +147,13 @@ public class ContestController {
 	 * 공모전 소설 각 회차 리스트 조회 페이지
 	 * @return model
 	 */
-	@GetMapping("/contest/novel/detail/{novelId}")
+	@GetMapping("/novel/detail/{novelId}")
 	public String getContestNovelDetail(@PathVariable Integer novelId,Model model) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		List<NovelSection> novelSectionList = novelService.selectNovelSectionListByNovelId(novelId);
-		System.out.println(novelSectionList.toString());
 		model.addAttribute("detail", novelDetailDto);
 		model.addAttribute("novelSectionList",novelSectionList);
 		
@@ -157,14 +164,19 @@ public class ContestController {
 	 * 공모전 소설 회차 조회 페이지
 	 * @return model
 	 */
-	@GetMapping("/contest/novel/read/{novelId}")
-	public String getContestNovelReadSection(@PathVariable Integer novelId,Model model) {
-
-		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		// contest.setUserId(principal.getId());
+	@GetMapping("/novel/read/{novelId}/{sectionId}")
+	public String getContestNovelReadSection(@PathVariable Integer novelId,
+			@PathVariable Integer sectionId,
+			@RequestParam(defaultValue = "1") Integer currentPage,Model model) {
 		
-		NovelDetailDto novel = novelService.selectNovelDetailById(novelId);
-		model.addAttribute("novel", novel);
+		// 이전글 다음글 기능
+		SectionDto novelSection = novelService.selectNovelReadSection(novelId,sectionId);
+		model.addAttribute("section", novelSection);
+		//
+		
+		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
+		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList); 
+		model.addAttribute("replyList", pageUtil);
 
 		return "/contest/contestNovelReadSection";
 	}
@@ -173,7 +185,7 @@ public class ContestController {
 	 * 공모전 소설 삭제
 	 * @return
 	 */
-	@GetMapping("/contest/novel/delete/{id}")
+	@GetMapping("/novel/delete/{id}")
 	public String deleteContestNovel(@PathVariable Integer id) {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
@@ -182,5 +194,33 @@ public class ContestController {
 		contestService.deleteContestNovelById(id);
 
 		return "redirect:/contest/list";
+	}
+	
+	/**
+	 * 공모전 소설 회차 삭제
+	 * @return
+	 */
+	@GetMapping("/novel/section/delete/{id}")
+	public String deleteContestNovelSection(@PathVariable Integer id) {
+
+		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		// contest.setUserId(principal.getId());
+		contestService.deleteContestNovelSectionById(id);
+
+		return "redirect:/contest/list";
+	}
+	
+	/**
+	 * 리플 생성
+	 * @param novelReply
+	 * @return
+	 */
+	@PostMapping("/novel/reply/{novelId}")
+	public String contestReplyProc(@PathVariable Integer novelId,NovelReply novelReply) {
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		novelReply.setUserId(principal.getId());
+		novelReplyService.insertNovelReply(novelReply);
+		
+		return "redirect:/contest/novel/read/"+novelId+"/" + novelReply.getSectionId();
 	}
 }

@@ -58,8 +58,6 @@
                   		<li><h4>${contestNovel.username}</h4></li>
                   		<li><h4>${contestNovel.genreName}</h4></li>
                   		<li><h4>${contestNovel.contestName}</h4></li>
-                  		<%-- <li class="text-center"><button onclick="location.href='/contest/novel/delete/${contestNovel.id}'"
-						type="button" class="btn btn-danger m-1">삭제</button></li> --%>
                 	</ul>
               	</div>
               </c:forEach>

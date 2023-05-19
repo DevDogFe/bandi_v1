@@ -72,7 +72,7 @@
 							<c:forEach items="${novelSectionList}" var="section" varStatus="vs">
 								<tr>
 									<td>${vs.index+1}</td>
-									<td><a href="/section/read/${section.id}" class="list--link">${section.title}</a></td>
+									<td><a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
 									<td>${section.createdAt()}</td>
 									<td>${section.views}</td>
 									<td>4.5</td>
