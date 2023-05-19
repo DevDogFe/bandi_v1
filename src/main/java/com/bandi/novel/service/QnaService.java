@@ -28,13 +28,12 @@ public class QnaService {
 	 */
 	public List<Question> readQuestionByUserId(Integer principalId) {
 
-		List<Question> list = questionRepository.findByUserId(principalId);
+		List<Question> list = questionRepository.findByQnaUserId(principalId);
 		return list;
 	}
 
 	/**
 	 * Question 생성
-	 * 
 	 * @param question
 	 * @param principalId
 	 */
@@ -58,7 +57,6 @@ public class QnaService {
 
 	/**
 	 * Question 수정
-	 * 
 	 * @param questionUpdateFormDto
 	 * @param principalId
 	 */

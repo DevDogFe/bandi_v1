@@ -65,7 +65,13 @@ insert into board_category_tb(board_type_id ,category_name) values
 ('4', '기타');
 
 -- Question 
-insert into question_tb(user_id, title, content, faq_category_id) values
-(1, '제목', '내용', '1' ),
-(2, '질문', '질문입니다', '2'),
-(1, '제목이요', '내용입니다', '3');
+insert into question_tb(user_id, title, content, faq_category_id, proceed) values
+(1, '제목', '내용', '1', 1 ),
+(2, '질문', '질문입니다', '2', 1),
+(1, '제목이요', '내용입니다', '3', 0),
+(2, '제목이요', '내용입니다', '4', 0);
+
+-- answer
+insert into answer_tb(user_id, content,  question_id) values
+(1, '답1', 1),
+(2, '답2', 2);

@@ -20,9 +20,18 @@ public class Question {
 	private String username;
 	private String CategoryName;
 	
+	private String answer;
+	private Timestamp answerCreatedAt; 
+	
+	
 	public String createdAt() {
 		
 		return TimestampFormat.dateFormat(createdAt);
+	}
+	
+	public String answerCreatedAt() {
+		
+		return TimestampFormat.dateFormat(answerCreatedAt);
 	}
 
 }

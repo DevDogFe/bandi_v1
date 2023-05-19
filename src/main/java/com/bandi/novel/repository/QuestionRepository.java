@@ -13,7 +13,7 @@ public interface QuestionRepository {
 	
 	public List<Question> findAll();
 	
-	public List<Question> findByUserId(Integer userId);
+	public List<Question> findByQnaUserId(Integer userId);
 	
 	public List<Question> findByProceed(Integer proceed);
 

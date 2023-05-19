@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bandi.novel.dto.QuestionUpdateDto;
+import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.User;
@@ -41,7 +42,7 @@ public class QnaController {
 
 		// List<Question> questionList = qnaService.readQuestionByUserId(principal.getId);
 		List<Question> questionList = qnaService.readQuestionByUserId(1);
-		model.addAttribute("questionList", questionList);
+		model.addAttribute("questionList", questionList);		
 
 		return "/cs/qnaList";
 	}

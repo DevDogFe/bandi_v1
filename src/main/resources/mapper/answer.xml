@@ -25,7 +25,7 @@
 		set content = #{content}
 		where question_id = #{questionId}
 	</update>
-	
+
 	<delete id="deleteByQuestionId">
 		delete from answer_tb where question_id = #{questionId}
 	</delete>
