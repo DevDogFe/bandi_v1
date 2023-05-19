@@ -9,6 +9,7 @@ public class NovelReply {
 	private int id;
 	private int sectionId;
 	private int userId;
+	private int novelId;
 	private String content;
 	private Timestamp createdAt;
 }

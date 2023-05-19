@@ -41,11 +41,11 @@ ul {
 			</div>
 			<div>
 				<c:if test="${section.prevTitle != '이전글이 없습니다'}">
-					<button type="button" onclick="location.href='/contest/novel/read/${novelId}/${section.prevId}?currentPage=${replyList.currentPage}'" 
+					<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}'" 
 					class="btn btn-info">${section.prevTitle}</button>
 				</c:if>
 				<c:if test="${section.nextTitle != '다음글이 없습니다'}">
-					<button type="button" onclick="location.href='/contest/novel/read/${novelId}/${section.nextId}?currentPage=${replyList.currentPage}'" 
+					<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}'" 
 					class="btn btn-success">${section.nextTitle}</button>
 				</c:if>
 			</div>
@@ -63,7 +63,7 @@ ul {
 						</div>
 				</c:when>
 				<c:otherwise>
-					<form action="/contest/novel/reply" method="post">
+					<form action="/contest/novel/reply/${section.novelId}" method="post">
 						<div class="mb-3 ps-3">
 							<label for="content" class="form-label">댓글 등록</label>
 							<textarea class="form-control" id="content" name="content" rows="3" placeholder="작가나 작품에 대한 비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
@@ -103,15 +103,15 @@ ul {
 					<div>
 						<ul class="d-flex">
 							<!-- Previous 시작 -->
-							<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/contest/novel/read/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
+							<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/contest/novel/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
 							<!-- Previous 끝 -->
 							<!-- Page번호 시작 -->
 							<c:forEach var="pNo" begin="${replyList.startPage }" end="${replyList.endPage }" step="1">
-								<li class="  <c:if test=''>active</c:if>"><a href="/contest/novel/read/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+								<li class="  <c:if test=''>active</c:if>"><a href="/contest/novel/read/${section.novelId}/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 							</c:forEach>
 							<!-- Page번호 끝 -->
 							<!-- Next 시작 -->
-							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/contest/novel/read/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
+							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/contest/novel/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
 							<!-- Next 끝 -->
 						</ul>
 					</div>

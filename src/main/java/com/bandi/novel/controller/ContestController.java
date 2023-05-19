@@ -154,7 +154,6 @@ public class ContestController {
 		// contest.setUserId(principal.getId());
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		List<NovelSection> novelSectionList = novelService.selectNovelSectionListByNovelId(novelId);
-		System.out.println(novelSectionList.toString());
 		model.addAttribute("detail", novelDetailDto);
 		model.addAttribute("novelSectionList",novelSectionList);
 		
@@ -170,16 +169,14 @@ public class ContestController {
 			@PathVariable Integer sectionId,
 			@RequestParam(defaultValue = "1") Integer currentPage,Model model) {
 		
+		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId,sectionId);
 		model.addAttribute("section", novelSection);
+		//
 		
-		// 댓글
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
-		
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList); 
 		model.addAttribute("replyList", pageUtil);
-		model.addAttribute("novelId",novelId);
-		//
 
 		return "/contest/contestNovelReadSection";
 	}
@@ -208,7 +205,6 @@ public class ContestController {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
-		System.out.println(id);
 		contestService.deleteContestNovelSectionById(id);
 
 		return "redirect:/contest/list";
@@ -219,12 +215,12 @@ public class ContestController {
 	 * @param novelReply
 	 * @return
 	 */
-	@PostMapping("/novel/reply")
-	public String contestReplyProc(NovelReply novelReply) {
+	@PostMapping("/novel/reply/{novelId}")
+	public String contestReplyProc(@PathVariable Integer novelId,NovelReply novelReply) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
 		
-		return "redirect:/contest/novel/read/" + novelReply.getSectionId();
+		return "redirect:/contest/novel/read/"+novelId+"/" + novelReply.getSectionId();
 	}
 }

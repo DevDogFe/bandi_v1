@@ -148,8 +148,6 @@ public class NovelService {
 	public SectionDto selectNovelReadSection(int novelId,int sectionId) {
 
 		SectionDto novelSection = novelSectionRepository.selectNovelByPage(novelId, sectionId);
-		System.out.println(novelSection.toString()); 
-		
 		return novelSection;
 	}
 
