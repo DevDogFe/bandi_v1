@@ -18,5 +18,11 @@
 		SELECT * FROM novel_section_tb
 		WHERE id = #{id}
 	</select>
+	
+	<update id="updateViewsById">
+		UPDATE novel_section_tb 
+		SET views = views + 1
+		WHERE id = #{sectionId}
+	</update>
 
 </mapper>

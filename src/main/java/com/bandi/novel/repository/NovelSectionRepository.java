@@ -16,4 +16,7 @@ public interface NovelSectionRepository {
 	
 	NovelSection selectById(Integer id);
 	
+	// 조회수 1 증가
+	int updateViewsById(Integer sectionId);
+	
 }
