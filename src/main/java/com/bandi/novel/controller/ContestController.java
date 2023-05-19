@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.dto.response.ContestNovelDto;
+import com.bandi.novel.dto.response.LastNovelRecordDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
+import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.NovelReply;
@@ -24,6 +26,7 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.NovelReplyPageUtil;
 
@@ -44,6 +47,8 @@ public class ContestController {
 	private NovelService novelService;
 	@Autowired
 	private NovelReplyService novelReplyService;
+	@Autowired
+	private UserNovelRecordService userNovelRecordService;
 	
 	/**
 	 * @param model
@@ -61,9 +66,25 @@ public class ContestController {
 	 */
 	@GetMapping("/list")
 	public String getContestList(Model model) {
+		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		
+		if(principal == null) {
+			return "/index";
+		}
 
 		List<Contest> contestList = contestService.selectContestListByLimit();
 		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
+		// 마지막으로 본 소설 조회
+		LastNovelRecordDto novelRecord = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		if(novelRecord != null) {
+			SectionDto novelSection = novelService.selectNovelReadSection(
+					novelRecord.getNovelId(),novelRecord.getSectionId());
+			System.out.println(novelSection.toString());
+			model.addAttribute("novelRecord",novelRecord);
+			model.addAttribute("section", novelSection);
+		}
+		//
 
 		model.addAttribute("contestList", contestList);
 		model.addAttribute("contestNovelList", contestNovelList);
@@ -150,10 +171,10 @@ public class ContestController {
 	@GetMapping("/novel/detail/{novelId}")
 	public String getContestNovelDetail(@PathVariable Integer novelId,Model model) {
 
-		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		// contest.setUserId(principal.getId());
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
-		List<NovelSection> novelSectionList = novelService.selectNovelSectionListByNovelId(novelId);
+		List<NovleRecordSectionDto> novelSectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		model.addAttribute("detail", novelDetailDto);
 		model.addAttribute("novelSectionList",novelSectionList);
 		
@@ -169,9 +190,15 @@ public class ContestController {
 			@PathVariable Integer sectionId,
 			@RequestParam(defaultValue = "1") Integer currentPage,Model model) {
 		
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId,sectionId);
 		model.addAttribute("section", novelSection);
+		//
+		
+		// 마지막으로 본 소설 저장 혹은 업데이트
+		userNovelRecordService.NovelRecord(principal.getId(),novelId,sectionId);
 		//
 		
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);

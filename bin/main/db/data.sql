@@ -145,5 +145,8 @@ INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES
 (1, 1, '너무 재밌어요'),
 (1, 2, '그저그래요34');
 
-
+-- 소설 조회 기록
+INSERT INTO user_novel_record_tb(user_id,novel_id,section_id) VALUES
+(1,1,1),
+(1,3,2);
 
