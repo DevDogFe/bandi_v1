@@ -20,6 +20,7 @@ import com.bandi.novel.service.QnaService;
 
 /**
  * 관리자 페이지
+ * 
  * @author 효린
  *
  */
@@ -37,21 +38,20 @@ public class AdminController {
 	 * @return 질문 리스트 전체조회
 	 */
 	@GetMapping("/qnaList")
-	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) String proceed, Model model) {
+	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) 
+							String proceed, Model model) {
 
 		List<Question> questionList = null;
-		
-			questionList = adminService.readAllQuestionList();
-			model.addAttribute("questionList", questionList);
+		questionList = adminService.readAllQuestionList();
+		model.addAttribute("questionList", questionList);
 		return "/admin/questionList";
 	}
-	
 
 	/**
-	 * 비동기 통신 처리 
+	 * 비동기 통신 처리
 	 * @return 질문 리스트 (전체)조회
-	 */	
-	
+	 */
+
 	// 타입 조건 설정
 	// 전체 = "-1"
 	// 미처리 = 0
@@ -69,7 +69,6 @@ public class AdminController {
 			// 데이터 타입 변경
 			questionList = adminService.readIncompleteQuestionList(Integer.parseInt(proceed));
 		}
-
 		return questionList;
 	}
 
@@ -90,13 +89,11 @@ public class AdminController {
 		} else {
 			model.addAttribute("answer", answer);
 		}
-
 		return "/admin/questionDetail";
 	}
 
 	/**
 	 * 답변 등록
-	 * 
 	 * @param questionId
 	 * @param answer
 	 * @return 질문 상세보기
@@ -128,7 +125,6 @@ public class AdminController {
 
 	/**
 	 * 답변 수정
-	 * 
 	 * @param questionId
 	 * @param answerUpdateDto
 	 * @return 질문 상세보기
@@ -142,7 +138,6 @@ public class AdminController {
 
 	/**
 	 * 답변삭제
-	 * 
 	 * @param questionId
 	 * @return 질문 상세보기
 	 */
