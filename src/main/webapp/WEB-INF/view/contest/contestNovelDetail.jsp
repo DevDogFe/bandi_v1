@@ -73,7 +73,7 @@
 								<c:choose>
 									<c:when test="${section.userId != null}">
 										<tr class="table-info">
-											<td>${vs.index+1}</td>
+											<td>${novelSectionList.size() - vs.index}</td>
 											<td><a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
 											<td>${section.createdAt()}</td>
 											<td>${section.views}</td>
@@ -82,7 +82,7 @@
 									</c:when>
 									<c:otherwise>
 										<tr class="table-default">
-											<td>${vs.index+1}</td>
+											<td>${novelSectionList.size() - vs.index}</td>
 											<td><a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
 											<td>${section.createdAt()}</td>
 											<td>${section.views}</td>

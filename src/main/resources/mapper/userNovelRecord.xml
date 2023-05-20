@@ -9,10 +9,11 @@
 		(#{userId},#{novelId},#{sectionId})
 	</insert>
 	
-	<select id="selectNovelRecordById" resultType="com.bandi.novel.model.UserNovelRecord">
+	<select id="selectNovelRecordByModel" resultType="com.bandi.novel.model.UserNovelRecord">
 		SELECT *
 		FROM user_novel_record_tb
 		WHERE user_id = #{userId} AND novel_id = #{novelId}
+		AND section_id = #{sectionId} 
 	</select>
 	
 	<select id="selectNovelRecord" resultType="com.bandi.novel.dto.response.NovleRecordSectionDto">
@@ -35,13 +36,14 @@
 		LEFT JOIN novel_section_tb as ns
 		ON unr.section_id = ns.id
 		WHERE unr.user_id = #{userId} 
-		order by unr.user_id DESC LIMIT 1;
+		order by unr.created_at DESC LIMIT 1;
 	</select>
 	
 	<update id="updateNovelRecord">
 		update user_novel_record_tb 
 		set section_id = #{sectionId}
 		where user_id = #{userId} AND novel_id = #{novelId}
+		AND section_id = #{sectionId}
 	</update>
 
 </mapper>

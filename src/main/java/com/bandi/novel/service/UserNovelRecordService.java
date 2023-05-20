@@ -18,7 +18,7 @@ public class UserNovelRecordService {
 	private UserNovelRecordRepository userNovelRecordRepository;
 
 	/**
-	 * 마지막으로 본 소설 기록 기능
+	 * 본 소설 기록 기능
 	 * @return 
 	 */
 	@Transactional
@@ -32,13 +32,13 @@ public class UserNovelRecordService {
 														.build();
 		
 		// 기록이 없는 경우 삽입, 있는 경우 업데이트
-		if(userNovelRecordRepository.selectNovelRecordById(userId,novelId) == null) {
+		if(userNovelRecordRepository.selectNovelRecordByModel(userNovelRecord) == null) {
 			result = userNovelRecordRepository.insertNovelRecord(userNovelRecord);
 		}else {
 			result = userNovelRecordRepository.updateNovelRecord(userNovelRecord);
 		}
 
-		if (result != 1) {
+		if (result < 1) {
 			throw new IllegalArgumentException("요청을 처리하지 못함.");
 		}
 	}
@@ -69,7 +69,6 @@ public class UserNovelRecordService {
 		
 		LastNovelRecordDto dto = userNovelRecordRepository.selectLastNovelRecord(userId);
 		
-		// todo 삭제
 		if(dto != null) {
 			System.out.println(dto.toString());
 		}

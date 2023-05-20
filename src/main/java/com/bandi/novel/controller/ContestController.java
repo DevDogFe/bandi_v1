@@ -189,7 +189,6 @@ public class ContestController {
 	public String getContestNovelReadSection(@PathVariable Integer novelId,
 			@PathVariable Integer sectionId,
 			@RequestParam(defaultValue = "1") Integer currentPage,Model model) {
-		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		
 		// 이전글 다음글 기능
@@ -197,7 +196,7 @@ public class ContestController {
 		model.addAttribute("section", novelSection);
 		//
 		
-		// 마지막으로 본 소설 저장 혹은 업데이트
+		// 본 소설 저장 혹은 업데이트
 		userNovelRecordService.NovelRecord(principal.getId(),novelId,sectionId);
 		//
 		

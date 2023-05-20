@@ -17,8 +17,7 @@ public interface UserNovelRecordRepository {
 	int updateNovelRecord(UserNovelRecord userNovelRecord);
 	
 	// userId로 기록이 있는지 없는지 확인
-	UserNovelRecord selectNovelRecordById(@Param("userId")Integer userId
-			,@Param("novelId")Integer novelId);
+	UserNovelRecord selectNovelRecordByModel(UserNovelRecord userNovelRecord);
 	// novelId와 userId로 본 소설 조회
 	List<NovleRecordSectionDto> selectNovelRecord(@Param("userId")Integer userId
 			,@Param("novelId")Integer novelId);
