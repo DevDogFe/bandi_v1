@@ -16,7 +16,6 @@ import com.bandi.novel.service.FaqService;
 /**
  * FAQ Controller
  * @author 효린
- *
  */
 
 @Controller

@@ -191,5 +191,10 @@ public class NovelService {
 
 		return novelSectionRepository.selectNovelSectionCount(novelId);
 	}
+	
+	@Transactional
+	public void updateCover(Integer novelId, String cover) {
+		novelRepository.updateCover(novelId, cover);
+	}
 
 }
