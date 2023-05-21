@@ -14,19 +14,78 @@
 	crossorigin="anonymous">
 <title>반디</title>
 
-<!-- Bootstrap core CSS -->
-<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Additional CSS Files -->
-<link rel="stylesheet" href="/assets/css/fontawesome.css">
-<link rel="stylesheet" href="/assets/css/templatemo-cyborg-gaming.css">
-<link rel="stylesheet" href="/assets/css/owl.css">
-<link rel="stylesheet" href="/assets/css/animate.css">
-<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-<style type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<style>
+* {
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+ul {
+	list-style: none;
+	-webkit-padding-start: 0;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+.header--top {
+	padding: 5px 50px;
+	background-color: darkcyan;
+	text-align: right;
+	width: 100%;
+}
+
+.header--top a {
+	color: white;
+}
+
+.header--bottom {
+	width: 80%;
+}
+
+#headerLogo {
+	width: 100px;
+	margin-right: 50px;
+}
+
+.header--menu {
+	width: 170px;
+}
+
+.nav--style {
+	margin-top: 20px;
+}
+
+.nav--menu {
+	font-size: 20px;
+	font-weight: bold;
+	padding: 5px 30px;
+	text-align: center;
+}
+
+.nav--panel {
+	display: none;
+	padding: 5px auto;
+	text-align: center;
+	position: absolute;
+	width: 170px;
+	background-color: white;
+	border-radius: 0 0 5px 5px;
+}
+
+.nav--panel li {
+	margin-bottom: 3px;
+	font-weight: bold;
+}
 
 .login--btn {
+	background-color: none;
 	border: none;
+	color: white;
 }
 </style>
 </head>
@@ -77,54 +136,83 @@
 			</div>
 		</div>
 	</div>
-	<!-- ***** Header Area Start ***** -->
-	<header class="header-area header-sticky">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav class="main-nav">
-						<!-- ***** Logo Start ***** -->
-						<a href="/main" class="logo"> <img src="/assets/images/logo.png" alt="">
-						</a>
-						<!-- ***** Logo End ***** -->
-						<!-- ***** Search End ***** -->
-						<div class="search-input">
-							<form id="search" action="#">
-								<input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" /> <i class="fa fa-search"></i>
-							</form>
+<body>
+	<header class="d-flex flex-column align-items-center">
+		<div class="header--top">
+			<c:choose>
+				<c:when test="${empty principal}">
+					<button type="button" class="login--btn btn" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${principal.external == true }">
+							<button onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://localhost/logout'" class="login--btn btn">로그아웃</button>
+						</c:when>
+						<c:otherwise>
+							<button onclick="location.href='/logout'" class="login--btn btn">로그아웃</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div class="header--bottom d-flex">
+			<div>
+				<img src="/assets/images/bandi-removebg.png" alt="" id="headerLogo">
+			</div>
+			<div class="flex-grow-1">
+				<nav class="d-flex justify-content-around nav--style">
+					<div id="novel" class="header--menu text-center">
+						<div class="nav--menu">
+							<a href="#">소설</a>
 						</div>
-						<!-- ***** Search End ***** -->
-						<!-- ***** Menu Start ***** -->
-
-						<ul class="nav">
-							<li><a href="/main" class="active">Home</a></li>
-							<c:choose>
-								<c:when test="${empty principal}">
-									<button type="button" class="login--btn btn" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
-								</c:when>
-								<c:otherwise>
-									<c:choose>
-										<c:when test="${principal.external == true }">
-											<button onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://localhost/logout'" class="login--btn btn">로그아웃</button>
-										</c:when>
-										<c:otherwise>
-											<button onclick="location.href='/logout'" class="login--btn btn">로그아웃</button>
-										</c:otherwise>
-									</c:choose>
-								</c:otherwise>
-							</c:choose>
-							<li><a href="/browse">Browse</a></li>
-							<li><a href="/details">Details</a></li>
-							<li><a href="/streams">Streams</a></li>
-							<li><a href="/profile">Profile <img src="/assets/images/profile-header.jpg" alt=""></a></li>
+						<ul id="novelPanel" class="nav--panel">
+							<li><a href="#">유료소설</a></li>
+							<li><a href="#">무료소설</a></li>
 						</ul>
-						<a class='menu-trigger'> <span>Menu</span>
-						</a>
-						<!-- ***** Menu End ***** -->
-					</nav>
-				</div>
+					</div>
+					<div id="contest" class="header--menu text-center">
+						<div class="nav--menu">
+							<a href="#">공모전</a>
+						</div>
+						<ul id="contestPanel" class="nav--panel">
+							<li><a href="#">공지</a></li>
+							<li><a href="#">출품작 보기</a></li>
+						</ul>
+					</div>
+					<div id="board" class="header--menu text-center">
+						<div class="nav--menu">
+							<a href="#">게시판</a>
+						</div>
+						<ul id="boardPanel" class="nav--panel">
+							<li><a href="#">자유게시판</a></li>
+							<li><a href="#">추천게시판</a></li>
+							<li><a href="#">홍보게시판</a></li>
+							<li><a href="#">팬아트게시판</a></li>
+						</ul>
+					</div>
+					<div id="cs" class="header--menu text-center">
+						<div class="nav--menu">
+							<a href="#">고객지원</a>
+						</div>
+						<ul id="csPanel" class="nav--panel">
+							<li><a href="#">Q&A</a></li>
+							<li><a href="#">FAQ</a></li>
+						</ul>
+					</div>
+					<div id="myPage" class="header--menu text-center">
+						<div class="nav--menu">
+							<a href="#">마이페이지</a>
+						</div>
+						<ul id="myPagePanel" class="nav--panel">
+							<li><a href="#">내 정보 조회</a></li>
+							<li><a href="#">즐겨찾기</a></li>
+							<li><a href="#">내 작품</a></li>
+						</ul>
+					</div>
+				</nav>
 			</div>
 		</div>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 	</header>
 
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

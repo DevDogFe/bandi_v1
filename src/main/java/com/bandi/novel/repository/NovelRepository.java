@@ -44,6 +44,8 @@ public interface NovelRepository {
 	List<NovelDto> selectFreeNovelsByGenreIdAndName(@Param("genreId")Integer genreId,@Param("search") String search);
 	
 	NovelDetailDto selectNovelDetailByNovelId(Integer id);
+	
+	int updateCover(@Param("novelId") Integer Id, @Param("cover") String cover);
 
 
 }
