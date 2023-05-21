@@ -19,7 +19,7 @@ import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.QnaService;
 
 /**
- * QnaController
+ * Q&A 컨트롤러
  * @author 효린
  */
 

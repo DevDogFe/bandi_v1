@@ -150,9 +150,11 @@ CREATE TABLE faq_tb(
 CREATE TABLE application_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    tel VARCHAR(20) NOT NULL,
     title VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
-    filename VARCHAR(150) NOT NULL,
+    origin_filename VARCHAR(150) NOT NULL,
+    upload_filename VARCHAR(150) 	,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
 	FOREIGN KEY(user_id) REFERENCES user_tb(id)
 );

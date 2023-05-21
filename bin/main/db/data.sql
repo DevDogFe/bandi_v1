@@ -231,6 +231,9 @@ INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES
 (1, 1, '너무 재밌어요'),
 (1, 2, '그저그래요34');
 
-
+-- 연재문의
+insert into application_tb (user_id, tel, title, content, origin_filename , upload_filename) values
+(1, '01022658611', '연재하고싶어요', '재밌어요', '서비스', '서비스'),
+(2, '010', '연재', '원해요','연재', '연재');
 
 

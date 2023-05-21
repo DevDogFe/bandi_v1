@@ -4,6 +4,7 @@
 
 <section>
 	<a href="/qna/write">문의하기</a>
+	<a href="/faq/list">자주묻는질문</a>
 	<table>
 		<thead>
 			<tr>
