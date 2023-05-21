@@ -140,5 +140,11 @@
 		from novel_tb
 		where id = #{id}
 	</delete>
+	
+	<update id="updateCover">
+		UPDATE novel_tb
+		SET cover = #{cover}
+		WHERE id = #{novelId}
+	</update>
 	<!-- -->
 </mapper>

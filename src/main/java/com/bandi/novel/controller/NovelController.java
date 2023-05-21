@@ -1,6 +1,8 @@
 package com.bandi.novel.controller;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
@@ -271,6 +274,32 @@ public class NovelController {
 		novelReplyService.insertNovelReply(novelReply);
 
 		return "redirect:/section/read/" + novelReply.getSectionId();
+	}
+	
+	@PostMapping("/novel/cover")
+	public String coverProc(MultipartFile coverFile, @RequestParam Integer novelId) {
+		MultipartFile file = coverFile;
+		if (!file.isEmpty()) {
+			if (file.getSize() > Define.MAX_FILE_SIZE) {
+				//todo 던지기
+			}
+			try {
+				String saveDirectory = Define.UPLOAD_DIRECTORY;
+				File dir = new File(saveDirectory);
+				if (dir.exists() == false) {
+					dir.mkdirs();
+				}
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid + "_" + file.getOriginalFilename();
+				String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
+				File destination = new File(uploadPath);
+				file.transferTo(destination);
+				novelService.updateCover(novelId, fileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "redirect:/novel/detail/" + novelId;
 	}
 
 }
