@@ -201,8 +201,7 @@ public class NovelController {
 	}
 
 	/**
-	 * 글 조회
-	 * 
+	 * 회차 조회
 	 * @param model
 	 * @param sectionId
 	 * @return
