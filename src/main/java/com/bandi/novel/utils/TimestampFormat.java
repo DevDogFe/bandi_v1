@@ -16,5 +16,11 @@ public class TimestampFormat {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(timestamp);
 	}
+	
+	// 날짜 시간 분까지 
+	public static String dateFormat(Timestamp timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		return sdf.format(timestamp);
+	}
 
 }

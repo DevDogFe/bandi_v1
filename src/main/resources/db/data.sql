@@ -88,6 +88,7 @@ VALUES
 (3, '프롤로그', '거실 조명은 꺼짐', 100, 100),
 (3, '영약 광산의 주인', '나는 형이 운전하는 차의 보조석에 앉아', 100, 100);
 
+-- FAQ category 
 insert into faq_category_tb(category_name)
 values('고객'), 
 	  ('작가'),
@@ -96,6 +97,7 @@ values('고객'),
 	  ('공모전'),
 	  ('기타' );
 	  
+-- FAQ  	  
 insert into faq_tb(faq_category_id, question, answer)
 values (1, '고객', '무료'),	
 	   (2, '작가될래요', '신청하세요'),	  
@@ -127,6 +129,17 @@ insert into board_category_tb(board_type_id ,category_name) values
 ('4', '카툰'),
 ('4', '기타');
 
+-- Question 
+insert into question_tb(user_id, title, content, faq_category_id, proceed) values
+(1, '제목', '내용', '1', 1 ),
+(2, '질문', '질문입니다', '2', 1),
+(1, '제목이요', '내용입니다', '3', 0),
+(2, '제목이요', '내용입니다', '4', 0);
+
+-- answer
+insert into answer_tb(user_id, content,  question_id) values
+(1, '답1', 1),
+(2, '답2', 2);
 INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES 
 (1, 1, '너무 재밌어요1'),
 (1, 2, '그저그래요2'),
@@ -195,6 +208,7 @@ INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES
 (1, 2, '그저그래요32'),
 (1, 1, '너무 재밌어요'),
 (1, 2, '그저그래요34');
+
 
 
 
