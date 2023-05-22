@@ -18,7 +18,15 @@
 		<h1>소설 제목</h1>
 		<div class="novel--header d-flex">
 			<div>
+			<c:choose>
+				<c:when test="${detail.cover != null }">
+					<img alt="" src="/bandi/uploads/${detail.cover }">
+				</c:when>
+				<c:otherwise>
+				
 				<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+				</c:otherwise>
+			</c:choose>
 			</div>
 			<div>
 				<table>

@@ -8,5 +8,6 @@ public class NovelDto {
 	private Integer id;
 	private String title;
 	private Integer userId;
-	private String username;
+	private String nickName;
+	private String genreName;
 }
