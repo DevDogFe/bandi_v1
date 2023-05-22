@@ -11,15 +11,14 @@
 		#{content});
 	</insert>
 
-	<select id="selectBoardType"
-		resultType="com.bandi.novel.dto.BoardTypeDto">
+	<select id="selectBoardType" resultType="com.bandi.novel.dto.BoardTypeDto">
 		select * from board_type_tb;
 	</select>
 
-	<select id="selectBoardListByBoardTypeId"
-		resultType="com.bandi.novel.dto.BoardDto">
+	<select id="selectBoardListByBoardTypeId" resultType="com.bandi.novel.dto.BoardDto">
 		select b.id, b.title, b.user_id, u.username, b.created_at,
-		b.category_id, b.views, bc.category_name as category_name,
+		b.category_id, b.views,
+		bc.category_name as category_name,
 		bt.board_name as board_name
 		from
 		board_tb as b
@@ -35,10 +34,10 @@
 		b.board_type_id = #{boardTypeId}
 	</select>
 
-	<select id="selectBoardListByCategoryId"
-		resultType="com.bandi.novel.dto.BoardDto">
+	<select id="selectBoardListByCategoryId" resultType="com.bandi.novel.dto.BoardDto">
 		select b.id, b.title, b.user_id, u.username, b.created_at,
-		b.category_id, b.views, bc.category_name as category_name,
+		b.category_id, b.views,
+		bc.category_name as category_name,
 		bt.board_name as board_name
 		from
 		board_tb as b
@@ -54,14 +53,14 @@
 		b.category_id = #{categoryId}
 	</select>
 
-	<select id="selectBoardDetailById"
-		resultType="com.bandi.novel.dto.BoardDetailDto">
+	<select id="selectBoardDetailById" resultType="com.bandi.novel.dto.BoardDetailDto">
 		select *
 		from board_tb as b
 		left join user_tb as u
 		on
 		b.user_id = u.id
-		left join board_category_tb as bc
+		left join board_category_tb as
+		bc
 		on b.category_id =
 		bc.id
 		where b.id = #{id}
@@ -83,22 +82,84 @@
 	</update>
 
 	<select id="selectSearchList" resultType="com.bandi.novel.dto.BoardDto">
-		select b.id, b.title, b.user_id, u.username, b.created_at,
-		b.category_id, b.views, bc.category_name as category_name,
-		bt.board_name as board_name
-		from
-		board_tb as b
-		left join user_tb as u
-		on
-		b.user_id = u.id
-		left join board_type_tb as bt
-		on b.board_type_id =
-		bt.id
-		left join board_category_tb as bc
-		on b.category_id = bc.id
-		where
-		b.board_type_id = #{boardTypeId} 
-		and #{type} like concat('%', #{keyword}, '%') 
+		<if test="categoryId == null">
+			<if test="type == 'title'">
+				select b.id, b.title, b.user_id, u.username, b.created_at,
+				b.category_id, b.views, bc.category_name as category_name,
+				bt.board_name as board_name
+				from
+				board_tb as b
+				left join user_tb as u
+				on
+				b.user_id = u.id
+				left join board_type_tb as bt
+				on b.board_type_id =
+				bt.id
+				left join board_category_tb as bc
+				on b.category_id = bc.id
+				where
+				b.board_type_id = #{boardTypeId}
+				and title like concat('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'content'">
+				select b.id, b.title, b.user_id, u.username, b.created_at,
+				b.category_id, b.views, bc.category_name as category_name,
+				bt.board_name as board_name
+				from
+				board_tb as b
+				left join user_tb as u
+				on
+				b.user_id = u.id
+				left join board_type_tb as bt
+				on b.board_type_id =
+				bt.id
+				left join board_category_tb as bc
+				on b.category_id = bc.id
+				where
+				b.board_type_id = #{boardTypeId}
+				and content like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+		<if test="categoryId != null">
+			<if test="type == 'title'">
+				select b.id, b.title, b.user_id, u.username, b.created_at,
+				b.category_id, b.views, bc.category_name as category_name,
+				bt.board_name as board_name
+				from
+				board_tb as b
+				left join user_tb as u
+				on
+				b.user_id = u.id
+				left join board_type_tb as bt
+				on b.board_type_id =
+				bt.id
+				left join board_category_tb as bc
+				on b.category_id = bc.id
+				where
+				b.board_type_id = #{boardTypeId}
+				and title like concat('%', #{keyword}, '%')
+				and b.category_id = #{categoryId}
+			</if>
+			<if test="type == 'content'">
+				select b.id, b.title, b.user_id, u.username, b.created_at,
+				b.category_id, b.views, bc.category_name as category_name,
+				bt.board_name as board_name
+				from
+				board_tb as b
+				left join user_tb as u
+				on
+				b.user_id = u.id
+				left join board_type_tb as bt
+				on b.board_type_id =
+				bt.id
+				left join board_category_tb as bc
+				on b.category_id = bc.id
+				where
+				b.board_type_id = #{boardTypeId}
+				and content like concat('%', #{keyword}, '%')
+				and b.category_id = #{categoryId}
+			</if>
+		</if>
 	</select>
 
 </mapper>

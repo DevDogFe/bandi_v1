@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
+import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.BoardTypeDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.BoardType;
@@ -29,5 +30,5 @@ public interface BoardRepository {
 	// 조회수 
 	int updateViewById(Integer boardId);
 	// 게시물 검색 
-	List<BoardDto> selectSearchList(@Param("type") String type, @Param("keyword") String keyword, @Param("boardTypeId") Integer boardTypeId);
+	List<BoardDto> selectSearchList(BoardSearchDto boardSearchDto);
 }

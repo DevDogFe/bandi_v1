@@ -58,7 +58,6 @@ public class BoardController {
 	@GetMapping({ "/list/{boardTypeId}", "/list" })
 	public String getBoardList(Model model, @PathVariable(required = false) Integer boardTypeId, 
 					@RequestParam(defaultValue = "1") Integer currentPage, BoardSearchDto boardSearchDto) {
-		System.out.println(boardSearchDto);
 		List<BoardDto> boardList = null;
 		if (boardTypeId == null) {
 			boardTypeId = 1;
@@ -69,7 +68,7 @@ public class BoardController {
 		if(boardSearchDto.getKeyword() == null) {
 			boardList = boardService.selectBoardList(boardTypeId);
 		} else {
-			boardList = boardService.searchList(boardSearchDto.getType(), boardSearchDto.getKeyword(), boardTypeId);
+			boardList = boardService.searchList(boardSearchDto);
 		}
 		List<CategorySelectDto> categoryList = boardService.selectCategory(boardTypeId);
 		List<BoardType> boardTypeList = boardService.selectBoardType();

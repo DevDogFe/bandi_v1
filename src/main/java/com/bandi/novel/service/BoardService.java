@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
+import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.BoardTypeDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.BoardType;
@@ -97,11 +98,8 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public List<BoardDto> searchList(String type, String keyword, Integer boardTypeId) {
+	public List<BoardDto> searchList(BoardSearchDto boardSearchDto) {
 		
-		if(type != null || keyword != null) {
-			return boardRepository.selectSearchList(type, keyword, boardTypeId);
-		}
-		return boardRepository.selectBoardListByBoardTypeId(boardTypeId);
+		return boardRepository.selectSearchList(boardSearchDto);
 	}
 }
