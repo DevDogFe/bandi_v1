@@ -39,6 +39,7 @@
 		on b.category_id = bc.id
 		where
 		b.board_type_id = #{boardTypeId}
+		ORDER BY b.created_at DESC
 	</select>
 
 	<select id="selectBoardListByCategoryId" resultType="com.bandi.novel.dto.BoardDto">
