@@ -25,6 +25,10 @@ public class FaqController {
 	@Autowired
 	private FaqService faqService;
 	
+	/**
+	 * @param model
+	 * @return FAQ 전체조회
+	 */
 	@GetMapping("/list")	
 	public String list(Model model) {
 		
@@ -37,6 +41,11 @@ public class FaqController {
 		
 	}
 	
+	/**
+	 * @param categoryId
+	 * @param model
+	 * @return FAQ 카테고리별 조회
+	 */
 	@GetMapping("/list/{categoryId}")
 	public String faqList(@PathVariable int categoryId, Model model) {
 		

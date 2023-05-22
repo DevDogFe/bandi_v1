@@ -40,7 +40,7 @@ public class AdminService {
 	 * @param answer
 	 */
 	@Transactional
-	public void createAnswer(Answer answer) {
+	public void createAnswer(Answer answer, Integer principalId) {
 
 		answer.setUserId(1);
 		int resultRowCount = answerRepository.insert(answer);

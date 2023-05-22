@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.model.Answer;
+import com.bandi.novel.model.Application;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.service.AdminService;
+import com.bandi.novel.service.ApplicationService;
 import com.bandi.novel.service.QnaService;
 
 /**
- * 관리자 페이지
+ * 관리자 페이지 
+ * (Q&A, 연재문의, FAQ) 
  * @author 효린
  *
  */
@@ -31,6 +34,8 @@ public class AdminController {
 	private QnaService qnaService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private ApplicationService applicationService;
 
 	/**
 	 * @param model
@@ -40,24 +45,15 @@ public class AdminController {
 	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) String proceed, Model model) {
 
 		List<Question> questionList = null;
-		
-			questionList = adminService.readAllQuestionList();
-			model.addAttribute("questionList", questionList);
+		questionList = adminService.readAllQuestionList();
+		model.addAttribute("questionList", questionList);
 		return "/admin/questionList";
 	}
-	
 
 	/**
-	 * 비동기 통신 처리 
+	 * 비동기 통신 처리
 	 * @return 질문 리스트 (전체)조회
-	 */	
-	
-	// 타입 조건 설정
-	// 전체 = "-1"
-	// 미처리 = 0
-	// 처리 1
-	// 주소 먼저 확인
-	// http://localhost/admin/qnaList?proceed=[-1, 0, 1]
+	 */
 	@GetMapping("/api/qnaList")
 	@ResponseBody
 	public List<Question> list(String proceed) {
@@ -69,7 +65,6 @@ public class AdminController {
 			// 데이터 타입 변경
 			questionList = adminService.readIncompleteQuestionList(Integer.parseInt(proceed));
 		}
-
 		return questionList;
 	}
 
@@ -90,7 +85,6 @@ public class AdminController {
 		} else {
 			model.addAttribute("answer", answer);
 		}
-
 		return "/admin/questionDetail";
 	}
 
@@ -104,8 +98,7 @@ public class AdminController {
 	@PostMapping("/answer/{questionId}")
 	public String answer(@PathVariable Integer questionId, Answer answer) {
 
-		// session
-		adminService.createAnswer(answer);
+		adminService.createAnswer(answer, 1);
 		adminService.updateQuestion(questionId, 1);
 		return "redirect:/admin/question/" + questionId;
 	}
@@ -151,9 +144,34 @@ public class AdminController {
 
 		adminService.deleteAnswer(questionId);
 		adminService.updateQuestion(questionId, 0);
-
 		return "redirect:/admin/question/" + questionId;
+	}
 
+	/**
+	 * @param model
+	 * @return 연재문의글 전체조회
+	 */
+	@GetMapping("/applicationList")
+	public String getApplicationList(Model model) {
+
+		List<Application> applicationList = applicationService.readAllApplication();
+		model.addAttribute("applicationList", applicationList);
+
+		return "/admin/applicationList";
+	}
+
+	/**
+	 * @param id
+	 * @param model
+	 * @return 연재글 상세조회
+	 */
+	@GetMapping("/applicationDetail/{id}")
+	public String getApplicationdetail(@PathVariable Integer id, Model model) {
+
+		Application application = applicationService.readApplicationById(id);
+		model.addAttribute("application", application);
+
+		return "/admin/applicationDetail";
 	}
 
 }

@@ -8,4 +8,5 @@ public class Define {
 	
 	public final static String UPLOAD_DIRECTORY = "C:\\bandi\\upload";
 
+
 }
