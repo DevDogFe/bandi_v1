@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class UserApiController {
 	 * @return
 	 */
 	@PutMapping("/update")
-	private UserUpdateDto updateProc(@RequestBody UserUpdateDto userUpdateDto) {
+	public UserUpdateDto updateProc(@RequestBody UserUpdateDto userUpdateDto) {
 		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if(principal.getExternal()) {
@@ -49,6 +50,38 @@ public class UserApiController {
 		return userUpdateDto;
 	}
 	
+	/**
+	 * 아이디 중복 체크
+	 * @param username
+	 * @return
+	 */
+	@GetMapping ("/api/username")
+	public Boolean usernameCheck(String username) {
+		System.out.println(username);
+		return userService.checkUsername(username);
+	}
+	
+	/**
+	 * 이메일 중복체크
+	 * @param email
+	 * @return
+	 */
+	@GetMapping ("/api/email")
+	public Boolean emailCheck(String email) {
+		
+		return userService.checkEmail(email);
+	}
+	
+	/**
+	 * 별명 중복체크
+	 * @param nickName
+	 * @return
+	 */
+	@GetMapping ("/api/nickname")
+	public Boolean nickNameCheck(String nickName) {
+		
+		return userService.checkNickName(nickName);
+	}
 	
 
 }

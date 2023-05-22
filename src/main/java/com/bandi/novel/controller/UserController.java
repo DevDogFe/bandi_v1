@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.bandi.novel.dto.JoinDto;
+import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.OAuthToken;
 import com.bandi.novel.dto.OAuthUserInfo;
 import com.bandi.novel.model.User;
@@ -43,9 +45,9 @@ public class UserController {
 	 * @return index페이지
 	 */
 	@PostMapping("/login")
-	public String loginProc(User user) {
+	public String loginProc(LoginDto loginDto) {
 		
-		User principal = userService.loginByUsernameAndPassword(user);
+		User principal = userService.loginByUsernameAndPassword(loginDto);
 		session.setAttribute("principal", principal);
 		return "redirect:/index";
 	}
@@ -73,14 +75,14 @@ public class UserController {
 	}
 	
 	/**
-	 * 
+	 * 회원가입 프로세스
 	 * @return
 	 */
 	@PostMapping("/user")
-	public String joinProc(User user) {
+	public String joinProc(JoinDto joinDto) {
 		
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
-		userService.insertUser(user);
+		userService.insertUser(joinDto);
 		
 		return "redirect:/index";
 	}

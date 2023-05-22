@@ -216,7 +216,7 @@ public class NovelController {
 		NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
-		
+		novelSection.setContent(novelSection.getContent().replace("\r\n", "<br>"));
 		// 조회수 올리기(쿠키에 userId와 sectionId 담아서 중복방지)
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		Integer userId = -1;
@@ -232,6 +232,7 @@ public class NovelController {
 			for (Cookie cookie : cookies) {
 				if(cookie.getName().equals("sectionCookie")) {
 					isSectionCookie = true;
+					System.out.println("같은 이름 있음?: " + cookie.getValue().contains("[" + userId + "_" + sectionId + "]"));
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
@@ -245,6 +246,7 @@ public class NovelController {
 		}
 		
 		if(!isSectionCookie) {
+			System.out.println("sessionCookie 없음");
 			Cookie sectionCookie = new Cookie("sectionCookie", "[" + userId + "_" + sectionId + "]");
 			sectionCookie.setMaxAge(60 * 60 * 24);
 			sectionCookie.setPath("/");

@@ -42,14 +42,4 @@ public class BoardController {
 		return "/board/boardwrite";
 	}
 	
-	@PostMapping("/write")
-	public String createBoardProc(User user, BoardDto boardDto) {
-		
-		User principal = userService.loginByUsernameAndPassword(user);
-		String content = boardDto.getContent().replaceAll("\r\n", "<br>");
-		boardDto.setContent(content);
-		boardDto.setUserId(user.getId());
-		boardService.createBoard(boardDto);
-		return "redirect:/board/boardlist";
-	}
 }

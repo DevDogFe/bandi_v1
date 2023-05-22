@@ -14,9 +14,11 @@
 			<input type="hidden" name="external" value="true">
 		<div class="mb-3">
 			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="개">
+			<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>
 		</div>
 		<div class="mb-3">
 			<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="dog@sample.com">
+			<button type="button" id="emailCheck" class="btn btn-secondary">이메일 중복 확인</button>
 		</div>
 		<div class="mb-3">
 			<label for="birthDate" class="form-label">생년월일</label> <input type="date" class="form-control" id="birthDate" name="birthDate" required value="1991-11-11">
@@ -34,6 +36,45 @@
 
 		<button type="submit" class="btn btn-primary">가입하기</button>
 	</form>
+	<script type="text/javascript">
+	$(document).ready(()=>{
+		
+		// 닉네임 중복확인
+		$("#nicknameCheck").on("click", () => {
+			$.ajax({
+				type: "GET",
+				url: "/api/nickname",
+				data: {nickName: $("#nickName").val()}
+			}).done((response) => {
+				if(response){
+					alert('이미 사용중인 아이디입니다.');
+				} else{
+					alert('사용 가능한 아이디입니다.');
+				}
+			}).fail((error) => {
+				console.log(error);
+				alert("요청을 처리할 수 없습니다.");
+			});
+		});
+		// 이메일 중복 확인
+		$("#emailCheck").on("click", () => {
+			$.ajax({
+				type: "GET",
+				url: "/api/email",
+				data: {email: $("#email").val()}
+			}).done((response) => {
+				if(response){
+					alert('이미 사용중인 아이디입니다.');
+				} else{
+					alert('사용 가능한 아이디입니다.');
+				}
+			}).fail((error) => {
+				console.log(error);
+				alert("요청을 처리할 수 없습니다.");
+			});
+		});
+	});
+</script>
 
 </body>
 </html>
