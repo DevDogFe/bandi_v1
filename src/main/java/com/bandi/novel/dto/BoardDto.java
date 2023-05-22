@@ -8,6 +8,7 @@ import lombok.Data;
 public class BoardDto {
 	private Integer id;
 	private Integer userId;
+	private Integer views;
 	private String username;
 	private Integer boardTypeId;
 	private String boardName;
@@ -16,4 +17,6 @@ public class BoardDto {
 	private Integer categoryId;
 	private String categoryName;
 	private Timestamp createdAt;
+	
+	
 }

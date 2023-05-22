@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class Board {
 	
-	private int id;
-	private int userId;
-	private int boardTypeId;
+	private Integer id;
+	private Integer userId;
+	private Integer boardTypeId;
 	private String title;
 	private String content;
-	private int likes;
-	private int views;
-	private int categoryId;
+	private Integer likes;
+	private Integer views;
+	private Integer categoryId;
 	private Timestamp createdAt;
 
 }

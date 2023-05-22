@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class BoardTypeDto {
 	
-	private int id;
+	private Integer id;
 	private String boardName;
 }

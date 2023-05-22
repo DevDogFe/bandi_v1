@@ -6,13 +6,14 @@ import lombok.Data;
 
 @Data
 public class BoardDetailDto {
-	private int id;
-	private int userId;
-	private int boardTypeId;
+	private Integer id;
+	private Integer userId;
+	private Integer boardTypeId;
+	private Integer views;
 	private String username;
 	private String title;
 	private String content;
-	private int categoryId;
+	private Integer categoryId;
 	private String categoryName;
 	private Timestamp createdAt;
 }

@@ -37,7 +37,7 @@ CREATE TABLE board_tb(
     likes INT NOT NULL DEFAULT 0,
     views INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT now(),
-    FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
     FOREIGN KEY(board_type_id) REFERENCES board_type_tb(id) ON DELETE CASCADE,
     FOREIGN KEY(category_id) REFERENCES board_category_tb(id) ON DELETE CASCADE
 );

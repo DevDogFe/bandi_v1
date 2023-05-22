@@ -56,6 +56,8 @@ public class BoardService {
 		return list;
 	}
 	
+	// 카테고리별 게시물 리스트 불러오기 
+	@Transactional
 	public List<BoardDto> selectBoardListByCategoryId(Integer categoryId) {
 		List<BoardDto> list = boardRepository.selectBoardListByCategoryId(categoryId);
 		return list;
@@ -79,11 +81,27 @@ public class BoardService {
 	}
 	
 	// 게시물 삭제하기
+	@Transactional
 	public int deleteBoard(Integer id) {
 		int resultRowCount = boardRepository.deleteById(id);
 		if(resultRowCount != 1) {
 			System.out.println("삭제 실패");
 		}
 		return resultRowCount;
+	}
+	
+	// 게시물 조회수 증가 
+	@Transactional
+	public void boardViewPlus(Integer boardId) {
+		boardRepository.updateViewById(boardId);
+	}
+	
+	@Transactional
+	public List<BoardDto> searchList(String type, String keyword, Integer boardTypeId) {
+		
+		if(type != null || keyword != null) {
+			return boardRepository.selectSearchList(type, keyword, boardTypeId);
+		}
+		return boardRepository.selectBoardListByBoardTypeId(boardTypeId);
 	}
 }

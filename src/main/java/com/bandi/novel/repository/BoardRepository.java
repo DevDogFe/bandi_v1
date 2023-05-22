@@ -26,4 +26,8 @@ public interface BoardRepository {
 	public int deleteById(Integer id);
 	// 카테고리 별 게시물 조회
 	public List<BoardDto> selectBoardListByCategoryId(Integer categoryId);
+	// 조회수 
+	int updateViewById(Integer boardId);
+	// 게시물 검색 
+	List<BoardDto> selectSearchList(@Param("type") String type, @Param("keyword") String keyword, @Param("boardTypeId") Integer boardTypeId);
 }
