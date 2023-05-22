@@ -33,10 +33,7 @@ import com.bandi.novel.utils.Define;
 public class ApplicationController {
 
 	@Autowired
-	private HttpSession session;
-	@Autowired
 	private ApplicationService applicationService;
-
 	/**
 	 * @return 연재문의 내역
 	 */
@@ -44,8 +41,7 @@ public class ApplicationController {
 	public String getList(Model model) {
 		/*
 		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		 * List<Application> applyList =
-		 * applicationService.readApplicationByUserId(principal.getId());
+		 * List<Application> applyList = applicationService.readApplicationByUserId(principal.getId());
 		 */
 		List<Application> application = applicationService.readApplicationByUserId(1);
 		model.addAttribute("application", application);
@@ -78,7 +74,7 @@ public class ApplicationController {
 	 * 
 	 * @return 연재문의 내역
 	 */
-	
+
 	@PostMapping("/write")
 	public String ApplicationProc(ApplicationFromDto applicationFromDto) {
 
@@ -86,19 +82,22 @@ public class ApplicationController {
 		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		 * application.setUserId(principal.getId());
 		 */
-		
+		System.out.println(applicationFromDto);
 		// 파일 업로드
 		MultipartFile file = applicationFromDto.getFile();
 		if (file.isEmpty() == false) {
+			System.out.println("!111111111");
 			if (file.getSize() > Define.MAX_FILE_SIZE) {
 				// throw new CustomRestfullException("파일 크기는 20MB이상 클 수 없습니다",
 				// HttpStatus.BAD_REQUEST);
 				System.out.println("파일크기안됨");
 			}
 			try {
+				System.out.println("2222222222222");
 				String saveDirectory = Define.UPLOAD_DIRECTORY;
 				File dir = new File(saveDirectory);
 				if (dir.exists() == false) {
+					dir.mkdirs();
 				}
 				UUID uuid = UUID.randomUUID();
 				String fileName = uuid + "_" + file.getOriginalFilename();
@@ -107,6 +106,7 @@ public class ApplicationController {
 				file.transferTo(destination);
 				applicationFromDto.setOriginFilename(file.getOriginalFilename());
 				applicationFromDto.setUploadFilename(fileName);
+				System.out.println(fileName + " / " + file.getOriginalFilename());
 
 			} catch (Exception e) {
 				e.getStackTrace();

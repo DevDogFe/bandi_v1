@@ -22,7 +22,7 @@ import com.bandi.novel.service.QnaService;
 
 /**
  * 관리자 페이지 
- * (Q&A, 연재문의, FAQ)
+ * (Q&A, 연재문의, FAQ) 
  * @author 효린
  *
  */
@@ -42,8 +42,7 @@ public class AdminController {
 	 * @return 질문 리스트 전체조회
 	 */
 	@GetMapping("/qnaList")
-	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) 
-							String proceed, Model model) {
+	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) String proceed, Model model) {
 
 		List<Question> questionList = null;
 		questionList = adminService.readAllQuestionList();
@@ -91,6 +90,7 @@ public class AdminController {
 
 	/**
 	 * 답변 등록
+	 * 
 	 * @param questionId
 	 * @param answer
 	 * @return 질문 상세보기
@@ -98,7 +98,6 @@ public class AdminController {
 	@PostMapping("/answer/{questionId}")
 	public String answer(@PathVariable Integer questionId, Answer answer) {
 
-		// session
 		adminService.createAnswer(answer, 1);
 		adminService.updateQuestion(questionId, 1);
 		return "redirect:/admin/question/" + questionId;
@@ -122,6 +121,7 @@ public class AdminController {
 
 	/**
 	 * 답변 수정
+	 * 
 	 * @param questionId
 	 * @param answerUpdateDto
 	 * @return 질문 상세보기
@@ -135,6 +135,7 @@ public class AdminController {
 
 	/**
 	 * 답변삭제
+	 * 
 	 * @param questionId
 	 * @return 질문 상세보기
 	 */
@@ -145,27 +146,32 @@ public class AdminController {
 		adminService.updateQuestion(questionId, 0);
 		return "redirect:/admin/question/" + questionId;
 	}
-	
+
+	/**
+	 * @param model
+	 * @return 연재문의글 전체조회
+	 */
 	@GetMapping("/applicationList")
 	public String getApplicationList(Model model) {
-		
-		// session
+
 		List<Application> applicationList = applicationService.readAllApplication();
-		model.addAttribute("applicationList", applicationList);				
-		
-		return "/admin/applicationList";		
+		model.addAttribute("applicationList", applicationList);
+
+		return "/admin/applicationList";
 	}
-	
+
+	/**
+	 * @param id
+	 * @param model
+	 * @return 연재글 상세조회
+	 */
 	@GetMapping("/applicationDetail/{id}")
 	public String getApplicationdetail(@PathVariable Integer id, Model model) {
-		
+
 		Application application = applicationService.readApplicationById(id);
 		model.addAttribute("application", application);
-		
+
 		return "/admin/applicationDetail";
 	}
-	
-	
-
 
 }

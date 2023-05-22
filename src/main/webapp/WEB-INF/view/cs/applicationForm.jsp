@@ -13,13 +13,13 @@
 		<!-- 파일업로드 -->
  		<div class="custom-file">
 			<input type="file" class="custom-file-input" id="customFile"
-				name="file" accept=".jpg, .jpeg, .png">
+				name="file" accept=".jpg, .jpeg, .png, .hwp">
 				<label class="custom-file-label" for="customFile"></label>
 		</div> 
 		
 		
 		<br> <label> 연락처</label> <input type="text" name="tel">
-		<button>연재신청</button>
+		<button type="submit">연재신청</button>
 	</form>
 	<!--<a href="#">임시저장</a>  -->
 
