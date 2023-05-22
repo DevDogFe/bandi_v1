@@ -262,3 +262,16 @@ CREATE TABLE user_library_tb(
 	FOREIGN KEY (user_id) REFERENCES user_tb(id),
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
 );
+
+
+-- 유저가 마지막으로 본 소설 기록
+CREATE TABLE user_novel_record_tb(
+	user_id INT NOT NULL,
+	novel_id INT NOT NULL,
+	section_id INT NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY (user_id, novel_id, section_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id),
+	FOREIGN KEY (novel_id) REFERENCES novel_tb(id),
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
+);

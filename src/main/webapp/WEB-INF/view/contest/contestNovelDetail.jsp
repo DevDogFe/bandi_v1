@@ -59,7 +59,7 @@
 				<c:otherwise>
 					<table class="table">
 						<thead>
-							<tr class="table-secondary">
+							<tr class="table-light">
 								<td>번호</td>
 								<td>제목</td>
 								<td>등록일</td>
@@ -70,13 +70,26 @@
 						<tbody>
 							<c:set var="count" value="${novelSectionList.size()}"></c:set>
 							<c:forEach items="${novelSectionList}" var="section" varStatus="vs">
-								<tr>
-									<td>${vs.index+1}</td>
-									<td><a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
-									<td>${section.createdAt()}</td>
-									<td>${section.views}</td>
-									<td>4.5</td>
-								</tr>
+								<c:choose>
+									<c:when test="${section.userId != null}">
+										<tr class="table-info">
+											<td>${novelSectionList.size() - vs.index}</td>
+											<td><a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
+											<td>${section.createdAt()}</td>
+											<td>${section.views}</td>
+											<td>4.5</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<tr class="table-default">
+											<td>${novelSectionList.size() - vs.index}</td>
+											<td><a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
+											<td>${section.createdAt()}</td>
+											<td>${section.views}</td>
+											<td>4.5</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</tbody>
 					</table>

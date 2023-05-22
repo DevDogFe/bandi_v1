@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../layout/header.jsp"%>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#lastNovelRecord").modal('show');
+	})
+</script>
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -64,6 +70,15 @@
           	</div>
           </div>
           <!-- ***** Most Popular End ***** -->
+          <div class="gaming-library">
+            <div class="col-lg-12">
+              <div class="heading-section">
+              <c:if test="${novelRecord != null}">
+                ${novelRecord.userId} ${novelRecord.sectionId} ${novelRecord.title} 
+              </c:if>
+              </div>
+          	</div>
+          </div>
       </div>
     </div>
   </div>
@@ -116,5 +131,5 @@
 				</div>
 			</c:forEach>
   
-  
+<%@include file="../modal.jsp"%>
 <%@include file="../layout/footer.jsp"%>

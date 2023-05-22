@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserNovelRecordRepository">
+
+	<insert id="insertNovelRecord">
+		INSERT INTO user_novel_record_tb (user_id,novel_id,section_id)
+		VALUES
+		(#{userId},#{novelId},#{sectionId})
+	</insert>
+	
+	<select id="selectNovelRecordByModel" resultType="com.bandi.novel.model.UserNovelRecord">
+		SELECT *
+		FROM user_novel_record_tb
+		WHERE user_id = #{userId} AND novel_id = #{novelId}
+		AND section_id = #{sectionId} 
+	</select>
+	
+	<select id="selectNovelRecord" resultType="com.bandi.novel.dto.response.NovleRecordSectionDto">
+		SELECT *
+		FROM novel_section_tb as ns
+		LEFT JOIN
+		(
+			select *
+			from user_novel_record_tb
+			where user_id = #{userId}
+		) as unr
+		ON ns.id = unr.section_id
+		WHERE ns.novel_id = #{novelId}
+		order by ns.id DESC
+	</select>
+	
+	<select id="selectLastNovelRecord" resultType="com.bandi.novel.dto.response.LastNovelRecordDto">
+		SELECT unr.user_id,unr.novel_id,unr.section_id,ns.title,ns.content
+		FROM user_novel_record_tb as unr
+		LEFT JOIN novel_section_tb as ns
+		ON unr.section_id = ns.id
+		WHERE unr.user_id = #{userId} 
+		order by unr.created_at DESC LIMIT 1;
+	</select>
+	
+	<update id="updateNovelRecord">
+		update user_novel_record_tb 
+		set section_id = #{sectionId}
+		where user_id = #{userId} AND novel_id = #{novelId}
+		AND section_id = #{sectionId}
+	</update>
+
+</mapper>
