@@ -32,9 +32,11 @@
 		</c:choose>
 		<div class="mb-3">
 			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="${principal.nickName}">
+			<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>
 		</div>
 		<div class="mb-3">
 			<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="${principal.email}">
+			<button type="button" id="emailCheck" class="btn btn-secondary">이메일 중복 확인</button>
 		</div>
 
 		<button type="button" id="updateBtn" class="btn btn-primary">정보 수정</button>
