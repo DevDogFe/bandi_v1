@@ -1,23 +1,19 @@
 package com.bandi.novel.dto;
 
+import java.sql.Date;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
 
-/**
- * 정보 수정용 dto
- * @author 김지현
- *
- */
 @Data
-public class UserUpdateDto {
+public class JoinDto {
 
-	private Integer id;
 	@NotBlank
 	@Size(min = 3, max = 20)
-	private String beforePassword;
+	private String username;
 	@NotBlank
 	@Size(min = 3, max = 20)
 	private String password;
@@ -25,10 +21,13 @@ public class UserUpdateDto {
 	@Size(min = 3, max = 20)
 	private String passwordCheck;
 	@NotBlank
-	@Size(min = 3, max = 10)
+	@Size(min = 3, max = 20)
 	private String nickName;
 	@NotBlank
 	@Email
 	private String email;
+	private Date birthDate;
+	private String gender;
+	private Boolean external;
 	
 }
