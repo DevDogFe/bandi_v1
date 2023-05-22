@@ -62,7 +62,7 @@
 									<h5 class="modal-title" id="exampleModalLabel">표지 등록</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
-								<form action="/novel/cover?novelId=${detail.id }" method="post" enctype="multipart/form-data">
+								<form action="/novel/cover?novelId=${detail.id }&serviceTypeId=${detail.serviceTypeId}" method="post" enctype="multipart/form-data">
 									<div class="modal-body">
 										<div class="mb-3">
 											<label for="formFile" class="form-label">이미지 파일 선택</label> <input class="form-control" name="coverFile" type="file" id="formFile">
@@ -109,15 +109,39 @@
 					</thead>
 					<tbody>
 						<c:set var="count" value="${sectionList.size()}"></c:set>
-						<c:forEach items="${sectionList}" var="section">
-							<tr>
+						<c:forEach items="${sectionList}" var="section" varStatus="vs">
+							<c:choose>
+								<c:when test="${section.userId != null}">
+									<tr class="table-info">
+										<td>${sectionList.size() - vs.index}</td>
+										<td><a
+											href="/section/read/${detail.id}/${section.id}"
+											class="list--link">${section.title}</a></td>
+										<td>${section.createdAt()}</td>
+										<td>${section.views}</td>
+										<td>4.5</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<tr class="table-default">
+										<td>${sectionList.size() - vs.index}</td>
+										<td><a
+											href="/section/read/${detail.id}/${section.id}"
+											class="list--link">${section.title}</a></td>
+										<td>${section.createdAt()}</td>
+										<td>${section.views}</td>
+										<td>4.5</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+							<%-- <tr>
 								<td>${count}</td>
-								<td><a href="/section/read/${section.id}" class="list--link">${section.title}</a></td>
+								<td><a href="/section/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
 								<td>${section.createdAt()}</td>
 								<td>${section.views}</td>
 								<td>4.5</td>
 								<c:set var="count" value="${count - 1}"></c:set>
-							</tr>
+							</tr> --%>
 						</c:forEach>
 					</tbody>
 				</table>

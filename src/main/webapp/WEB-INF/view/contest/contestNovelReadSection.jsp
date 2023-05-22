@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<!-- jquery 나중에 헤더로 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style type="text/css">
 .list--link {
 	text-decoration: none;
@@ -93,7 +95,7 @@ ul {
 								<td>${reply.content }</td>
 								<td>${reply.createdAt() }</td>
 								<td><c:if test="${principal.id == reply.userId }">
-										<button onclick="#">삭제</button>
+										<button onclick="deleteReply(${reply.id},${section.novelId}, ${section.id})">삭제</button>
 									</c:if></td>
 							</tr>
 						</c:forEach>
@@ -119,5 +121,24 @@ ul {
 			</div>
 		</article>
 	</section>
+	<script type="text/javascript">
+	
+	function deleteReply(replyId,novelId,sectionId) {
+		$.ajax({
+			type: "DELETE",
+			url: "/api/reply/" + replyId
+		}).done((response) => {
+			console.log(response);
+			console.log(typeof response);
+			location.href='/section/read/'+novelId+'/' + sectionId;
+		}).fail((error) => {
+			console.log(error);
+			alert("요청을 처리할 수 없습니다.");
+		});
+	}
+	$(document).ready(() => {
+		
+	});
+	</script>
 </body>
 </html>

@@ -3,8 +3,8 @@ package com.bandi.novel.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.NovelDto;
-import com.bandi.novel.dto.response.NovelReplyListDto;
 
 import lombok.Data;
 
@@ -18,6 +18,7 @@ public class NovelPageUtil {
 	private int endPage;
 	private int pagingCount;
 	private List<NovelDto> content;
+	private List<ContestNovelDto> contestContent;
 
 	public NovelPageUtil(int total, int size, int currentPage, int pagingCount,
 			List<NovelDto> novelList) {
@@ -33,6 +34,43 @@ public class NovelPageUtil {
 					break;
 				}
 				content.add(novelList.get(i));
+			}
+		}
+		if (total == 0) {
+			totalPages = 0;
+			startPage = 1;
+			endPage = 1;
+		} else {
+			totalPages = total / size;
+			if (total % size > 0) {
+				totalPages++;
+			}
+
+			startPage = currentPage - pagingCount + 3;
+			if (startPage < 1) {
+				startPage = 1;
+			}
+
+			endPage = startPage + pagingCount - 1;
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+		}
+	}
+	
+	public NovelPageUtil(List<ContestNovelDto> contestNovelList,int total, int size, int currentPage, int pagingCount) {
+		this.total = total;
+		this.currentPage = currentPage;
+		this.pagingCount = pagingCount;
+		this.contestContent = new ArrayList<>();
+		int count = (currentPage - 1) * size;
+		if (contestNovelList.size() != 0) {
+			for (int i = count; i < count + size; i++) {
+
+				if (i == contestNovelList.size()) {
+					break;
+				}
+				contestContent.add(contestNovelList.get(i));
 			}
 		}
 		if (total == 0) {

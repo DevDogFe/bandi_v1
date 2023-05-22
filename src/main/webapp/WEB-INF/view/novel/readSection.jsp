@@ -32,6 +32,16 @@ ul {
 			<div>
 				<a href="/novel/detail/${section.novelId }">목록</a>
 			</div>
+			<div>
+				<c:if test="${section.prevTitle != '이전글이 없습니다'}">
+					<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}'" 
+					class="btn btn-info">${section.prevTitle}</button>
+				</c:if>
+				<c:if test="${section.nextTitle != '다음글이 없습니다'}">
+					<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}'" 
+					class="btn btn-success">${section.nextTitle}</button>
+				</c:if>
+			</div>
 		</article>
 		<article>
 			<c:choose>
@@ -51,6 +61,7 @@ ul {
 							<label for="content" class="form-label">댓글 등록</label>
 							<textarea class="form-control" id="content" name="content" rows="3" placeholder="작가나 작품에 대한 비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
 							<input type="hidden" name="sectionId" value="${section.id}">
+							<input type="hidden" name="novelId" value="${section.novelId}">
 						</div>
 						<div class="mb-3 ps-3">
 							<button type="submit" class="btn btn-secondary">등록</button>
@@ -76,7 +87,7 @@ ul {
 								<td>${reply.content }</td>
 								<td>${reply.createdAt() }</td>
 								<td><c:if test="${principal.id == reply.userId }">
-										<button class="delete--btn" onclick="deleteReply(${reply.id})">삭제</button>
+										<button class="delete--btn" onclick="deleteReply(${reply.id},${section.novelId}, ${section.id})">삭제</button>
 									</c:if></td>
 							</tr>
 						</c:forEach>
@@ -86,15 +97,15 @@ ul {
 					<div>
 						<ul class="d-flex">
 							<!-- Previous 시작 -->
-							<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/section/read/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
+							<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
 							<!-- Previous 끝 -->
 							<!-- Page번호 시작 -->
 							<c:forEach var="pNo" begin="${replyList.startPage }" end="${replyList.endPage }" step="1">
-								<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+								<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.novelId}/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 							</c:forEach>
 							<!-- Page번호 끝 -->
 							<!-- Next 시작 -->
-							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/section/read/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
+							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
 							<!-- Next 끝 -->
 						</ul>
 					</div>
@@ -104,14 +115,14 @@ ul {
 	</section>
 	<script type="text/javascript">
 	
-	function deleteReply(replyId) {
+	function deleteReply(replyId,novelId,sectionId) {
 		$.ajax({
 			type: "DELETE",
 			url: "/api/reply/" + replyId
 		}).done((response) => {
 			console.log(response);
 			console.log(typeof response);
-			location.href='/section/read/' + $("#sectionId").val();
+			location.href='/section/read/'+novelId+'/'+ sectionId;
 		}).fail((error) => {
 			console.log(error);
 			alert("요청을 처리할 수 없습니다.");
