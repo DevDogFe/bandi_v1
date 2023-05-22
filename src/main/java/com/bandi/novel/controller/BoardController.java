@@ -1,6 +1,9 @@
 package com.bandi.novel.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
@@ -99,6 +103,35 @@ public class BoardController {
 	// 게시물 등록
 	@PostMapping("/write/{boardTypeId}")
 	public String createBoardProc(BoardDto boardDto) {
+		System.out.println(boardDto);
+		ArrayList<String> fileNames = new ArrayList<>();
+		ArrayList<String> rawFileNames = new ArrayList<>();
+		for(int i = 0; i < boardDto.getFiles().length; i++) {
+			if(!boardDto.getFiles()[i].isEmpty()) {
+				if(boardDto.getFiles()[i].getSize() > Define.MAX_FILE_SIZE) {
+					
+				}
+				try {
+					String saveDirectory = Define.UPLOAD_DIRECTORY;
+					File dir = new File(saveDirectory);
+					if(dir.exists() == false) {
+						dir.mkdirs();
+					}
+					UUID uuid = UUID.randomUUID();
+					String rawFileName = boardDto.getFiles()[i].getOriginalFilename();
+					String fileName = uuid + "_" + rawFileName;
+					rawFileNames.add(rawFileName);
+					fileNames.add(fileName);
+					String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
+					File destination = new File(uploadPath);
+					boardDto.getFiles()[i].transferTo(destination);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		boardDto.setFileName(fileNames);
+		boardDto.setRawFilName(rawFileNames);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		String content = boardDto.getContent().replaceAll("\r\n", "<br>");
 		boardDto.setContent(content);

@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardSearchDto;
-import com.bandi.novel.dto.BoardTypeDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.repository.BoardCategoryRepository;
+import com.bandi.novel.repository.BoardFileRepository;
 import com.bandi.novel.repository.BoardRepository;
 import com.bandi.novel.repository.BoardTypeRepository;
 
@@ -25,12 +25,23 @@ public class BoardService {
 	private BoardTypeRepository boardTypeRepository;
 	@Autowired
 	private BoardCategoryRepository boardCategoryRepository;
+	@Autowired
+	private BoardFileRepository boardFileRepository;
 
 	// 게시물 등록
 	@Transactional
 	public void createBoard(BoardDto boardDto) {
-		
+		// board_tb에 저장
 		int resultRowCount = boardRepository.insert(boardDto);
+		// 위에서 저장할 때 자동생성된 boardId 끌어오기
+		Integer boardId = boardRepository.selectBoardIdByDTO(boardDto);
+		
+		boardDto.setId(boardId);
+		if(boardDto.getFiles() != null) {
+			for(int i = 0; i < boardDto.getFileName().size(); i++) {
+				boardFileRepository.insertFile(boardId, boardDto.getRawFilName().get(i), boardDto.getFileName().get(i));
+			}
+		}
 		if(resultRowCount != 1) {
 			System.out.println("등록 실패");
 		}
@@ -97,9 +108,11 @@ public class BoardService {
 		boardRepository.updateViewById(boardId);
 	}
 	
+	// 게시물 검색
 	@Transactional
 	public List<BoardDto> searchList(BoardSearchDto boardSearchDto) {
 		
 		return boardRepository.selectSearchList(boardSearchDto);
 	}
+
 }

@@ -7,9 +7,16 @@
 		insert into board_tb(user_id , title, board_type_id,
 		category_id, content)
 		values(#{userId}, #{title}, #{boardTypeId},
-		#{categoryId},
-		#{content});
+		#{categoryId}, #{content});
 	</insert>
+	
+	<select id="selectBoardIdByDTO" resultType="integer">
+		SELECT id FROM board_tb
+		WHERE user_id = #{userId}
+		AND title = #{title}
+		ORDER BY id DESC
+		LIMIT 1
+	</select>
 
 	<select id="selectBoardType" resultType="com.bandi.novel.dto.BoardTypeDto">
 		select * from board_type_tb;

@@ -63,7 +63,6 @@ CREATE TABLE board_file_tb(
 	board_id INT NOT NULL,
     raw_file_name VARCHAR(100) NOT NULL,
     encoded_file_name VARCHAR(150) NOT NULL,
-    file_type VARCHAR(10) NOT NULL,
     FOREIGN KEY(board_id) REFERENCES board_tb(id) ON DELETE CASCADE
 );
 

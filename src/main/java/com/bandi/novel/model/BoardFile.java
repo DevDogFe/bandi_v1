@@ -6,8 +6,8 @@ import lombok.Data;
 public class BoardFile {
 	
 	private int boardId;
-	private String rawFilename;
-	private String encodedFilename;
+	private String rawFileName;
+	private String encodedFileName;
 	private String fileType;
 
 }
