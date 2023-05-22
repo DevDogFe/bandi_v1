@@ -32,12 +32,15 @@
 	<c:if test="${principal != null }">
 		<c:choose>
 			<c:when test="${isLike}">
-				<button type="button" id="unlike" onclick="">공감해제</button>
+				<button type="button" id="unlike">공감해제</button>
 			</c:when>
 			<c:otherwise>
 				<button type="button" id="like">공감</button>
 			</c:otherwise>
 		</c:choose>
+	</c:if>
+	<c:if test="${principal == null }">
+		<button type="button" id="noUser">공감</button>
 	</c:if>
 	<article>
 		<c:choose>
@@ -98,20 +101,25 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(document).ready(() => {
-			function unlike (userId){
+			
+			$("#unlike").on("click", ()=>{
 				$.ajax({
 					type: "DELETE",
-					url: "/api/unlike/" + $("#boardId").val() + userId;
+					url: "/api/unlike/" + $("#boardId").val()
 				}).done((response) => {
 					location.href='/board/detail/' + $("#boardId").val();
 				}).fail((error) => {
 					console.log(error);
 					alert("요청 실패")
 				});
-			}
+			});
 			
-			$("#like").on("click", () => {
+			$("#noUser").on("click", ()=>{
+				console.log('111');
+				alert('로그인이 필요한 기능입니다.');
+			});				
+			
+			$("#like").on("click", ()=>{
 				$.ajax({
 					type: "POST",
 					url: "/api/like/" + $("#boardId").val()
@@ -122,6 +130,10 @@
 					alert("요청 실패")
 				});
 			});
+			
+			
+		$(document).ready(() => {
+
 		});
 	</script>
 	<script type="text/javascript">
