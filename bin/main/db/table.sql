@@ -273,7 +273,7 @@ CREATE TABLE user_novel_record_tb(
 	section_id INT NOT NULL,
 	created_at TIMESTAMP DEFAULT NOW(),
 	PRIMARY KEY (user_id, novel_id, section_id),
-	FOREIGN KEY (user_id) REFERENCES user_tb(id),
-	FOREIGN KEY (novel_id) REFERENCES novel_tb(id),
-	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );

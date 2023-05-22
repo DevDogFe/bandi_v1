@@ -14,9 +14,10 @@ import com.bandi.novel.model.Contest;
 public interface ContestRepository {
 	
 	int insertContest(Contest contest);
-	int deleteContestById(int contestId);
+	int deleteContestById(Integer contestId);
 	int updateContestByModel(Contest contest);
 	
+	Contest selectContestById(Integer id);
 	Contest selectContestByUserIdAndTitle(Contest contest);
 	
 	List<Contest> selectContestListByDate();
