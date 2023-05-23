@@ -176,8 +176,9 @@ public class UserController {
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
 		user.setPassword(TempPasswordUtill.getTempPassword());
-		// userService.updateUserPwd(user);
-
+		
+		// TODO 순서 확인
+		//userService.updateUserPwd(user);
 		// 메일 전송
 		mailService.sendMail(user);
 		// 비밀번호변경

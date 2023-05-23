@@ -26,5 +26,11 @@
 		email = #{email}
 		WHERE id = #{id};
 	</update>
+	
+	<!-- 비밀번호 변경 (효린)-->
+	<update id="updatePwd">
+		update user_tb 
+		set password = #{password} where id = #{id}
+	</update>
 
 </mapper>

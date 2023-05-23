@@ -110,11 +110,13 @@ public class UserService {
 	 * 비밀번호 변경
 	 * @param user
 	 */
+	@Transactional
 	public void updateUserPwd(User user) {
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		
 		int resultRowCount = userRepository.updatePwd(user);
+		
 		if (resultRowCount != 1) {
 			System.out.println("비밀번호 임시변경실패");
 		}
