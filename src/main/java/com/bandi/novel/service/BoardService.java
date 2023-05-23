@@ -87,6 +87,12 @@ public class BoardService {
 	@Transactional
 	public int updateBoard(BoardDto boardDto) {
 		int resultRowCount = boardRepository.updateBoard(boardDto);
+		
+		if(boardDto.getFiles() != null) {
+			for(int i = 0; i < boardDto.getFileName().size(); i++) {
+				boardFileRepository.insertFile(boardDto.getId(), boardDto.getRawFileName().get(i), boardDto.getFileName().get(i));
+			}
+		}
 		if(resultRowCount != 1) {
 			System.out.println("수정 실패");
 		}

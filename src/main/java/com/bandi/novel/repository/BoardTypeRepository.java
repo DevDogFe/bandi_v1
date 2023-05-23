@@ -13,5 +13,6 @@ import com.bandi.novel.model.BoardType;
 @Mapper
 public interface BoardTypeRepository {
 	
+	// 게시물 종류 조회
 	public List<BoardType> selectBoardTypeAll();
 }

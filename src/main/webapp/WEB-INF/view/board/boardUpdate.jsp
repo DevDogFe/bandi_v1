@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
-	<form action="/board/updateProc/${boardDetail.id}" method="post">
+	<form action="/board/updateProc/${boardDetail.id}" method="post" enctype="multipart/form-data">
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">제목</label> <input type="text" class="form-control" id="title" name="title" value="${boardDetail.title}">
 		</div>
@@ -34,6 +34,9 @@
 			</c:forEach>
 		</div>
 		</c:if>
+		<div class="mb-3">
+			<label for="formFileMultiple" class="form-label">파일 선택</label> <input class="form-control" type="file" name="files" id="formFileMultiple" multiple>
+		</div>
 		<button type="submit" class="btn btn-light">수정</button>
 	</form>
 	<script type="text/javascript">

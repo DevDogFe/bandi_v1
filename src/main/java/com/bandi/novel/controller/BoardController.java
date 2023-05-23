@@ -99,10 +99,9 @@ public class BoardController {
 		return "/board/boardWrite";
 	}
 
-	// 게시물 등록
+	// 게시물 쓰기
 	@PostMapping("/write/{boardTypeId}")
 	public String createBoardProc(BoardDto boardDto) {
-		System.out.println(boardDto);
 		ArrayList<String> fileNames = new ArrayList<>();
 		ArrayList<String> rawFileNames = new ArrayList<>();
 		for(int i = 0; i < boardDto.getFiles().length; i++) {
@@ -139,6 +138,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 
+	// 게시물 상세보기 
 	@GetMapping("/detail/{id}")
 	public String getBoardDetail(HttpServletRequest request, HttpServletResponse response, Model model, 
 					@PathVariable Integer id, @RequestParam(defaultValue = "1") Integer currentPage) {
@@ -192,6 +192,7 @@ public class BoardController {
 		return "/board/boardDetail";
 	}
 
+	// 게시물 수정 
 	@GetMapping("/update/{id}")
 	public String updateBoard(@PathVariable Integer id, Model model) {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
@@ -206,13 +207,45 @@ public class BoardController {
 		return "/board/boardUpdate";
 	}
 
+	// 게시물 수정
 	@PostMapping("/updateProc/{id}")
 	public String updateBoardProc(BoardDto boardDto) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		ArrayList<String> fileNames = new ArrayList<>();
+		ArrayList<String> rawFileNames = new ArrayList<>();
+		for(int i = 0; i < boardDto.getFiles().length; i++) {
+			if(!boardDto.getFiles()[i].isEmpty()) {
+				if(boardDto.getFiles()[i].getSize() > Define.MAX_FILE_SIZE) {
+					
+				}
+				try {
+					String saveDirectory = Define.UPLOAD_DIRECTORY;
+					File dir = new File(saveDirectory);
+					if(dir.exists() == false) {
+						dir.mkdirs();
+					}
+					UUID uuid = UUID.randomUUID();
+					String rawFileName = boardDto.getFiles()[i].getOriginalFilename();
+					String fileName = uuid + "_" + rawFileName;
+					rawFileNames.add(rawFileName);
+					fileNames.add(fileName);
+					String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
+					File destination = new File(uploadPath);
+					boardDto.getFiles()[i].transferTo(destination);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		String content = boardDto.getContent().replaceAll("\r\n", "<br>");
+		boardDto.setContent(content);
+		boardDto.setFileName(fileNames);
+		boardDto.setRawFileName(rawFileNames);
 		boardService.updateBoard(boardDto);
 		return "redirect:/board/list";
 	}
 
+	// 게시물 삭제
 	@GetMapping("/delete/{id}")
 	public String deleteBoard(@PathVariable Integer id) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -220,6 +253,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	// 게시물 댓글 쓰기
 	@PostMapping("/reply")
 	public String boardReplyProc(BoardReply boardReply) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);

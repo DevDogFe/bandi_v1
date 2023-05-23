@@ -14,6 +14,7 @@ public class BoardLikeService {
 	@Autowired
 	private BoardLikeRepository boardLikeRepository;
 	
+	// 좋아요 조회
 	@Transactional
 	public boolean selectLikeByUserIdAndBoardId(Integer userId, Integer boardId) {
 		if(boardLikeRepository.selectByUserIdAndBoardId(Like.builder().userId(userId).boardId(boardId).build()) != null) {
@@ -22,11 +23,13 @@ public class BoardLikeService {
 		return false;
 	}
 	
+	// 좋아요 등록
 	@Transactional
 	public void insertLike(Integer userId, Integer boardId) {
 		int result = boardLikeRepository.insert(Like.builder().userId(userId).boardId(boardId).build());
 	}
 	
+	// 좋아요 해제
 	@Transactional
 	public void deleteLike(Integer userId, Integer boardId) {
 		int result = boardLikeRepository.delete(Like.builder().userId(userId).boardId(boardId).build());

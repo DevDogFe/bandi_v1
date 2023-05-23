@@ -18,12 +18,14 @@ public class BoardApiController {
 	@Autowired
 	private BoardReplyService boardReplyService;
 	
+	// 댓글 삭제
 	@DeleteMapping("/api/deletereply/{id}")
 	public Integer deleteReplyProc(@PathVariable Integer id) {
 		int resultRow = boardReplyService.deleteBoardReplyById(id);
 		return resultRow;
 	}
 	
+	// 파일 삭제
 	@DeleteMapping("/api/deletefile/{id}")
 	public Integer deleteFileProc(@PathVariable Integer id) {
 		int resultRow = boardService.deleteFile(id);
