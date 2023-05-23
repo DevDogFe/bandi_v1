@@ -40,8 +40,9 @@
 										<input type="checkbox" class="form-check-input" id="exampleCheck1"> <label class="form-check-label" for="exampleCheck1">Check me out</label>
 									</div>
 									<button type="submit" class="btn btn-primary">Submit</button>
-									<br> <a href="/user">회원가입</a> <br> <a
-										href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
+									<br> <a href="/user">회원가입</a> <br> 
+									<a href="/findPwd">비밀번호 찾기</a>  
+									<a href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
 										src="/assets/images/kakao_login/ko/kakao_login_medium_wide.png">
 									</a>
 								</form>

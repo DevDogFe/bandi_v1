@@ -30,7 +30,18 @@ spring:
       enabled: true
   output:
     ansi: 
-      enabled: always
+      enabled: always   
+  mail:
+    host: smtp.naver.com
+    port: 465
+    # 이메일 
+    username: 
+    password: 
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com
+      mail.smtp.starttls.enable: true  
       
 mybatis:
   mapper-locations:

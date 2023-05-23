@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.BoardRepository">
+
+	<insert id="insert">
+		insert into board_tb(board_type_id, title, content, category_id)
+		values(#{boardTypeId}, #{title}, #{content}, #{categoryId});
+	</insert>
+	
+	<select id="selectCategory" resultType="com.bandi.novel.dto.CategorySelectDto">
+		select * from board_category_tb;
+	</select>
+</mapper>

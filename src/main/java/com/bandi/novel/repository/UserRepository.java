@@ -16,4 +16,7 @@ public interface UserRepository {
 	
 	public int updateUser(UserUpdateDto userUpdateDto);
 	
+	// 비밀번호 변경 (효린) 
+	public int updatePwd(User user);
+	
 }

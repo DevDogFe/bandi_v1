@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserFavoriteRepository">
+
+	<insert id="insert">
+		INSERT INTO user_favorite_tb VALUES
+		(#{userId}, #{novelId})
+	</insert>
+
+	<select id="selectByUserIdAndNovelId" resultType="com.bandi.novel.model.UserFavorite">
+		SELECT *
+		FROM user_favorite_tb
+		WHERE user_id = #{userId}
+		AND novel_id = #{novelId}
+	</select>
+
+	<delete id="delete">
+		DELETE FROM user_favorite_tb
+		WHERE user_id = #{userId} 
+		AND novel_id = #{novelId}
+	</delete>
+
+</mapper>
