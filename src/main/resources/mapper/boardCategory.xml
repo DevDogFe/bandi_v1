@@ -6,6 +6,5 @@
 	<select id="selectCategory" resultType="com.bandi.novel.dto.CategorySelectDto">
 		SELECT * FROM board_category_tb
 		WHERE board_type_id = #{boardTypeId}
-		
 	</select>
 </mapper>

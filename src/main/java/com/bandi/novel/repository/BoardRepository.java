@@ -8,10 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardSearchDto;
-import com.bandi.novel.dto.BoardTypeDto;
-import com.bandi.novel.dto.CategorySelectDto;
-import com.bandi.novel.model.BoardFile;
-import com.bandi.novel.model.BoardType;
 
 @Mapper
 public interface BoardRepository {
@@ -21,7 +17,7 @@ public interface BoardRepository {
 	// 게시판 종류 별 게시물 조회
 	public List<BoardDto> selectBoardListByBoardTypeId(Integer boardTypeId);
 	// 게시물 상세보기
-	BoardDetailDto selectBoardDetailById(Integer id);
+	BoardDetailDto selectBoardDetailById(Integer Id);
 	// 게시물 수정
 	public int updateBoard(BoardDto boardDto);
 	// 게시물 삭제
@@ -34,5 +30,4 @@ public interface BoardRepository {
 	List<BoardDto> selectSearchList(BoardSearchDto boardSearchDto);
 	// 방금 등록한 게시물 boardId 가져오기
 	Integer selectBoardIdByDTO(BoardDto boardDto);
-
 }

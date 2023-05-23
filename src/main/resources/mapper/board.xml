@@ -65,18 +65,17 @@
 		select *
 		from board_tb as b
 		left join user_tb as u
-		on
-		b.user_id = u.id
-		left join board_category_tb as
-		bc
-		on b.category_id =
-		bc.id
+		on b.user_id = u.id
+		left join board_category_tb as bc
+		on b.category_id = bc.id
+		left join board_type_tb as bt
+		on b.board_type_id = bt.id
 		where b.id = #{id}
 	</select>
 
 	<update id="updateBoard">
-		update board_tb set title = #{title}, content =
-		#{content} where id = #{id}
+		update board_tb set title = #{title}, content = #{content}, category_id = #{categoryId} 
+		where id = #{id}
 	</update>
 
 	<delete id="deleteById">

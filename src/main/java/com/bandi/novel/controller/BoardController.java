@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardReplyDto;
 import com.bandi.novel.dto.BoardSearchDto;
-import com.bandi.novel.dto.BoardTypeDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.model.BoardFile;
 import com.bandi.novel.model.BoardReply;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.model.User;
@@ -131,7 +130,7 @@ public class BoardController {
 			}
 		}
 		boardDto.setFileName(fileNames);
-		boardDto.setRawFilName(rawFileNames);
+		boardDto.setRawFileName(rawFileNames);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		String content = boardDto.getContent().replaceAll("\r\n", "<br>");
 		boardDto.setContent(content);
@@ -146,6 +145,8 @@ public class BoardController {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<BoardReplyDto> replyList = boardReplyService.selectBoardReplyListByBoardId(id);
+		System.out.println(replyList);
+		List<BoardFile> fileList = boardService.selectFileList(id);
 		BoardReplyPageUtil replyPageUtil = new BoardReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
 		if(principal != null) {
 			boolean isLike = boardLikeService.selectLikeByUserIdAndBoardId(principal.getId(), id);
@@ -187,6 +188,7 @@ public class BoardController {
 		boardDetail.setViews(boardDetail.getViews() + 1);
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("replyList", replyPageUtil);
+		model.addAttribute("fileList", fileList);
 		return "/board/boardDetail";
 	}
 
@@ -194,8 +196,13 @@ public class BoardController {
 	public String updateBoard(@PathVariable Integer id, Model model) {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		// boardDetail 에서 boardTypeId 가져와서 카테고리 리스트 불러옴
+		List<CategorySelectDto> categoryList = boardService.selectCategory(boardDetail.getBoardTypeId());
+		List<BoardFile> fileList = boardService.selectFileList(id);
 		boardDetail.setContent(boardDetail.getContent().replaceAll("<br>", "\r\n"));
 		model.addAttribute("boardDetail", boardDetail);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("fileList", fileList);
 		return "/board/boardUpdate";
 	}
 
@@ -221,5 +228,6 @@ public class BoardController {
 		String content = boardReply.getContent().replaceAll("\r\n", "<br>");
 		return "redirect:/board/detail/" + boardReply.getBoardId();
 	}
+	
 
 }

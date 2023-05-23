@@ -17,9 +17,9 @@
 			<label for="exampleFormControlInput1" class="form-label">제목</label> <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요.">
 		</div>
 		<div class="mb-3">
-			<label for="formFileMultiple" class="form-label">Multiple files input example</label> <input class="form-control" type="file" name="files" id="formFileMultiple" multiple>
+			<label for="formFileMultiple" class="form-label">파일 선택</label> <input class="form-control" type="file" name="files" id="formFileMultiple" multiple>
 		</div>
-		<input type="hidden" name="boardTypeId" value="${boardTypeId }"> <select class="form-select" name="categoryId">
+		<select class="form-select" name="categoryId">
 			<c:forEach items="${categoryList }" var="category">
 				<option value="${category.id }">${category.categoryName }</option>
 			</c:forEach>

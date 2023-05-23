@@ -4,10 +4,8 @@ import lombok.Data;
 
 @Data
 public class BoardFile {
-	
-	private int boardId;
+	private Integer id;
+	private Integer boardId;
 	private String rawFileName;
 	private String encodedFileName;
-	private String fileType;
-
 }

@@ -12,6 +12,7 @@ public class Board {
 	private Integer boardTypeId;
 	private String title;
 	private String content;
+	private String encodedFileName;
 	private Integer likes;
 	private Integer views;
 	private Integer categoryId;

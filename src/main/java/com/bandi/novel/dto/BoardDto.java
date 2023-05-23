@@ -9,8 +9,7 @@ import com.bandi.novel.utils.TimestampFormat;
 
 import lombok.Data;
 
-@Data
-public class BoardDto {
+@Datapublic class BoardDto {
 	private Integer id;
 	private Integer userId;
 	private Integer views;
@@ -24,7 +23,7 @@ public class BoardDto {
 	private Timestamp createdAt;
 	private MultipartFile[] files;
 	private List<String> fileName;
-	private List<String> rawFilName;
+	private List<String> rawFileName;
 	
 	public String createdAt() {
 		return TimestampFormat.format(createdAt);

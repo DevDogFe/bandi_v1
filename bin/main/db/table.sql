@@ -41,6 +41,7 @@ CREATE TABLE board_tb(
     content TEXT NOT NULL,
     likes INT NOT NULL DEFAULT 0,
     views INT NOT NULL DEFAULT 0,
+    ecoded_file_name VARCHAR(100),
     created_at TIMESTAMP DEFAULT now(),
 	FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
     FOREIGN KEY(board_type_id) REFERENCES board_type_tb(id) ON DELETE CASCADE,
@@ -60,6 +61,7 @@ CREATE TABLE board_reply_tb(
 
 -- 게시판 첨부파일
 CREATE TABLE board_file_tb(
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	board_id INT NOT NULL,
     raw_file_name VARCHAR(100) NOT NULL,
     encoded_file_name VARCHAR(150) NOT NULL,

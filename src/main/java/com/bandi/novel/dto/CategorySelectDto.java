@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CategorySelectDto {
-	private int id;
-	private int boardTypeId;
+	private Integer id;
+	private Integer boardTypeId;
 	private String categoryName;
 }

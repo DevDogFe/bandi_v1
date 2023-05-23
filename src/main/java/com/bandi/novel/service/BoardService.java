@@ -10,6 +10,7 @@ import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.model.BoardFile;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.BoardFileRepository;
@@ -39,7 +40,7 @@ public class BoardService {
 		boardDto.setId(boardId);
 		if(boardDto.getFiles() != null) {
 			for(int i = 0; i < boardDto.getFileName().size(); i++) {
-				boardFileRepository.insertFile(boardId, boardDto.getRawFilName().get(i), boardDto.getFileName().get(i));
+				boardFileRepository.insertFile(boardId, boardDto.getRawFileName().get(i), boardDto.getFileName().get(i));
 			}
 		}
 		if(resultRowCount != 1) {
@@ -113,6 +114,22 @@ public class BoardService {
 	public List<BoardDto> searchList(BoardSearchDto boardSearchDto) {
 		
 		return boardRepository.selectSearchList(boardSearchDto);
+	}
+	
+	// 파일 조회
+	@Transactional
+	public List<BoardFile> selectFileList(Integer boardId) {
+		return boardFileRepository.selectFileList(boardId);
+	}
+	
+	// 파일 삭제
+	@Transactional
+	public int deleteFile(Integer id) {
+		int resultRowCount = boardFileRepository.deleteFile(id);
+		if(resultRowCount != 1) {
+			System.out.println("삭제 실패");
+		}
+		return resultRowCount;
 	}
 
 }
