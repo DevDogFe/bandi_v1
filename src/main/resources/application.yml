@@ -39,7 +39,7 @@ spring:
   mail:
     host: smtp.naver.com
     port: 465
-    # 이메일 !!!
+    # 이메일 !!! 
     username:  
     password: 
     properties:

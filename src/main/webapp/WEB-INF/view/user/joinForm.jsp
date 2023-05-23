@@ -4,7 +4,7 @@
 <h1>회원가입</h1>
 <form action="/user" method="post">
 	<div class="mb-3">
-		<label for="username" class="form-label">아이디</label> <input type="text" class="form-control" id="usernameJ" name="username" required value="zxc">
+		<label for="username" class="form-label">아이디</label> <input type="text" class="form-control" id="usernameJ" name="username" required value="hyo">
 		<button type="button" id="usernameCheck" class="btn btn-secondary">아이디 중복 확인</button>
 	</div>
 	<div class="mb-3">
@@ -14,15 +14,16 @@
 		<label for="passwordCheck" class="form-label">비밀번호 확인</label> <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" required value="456">
 	</div>
 	<div class="mb-3">
-		<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="개">
+		<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="효린씨">
 		<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>
 	</div>
 	<div class="mb-3">
-		<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="dog@sample.com">
+		<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="khl4459@naver.com">
 		<button type="button" id="emailCheck" class="btn btn-secondary">이메일 중복 확인</button>
+		<button type="button" id="emailAuth" class="btn btn-secondary">이메일 인증</button>
 	</div>
 	<div class="mb-3">
-		<label for="birthDate" class="form-label">생년월일</label> <input type="date" class="form-control" id="birthDate" name="birthDate" required value="1991-11-11">
+		<label for="birthDate" class="form-label">생년월일</label> <input type="date" class="form-control" id="birthDate" name="birthDate" required value="1991-09-29">
 	</div>
 	<div class="mb-3 d-flex">
 		<div>성별 &nbsp;&nbsp;&nbsp;</div>
@@ -92,6 +93,11 @@
 				alert("요청을 처리할 수 없습니다.");
 			});
 		});
+		
+		$("#emailAuth").on("click", () =>{
+			
+		});
+		
 	});
 </script>
 <%@include file="../layout/footer.jsp"%>

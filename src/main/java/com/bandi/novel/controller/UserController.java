@@ -160,7 +160,9 @@ public class UserController {
 	}
 
 	/**
-	 * @author 효린 비밀번호 찾기 폼
+	 * 비밀번호 찾기 폼
+	 * @author 효린
+	 * 
 	 */
 	@GetMapping("/findPwd")
 	private String getFindPwd() {
@@ -177,12 +179,10 @@ public class UserController {
 
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
-		user.setPassword(TempPasswordUtill.getTempPassword());
-		
-		// TODO 순서 확인
+		user.setPassword(TempPasswordUtill.getTempPassword());		
 		//userService.updateUserPwd(user);
 		// 메일 전송
-		mailService.sendMail(user);
+		mailService.sendTempPassword(user);
 		// 비밀번호변경
 		userService.updateUserPwd(user);
 		return "redirect:/index";

@@ -44,8 +44,7 @@ public class UserApiController {
 		
 		userUpdateDto.setBeforePassword("***");
 		userUpdateDto.setPassword("***");
-		userUpdateDto.setPasswordCheck("***");
-		
+		userUpdateDto.setPasswordCheck("***");		
 		
 		return userUpdateDto;
 	}
