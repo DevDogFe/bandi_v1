@@ -43,4 +43,9 @@ public class SampleController {
 		return "/browse";
 	}
 	
+	@GetMapping("/error")
+	public String handleError() {
+		return "/error/notFound";
+	}
+	
 }

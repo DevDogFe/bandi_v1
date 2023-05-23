@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
+import com.bandi.novel.dto.response.NovleRecordSectionDto;
+import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -32,6 +34,7 @@ import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.UserFavoriteService;
+import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.NovelPageUtil;
 import com.bandi.novel.utils.NovelReplyPageUtil;
@@ -55,6 +58,8 @@ public class NovelController {
 	private ContestService contestService;
 	@Autowired
 	private UserFavoriteService userFavoriteService;
+	@Autowired
+	private UserNovelRecordService userNovelRecordService;
 
 	/**
 	 * @param model
@@ -187,11 +192,12 @@ public class NovelController {
 	@GetMapping("/novel/detail/{novelId}")
 	public String getNovelDetail(Model model, @PathVariable Integer novelId) {
 
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		// 소설 회차 리스트
-		List<NovelSection> sectionList = novelService.selectNovelSectionListByNovelId(novelId);
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
+				novelId);
 		// 즐겨찾기 여부
 		if (principal != null) {
 			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
@@ -209,16 +215,25 @@ public class NovelController {
 	 * @param sectionId
 	 * @return
 	 */
-	@GetMapping("/section/read/{sectionId}")
+	@GetMapping("/section/read/{novelId}/{sectionId}")
 	public String getReadSection(HttpServletRequest request, HttpServletResponse response, Model model,
+			@PathVariable Integer novelId,
 			@PathVariable Integer sectionId, @RequestParam(defaultValue = "1") Integer currentPage) {
+		
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		// 이전글 다음글 기능
+		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
+		//
 
-		NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
+		// 본 소설 저장 혹은 업데이트
+		userNovelRecordService.NovelRecord(principal.getId(), novelId, sectionId);
+		//
+
+		//NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
-		
+		novelSection.setContent(novelSection.getContent().replace("\r\n", "<br>"));
 		// 조회수 올리기(쿠키에 userId와 sectionId 담아서 중복방지)
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		Integer userId = -1;
 		if(principal != null) {
 			userId = principal.getId();
@@ -232,6 +247,7 @@ public class NovelController {
 			for (Cookie cookie : cookies) {
 				if(cookie.getName().equals("sectionCookie")) {
 					isSectionCookie = true;
+					System.out.println("같은 이름 있음?: " + cookie.getValue().contains("[" + userId + "_" + sectionId + "]"));
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
@@ -245,6 +261,7 @@ public class NovelController {
 		}
 		
 		if(!isSectionCookie) {
+			System.out.println("sessionCookie 없음");
 			Cookie sectionCookie = new Cookie("sectionCookie", "[" + userId + "_" + sectionId + "]");
 			sectionCookie.setMaxAge(60 * 60 * 24);
 			sectionCookie.setPath("/");
@@ -272,11 +289,17 @@ public class NovelController {
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
 
-		return "redirect:/section/read/" + novelReply.getSectionId();
+		return "redirect:/section/read/"+novelReply.getNovelId()+"/"+ novelReply.getSectionId();
 	}
 	
+	/**
+	 * 파일 등록
+	 * 
+	 * @param coverFile
+	 * @return
+	 */
 	@PostMapping("/novel/cover")
-	public String coverProc(MultipartFile coverFile, @RequestParam Integer novelId) {
+	public String coverProc(MultipartFile coverFile, @RequestParam Integer novelId, @RequestParam Integer serviceTypeId) {
 		MultipartFile file = coverFile;
 		if (!file.isEmpty()) {
 			if (file.getSize() > Define.MAX_FILE_SIZE) {
@@ -298,7 +321,12 @@ public class NovelController {
 				e.printStackTrace();
 			}
 		}
-		return "redirect:/novel/detail/" + novelId;
+		
+		if(serviceTypeId == 3) {
+			return "redirect:/contest/novel/detail/" + novelId;
+		}else {
+			return "redirect:/novel/detail/" + novelId;
+		}
 	}
 
 }

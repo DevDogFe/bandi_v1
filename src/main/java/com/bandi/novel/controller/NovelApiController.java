@@ -47,6 +47,7 @@ public class NovelApiController {
 
 	}
 	
+	// 댓글 삭제
 	@DeleteMapping("/api/reply/{replyId}")
 	public Integer deleteNovelReplyProc(@PathVariable Integer replyId) {
 		novelReplyService.deleteNovelReplyById(replyId);

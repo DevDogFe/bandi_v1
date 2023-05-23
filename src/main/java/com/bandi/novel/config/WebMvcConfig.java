@@ -21,6 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/bandi/uploads/**")
 				.addResourceLocations("file:///C:\\bandi\\upload/");
+
 	}
 
 	/**

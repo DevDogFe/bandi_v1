@@ -34,6 +34,52 @@
 		WHERE n.service_type_id = 3
 	</select>
 	
+	<!-- 공모전인 소설 검색 조회 -->
+	<select id="selectContestNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.ContestNovelDto">
+		<if test="genreId != null and search != null">
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			LEFT JOIN contest_novel_tb AS cn
+			ON n.id = cn.novel_id
+        	LEFT JOIN contest_tb AS c
+        	ON cn.contest_id = c.id
+			WHERE n.service_type_id = 3
+			AND g.id = #{genreId}
+			AND n.title LIKE CONCAT('%', #{search}, '%')
+		</if>
+		<if test='genreId != null and search == null'>
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			LEFT JOIN contest_novel_tb AS cn
+			ON n.id = cn.novel_id
+        	LEFT JOIN contest_tb AS c
+        	ON cn.contest_id = c.id
+			WHERE n.service_type_id = 3
+			AND g.id = #{genreId}
+		</if>
+		<if test="genreId == null and search != null">
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			LEFT JOIN contest_novel_tb AS cn
+			ON n.id = cn.novel_id
+        	LEFT JOIN contest_tb AS c
+        	ON cn.contest_id = c.id
+			WHERE n.service_type_id = 3
+			AND n.title LIKE CONCAT('%', #{search}, '%')
+		</if>
+	</select>
 	
 	<delete id="deleteContestNovelByNovelId">
 		delete from contest_novel_tb where novel_id = #{novelId}

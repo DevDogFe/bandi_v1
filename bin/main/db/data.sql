@@ -6,7 +6,9 @@ insert into test_tb values
 insert into user_tb(username, password, user_role, nick_name, email, birth_date, gender, external) values
 ('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨', 'aa@sample.com', '1997-01-11', '남성', false),
 ('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨', 'user@sample.com', '1992-12-12', '여성', false),
-('qwq', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨', 'user2@sample.com', '1992-10-12', '여성', false);
+('qwq', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨', 'user2@sample.com', '1992-10-12', '여성', false),
+('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', false),
+('hyun', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '지현씨', 'jhkim900726@gmail.com', '1990-07-26', '여성', false);
 
 insert into genre_tb(name) values
 ('무협'), ('판타지'), ('로맨스'), ('SF'), ('대체역사');
@@ -84,7 +86,9 @@ VALUES (3,1);
         
 INSERT INTO novel_section_tb (novel_id, title, content, list_price, current_price)
 VALUES 
-(1, '1화 세조의 슬픔', '세조는 반역을 계획중이다.', 100, 100),
+(1, '1화 세조의 슬픔', '세조는 반역을 계획중이다.
+
+하지만 단종이 너무 강하다는 것을 알게되었다.', 100, 100),
 (3, '프롤로그', '거실 조명은 꺼짐', 100, 100),
 (3, '영약 광산의 주인', '나는 형이 운전하는 차의 보조석에 앉아', 100, 100),
 (3, '내 집에 영약 광산이 열렸다', '내 눈이 커다랗게 떠졌다.', 100, 100),
@@ -97,21 +101,41 @@ VALUES
 
 -- FAQ category 
 insert into faq_category_tb(category_name)
-values('고객'), 
-	  ('작가'),
-	  ('포인트'),
+values('이용안내'), 
+	  ('콘텐츠'),
+	  ('구매'),
 	  ('이벤트'),
 	  ('공모전'),
+	  ('연재'),
 	  ('기타' );
 	  
 -- FAQ  	  
 insert into faq_tb(faq_category_id, question, answer)
-values (1, '고객', '무료'),	
-	   (2, '작가될래요', '신청하세요'),	  
-	   (3, '공짜는 없나요', '무료'),	  
+values (1, '로그인 어떻게 하나요', '무료'),	
+	   (1, '문의는 어떻게 하나요', '무료'),	
+	   (1, '탈퇴하고 싶습니다', '무료'),
+	   (1, '게시글 및 댓글 신고가능한가요', '무료'),	
+	   (2, '콘텐츠 사용기한이 있나요', '신청하세요'),	
+	   (2, '즐겨찾기 할 수 있나요', '신청하세요'),	
+	   (2, '싫어요는 없나요', '신청하세요'),	
+	   (2, '콘텐츠는 신고 안되나요', '신청하세요'),	  
+	   (3, '캐시란 무엇인가요', '무료'),
+	   (3, '이용권은 무엇인가요', '무료'),
+	   (3, '캐시충전은 어떻게 하나요', '무료'),
+	   (3, '캐시 환불은 어떻게 하나요', '무료'),
+	   (3, '결제 어떻게하나요', '무료'),
+	   (3, '캐시 사용기한이 있나요', '무료'),
+	   (3, '소장할 수 있나요', '무료'),	  
 	   (4, '이벤트언제합니까', '내일'),
-	   (5, '공모전언제합니까', '내일') ,
-	   (6, '기타기타', '내일');	  
+	   (4, '어떻게 참여하나요', '내일'),
+	   (4, '당첨자는 어떻게 알려주나요', '내일'),
+	   (5, '공모전 참여 어떻게 하나요', '내일') ,
+	   (5, '언제 열리나요', '내일') ,
+	   (5, '공모전 수상하면 어떻게 되나여', '내일') ,
+	   (6, '제 작품 등록하고 싶은데 어떻게 하나요', '내일'),
+	   (6, '작가로 데뷔하고싶습니다', '내일'),
+	   (7, '알람 기능은 없나요', '내일'),
+	   (7, '앱으로 이용할 수는 없나요', '내일');	  
 	  
 
 -- 게시판 종류 sample data
@@ -161,6 +185,7 @@ insert into question_tb(user_id, title, content, faq_category_id, proceed) value
 insert into answer_tb(user_id, content,  question_id) values
 (1, '답1', 1),
 (2, '답2', 2);
+
 INSERT INTO novel_reply_tb (section_id, user_id, content) VALUES 
 (1, 1, '너무 재밌어요1'),
 (1, 2, '그저그래요2'),
@@ -235,5 +260,10 @@ INSERT INTO user_novel_record_tb(user_id,novel_id,section_id,created_at) VALUES
 (1,1,1,'2023-05-16'),
 (1,3,2,'2023-05-17'),
 (1,3,3,'2023-05-18');
+
+-- 연재문의
+insert into application_tb (user_id, tel, title, content, origin_filename , upload_filename) values
+(1, '01022658611', '연재하고싶어요', '재밌어요', '서비스', '서비스'),
+(2, '010', '연재', '원해요','연재', '연재');
 
 

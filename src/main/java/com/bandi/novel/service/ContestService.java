@@ -89,7 +89,6 @@ public class ContestService {
 		
 		// contest에서 삭제
 		int contestResult = contestRepository.deleteContestById(contestId);
-		System.out.println(novelResult + contestResult);
 		if(contestResult != 1) {
 			throw new IllegalArgumentException("요청을 처리하지 못함.");
 		}
@@ -118,6 +117,21 @@ public class ContestService {
 		
 		return contestNovelList;
 	}
+	
+	/**
+	 * 공모전 게시판 리스트 검색 조회
+	 * @return 공모전 
+	 */
+	@Transactional
+	public List<ContestNovelDto> selectContestNovelListBySearch(Integer genreId, String search) {
+		
+		if(genreId != null || search != null) {
+			return contestNovelRepository.selectContestNovelsByGenreIdAndName(genreId, search);
+		}
+		
+		return contestNovelRepository.selectContestNovelList();
+	}
+	
 	
 	/**
 	 * 공모전 소설 삭제

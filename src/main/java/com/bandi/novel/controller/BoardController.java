@@ -263,5 +263,4 @@ public class BoardController {
 		return "redirect:/board/detail/" + boardReply.getBoardId();
 	}
 	
-
 }
