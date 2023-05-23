@@ -51,27 +51,24 @@ body {
 <body>
 	<div class="container">
 		<div class="top">
-			<h1>구매가 필요한 유료 작품입니다.</h1>
 			<p>내 보유 골드 : <span>${userGold} 골드</span></p>
 			<hr>
 		</div>
 		<div class="bottom">
-		<form action="/payment/kakaoPay/ready" method="post">
 			<p>
-				<b> 구매하기</b>
+				<b>골드 충전하기</b>
 			</p>
 			<p>아래에서 방법을 선택해주세요</p>
+			<select >
+				<option>1000</option>
+				<option>2000</option>
+				<option>3000</option>
+				<option>4000</option>
+			</select>
 			<div class="bottom-inner">
-				<input type="hidden" name="sectionId" value="${paySection.id}">
-				<input type="hidden" name="novelId" value="${paySection.novelId}">
-				<input type="hidden" name="quantity" value="1">
-				<input type="hidden" name="itemName" value="${paySection.title}">
-				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-				<button type="submit" class="pay-btn gold">구매 ${paySection.currentPrice} G</button>
 				<button class="pay-btn charge"
-					onclick="location.href='/payment/charge'">골드 충전하기</button>
+					onclick="location.href='/payment/kakaoPay/ready">충전하기</button>
 			</div>
-		</form>
 		</div>
 	</div>
 </body>

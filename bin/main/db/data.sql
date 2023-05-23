@@ -93,7 +93,8 @@ VALUES
 (3, '회복', '나는 영약 광산 안으로 들어섰다.', 100, 100),
 (3, '설욕의 시간', '윤재는 나를 붙든 채 물었다.', 100, 100),
 (3, '진화석의 쓰임새', '영상 속의 나는 기자의 질문에 답했었다.', 100, 100),
-(3, '약팔이', '나는 형이 운전하는 차의 보조석에 앉아라', 100, 100);
+(3, '약팔이', '나는 형이 운전하는 차의 보조석에 앉아라', 100, 100),
+(1, '2화 슬픈 세조', '세조는 계획중이다. 반역을', 200, 150);
 
 -- FAQ category 
 insert into faq_category_tb(category_name)
@@ -248,4 +249,13 @@ insert into application_tb (user_id, tel, title, content, origin_filename , uplo
 (1, '01022658611', '연재하고싶어요', '재밌어요', '서비스', '서비스'),
 (2, '010', '연재', '원해요','연재', '연재');
 
+-- 유저 골드 정보 
+INSERT INTO user_gold_tb(user_id,gold) VALUES
+(1,1000),
+(2,1000),
+(3,5000);
+
+-- 유저 결제 회차 기록
+INSERT INTO user_library_tb(user_id,section_id) VALUES
+(1,1);
 

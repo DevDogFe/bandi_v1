@@ -157,7 +157,6 @@ public class ContestController {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
-		System.out.println(contest.toString()); 
 		contestService.updateContest(contest);
 
 		return "redirect:/contest/list";

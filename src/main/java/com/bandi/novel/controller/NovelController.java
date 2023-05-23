@@ -30,9 +30,12 @@ import com.bandi.novel.model.NovelReply;
 import com.bandi.novel.model.NovelSection;
 import com.bandi.novel.model.ServiceType;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserGold;
+import com.bandi.novel.model.UserLibrary;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
@@ -60,6 +63,8 @@ public class NovelController {
 	private UserFavoriteService userFavoriteService;
 	@Autowired
 	private UserNovelRecordService userNovelRecordService;
+	@Autowired
+	private PayService payService;
 
 	/**
 	 * @param model
@@ -221,6 +226,19 @@ public class NovelController {
 			@PathVariable Integer sectionId, @RequestParam(defaultValue = "1") Integer currentPage) {
 		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		
+		// 결제 여부 확인
+		UserLibrary userLibrary = payService.selectUserLibrary(principal.getId(), sectionId);
+		
+		if(userLibrary == null) {
+			NovelSection paySection = novelService.selectNovelSectionById(sectionId);
+			int userGold = payService.selectUserGold(principal.getId());
+			model.addAttribute("paySection",paySection);
+			model.addAttribute("userGold",userGold);
+			return "/pay/userPay";
+		}
+		//
+		
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//

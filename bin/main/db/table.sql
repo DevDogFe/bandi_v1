@@ -277,3 +277,11 @@ CREATE TABLE user_novel_record_tb(
 	FOREIGN KEY (novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
+
+
+-- 유저가 골드 정보
+CREATE TABLE user_gold_tb(
+	user_id INT PRIMARY KEY,
+	gold INT NOT NULL DEFAULT 0,
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE
+);
