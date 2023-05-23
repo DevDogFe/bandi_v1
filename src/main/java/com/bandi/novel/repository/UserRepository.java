@@ -20,5 +20,7 @@ public interface UserRepository {
 	public User selectByEmail(String email);
 	
 	public User selectByNickName(String nickName);
+	// 비밀번호 변경 (효린) 
+	public int updatePwd(User user);
 	
 }
