@@ -10,4 +10,12 @@ public class NovelDto {
 	private Integer userId;
 	private String nickName;
 	private String genreName;
+	private Integer genreId;
+	private Integer favoriteCount;
+	private Double score;
+	
+	public Double score() {
+		
+		return Math.round(score*10)/10.0;
+	}
 }

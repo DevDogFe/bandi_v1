@@ -1,9 +1,11 @@
 package com.bandi.novel.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.UserFavorite;
 import com.bandi.novel.repository.UserFavoriteRepository;
 
@@ -36,13 +38,36 @@ public class UserFavoriteService {
 	@Transactional
 	public void insertUserFavorite(Integer userId, Integer novelId) {
 		int result = userFavoriteRepository.insert(UserFavorite.builder().userId(userId).novelId(novelId).build());
-		// todo 예외처리
+		if(result != 1) {
+			throw new CustomRestfulException("요청을 처리하지 못했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
+	/**
+	 * 즐겨찾기 삭제
+	 * @param userId
+	 * @param novelId
+	 */
 	@Transactional
 	public void deleteUserFavorite(Integer userId, Integer novelId) {
 		int result = userFavoriteRepository.delete(UserFavorite.builder().userId(userId).novelId(novelId).build());
-		// todo 예외처리
+		if(result != 1) {
+			throw new CustomRestfulException("요청을 처리하지 못했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	/**
+	 * 소설 작품별 즐겨찾기 총합
+	 * @param novelId
+	 * @return
+	 */
+	@Transactional
+	public Integer selectFavoriteSumByNovelId(Integer novelId) {
+		Integer favoriteSum = userFavoriteRepository.selectUserFavoriteSumByNovelId(novelId);
+		if(favoriteSum == null) {
+			favoriteSum = 0;
+		}
+		return favoriteSum;
 	}
 
 }

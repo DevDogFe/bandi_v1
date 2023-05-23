@@ -218,12 +218,10 @@ CREATE TABLE  novel_reply_tb(
 CREATE TABLE score_tb(
 	user_id INT,
 	section_id INT,
-    service_type_id INT,
     score INT NOT NULL,
     PRIMARY KEY(user_id, section_id),
     FOREIGN KEY(user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY(section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE,
-    FOREIGN KEY(service_type_id) REFERENCES service_type_tb(id) ON DELETE CASCADE
+    FOREIGN KEY(section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
 
 

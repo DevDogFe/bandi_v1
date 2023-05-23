@@ -150,6 +150,9 @@ public class NovelController {
 			search = null;
 		}
 		List<NovelDto> payNovelList = novelService.selectPayNovelList(genreId, search);
+		payNovelList.forEach((n) -> {
+			System.out.println(n);
+		});
 		List<Genre> genreList = novelService.selectGenreList();
 		NovelPageUtil novelPageUtil = new NovelPageUtil(payNovelList.size(), 20, currentPage, 5, payNovelList);
 		model.addAttribute("novelList", novelPageUtil);
@@ -191,10 +194,10 @@ public class NovelController {
 	 */
 	@GetMapping("/novel/detail/{novelId}")
 	public String getNovelDetail(Model model, @PathVariable Integer novelId) {
-
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		// 소설 회차 리스트
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
 				novelId);
@@ -205,6 +208,7 @@ public class NovelController {
 		}
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("detail", novelDetailDto);
+		model.addAttribute("favorite", favorite);
 
 		return "/novel/novelDetail";
 	}

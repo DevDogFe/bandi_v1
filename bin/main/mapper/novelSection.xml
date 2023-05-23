@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.bandi.novel.repository.NovelSectionRepository">
+<mapper namespace="com.bandi.novel.repository.NovelSectionRepository">
 
-	<select id="selectListByNovelId"
-		resultType="com.bandi.novel.model.NovelSection">
-		SELECT * FROM novel_section_tb
-		WHERE novel_id = #{id}
-		ORDER
-		BY id DESC
+	<select id="selectListByNovelId" resultType="com.bandi.novel.dto.response.SectionListDto">
+		SELECT ns.*, s.score
+		FROM novel_section_tb AS ns
+		LEFT JOIN
+		(
+			SELECT section_id, avg(score) AS score
+			FROM score_tb
+			GROUP BY section_id
+		) AS s
+		ON ns.id = s.section_id
+		ORDER BY ns.id DESC
 	</select>
 
 	<insert id="insert">
@@ -19,14 +23,13 @@
 		#{content}, #{listPrice}, #{currentPrice});
 	</insert>
 
-	<select id="selectById"
-		resultType="com.bandi.novel.model.NovelSection">
+	<select id="selectById" resultType="com.bandi.novel.model.NovelSection">
 		SELECT * FROM novel_section_tb
 		WHERE id = #{id}
 	</select>
-	
+
 	<update id="updateViewsById">
-		UPDATE novel_section_tb 
+		UPDATE novel_section_tb
 		SET views = views + 1
 		WHERE id = #{sectionId}
 	</update>
@@ -38,20 +41,19 @@
 		WHERE novel_id = #{novelId}
 	</select>
 
-	<select id="selectNovelByPage"
-		resultType="com.bandi.novel.dto.response.SectionDto">
-		SELECT * 
+	<select id="selectNovelByPage" resultType="com.bandi.novel.dto.response.SectionDto">
+		SELECT *
 		FROM(
-			SELECT 
-			id,novel_id,title,content,created_at,recommend,
-			favorite,views,list_price,current_price,
-			LAG(id, 1, 0) OVER(ORDER BY id ASC) AS prev_id,
-			LAG(title, 1, '이전글이 없습니다') OVER (ORDER BY id) AS prev_title,
-			LEAD(id, 1, 0) OVER(ORDER BY id ASC) AS next_id,
-			LEAD(title, 1, '다음글이 없습니다')
-			OVER (ORDER BY id) AS next_title
-			FROM novel_section_tb
-			where novel_id = ${novelId}
+		SELECT
+		id,novel_id,title,content,created_at,recommend,
+		favorite,views,list_price,current_price,
+		LAG(id, 1, 0) OVER(ORDER BY id ASC) AS prev_id,
+		LAG(title, 1, '이전글이 없습니다') OVER (ORDER BY id) AS prev_title,
+		LEAD(id, 1, 0) OVER(ORDER BY id ASC) AS next_id,
+		LEAD(title, 1, '다음글이 없습니다')
+		OVER (ORDER BY id) AS next_title
+		FROM novel_section_tb
+		where novel_id = ${novelId}
 		) sub_tb
 		where id = ${sectionId}
 		ORDER BY id desc;
