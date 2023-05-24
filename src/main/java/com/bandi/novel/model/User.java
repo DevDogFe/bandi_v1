@@ -16,4 +16,11 @@ public class User {
 	private Date birthDate;
 	private String gender;
 	private Boolean external;
+	
+	public String gender() {
+		if(this.gender.equals("male")) {
+			return "남성";
+		}
+		return "여성";
+	}
 }
