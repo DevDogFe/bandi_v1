@@ -86,13 +86,13 @@ public class NovelService {
 	 * @return
 	 */
 	@Transactional
-	public List<NovelDto> selectPayNovelList(Integer genreId, String search) {
+	public List<NovelDto> selectPayNovelList(Integer genreId, String search, String sort) {
 
 		if (genreId != null || search != null) {
-			return novelRepository.selectPayNovelsByGenreIdAndName(genreId, search);
+			return novelRepository.selectPayNovelsByGenreIdAndName(genreId, search, sort);
 		}
-
-		return novelRepository.selectPayNovels();
+		System.out.println(sort);
+		return novelRepository.selectPayNovels(sort);
 	}
 
 	/**
@@ -101,13 +101,13 @@ public class NovelService {
 	 * @return
 	 */
 	@Transactional
-	public List<NovelDto> selectFreeNovelList(Integer genreId, String search) {
+	public List<NovelDto> selectFreeNovelList(Integer genreId, String search, String sort) {
 
 		if (genreId != null || search != null) {
-			return novelRepository.selectFreeNovelsByGenreIdAndName(genreId, search);
+			return novelRepository.selectFreeNovelsByGenreIdAndName(genreId, search, sort);
 		}
 
-		return novelRepository.selectFreeNovels();
+		return novelRepository.selectFreeNovels(sort);
 	}
 
 	/**

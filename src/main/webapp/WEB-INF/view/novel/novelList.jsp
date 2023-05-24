@@ -19,6 +19,9 @@ ul {
 <section>
 	<article>
 		<h1>${serviceType}소설</h1>
+		<a href="?sort=default">최신순</a>
+		<a href="?sort=favorite">즐겨찾기순</a>
+		<a href="?sort=score">평점순</a>
 		<table class="table">
 			<thead>
 				<tr class="table-secondary">

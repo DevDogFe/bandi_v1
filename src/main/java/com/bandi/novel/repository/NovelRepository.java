@@ -35,13 +35,13 @@ public interface NovelRepository {
 
 	int deleteNovelById(Integer id);
 
-	List<NovelDto> selectPayNovels();
+	List<NovelDto> selectPayNovels(String sort);
 
-	List<NovelDto> selectFreeNovels();
+	List<NovelDto> selectFreeNovels(String sort);
 
-	List<NovelDto> selectPayNovelsByGenreIdAndName(@Param("genreId") Integer genreId,@Param("search") String search);
+	List<NovelDto> selectPayNovelsByGenreIdAndName(@Param("genreId") Integer genreId,@Param("search") String search, @Param("sort") String sort);
 	
-	List<NovelDto> selectFreeNovelsByGenreIdAndName(@Param("genreId")Integer genreId,@Param("search") String search);
+	List<NovelDto> selectFreeNovelsByGenreIdAndName(@Param("genreId")Integer genreId,@Param("search") String search, @Param("sort") String sort);
 	
 	NovelDetailDto selectNovelDetailByNovelId(Integer id);
 	

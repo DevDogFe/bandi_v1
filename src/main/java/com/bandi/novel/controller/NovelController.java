@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.SectionDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -144,15 +146,14 @@ public class NovelController {
 	 * @return
 	 */
 	@GetMapping("/pay")
-	public String getPayList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
-		System.out.println(genreId + "/" + search);
-		if("".equals(search)) {
+	public String getPayList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,
+			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
+			@RequestParam(defaultValue = "default") String sort) {
+		if ("".equals(search)) {
 			search = null;
 		}
-		List<NovelDto> payNovelList = novelService.selectPayNovelList(genreId, search);
-		payNovelList.forEach((n) -> {
-			System.out.println(n);
-		});
+		System.out.println(sort);
+		List<NovelDto> payNovelList = novelService.selectPayNovelList(genreId, search, sort);
 		List<Genre> genreList = novelService.selectGenreList();
 		NovelPageUtil novelPageUtil = new NovelPageUtil(payNovelList.size(), 20, currentPage, 5, payNovelList);
 		model.addAttribute("novelList", novelPageUtil);
@@ -169,12 +170,13 @@ public class NovelController {
 	 * @return
 	 */
 	@GetMapping("/free")
-	public String getFreeList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,  @RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
-		System.out.println(genreId+ "/" + search);
-		if("".equals(search)) {
+	public String getFreeList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,
+			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
+			@RequestParam(required = false) String sort) {
+		if ("".equals(search)) {
 			search = null;
 		}
-		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search);
+		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search, sort);
 		List<Genre> genreList = novelService.selectGenreList();
 		NovelPageUtil novelPageUtil = new NovelPageUtil(freeNovelList.size(), 20, currentPage, 5, freeNovelList);
 		model.addAttribute("novelList", novelPageUtil);
@@ -199,8 +201,7 @@ public class NovelController {
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		// 소설 회차 리스트
-		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
-				novelId);
+		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		// 즐겨찾기 여부
 		if (principal != null) {
 			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
@@ -215,16 +216,17 @@ public class NovelController {
 
 	/**
 	 * 회차 조회
+	 * 
 	 * @param model
 	 * @param sectionId
 	 * @return
 	 */
 	@GetMapping("/section/read/{novelId}/{sectionId}")
 	public String getReadSection(HttpServletRequest request, HttpServletResponse response, Model model,
-			@PathVariable Integer novelId,
-			@PathVariable Integer sectionId, @RequestParam(defaultValue = "1") Integer currentPage) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+			@PathVariable Integer novelId, @PathVariable Integer sectionId,
+			@RequestParam(defaultValue = "1") Integer currentPage) {
+
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//
@@ -233,25 +235,22 @@ public class NovelController {
 		userNovelRecordService.NovelRecord(principal.getId(), novelId, sectionId);
 		//
 
-		//NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
+		// NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
 		novelSection.setContent(novelSection.getContent().replace("\r\n", "<br>"));
 		// 조회수 올리기(쿠키에 userId와 sectionId 담아서 중복방지)
 		Integer userId = -1;
-		if(principal != null) {
+		if (principal != null) {
 			userId = principal.getId();
-		} else {
-			userId = -1;
 		}
 
 		Cookie[] cookies = request.getCookies();
 		boolean isSectionCookie = false;
-		if(cookies != null) {
+		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if(cookie.getName().equals("sectionCookie")) {
+				if (cookie.getName().equals("sectionCookie")) {
 					isSectionCookie = true;
-					System.out.println("같은 이름 있음?: " + cookie.getValue().contains("[" + userId + "_" + sectionId + "]"));
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
@@ -263,9 +262,8 @@ public class NovelController {
 				}
 			}
 		}
-		
-		if(!isSectionCookie) {
-			System.out.println("sessionCookie 없음");
+
+		if (!isSectionCookie) {
 			Cookie sectionCookie = new Cookie("sectionCookie", "[" + userId + "_" + sectionId + "]");
 			sectionCookie.setMaxAge(60 * 60 * 24);
 			sectionCookie.setPath("/");
@@ -274,7 +272,7 @@ public class NovelController {
 			novelSection.setViews(novelSection.getViews() + 1);
 		}
 		// 조회수 up 여기까지
-		
+
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
 
@@ -293,9 +291,9 @@ public class NovelController {
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
 
-		return "redirect:/section/read/"+novelReply.getNovelId()+"/"+ novelReply.getSectionId();
+		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId();
 	}
-	
+
 	/**
 	 * 파일 등록
 	 * 
@@ -303,11 +301,12 @@ public class NovelController {
 	 * @return
 	 */
 	@PostMapping("/novel/cover")
-	public String coverProc(MultipartFile coverFile, @RequestParam Integer novelId, @RequestParam Integer serviceTypeId) {
+	public String coverProc(MultipartFile coverFile, @RequestParam Integer novelId,
+			@RequestParam Integer serviceTypeId) {
 		MultipartFile file = coverFile;
 		if (!file.isEmpty()) {
 			if (file.getSize() > Define.MAX_FILE_SIZE) {
-				//todo 던지기
+				throw new CustomRestfulException("파일의 용량이 20MB를 초과하였습니다.", HttpStatus.BAD_REQUEST);
 			}
 			try {
 				String saveDirectory = Define.UPLOAD_DIRECTORY;
@@ -325,10 +324,10 @@ public class NovelController {
 				e.printStackTrace();
 			}
 		}
-		
-		if(serviceTypeId == 3) {
+
+		if (serviceTypeId == 3) {
 			return "redirect:/contest/novel/detail/" + novelId;
-		}else {
+		} else {
 			return "redirect:/novel/detail/" + novelId;
 		}
 	}
