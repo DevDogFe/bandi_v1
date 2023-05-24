@@ -1,75 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-body {
-	display: flex;
-	justify-content: center;
-	height: 100vh;
-	align-items: center;
-	background-color: #f3f3f3;
-}
+<%@include file="../layout/header.jsp"%>
+<script>
+	$(document).ready(function() {
+		$("#goldSelectForm").on("change", function() {
 
-.container {
-	height: 40vh;
-	width: 700px;
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	background-color: white;
-	padding: 10px;
-	border-radius: 10px;
-	align-items: center;
-	justify-content: center;
-}
-
-.bottom-inner {
-	display: flex;
-	flex-direction: column;
-}
-
-.pay-btn {
-	margin: 10px 0px;
-	color: white;
-	border-radius: 5px;
-	height: 50px;
-}
-
-.pay-btn.gold {
-	background-color: blue;
-}
-
-.pay-btn.charge {
-	background-color: gray;
-}
-</style>
-</head>
-<body>
-	<div class="container">
-		<div class="top">
-			<p>내 보유 골드 : <span>${userGold} 골드</span></p>
-			<hr>
-		</div>
-		<div class="bottom">
-			<p>
-				<b>골드 충전하기</b>
-			</p>
-			<p>아래에서 방법을 선택해주세요</p>
-			<select >
-				<option>1000</option>
-				<option>2000</option>
-				<option>3000</option>
-				<option>4000</option>
-			</select>
-			<div class="bottom-inner">
-				<button class="pay-btn charge"
-					onclick="location.href='/payment/kakaoPay/ready">충전하기</button>
-			</div>
-		</div>
+			$("#totalAmount").val($("#goldSelectForm").val());
+			console.log($("#totalAmount").val());
+		});
+	})
+</script>
+<div class="container">
+	<div class="top">
+		<p>
+			내 보유 골드 : <span>${userGold} 골드</span>
+		</p>
+		<hr>
 	</div>
+	<div class="bottom">
+		<p>
+			<b>골드 충전하기</b>
+		</p>
+		<p>아래에서 충전 금액을 선택해주세요</p>
+		<form action="/payment/kakaoPay/gold/ready" method="post">
+			<select id="goldSelectForm" class="form-select" aria-label="Default select example">
+				<option selected>골드 충전 선택</option>
+				<option value="1000">1000</option>
+				<option value="2000">2000</option>
+				<option value="3000">3000</option>
+			</select> 
+			<input type="hidden" name="sectionId" value="0">
+			<input type="hidden" name="novelId" value="0">
+			<input type="hidden" name="quantity" value="1"> 
+			<input type="hidden" name="itemName" value="골드"> 
+			<input id="totalAmount" type="hidden" name="totalAmount" value="0">
+			<div id="chargeBtn" class="bottom-inner" style="display: inline-block;">
+				<button type="submit" class="pay-btn charge">충전하기</button>
+			</div>
+		</form>
+	</div>
+</div>
 </body>
 </html>

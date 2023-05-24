@@ -68,7 +68,7 @@ body {
 				<input type="hidden" name="itemName" value="${paySection.title}">
 				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
 				<button type="submit" class="pay-btn gold">구매 ${paySection.currentPrice} G</button>
-				<button class="pay-btn charge"
+				<button type="button" class="pay-btn charge"
 					onclick="location.href='/payment/charge'">골드 충전하기</button>
 			</div>
 		</form>

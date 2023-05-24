@@ -49,7 +49,19 @@ public class PayService {
 		if (result != 1) {
 			System.out.println("골드 변경 안됨");
 		} else {
-			System.out.println(userGoldRepository.selectUserGoldByUserId(userId).getGold());
+			System.out.println("구매 후 골드 :" + userGoldRepository.selectUserGoldByUserId(userId).getGold());
+		}
+	}
+	
+	public void chargeGold(Integer userId, Integer amount) {
+		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
+		userGold.setGold(userGold.getGold() + amount);
+		int result = userGoldRepository.updateUserGold(userGold);
+
+		if (result != 1) {
+			System.out.println("골드 충전 안됨");
+		} else {
+			System.out.println("충전 후 골드 :" + userGoldRepository.selectUserGoldByUserId(userId).getGold());
 		}
 	}
 }
