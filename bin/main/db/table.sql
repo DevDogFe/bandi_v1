@@ -285,3 +285,36 @@ CREATE TABLE user_gold_tb(
 	gold INT NOT NULL DEFAULT 0,
 	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );
+
+
+-- 유저 골드 충전 기록
+CREATE TABLE user_gold_charge_tb(
+	user_id INT PRIMARY KEY,
+	price INT NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE
+);
+
+
+-- 유저 대여 기록
+CREATE TABLE user_rental_tb(
+	user_id INT NOT NULL,
+	section_id INT NOT NULL,
+	price INT NOT NULL,
+	begin_rental TIMESTAMP DEFAULT NOW(),
+	end_rental TIMESTAMP NOT NULL,
+	PRIMARY KEY (user_id, section_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
+);
+
+-- 유저 구매 기록
+CREATE TABLE user_purchase_tb(
+	user_id INT NOT NULL,
+	section_id INT NOT NULL,
+	price INT NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY (user_id, section_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
+);
