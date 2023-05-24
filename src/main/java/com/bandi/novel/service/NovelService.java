@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.SectionDto;
@@ -186,6 +187,18 @@ public class NovelService {
 	@Transactional
 	public void updateCover(Integer novelId, String cover) {
 		novelRepository.updateCover(novelId, cover);
+	}
+	
+	// 내 즐겨찾기 목록
+	@Transactional
+	public List<MyFavoriteDto> selectUserFavoriteNovelList(Integer userId, Integer limit){
+		return novelRepository.selectUserFavoriteListByUserId(userId, limit);
+	}
+	
+	// 내 작품 목록
+	@Transactional
+	public List<MyFavoriteDto> selectMyNovels(Integer userId, Integer limit){
+		return novelRepository.selectMyNovelsByUserId(userId, limit);
 	}
 
 }

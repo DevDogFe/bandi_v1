@@ -1,5 +1,7 @@
 package com.bandi.novel.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,10 @@ import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.FindPwdDto;
 import com.bandi.novel.dto.OAuthToken;
 import com.bandi.novel.dto.OAuthUserInfo;
+import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.MailService;
+import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.TempPasswordUtill;
@@ -44,6 +48,8 @@ public class UserController {
 	private String bandiKey;	
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private NovelService novelService;
 
 	/**
 	 * 로그인
@@ -186,6 +192,18 @@ public class UserController {
 		// 비밀번호변경
 		userService.updateUserPwd(user);
 		return "redirect:/index";
+	}
+	
+	// 내정보
+	@GetMapping("/myInfo")
+	private String getMyInfo(Model model) {
+		
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		List<MyFavoriteDto> favoriteList = novelService.selectUserFavoriteNovelList(principal.getId(), 3);
+		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), 3);
+		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("myNovelList", myNovelList);
+		return "/user/userInfo";
 	}
 
 }

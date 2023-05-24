@@ -3,6 +3,51 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.NovelRepository">
 
+	<select id="selectUserFavoriteListByUserId" resultType="com.bandi.novel.dto.response.MyFavoriteDto">
+		<if test="limit != null">
+			SELECT n.id, n.title, g.name AS genre_name, u.nick_name AS author_name
+			FROM novel_tb AS n
+			INNER JOIN user_favorite_tb AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			WHERE uf.user_id = #{userId}
+			LIMIT #{limit}
+		</if>
+		<if test="limit == null">
+			SELECT n.id, n.title, g.name AS genre_name, u.nick_name AS author_name
+			FROM novel_tb AS n
+			INNER JOIN user_favorite_tb AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			LEFT JOIN user_tb AS u
+			ON n.user_id = u.id
+			WHERE uf.user_id = #{userId}
+		</if>
+	</select>
+
+	<select id="selectMyNovelsByUserId" resultType="com.bandi.novel.dto.response.MyFavoriteDto">
+		<if test="limit != null">
+			SELECT n.id, n.title, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.user_id = #{userId}
+			LIMIT #{limit}
+		</if>
+		<if test="limit == null">
+			SELECT n.id, n.title, g.name AS genre_name
+			FROM novel_tb AS n
+			LEFT JOIN genre_tb AS g
+			ON n.genre_id = g.id
+			WHERE n.user_id = #{userId}
+		</if>
+
+	</select>
+
 	<select id="selectPayNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test='sort.equals("default")'>
 			<if test="genreId != null and search != null">
@@ -811,7 +856,8 @@
 			)
 			AS ns
 			ON n.id = ns.novel_id
-			WHERE n.service_type_id = 2
+			WHERE
+			n.service_type_id = 2
 			ORDER BY n.id DESC
 		</if>
 		<if test='sort.equals("favorite")'>

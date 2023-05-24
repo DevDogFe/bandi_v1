@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.model.Novel;
@@ -35,17 +36,30 @@ public interface NovelRepository {
 
 	int deleteNovelById(Integer id);
 
+	// 유료소설 전체
 	List<NovelDto> selectPayNovels(String sort);
 
+	// 무료소설 전체
 	List<NovelDto> selectFreeNovels(String sort);
 
+	// 유료소설 검색
 	List<NovelDto> selectPayNovelsByGenreIdAndName(@Param("genreId") Integer genreId,@Param("search") String search, @Param("sort") String sort);
 	
+	// 무료소설 검색
 	List<NovelDto> selectFreeNovelsByGenreIdAndName(@Param("genreId")Integer genreId,@Param("search") String search, @Param("sort") String sort);
 	
 	NovelDetailDto selectNovelDetailByNovelId(Integer id);
 	
+	// 커버 수정
 	int updateCover(@Param("novelId") Integer Id, @Param("cover") String cover);
+	
+	// 유저 즐겨찾기 소설 목록
+	List<MyFavoriteDto> selectUserFavoriteListByUserId(@Param("userId") Integer userId, @Param("limit") Integer limit);
+	
+	// 유저 내작품 목록
+	List<MyFavoriteDto> selectMyNovelsByUserId(@Param("userId") Integer userId, @Param("limit") Integer limit);
+	
+	
 
 
 }

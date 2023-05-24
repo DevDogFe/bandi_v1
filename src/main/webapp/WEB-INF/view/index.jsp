@@ -66,7 +66,7 @@
 					</c:otherwise>
 				</c:choose>
 				<a href="/board/list">게시판</a>	
-				<a href="/update">내 정보 수정</a>
+				<a href="/myInfo">내 정보</a>
 				<a href="/novel/registration">소설 등록</a>
 				<a href="/pay">유료 작품 목록</a>
 				<a href="/free">무료 작품 목록</a>

@@ -1,6 +1,7 @@
 package com.bandi.novel.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.Data;
 
@@ -22,5 +23,12 @@ public class User {
 			return "남성";
 		}
 		return "여성";
+	}
+	
+	public Integer getAge() {
+		int birthYear = birthDate.getYear() + 1900;
+		int currentYear = LocalDate.now().getYear();
+		
+		return currentYear - birthYear + 1;
 	}
 }
