@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.dto.response.SectionDto;
+import com.bandi.novel.dto.response.SectionListDto;
 import com.bandi.novel.model.NovelSection;
 
 @Mapper
 public interface NovelSectionRepository {
 
-	List<NovelSection> selectListByNovelId(Integer id);
+	List<SectionListDto> selectListByNovelId(Integer id);
 
 	int insert(NovelSection novelSection);
 

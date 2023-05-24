@@ -12,4 +12,6 @@ public interface UserFavoriteRepository {
 	UserFavorite selectByUserIdAndNovelId(UserFavorite userFavorite);
 	
 	int delete(UserFavorite userFavorite);
+	
+	Integer selectUserFavoriteSumByNovelId(Integer novelId);
 }

@@ -5,67 +5,208 @@
 
 	<select id="selectPayNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test="genreId != null and search != null">
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON n.user_id = u.id
-			LEFT JOIN genre_tb AS g
+			LEFT JOIN genre_tb AS
+			g
 			ON n.genre_id = g.id
-			WHERE n.service_type_id = 1
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			) AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 1
 			AND g.id = #{genreId}
 			AND n.title LIKE CONCAT('%', #{search}, '%')
 		</if>
 		<if test='genreId != null and search == null'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON n.user_id = u.id
-			LEFT JOIN genre_tb AS g
+			LEFT JOIN genre_tb AS
+			g
 			ON n.genre_id = g.id
-			WHERE n.service_type_id = 1
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			) AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 1
+			AND g.id = #{genreId}
+			AND n.title LIKE CONCAT('%', #{search}, '%')
 			AND g.id = #{genreId}
 		</if>
 		<if test="genreId == null and search != null">
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
-			ON n.user_id = u.id
-			LEFT JOIN genre_tb AS g
+			ON
+			n.user_id = u.id
+			LEFT JOIN genre_tb AS
+			g
 			ON n.genre_id = g.id
-			WHERE n.service_type_id = 1
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			) AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 1
 			AND n.title LIKE CONCAT('%', #{search}, '%')
 		</if>
 	</select>
-	
+
 	<select id="selectFreeNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test="genreId != null and search != null">
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
-			ON n.user_id = u.id
-			LEFT JOIN genre_tb AS g
+			ON
+			n.user_id = u.id
+			LEFT JOIN genre_tb AS
+			g
 			ON n.genre_id = g.id
-			WHERE n.service_type_id = 2
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			) AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 2
 			AND g.id = #{genreId}
 			AND n.title LIKE CONCAT('%', #{search}, '%')
 		</if>
 		<if test='genreId != null and search == null'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
-			ON n.user_id = u.id
-			LEFT JOIN genre_tb AS g
+			ON
+			n.user_id = u.id
+			LEFT JOIN genre_tb AS
+			g
 			ON n.genre_id = g.id
-			WHERE n.service_type_id = 2
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			) AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 2
 			AND g.id = #{genreId}
 		</if>
 		<if test="genreId == null and search != null">
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
-			ON n.user_id = u.id
+			ON
+			n.user_id = u.id
 			LEFT JOIN genre_tb AS g
 			ON n.genre_id = g.id
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			) AS ns
+			ON n.id = ns.novel_id
 			WHERE n.service_type_id = 2
 			AND n.title LIKE CONCAT('%', #{search}, '%')
 		</if>
@@ -78,24 +219,66 @@
 	</insert>
 
 	<select id="selectPayNovels" resultType="com.bandi.novel.dto.response.NovelDto">
-		SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+		SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 		FROM novel_tb AS n
 		LEFT JOIN user_tb AS u
-		ON n.user_id = u.id
-		LEFT JOIN genre_tb AS g
 		ON
-		n.genre_id = g.id
+		n.user_id = u.id
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		LEFT JOIN
+		(
+		SELECT count(user_id) AS favoriteCount, novel_id
+		FROM user_favorite_tb
+		GROUP BY novel_id
+		) AS uf
+		ON n.id = uf.novel_id
+		LEFT JOIN
+		(
+		SELECT novel_id, avg(score) AS score FROM novel_section_tb AS ns
+		LEFT JOIN
+		(
+		SELECT avg(score) AS score, section_id
+		FROM score_tb
+		GROUP BY section_id
+		) AS sc
+		ON ns.id = sc.section_id
+		GROUP BY ns.novel_id
+		)
+		AS ns
+		ON n.id = ns.novel_id
 		WHERE n.service_type_id = 1
 	</select>
 
 	<select id="selectFreeNovels" resultType="com.bandi.novel.dto.response.NovelDto">
-		SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id
+		SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 		FROM novel_tb AS n
 		LEFT JOIN user_tb AS u
-		ON n.user_id = u.id
-		LEFT JOIN genre_tb AS g
 		ON
-		n.genre_id = g.id
+		n.user_id = u.id
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		LEFT JOIN
+		(
+		SELECT count(user_id) AS favoriteCount, novel_id
+		FROM user_favorite_tb
+		GROUP BY novel_id
+		) AS uf
+		ON n.id = uf.novel_id
+		LEFT JOIN
+		(
+		SELECT novel_id, avg(score) AS score FROM novel_section_tb AS ns
+		LEFT JOIN
+		(
+		SELECT avg(score) AS score, section_id
+		FROM score_tb
+		GROUP BY section_id
+		) AS sc
+		ON ns.id = sc.section_id
+		GROUP BY ns.novel_id
+		)
+		AS ns
+		ON n.id = ns.novel_id
 		WHERE n.service_type_id = 2
 	</select>
 
@@ -140,7 +323,7 @@
 		from novel_tb
 		where id = #{id}
 	</delete>
-	
+
 	<update id="updateCover">
 		UPDATE novel_tb
 		SET cover = #{cover}

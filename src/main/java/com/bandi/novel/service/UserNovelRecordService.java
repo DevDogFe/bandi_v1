@@ -52,11 +52,6 @@ public class UserNovelRecordService {
 		
 		List<NovleRecordSectionDto> dto = userNovelRecordRepository.selectNovelRecord(userId,novelId);
 		
-		// todo 삭제
-		if(dto != null) {
-			System.out.println(dto.toString());
-		}
-		
 		return dto;
 	}
 

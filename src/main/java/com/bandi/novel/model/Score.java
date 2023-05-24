@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Score {
 
-	private int userId;
-	private int boardId;
-	private int score;
+	private Integer userId;
+	private Integer sectionId;
+	private Integer score;
 }

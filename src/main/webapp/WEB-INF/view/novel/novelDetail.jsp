@@ -18,15 +18,15 @@
 		<h1>소설 제목</h1>
 		<div class="novel--header d-flex">
 			<div>
-			<c:choose>
-				<c:when test="${detail.cover != null }">
-					<img alt="" src="/bandi/uploads/${detail.cover }">
-				</c:when>
-				<c:otherwise>
-				
-				<img alt="이미지 없음" src="/assets/images/noimg.jpg">
-				</c:otherwise>
-			</c:choose>
+				<c:choose>
+					<c:when test="${detail.cover != null }">
+						<img alt="" src="/bandi/uploads/${detail.cover }">
+					</c:when>
+					<c:otherwise>
+
+						<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div>
 				<table>
@@ -46,11 +46,11 @@
 					</tr>
 					<tr>
 						<td>즐겨찾기</td>
-						<td>12</td>
+						<td>${favorite}</td>
 					</tr>
 
 				</table>
-				<c:if test="${principal.id == detail.userId }">
+				<c:if test="${detail.userId == principal.id}">
 					<!-- Button trigger modal -->
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">표지 등록하기</button>
 
@@ -114,23 +114,33 @@
 								<c:when test="${section.userId != null}">
 									<tr class="table-info">
 										<td>${sectionList.size() - vs.index}</td>
-										<td><a
-											href="/section/read/${detail.id}/${section.id}"
-											class="list--link">${section.title}</a></td>
+										<td><a href="/section/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
 										<td>${section.createdAt()}</td>
 										<td>${section.views}</td>
-										<td>4.5</td>
+										<td><c:choose>
+												<c:when test="${empty section.score }">
+													-
+												</c:when>
+												<c:otherwise>
+													${section.score()}
+												</c:otherwise>
+											</c:choose></td>
 									</tr>
 								</c:when>
 								<c:otherwise>
 									<tr class="table-default">
 										<td>${sectionList.size() - vs.index}</td>
-										<td><a
-											href="/section/read/${detail.id}/${section.id}"
-											class="list--link">${section.title}</a></td>
+										<td><a href="/section/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
 										<td>${section.createdAt()}</td>
 										<td>${section.views}</td>
-										<td>4.5</td>
+										<td><c:choose>
+												<c:when test="${empty section.score }">
+													-
+												</c:when>
+												<c:otherwise>
+													${section.score}
+												</c:otherwise>
+											</c:choose></td>
 									</tr>
 								</c:otherwise>
 							</c:choose>

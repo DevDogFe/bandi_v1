@@ -8,14 +8,15 @@
 		VALUES
 		(#{userId},#{novelId},#{sectionId})
 	</insert>
-	
+
 	<select id="selectNovelRecordByModel" resultType="com.bandi.novel.model.UserNovelRecord">
 		SELECT *
 		FROM user_novel_record_tb
 		WHERE user_id = #{userId} AND novel_id = #{novelId}
-		AND section_id = #{sectionId} 
+		AND section_id = #{sectionId}
 	</select>
-	
+
+<!-- 추후 novelSection.xml로 옮길 것 -->
 	<select id="selectNovelRecord" resultType="com.bandi.novel.dto.response.NovleRecordSectionDto">
 		SELECT *
 		FROM novel_section_tb as ns
@@ -26,21 +27,29 @@
 			where user_id = #{userId}
 		) as unr
 		ON ns.id = unr.section_id
+		LEFT JOIN
+		(
+			SELECT section_id, avg(score) AS score
+			FROM score_tb
+			GROUP BY section_id
+		) AS s
+		ON ns.id = s.section_id
 		WHERE ns.novel_id = #{novelId}
 		order by ns.id DESC
 	</select>
-	
+
 	<select id="selectLastNovelRecord" resultType="com.bandi.novel.dto.response.LastNovelRecordDto">
 		SELECT unr.user_id,unr.novel_id,unr.section_id,ns.title,ns.content
 		FROM user_novel_record_tb as unr
 		LEFT JOIN novel_section_tb as ns
-		ON unr.section_id = ns.id
-		WHERE unr.user_id = #{userId} 
+		ON
+		unr.section_id = ns.id
+		WHERE unr.user_id = #{userId}
 		order by unr.created_at DESC LIMIT 1;
 	</select>
-	
+
 	<update id="updateNovelRecord">
-		update user_novel_record_tb 
+		update user_novel_record_tb
 		set section_id = #{sectionId}
 		where user_id = #{userId} AND novel_id = #{novelId}
 		AND section_id = #{sectionId}

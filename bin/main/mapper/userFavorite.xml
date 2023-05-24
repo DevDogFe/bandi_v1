@@ -20,5 +20,12 @@
 		WHERE user_id = #{userId} 
 		AND novel_id = #{novelId}
 	</delete>
+	
+	<select id="selectUserFavoriteSumByNovelId" resultType="integer">
+		SELECT count(*)
+		FROM user_favorite_tb
+		WHERE novel_id = #{novelId}
+		GROUP BY novel_id
+	</select>
 
 </mapper>

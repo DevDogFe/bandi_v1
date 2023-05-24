@@ -2,7 +2,6 @@ package com.bandi.novel.service;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +37,7 @@ public class NovelService {
 	private NovelSectionRepository novelSectionRepository;
 	@Autowired
 	private ContestNovelRepository contestNovelRepository;
+	@Autowired
 
 	@Transactional
 	public List<Genre> selectGenreList() {
@@ -88,13 +88,13 @@ public class NovelService {
 	@Transactional
 	public List<NovelDto> selectPayNovelList(Integer genreId, String search) {
 
-		if(genreId != null || search != null) {
+		if (genreId != null || search != null) {
 			return novelRepository.selectPayNovelsByGenreIdAndName(genreId, search);
 		}
-		
+
 		return novelRepository.selectPayNovels();
 	}
-	
+
 	/**
 	 * 무료소설 리스트
 	 * 
@@ -102,11 +102,11 @@ public class NovelService {
 	 */
 	@Transactional
 	public List<NovelDto> selectFreeNovelList(Integer genreId, String search) {
-		
-		if(genreId != null || search != null) {
+
+		if (genreId != null || search != null) {
 			return novelRepository.selectFreeNovelsByGenreIdAndName(genreId, search);
 		}
-		
+
 		return novelRepository.selectFreeNovels();
 	}
 
@@ -122,17 +122,6 @@ public class NovelService {
 		return novelRepository.selectNovelDetailByNovelId(id);
 	}
 
-	/**
-	 * 소설 회차 리스트 불러오기
-	 * 
-	 * @param novelId
-	 * @return
-	 */
-	@Transactional
-	public List<NovelSection> selectNovelSectionListByNovelId(Integer novelId) {
-
-		return novelSectionRepository.selectListByNovelId(novelId);
-	}
 
 	/**
 	 * 회차 등록
@@ -158,9 +147,9 @@ public class NovelService {
 	public NovelSection selectNovelSectionById(Integer id) {
 		return novelSectionRepository.selectById(id);
 	}
-	
+
 	/**
-	 * 소설 회차 조회수 증가 
+	 * 소설 회차 조회수 증가
 	 */
 	@Transactional
 	public void sectionViewsPlus(Integer sectionId) {
@@ -174,7 +163,7 @@ public class NovelService {
 	 * @return
 	 */
 	@Transactional
-	public SectionDto selectNovelReadSection(int novelId,int sectionId) {
+	public SectionDto selectNovelReadSection(int novelId, int sectionId) {
 
 		SectionDto novelSection = novelSectionRepository.selectNovelByPage(novelId, sectionId);
 		return novelSection;
@@ -182,6 +171,7 @@ public class NovelService {
 
 	/**
 	 * section의 전체 회차 수(count) 조회
+	 * 
 	 * @author 김경은
 	 * @param id
 	 * @return
@@ -191,7 +181,8 @@ public class NovelService {
 
 		return novelSectionRepository.selectNovelSectionCount(novelId);
 	}
-	
+
+	// 커버 업데이트
 	@Transactional
 	public void updateCover(Integer novelId, String cover) {
 		novelRepository.updateCover(novelId, cover);
