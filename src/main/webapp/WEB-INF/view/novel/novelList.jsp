@@ -35,7 +35,7 @@ ul {
 			<tbody>
 				<c:forEach items="${novelList.content}" var="novel">
 					<tr>
-						<td><a href="#" class="list--link">${novel.genreName}</a></td>
+						<td><a href="?genreId=${novel.genreId }" class="list--link">${novel.genreName}</a></td>
 						<td><a href="/novel/detail/${novel.id}" class="list--link">${novel.title}</a></td>
 						<td><a href="#" class="list--link">${novel.nickName}</a></td>
 						<c:choose>

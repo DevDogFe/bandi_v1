@@ -152,7 +152,6 @@ public class NovelController {
 		if ("".equals(search)) {
 			search = null;
 		}
-		System.out.println(sort);
 		List<NovelDto> payNovelList = novelService.selectPayNovelList(genreId, search, sort);
 		List<Genre> genreList = novelService.selectGenreList();
 		NovelPageUtil novelPageUtil = new NovelPageUtil(payNovelList.size(), 20, currentPage, 5, payNovelList);
