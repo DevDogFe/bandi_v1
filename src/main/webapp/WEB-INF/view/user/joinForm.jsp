@@ -33,7 +33,6 @@
 		<div class="form-check">
 			<input class="form-check-input" type="radio" name="gender" id="male" value="남성" checked> <label class="form-check-label" for="male"> 남성 </label>
 		</div>
-		<input type="hidden" name="external" value="false">
 	</div>
 
 	<button type="submit" class="btn btn-primary">가입하기</button>

@@ -60,8 +60,6 @@ public class UserController {
 	@PostMapping("/login")
 	public String loginProc(LoginDto loginDto) {
 		
-		User principal = userService.loginByUsernameAndPassword(loginDto);
-		session.setAttribute("principal", principal);
 		return "redirect:/index";
 	}
 

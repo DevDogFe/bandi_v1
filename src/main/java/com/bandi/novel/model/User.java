@@ -16,7 +16,7 @@ public class User {
 	private String email;
 	private Date birthDate;
 	private String gender;
-	private Boolean external;
+	private String external;
 	
 	public String gender() {
 		if(this.gender.equals("male")) {

@@ -14,7 +14,7 @@ CREATE TABLE user_tb(
     email VARCHAR(100) NOT NULL UNIQUE,
     birth_date DATE NOT NULL,
     gender VARCHAR(2) NOT NULL,
-    external boolean NOT NULL
+    external VARCHAR(10)
 );
 
 -- 게시판 종류

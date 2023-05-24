@@ -5,11 +5,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.UserUpdateDto;
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
@@ -33,7 +37,7 @@ public class UserApiController {
 	public UserUpdateDto updateProc(@RequestBody UserUpdateDto userUpdateDto) {
 		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		if(principal.getExternal()) {
+		if(principal.getExternal() != null) {
 			userUpdateDto.setPassword(bandiKey);
 		}
 		userUpdateDto.setId(principal.getId());
@@ -81,6 +85,15 @@ public class UserApiController {
 	public Boolean nickNameCheck(String nickName) {
 		
 		return userService.checkNickName(nickName);
+	}
+	
+	@PostMapping("/api/login")
+	public ResponseDto<Boolean> loginProc(@RequestBody LoginDto loginDto){
+		
+		User principal = userService.loginByUsernameAndPassword(loginDto);
+		session.setAttribute("principal", principal);
+		
+		return new ResponseDto<Boolean>(200, "20000", "ok", "1", true);
 	}
 	
 

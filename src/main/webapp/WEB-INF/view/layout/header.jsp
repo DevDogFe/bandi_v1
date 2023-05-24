@@ -9,11 +9,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-	<link href="/assets/images/bandi2.png" rel="shortcut icon">
-    <title>반디</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="/assets/images/bandi2.png" rel="shortcut icon">
+<title>반디</title>
 
-    <!-- Bootstrap core CSS -->
+<!-- Bootstrap core CSS -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="/assets/images/bandi2.png" rel="shortcut icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -120,15 +120,15 @@ a {
 				<div class="modal-body">
 					<form action="/login" method="post">
 						<div class="mb-3">
-							<label for="username" class="form-label">ID</label> <input type="text" class="form-control" name="username" id="username" required="required" value="qwe">
+							<label for="username" class="form-label">ID</label> <input type="text" class="form-control" name="username" id="usernameL" required="required" value="qwe">
 						</div>
 						<div class="mb-3">
-							<label for="password" class="form-label">Password</label> <input type="password" class="form-control" name="password" id="password" required="required" value="123">
+							<label for="password" class="form-label">Password</label> <input type="password" class="form-control" name="password" id="passwordL" required="required" value="123">
 						</div>
 						<div class="mb-3 form-check">
 							<input type="checkbox" class="form-check-input" id="remember" name="remember"> <label class="form-check-label" for="remember">Check me out</label>
 						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="button" id="loginBtn" class="btn btn-primary">Login</button>
 						<br> <a href="/user">회원가입</a> <br> <a
 							href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
 							src="/assets/images/kakao_login/ko/kakao_login_medium_wide.png">
@@ -151,7 +151,7 @@ a {
 				</c:when>
 				<c:otherwise>
 					<c:choose>
-						<c:when test="${principal.external == true }">
+						<c:when test="${\"kakao\".equals(principal.external)}">
 							<button onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://localhost/logout'" class="login--btn btn">로그아웃</button>
 						</c:when>
 						<c:otherwise>
@@ -221,5 +221,28 @@ a {
 
 	</header>
 
-
+	<script type="text/javascript">
+		$(document).ready(()=>{
+			$("#loginBtn").on("click", () => {
+				
+				let data = {
+						username: $("#usernameL").val(),
+						password: $("#passwordL").val()
+				};
+				
+				$.ajax({
+					type: "POST",
+					url: "/api/login",
+					contentType:"application/json; charset=utf-8",
+					data: JSON.stringify(data),
+					dataType:"json"
+				}).done((response) => {
+					location.reload();
+				}).fail((error) => {
+					console.log(error);
+					alert("요청을 처리할 수 없습니다.");
+				});
+			});
+		});
+	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

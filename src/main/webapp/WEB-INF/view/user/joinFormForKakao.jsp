@@ -11,7 +11,7 @@
 	<form action="/user" method="post">
 			<input type="hidden" name="username" value="${user.username}">
 			<input type="hidden" name="password" value="${user.password}">
-			<input type="hidden" name="external" value="true">
+			<input type="hidden" name="external" value="kakao">
 		<div class="mb-3">
 			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="개">
 			<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>

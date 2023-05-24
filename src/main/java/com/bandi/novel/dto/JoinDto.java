@@ -28,6 +28,6 @@ public class JoinDto {
 	private String email;
 	private Date birthDate;
 	private String gender;
-	private Boolean external;
+	private String external;
 	
 }
