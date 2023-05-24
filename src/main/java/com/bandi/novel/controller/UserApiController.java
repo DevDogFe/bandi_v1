@@ -16,7 +16,7 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.MailService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
-import com.bandi.novel.utils.TempPasswordUtill;
+import com.bandi.novel.utils.TempNumberUtill;
 
 @RestController
 public class UserApiController {
@@ -95,14 +95,9 @@ public class UserApiController {
 			return false;
 		}
 		// 인증번호 생성 
-		// TODO utill 이름 변경
-		String key = TempPasswordUtill.getAuthKey();
+		String key = TempNumberUtill.getAuthKey();
 
-		AuthKey authKey = new AuthKey(email, key);
-		
-		// 		
-		// authkey 
-		userService.updateAuthKey(authKey);
+		AuthKey authKey = new AuthKey(email, key);		
 		// 인증번호 저장
 		userService.createAuthKey(authKey);
 		// 인증번호 메일 전송

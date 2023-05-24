@@ -145,7 +145,6 @@ public class UserService {
 
 	/**
 	 * 효린 사용자 조회 (비밀번호 찾기)
-	 * 
 	 * @param findPwdDto
 	 * @return userEntity
 	 */
@@ -164,7 +163,6 @@ public class UserService {
 
 	/**
 	 * 효린 비밀번호 변경
-	 * 
 	 * @param user
 	 */
 	@Transactional
@@ -180,47 +178,27 @@ public class UserService {
 	}
 
 	/**
-	 * DB 이메일 인증번호 저장
-	 * 
+	 * 효린 DB 이메일 인증번호 저장
 	 * @param authKey
 	 */
 	@Transactional
 	public void createAuthKey(AuthKey authKey) {
 
-		int resultRowCount = authRepository.insert(authKey);
-		if (resultRowCount != 1) {
-			System.out.println("인증번호 DB 저장실패");
-		}
+		AuthKey authKeyEntity = authRepository.FindByEmail(authKey.getEmail());
+		if (authKeyEntity != null) {
+			authRepository.updateByEmail(authKey);
+		} else {
+			authRepository.insert(authKey);
+		}		
 	}
 
-//	/**
-//	 * 효린 DB 인증번호 확인
-//	 * 
-//	 * @param email
-//	 * @return authKeyEntity
-//	 */
-//	@Transactional
-//	public AuthKey readAuthKey(String email) {
-//
-//		AuthKey authKeyEntity = authRepository.FindByEmail(email);
-////		if(authKeyEntity == null) {
-////			System.out.println("등록된 이메일이 존재하지 않습니다");
-////		}		
-//		return authKeyEntity;
-//	}
-
 	/**
-	 * 효린 
-	 * DB 인증번호 변경
+	 * 효린 DB 인증번호 변경
 	 * @param email
 	 */
 	@Transactional
 	public void updateAuthKey(AuthKey authKey) {
 
-		AuthKey authKeyEntity = authRepository.FindByEmail(authKey.getEmail());
-		if (authKeyEntity != null) {
-			authRepository.updateByEmail(authKey);
-		}
 	}
 
 	/**
