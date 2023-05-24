@@ -19,8 +19,10 @@
 	</div>
 	<div class="mb-3">
 		<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="khl4459@naver.com">
-		<button type="button" id="emailCheck" class="btn btn-secondary">이메일 중복 확인</button>
 		<button type="button" id="emailAuth" class="btn btn-secondary">이메일 인증</button>
+		<br>
+		<label for="authKey" class="form-label">인증번호</label> <input type="text" class="form-control" id="authKey" name="authKey" >				
+		<button type="button" id="confirm" class="btn btn-secondary">인증확인</button>
 	</div>
 	<div class="mb-3">
 		<label for="birthDate" class="form-label">생년월일</label> <input type="date" class="form-control" id="birthDate" name="birthDate" required value="1991-09-29">
@@ -37,7 +39,7 @@
 		<input type="hidden" name="external" value="false">
 	</div>
 
-	<button type="submit" class="btn btn-primary">가입하기</button>
+	<button type="button" class="btn btn-primary" id="joinBtn">가입하기</button>
 </form>
 
 <script type="text/javascript">
@@ -49,6 +51,7 @@
 				url: "/api/username",
 				data: {username: $("#usernameJ").val()}
 			}).done((response) => {
+				console.log(response)
 				if(response){
 					alert('이미 사용중인 아이디입니다.');
 				} else{
@@ -59,6 +62,7 @@
 				alert("요청을 처리할 수 없습니다.");
 			});
 		});
+		
 		// 닉네임 중복확인
 		$("#nicknameCheck").on("click", () => {
 			$.ajax({
@@ -76,28 +80,48 @@
 				alert("요청을 처리할 수 없습니다.");
 			});
 		});
-		// 이메일 중복 확인
-		$("#emailCheck").on("click", () => {
+		
+		
+		
+		// 이메일 인증번호 발송 (효린)
+		$("#emailAuth").on("click", () =>{
 			$.ajax({
-				type: "GET",
-				url: "/api/email",
-				data: {email: $("#email").val()}
+				type: "POST",
+				url: "/api/emailAuth",
+				data: {email: $("#email").val()}				
 			}).done((response) => {
+				console.log(response)
 				if(response){
-					alert('이미 사용중인 아이디입니다.');
+					alert("인증번호 발송되었습니다.");					
 				} else{
-					alert('사용 가능한 아이디입니다.');
+					alert("이미 가입된 이메일입니다.");					
+				}				
+			}).fail((error) => {
+				console.log(error);
+				alert("인증번호 발송 실패");
+			});	
+		});
+		
+		// 인증번호 일치여부 확인 (효린) 
+		$("#confirm").on("click", () => {
+			$.ajax({
+				type: "POST",
+				url: "/api/authKey",
+				data: {email: $("#email").val(),
+					  inputKey: $("#authKey").val()}
+			}).done((response) => {				
+				console.log(response)
+				if(response){
+					alert("인증 완료되었습니다");
+					$("#joinBtn").prop("type","submit");
+				}else{
+					alert("인증실패 확인 다시입력해주세요");
 				}
 			}).fail((error) => {
 				console.log(error);
-				alert("요청을 처리할 수 없습니다.");
-			});
-		});
-		
-		$("#emailAuth").on("click", () =>{
-			
-		});
-		
+				alert("요청을 처리할 수 없습니다")
+			});			
+		});		
 	});
 </script>
 <%@include file="../layout/footer.jsp"%>

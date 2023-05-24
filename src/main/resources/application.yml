@@ -40,7 +40,7 @@ spring:
     host: smtp.naver.com
     port: 465
     # 이메일 !!! 
-    username:  
+    username: 
     password: 
     properties:
       mail.smtp.auth: true

@@ -162,7 +162,6 @@ public class UserController {
 	/**
 	 * 비밀번호 찾기 폼
 	 * @author 효린
-	 * 
 	 */
 	@GetMapping("/findPwd")
 	private String getFindPwd() {

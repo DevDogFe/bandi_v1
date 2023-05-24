@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bandi.novel.repository.AuthRepository">
+
+	<select id="FindByEmail" resultType="com.bandi.novel.model.AuthKey">
+		select * from auth_key_tb
+		where email = #{email}
+	</select>
+	
+	<insert id="insert">
+		insert into auth_key_tb (email, auth_key)
+		values (#{email}, #{authKey})			
+	</insert>
+	
+	<update id="updateByEmail">
+		update auth_key_tb
+		set auth_key = #{authKey}
+		where email = #{email}
+	</update>
+
+</mapper>
