@@ -173,5 +173,11 @@ public class AdminController {
 
 		return "/admin/applicationDetail";
 	}
+	
+	@GetMapping("/adminReport")
+	public String getAdminReport() {
+		
+		return "/admin/adminForm";
+	}
 
 }

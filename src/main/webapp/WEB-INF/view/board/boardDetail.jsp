@@ -45,6 +45,7 @@
 	<c:if test="${principal.id == boardDetail.userId }">
 		<button type="submit" class="btn btn-primary" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
 		<button type="submit" class="btn btn-primary" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
+		<button class="btn btn-danger" id="report-btn" onclick="popup()">신고</button>
 	</c:if>
 	<button type="button" class="btn btn-primary" onclick="location.href='/board/list'">목록</button>
 	<br>
@@ -169,11 +170,19 @@
 	        }).done(function(response) {
 	            console.log(response);
 	            console.log(id);
-	            location.href = '/board/detail/' + ${boardDetail.id};
+	            location.href = '/board/detail/' + $("#boardId").val();
 	        }).fail(function(error) {
 	            alert("요청 실패");
 	        });
 	    }
+	</script>
+	<script type="text/javascript">
+		function popup() {
+			var url = "/report/reportPopup/" + $("#boardId").val();
+			var name = "신고하기"
+			var option = "width = 500, height = 500, top = 100, left = 200, location = no";
+            window.open(url, name, option)
+		}
 	</script>
 </body>
 </html>

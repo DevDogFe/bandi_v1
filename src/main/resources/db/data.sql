@@ -266,4 +266,11 @@ insert into application_tb (user_id, tel, title, content, origin_filename , uplo
 (1, '01022658611', '연재하고싶어요', '재밌어요', '서비스', '서비스'),
 (2, '010', '연재', '원해요','연재', '연재');
 
+--신고 카테고리
+insert into report_category_tb (category_name) values
+('욕설/비방'),
+('도배'),
+('광고/상업성'),
+('기타');
+
 
