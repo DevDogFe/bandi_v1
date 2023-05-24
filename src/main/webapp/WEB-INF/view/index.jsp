@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <style type="text/css">
 </style>
@@ -31,18 +32,17 @@
 							<div class="modal-body">
 								<form action="/login" method="post">
 									<div class="mb-3">
-										<label for="username" class="form-label">ID</label> <input type="text" class="form-control" name="username" id="username" required="required" value="qwe">
+										<label for="username" class="form-label">ID</label> <input type="text" class="form-control" name="username" id="usernameL" required="required" value="qwe">
 									</div>
 									<div class="mb-3">
-										<label for="password" class="form-label">Password</label> <input type="password" class="form-control" name="password" id="password" required="required" value="123">
+										<label for="password" class="form-label">Password</label> <input type="password" class="form-control" name="password" id="passwordL" required="required" value="123">
 									</div>
 									<div class="mb-3 form-check">
 										<input type="checkbox" class="form-check-input" id="exampleCheck1"> <label class="form-check-label" for="exampleCheck1">Check me out</label>
 									</div>
-									<button type="submit" class="btn btn-primary">Submit</button>
-									<br> <a href="/user">회원가입</a> <br> 
-									<a href="/findPwd">비밀번호 찾기</a>  
-									<a href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
+									<button type="button" id="loginBtn" class="btn btn-primary">Login</button>
+									<br> <a href="/user">회원가입</a> <br> <a href="/findPwd">비밀번호 찾기</a> <a
+										href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
 										src="/assets/images/kakao_login/ko/kakao_login_medium_wide.png">
 									</a>
 								</form>
@@ -65,7 +65,7 @@
 						<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
 					</c:otherwise>
 				</c:choose>
-				<a href="/board/list">게시판</a>	
+				<a href="/board/list">게시판</a>
 				<a href="/myInfo">내 정보</a>
 				<a href="/novel/registration">소설 등록</a>
 				<a href="/pay">유료 작품 목록</a>
@@ -75,5 +75,33 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(()=>{
+			$("#loginBtn").on("click", () => {
+				console.log($("#usernameL").val() + "/" + $("#passwordL").val());
+				let data = {
+						username: $("#usernameL").val(),
+						password: $("#passwordL").val()
+				};
+				
+				$.ajax({
+					type: "POST",
+					url: "/api/login",
+					contentType:"application/json; charset=utf-8",
+					data: JSON.stringify(data),
+					dataType:"json"
+				}).done((response) => {
+					if(response.data){
+						location.reload();
+					} else {
+						alert(response.message);
+					}
+				}).fail((error) => {
+					console.log(error);
+					alert("요청을 처리할 수 없습니다.");
+				});
+			});
+		});
+	</script>
 </body>
 </html>

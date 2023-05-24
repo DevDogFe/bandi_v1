@@ -10,6 +10,7 @@ import com.bandi.novel.dto.FindPwdDto;
 import com.bandi.novel.dto.JoinDto;
 import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.UserUpdateDto;
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.User;
 import com.bandi.novel.repository.UserRepository;
@@ -29,16 +30,16 @@ public class UserService {
 	 * @return userEntity
 	 */
 	@Transactional
-	public User loginByUsernameAndPassword(LoginDto loginDto) {
+	public ResponseDto<User> loginByUsernameAndPassword(LoginDto loginDto) {
 		User userEntity = userRepository.selectByUsername(loginDto.getUsername());
 		if(userEntity == null) {
-			throw new CustomRestfulException("아이디가 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseDto<User>(500, "50000", "아이디가 없습니다.", "50000", null);
 		}
 		if(!passwordEncoder.matches(loginDto.getPassword(), userEntity.getPassword())) {
-			throw new CustomRestfulException("비밀번호가 틀렸습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseDto<User>(500, "50000", "비밀번호가 틀렸습니다.", "50000", null);
 		}
 		
-		return userEntity;
+		return new ResponseDto<User>(200, "20000", "ok", "20000", userEntity);
 	}
 	
 	/**

@@ -142,7 +142,7 @@ a {
 			</div>
 		</div>
 	</div>
-<body>
+
 	<header class="d-flex flex-column align-items-center">
 		<div class="header--top">
 			<c:choose>
@@ -237,6 +237,7 @@ a {
 					data: JSON.stringify(data),
 					dataType:"json"
 				}).done((response) => {
+					console.log(response);
 					location.reload();
 				}).fail((error) => {
 					console.log(error);

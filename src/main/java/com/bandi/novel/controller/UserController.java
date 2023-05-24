@@ -51,17 +51,6 @@ public class UserController {
 	@Autowired
 	private NovelService novelService;
 
-	/**
-	 * 로그인
-	 * 
-	 * @param user model
-	 * @return index페이지
-	 */
-	@PostMapping("/login")
-	public String loginProc(LoginDto loginDto) {
-		
-		return "redirect:/index";
-	}
 
 	/**
 	 * 로그아웃

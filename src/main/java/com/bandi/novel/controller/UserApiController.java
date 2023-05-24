@@ -89,11 +89,15 @@ public class UserApiController {
 	
 	@PostMapping("/api/login")
 	public ResponseDto<Boolean> loginProc(@RequestBody LoginDto loginDto){
-		
-		User principal = userService.loginByUsernameAndPassword(loginDto);
+		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
+		Boolean result = true;
+		if(resUser.getData() == null) {
+			result = false;
+		}
+		User principal = resUser.getData();
 		session.setAttribute("principal", principal);
 		
-		return new ResponseDto<Boolean>(200, "20000", "ok", "1", true);
+		return new ResponseDto<Boolean>(resUser.getStatusCode(), resUser.getCode(), resUser.getMessage(), resUser.getResultCode(), result);
 	}
 	
 
