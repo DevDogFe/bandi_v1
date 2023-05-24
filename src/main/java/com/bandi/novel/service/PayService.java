@@ -45,6 +45,26 @@ public class PayService {
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 		userGold.setGold(userGold.getGold() - amount);
 		int result = userGoldRepository.updateUserGold(userGold);
+		
+		// 유저 구매 기록(user_purchase_tb)
+		
+
+		if (result != 1) {
+			System.out.println("골드 변경 안됨");
+		} else {
+			System.out.println("구매 후 골드 :" + userGoldRepository.selectUserGoldByUserId(userId).getGold());
+		}
+	}
+	
+	public void rentalNovel(Integer userId, Integer amount) {
+
+		// 유저 골드 정보
+		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
+		userGold.setGold(userGold.getGold() - amount);
+		int result = userGoldRepository.updateUserGold(userGold);
+		
+		// 유저 대여 기록(user_rental_tb)
+		
 
 		if (result != 1) {
 			System.out.println("골드 변경 안됨");
@@ -56,7 +76,11 @@ public class PayService {
 	public void chargeGold(Integer userId, Integer amount) {
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 		userGold.setGold(userGold.getGold() + amount);
+		
 		int result = userGoldRepository.updateUserGold(userGold);
+		
+		// 골드 충전 기록 하기(user_gold_tb)
+		
 
 		if (result != 1) {
 			System.out.println("골드 충전 안됨");

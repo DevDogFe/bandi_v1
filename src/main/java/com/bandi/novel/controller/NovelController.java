@@ -227,7 +227,7 @@ public class NovelController {
 		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		
-		// 결제 여부 확인
+		// 결제 여부 확인 !!!!!!! 나중에 변경
 		UserLibrary userLibrary = payService.selectUserLibrary(principal.getId(), sectionId);
 		
 		if(userLibrary == null) {
