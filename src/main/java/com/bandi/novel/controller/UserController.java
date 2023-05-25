@@ -30,7 +30,7 @@ import com.bandi.novel.service.MailService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
-import com.bandi.novel.utils.TempPasswordUtill;
+import com.bandi.novel.utils.TempNumberUtill;
 
 /**
  * 유저 관련 로직 컨트롤러
@@ -153,7 +153,8 @@ public class UserController {
 	}
 
 	/**
-	 * @author 효린 비밀번호 찾기 폼
+	 * 비밀번호 찾기 폼
+	 * @author 효린
 	 */
 	@GetMapping("/findPwd")
 	private String getFindPwd() {
@@ -170,12 +171,10 @@ public class UserController {
 
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
-		user.setPassword(TempPasswordUtill.getTempPassword());
-		
-		// TODO 순서 확인
+		user.setPassword(TempNumberUtill.getTempPassword());		
 		//userService.updateUserPwd(user);
 		// 메일 전송
-		mailService.sendMail(user);
+		mailService.sendTempPassword(user);
 		// 비밀번호변경
 		userService.updateUserPwd(user);
 		return "redirect:/index";

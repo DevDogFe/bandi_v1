@@ -24,7 +24,6 @@ import com.bandi.novel.service.QnaService;
  * 관리자 페이지 
  * (Q&A, 연재문의, FAQ) 
  * @author 효린
- *
  */
 @Controller
 @RequestMapping("/admin")
@@ -78,7 +77,6 @@ public class AdminController {
 
 		Question question = qnaService.readQuestionById(id);
 		model.addAttribute("question", question);
-
 		Answer answer = qnaService.readAnswerByQuestionId(id);
 		if (answer == null) {
 			model.addAttribute("answer", null);
@@ -90,7 +88,6 @@ public class AdminController {
 
 	/**
 	 * 답변 등록
-	 * 
 	 * @param questionId
 	 * @param answer
 	 * @return 질문 상세보기
@@ -121,7 +118,6 @@ public class AdminController {
 
 	/**
 	 * 답변 수정
-	 * 
 	 * @param questionId
 	 * @param answerUpdateDto
 	 * @return 질문 상세보기
@@ -135,7 +131,6 @@ public class AdminController {
 
 	/**
 	 * 답변삭제
-	 * 
 	 * @param questionId
 	 * @return 질문 상세보기
 	 */

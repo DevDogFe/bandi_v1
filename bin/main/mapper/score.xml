@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.ScoreRepository">
+
+	<insert id="insertScore">
+		INSERT INTO score_tb VALUES
+		(#{userId}, #{sectionId}, #{score})
+	</insert>
+
+	<update id="updateScore">
+		UPDATE score_tb
+		SET score = #{score}
+		WHERE user_id = #{userId}
+		AND section_id = #{sectionId}
+	</update>
+	
+	<select id="selectByUserIdAndSectionId" resultType="com.bandi.novel.model.Score">
+		SELECT * FROM score_tb
+		WHERE user_id = #{userId}
+		AND section_id = #{sectionId}
+	</select>
+	
+
+</mapper>

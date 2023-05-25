@@ -284,3 +284,9 @@ CREATE TABLE user_novel_record_tb(
 	FOREIGN KEY (novel_id) REFERENCES novel_tb(id),
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
 );
+
+-- 이메일 인증번호 (회원가입)
+CREATE TABLE auth_key_tb(
+	email VARCHAR(100) NOT NULL, -- UNIQUE
+    auth_key VARCHAR(6) NOT NULL    
+);
