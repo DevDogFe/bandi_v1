@@ -15,6 +15,11 @@
 		ORDER BY id DESC
 	</select>
 	
+	<select id="selectContestById" resultType="com.bandi.novel.model.Contest">
+		SELECT * FROM contest_tb
+		WHERE id = #{id}
+	</select>
+	
 	<select id="selectContestList" resultType="com.bandi.novel.model.Contest">
 		SELECT * FROM contest_tb
 		ORDER BY begin_created_at DESC limit 10

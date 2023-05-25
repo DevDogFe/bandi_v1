@@ -20,7 +20,7 @@
                   <h6>2023</h6>
                   <h4>${contestList[0].title}</h4>
                   <div class="main-button">
-                    <a href="/contest/detail/1">상세 보기</a>
+                    <a href="/contest/detail/${contestList[0].id}">상세 보기</a>
                   </div>
                 </div>
               </div>
@@ -35,9 +35,10 @@
               <div class="heading-section">
                 <h4><em class="text-decoration-none">공모전</em> 리스트</h4>
               </div>
-              <c:forEach var="contest" items="${contestList}" >
+              <c:forEach var="contest" items="${contestList}" varStatus="vs" >
               	<div class="item">
                 	<ul>
+                  		<li><h4>${contest.id}</h4></li>
                   		<li><h4>${contest.title}</h4></li>
                   		<li><h4>${contest.content}</h4></li>
                   		<li><h4>${contest.beginCreatedAt}</h4></li>
@@ -120,6 +121,7 @@
 							</div>
 							</div>
 							<div class="modal-footer">
+								<input type="hidden" name="userId" value="${contest.userId}">
 								<input type="hidden" name="id" value="${contest.id}">
 								<button type="submit" class="btn btn-primary m-1">수정</button>
 								<button type="button" class="btn btn-secondary"

@@ -39,6 +39,7 @@ public class RecommendService {
 
 	/**
 	 * 나이, 성별, 즐겨찾기, 평점으로 추천리스트
+	 * 
 	 * @param ageGenderRecommendDto
 	 * @return
 	 */

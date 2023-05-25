@@ -102,6 +102,7 @@
 						<tr class="table-secondary">
 							<td>번호</td>
 							<td>제목</td>
+							<td>상태</td>
 							<td>등록일</td>
 							<td>조회수</td>
 							<td>평점</td>
@@ -114,7 +115,26 @@
 								<c:when test="${section.userId != null}">
 									<tr class="table-info">
 										<td>${sectionList.size() - vs.index}</td>
-										<td><a href="/section/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
+										<td><a
+											href="/section/read/${detail.id}/${section.id}"
+											class="list--link">${section.title}</a></td>
+										<c:choose>
+											<c:when test="${paymentList[vs.index] != null }">
+												<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
+													<c:choose>
+														<c:when test="${paymentList[vs.index].purchaseSectionId != null}">
+															<td>구매 중</td>
+														</c:when>
+														<c:otherwise>
+															<td>대여 : ${paymentList[vs.index].endFormat()}까지</td>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												<td>${vs.index}</td>
+											</c:otherwise>
+										</c:choose>	
 										<td>${section.createdAt()}</td>
 										<td>${section.views}</td>
 										<td><c:choose>
@@ -130,7 +150,29 @@
 								<c:otherwise>
 									<tr class="table-default">
 										<td>${sectionList.size() - vs.index}</td>
-										<td><a href="/section/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
+										<td><a
+											href="/section/read/${detail.id}/${section.id}"
+											class="list--link">${section.title}</a></td>
+										<c:choose>
+											<c:when test="${paymentList[vs.index] != null }">
+												<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
+													<c:choose>
+														<c:when test="${paymentList[vs.index].purchaseSectionId != null}">
+															<td>구매 중</td>
+														</c:when>
+														<c:otherwise>
+															<td>대여 : ${paymentList[vs.index].endFormat()}까지</td>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+												<c:if test="${paymentList[vs.index].purchaseSectionId == null && paymentList[vs.index].rentalSectionId == null}">
+													<td></td>
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												<td>${vs.index}</td>
+											</c:otherwise>
+										</c:choose>	
 										<td>${section.createdAt()}</td>
 										<td>${section.views}</td>
 										<td><c:choose>
@@ -144,14 +186,6 @@
 									</tr>
 								</c:otherwise>
 							</c:choose>
-							<%-- <tr>
-								<td>${count}</td>
-								<td><a href="/section/read/${detail.id}/${section.id}" class="list--link">${section.title}</a></td>
-								<td>${section.createdAt()}</td>
-								<td>${section.views}</td>
-								<td>4.5</td>
-								<c:set var="count" value="${count - 1}"></c:set>
-							</tr> --%>
 						</c:forEach>
 					</tbody>
 				</table>

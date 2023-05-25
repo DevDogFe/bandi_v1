@@ -280,13 +280,55 @@ CREATE TABLE user_novel_record_tb(
 	section_id INT NOT NULL,
 	created_at TIMESTAMP DEFAULT NOW(),
 	PRIMARY KEY (user_id, novel_id, section_id),
-	FOREIGN KEY (user_id) REFERENCES user_tb(id),
-	FOREIGN KEY (novel_id) REFERENCES novel_tb(id),
-	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id)
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
+
 
 -- 이메일 인증번호 (회원가입)
 CREATE TABLE auth_key_tb(
 	email VARCHAR(100) NOT NULL, -- UNIQUE
     auth_key VARCHAR(6) NOT NULL    
+);
+
+
+-- 유저가 골드 정보
+CREATE TABLE user_gold_tb(
+	user_id INT PRIMARY KEY,
+	gold INT NOT NULL DEFAULT 0,
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE
+);
+
+
+-- 유저 골드 충전 기록
+CREATE TABLE user_gold_charge_tb(
+	user_id INT PRIMARY KEY,
+	price INT NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE
+);
+
+
+-- 유저 대여 기록
+CREATE TABLE user_rental_tb(
+	user_id INT NOT NULL,
+	section_id INT NOT NULL,
+	price INT NOT NULL,
+	begin_rental TIMESTAMP DEFAULT NOW(),
+	end_rental TIMESTAMP DEFAULT NOW()+3,
+	PRIMARY KEY (user_id, section_id,end_rental),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
+);
+
+-- 유저 구매 기록
+CREATE TABLE user_purchase_tb(
+	user_id INT NOT NULL,
+	section_id INT NOT NULL,
+	price INT NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY (user_id, section_id),
+	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );

@@ -97,7 +97,8 @@ VALUES
 (3, '회복', '나는 영약 광산 안으로 들어섰다.', 100, 100),
 (3, '설욕의 시간', '윤재는 나를 붙든 채 물었다.', 100, 100),
 (3, '진화석의 쓰임새', '영상 속의 나는 기자의 질문에 답했었다.', 100, 100),
-(3, '약팔이', '나는 형이 운전하는 차의 보조석에 앉아라', 100, 100);
+(3, '약팔이', '나는 형이 운전하는 차의 보조석에 앉아라', 100, 100),
+(1, '2화 슬픈 세조', '세조는 계획중이다. 반역을', 200, 150);
 
 -- FAQ category 
 insert into faq_category_tb(category_name)
@@ -266,6 +267,7 @@ insert into application_tb (user_id, tel, title, content, origin_filename , uplo
 (1, '01022658611', '연재하고싶어요', '재밌어요', '서비스', '서비스'),
 (2, '010', '연재', '원해요','연재', '연재');
 
+
 INSERT INTO novel_section_tb (novel_id, title, content, list_price, current_price)
 VALUES 
 (1, '11화 세조의 슬픔', '세조는 반역을 계획중이다. 하지만 단종이 너무 강하다는 것을 알게되었다.', 100, 100),
@@ -389,3 +391,39 @@ INSERT INTO user_favorite_tb VALUES
 (9, 11),
 (9, 13),
 (9, 14);
+-- 신고 카테고리
+insert into report_category_tb (category_name) values
+('욕설/비방'),
+('도배'),
+('광고/상업성'),
+('기타');
+
+-- 신고 기록
+insert into report_tb (user_id, board_id, content, category_id, created_at) values
+(2, 1, '도배해서 신고함', 2, now()),
+(2, 10, '맘에 안들어서 신고함', 4, '2023-05-23');
+
+-- 유저 골드 정보 
+INSERT INTO user_gold_tb(user_id,gold) VALUES
+(1,1000),
+(2,1000),
+(3,5000);
+
+-- 유저 결제 회차 기록(삭제 예정)
+INSERT INTO user_library_tb(user_id,section_id) VALUES
+(1,1);
+
+-- 유저 결제 소설 기록
+INSERT INTO user_purchase_tb(user_id,section_id,price) VALUES
+(1,1,100),
+(1,2,100),
+(1,3,100),
+(1,4,100);
+
+-- 유저 대여 소설 기록
+INSERT INTO user_rental_tb(user_id,section_id,price,end_rental) VALUES
+(1,11,100,now()),
+(1,4,100,now()+3),
+(1,5,100,now()+3),
+(1,6,100,now()+3);
+

@@ -2,6 +2,8 @@ package com.bandi.novel.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bandi.novel.dto.AdminReportDto;
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.Question;
+import com.bandi.novel.model.Report;
+import com.bandi.novel.model.User;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.ApplicationService;
 import com.bandi.novel.service.QnaService;
+import com.bandi.novel.service.ReportService;
+import com.bandi.novel.utils.Define;
 
 /**
  * 관리자 페이지 
@@ -35,6 +42,10 @@ public class AdminController {
 	private AdminService adminService;
 	@Autowired
 	private ApplicationService applicationService;
+	@Autowired
+	private ReportService reportService;
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * @param model
@@ -168,5 +179,11 @@ public class AdminController {
 
 		return "/admin/applicationDetail";
 	}
-
+	
+	@GetMapping("/adminPage")
+	public String getAdminPage() {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		return "/admin/adminForm";
+	}
+	
 }
