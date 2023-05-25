@@ -86,23 +86,24 @@ public class UserApiController {
 	 * @return T/F
 	 */
 	@PostMapping("/api/emailAuth")
-	public Boolean emailAuthCheck(String email) {
+	public String emailAuthCheck(String email) {
 
 		// 가입 유무 확인
 		Boolean check = userService.checkEmail(email);
 		if (check) {
 			System.out.println("이미 가입된 사용자 이메일입니다");
-			return false;
+			// TODO 수정
+			//return false;
 		}
 		// 인증번호 생성 
 		String key = TempNumberUtill.getAuthKey();
 
 		AuthKey authKey = new AuthKey(email, key);		
 		// 인증번호 저장
-		userService.createAuthKey(authKey);
+		//userService.createAuthKey(authKey);
 		// 인증번호 메일 전송
 		mailService.sendAuthKey(authKey);
-		return true;
+		return key;
 	}
 
 	/**
