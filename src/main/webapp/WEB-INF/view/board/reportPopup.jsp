@@ -24,8 +24,5 @@
 		</div>
 		<button type="submit" class="btn btn-primary">신고하기</button>
 	</form>
-	<script>
-		function f
-	</script>
 </body>
 </html>

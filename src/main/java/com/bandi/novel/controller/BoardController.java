@@ -145,7 +145,6 @@ public class BoardController {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<BoardReplyDto> replyList = boardReplyService.selectBoardReplyListByBoardId(id);
-		System.out.println(replyList);
 		List<BoardFile> fileList = boardService.selectFileList(id);
 		BoardReplyPageUtil replyPageUtil = new BoardReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
 		if(principal != null) {

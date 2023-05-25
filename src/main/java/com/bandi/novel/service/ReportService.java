@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.AdminReportDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Report;
 import com.bandi.novel.model.ReportCategory;
@@ -36,5 +37,24 @@ public class ReportService {
 		if(resultRowCount != 1) {
 			throw new CustomRestfulException("요청을 처리할 수 없습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	// 신고 게시물 확인
+	@Transactional
+	public List<AdminReportDto> selectReport() {
+		List<AdminReportDto> list = reportRepository.selectAll();
+		return list;
+	}
+	
+	// 신고 게시물 상세보기
+	@Transactional
+	public Report selectReportDetailById(Integer id) {
+		return reportRepository.selectReportDetailById(id);
+	}
+	
+	// 신고 게시물 확인 상태 업데이트
+	@Transactional
+	public void updateProceed(Integer id) {
+		reportRepository.updateProceedById(id);
 	}
 }

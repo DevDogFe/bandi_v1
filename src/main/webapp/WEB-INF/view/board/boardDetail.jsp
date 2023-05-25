@@ -179,7 +179,7 @@
 	<script type="text/javascript">
 		function popup() {
 			var url = "/report/reportPopup/" + $("#boardId").val();
-			var name = "신고하기"
+			var name = "신고하기";
 			var option = "width = 500, height = 500, top = 100, left = 200, location = no";
             window.open(url, name, option)
 		}

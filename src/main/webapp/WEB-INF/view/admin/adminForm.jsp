@@ -20,13 +20,23 @@
 		display: table-cell;
 		width: 85%;
 	}
+	.sidebar ul {
+		color: white;
+		font-size: 20px;
+	}
+	.sidebar ul a {
+		
+	}
 </style>
 <body>
 	<div class="sidebar">
-		
+		<ul><a href="/report/reportList">신고게시물 처리</a></ul>
+		<ul><a href="#">카테고리 관리</a></ul>
+		<ul><a href="#">장르 관리</a></ul>
+		<ul><a href="#">유저롤 변경</a></ul>
 	</div>
 	<div class="main">
-		<h1>main</h1>
+		
 	</div>
 </body>
 </html>
