@@ -74,6 +74,16 @@
 				<a href="#">내 작품</a>
 			</c:otherwise>
 		</c:choose>
+		<c:if test="${!empty principal }">
+			<h3>${principal.getGeneration() }대 ${principal.gender}이 좋아하는 작품</h3>
+			<table class="table">
+				<c:forEach items="${ageGenderList }" var="novel">
+					<tr>
+						<td>${novel.title }</td>					
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(()=>{

@@ -31,4 +31,10 @@ public class User {
 		
 		return currentYear - birthYear + 1;
 	}
+	
+	public Integer getGeneration() {
+		return (this.getAge()/10) * 10;
+	}
+	
+	
 }
