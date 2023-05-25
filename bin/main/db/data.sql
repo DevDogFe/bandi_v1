@@ -7,7 +7,7 @@ insert into user_tb(username, password, user_role, nick_name, email, birth_date,
 ('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨', 'aa@sample.com', '1997-01-11', '남성', null),
 ('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨', 'user@sample.com', '1992-12-12', '여성', null),
 ('qwq', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨', 'user2@sample.com', '1992-10-12', '여성', null),
---('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', null),
+('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', null),
 ('hyun', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '지현씨', 'jhkim900726@gmail.com', '1990-07-26', '여성', null);
 
 insert into genre_tb(name) values
@@ -318,6 +318,13 @@ INSERT INTO user_favorite_tb VALUES
 (3, 13),
 (3, 14);
 
+insert into user_tb(username, password, user_role, nick_name, email, birth_date, gender, external) values
+('qwe3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨3', 'aa3@sample.com', '1997-01-11', '남성', null),
+('asd3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨3', 'user3@sample.com', '1992-12-12', '여성', null),
+('qwq3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨3', 'user23@sample.com', '1992-10-12', '여성', null),
+('hyo3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨3', 'khl44593@naver.com', '1995-09-29', '남성', null),
+('hyun3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '지현씨3', 'jhkim9030726@gmail.com', '1990-07-26', '여성', null);
+
 INSERT INTO score_tb VALUES
 (1, 1, 5),
 (1, 11, 5),
@@ -339,4 +346,46 @@ INSERT INTO score_tb VALUES
 (1, 27, 3),
 (1, 28, 4),
 (1, 29, 5),
-(1, 30, 5);
+(1, 30, 5),
+(6, 1, 5),
+(6, 11, 5),
+(6, 12, 4),
+(6, 13, 3),
+(6, 14, 2),
+(6, 15, 1),
+(6, 16, 2),
+(6, 17, 3),
+(6, 18, 4),
+(6, 19, 5),
+(6, 20, 5),
+(6, 21, 5),
+(6, 22, 4),
+(6, 23, 3),
+(6, 24, 2),
+(6, 25, 1),
+(6, 26, 2),
+(6, 27, 3),
+(6, 28, 4),
+(6, 29, 5),
+(6, 30, 5);
+
+
+
+INSERT INTO user_favorite_tb VALUES
+(6, 1),
+(6, 2),
+(6, 4),
+(6, 5),
+(6, 7),
+(6, 8),
+(6, 11),
+(6, 13),
+(6, 14),
+(9, 1),
+(9, 2),
+(9, 7),
+(9, 8),
+(9, 10),
+(9, 11),
+(9, 13),
+(9, 14);

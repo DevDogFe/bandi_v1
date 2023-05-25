@@ -84,6 +84,16 @@
 				</c:forEach>
 			</table>
 		</c:if>
+		<c:if test="${!empty principal }">
+			<h3>${principal.nickName }님이 좋아할만한 작품</h3>
+			<table class="table">
+				<c:forEach items="${totalRecommendList }" var="novel">
+					<tr>
+						<td>${novel.title }</td>					
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(()=>{

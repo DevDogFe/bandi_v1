@@ -11,7 +11,8 @@
 		ON uf.user_id = u.id
 		LEFT JOIN novel_tb AS n
 		ON uf.novel_id = n.id
-		WHERE gender = #{gender}
+		WHERE gender =
+		#{gender}
 		AND
 		(birth_date <![CDATA[ > ]]>
 		#{leftPort} AND birth_date <![CDATA[ <= ]]>
@@ -33,21 +34,34 @@
 	</select>
 
 	<select id="selectByAgeAndGenderForTotalRecommend" resultType="com.bandi.novel.dto.response.MainRecommendDto">
-		SELECT n.id, n.genre_id, count(*) AS favorite_count 
+		SELECT n.id, n.genre_id, n.title, n.cover, count(*) AS favorite_count, score
 		FROM user_favorite_tb AS uf
 		LEFT JOIN user_tb AS u
 		ON uf.user_id = u.id
 		LEFT JOIN novel_tb AS n
 		ON uf.novel_id = n.id
+		LEFT JOIN
+		(
+		SELECT ns.novel_id, avg(sc.score) AS score
+		FROM novel_section_tb AS ns
+		LEFT JOIN
+		(
+		SELECT section_id, avg(score) AS score
+		FROM score_tb
+		GROUP BY section_id
+		) AS sc
+		ON ns.id = sc.section_id
+		GROUP BY ns.novel_id
+		) AS sc
+		ON n.id = sc.novel_id
 		WHERE gender = #{gender}
-		AND
-		(birth_date <![CDATA[ > ]]>
+		AND (birth_date <![CDATA[ > ]]>
 		#{leftPort} AND birth_date <![CDATA[ <= ]]>
 		#{rightPort})
 		AND uf.user_id != #{userId}
-		GROUP BY novel_id
-		ORDER BY favorite_count DESC
-		LIMIT 50;
+		GROUP BY uf.novel_id
+		ORDER BY favorite_count
+		LIMIT 50
 	</select>
 
 </mapper>

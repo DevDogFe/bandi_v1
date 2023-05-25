@@ -8,30 +8,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
+import com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto;
 import com.bandi.novel.repository.RecommendRepository;
+import com.bandi.novel.utils.TotalRecommendUtil;
 
 /**
  * 추천 알고리즘 처리
+ * 
  * @author 김지현
  *
  */
 @Service
 public class RecommendService {
-	
+
 	@Autowired
 	private RecommendRepository recommendRepository;
-	
+
 	/**
 	 * 나이 성별으로 추천 리스트
+	 * 
 	 * @param ageGenderRecommendDto
-	 * @return 소설리스트 
+	 * @return 소설리스트
 	 */
 	@Transactional
-	public List<MainRecommendDto> selectNovelsByAgeAndGender(AgeGenderRecommendDto ageGenderRecommendDto){
-		
+	public List<MainRecommendDto> selectNovelsByAgeAndGender(AgeGenderRecommendDto ageGenderRecommendDto) {
+
 		return recommendRepository.selectByAgeAndGender(ageGenderRecommendDto);
-		
+
 	}
-	
+
+	/**
+	 * 나이, 성별, 즐겨찾기, 평점으로 추천리스트
+	 * @param ageGenderRecommendDto
+	 * @return
+	 */
+	@Transactional
+	public List<MainRecommendDto> selectTotalRecommendedNovels(AgeGenderRecommendDto ageGenderRecommendDto) {
+		List<PreferGenreForTotalRecommendDto> genreList = recommendRepository
+				.selectPreferGenre(ageGenderRecommendDto.getUserId());
+		List<MainRecommendDto> tempList = recommendRepository
+				.selectByAgeAndGenderForTotalRecommend(ageGenderRecommendDto);
+		List<MainRecommendDto> resultList = TotalRecommendUtil.getTotalRecommendList(genreList, tempList);
+
+		return resultList;
+	}
 
 }
