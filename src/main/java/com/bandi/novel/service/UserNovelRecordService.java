@@ -64,10 +64,6 @@ public class UserNovelRecordService {
 		
 		LastNovelRecordDto dto = userNovelRecordRepository.selectLastNovelRecord(userId);
 		
-		if(dto != null) {
-			System.out.println(dto.toString());
-		}
-		
 		return dto;
 	}
 	

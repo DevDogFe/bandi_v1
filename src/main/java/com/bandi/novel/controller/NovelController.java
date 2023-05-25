@@ -25,6 +25,7 @@ import com.bandi.novel.dto.response.NovelReplyListDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
+import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -35,6 +36,7 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
@@ -62,6 +64,8 @@ public class NovelController {
 	private UserFavoriteService userFavoriteService;
 	@Autowired
 	private UserNovelRecordService userNovelRecordService;
+	@Autowired
+	private PayService payService;
 
 	/**
 	 * @param model
@@ -200,7 +204,11 @@ public class NovelController {
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		// 소설 회차 리스트
-		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
+		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
+				novelId);
+		// 소설 구매, 대여 여부 리스트
+		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(),novelId);
+		
 		// 즐겨찾기 여부
 		if (principal != null) {
 			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
@@ -209,6 +217,8 @@ public class NovelController {
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("detail", novelDetailDto);
 		model.addAttribute("favorite", favorite);
+		model.addAttribute("paymentList",paymentList);
+
 
 		return "/novel/novelDetail";
 	}
@@ -222,10 +232,24 @@ public class NovelController {
 	 */
 	@GetMapping("/section/read/{novelId}/{sectionId}")
 	public String getReadSection(HttpServletRequest request, HttpServletResponse response, Model model,
-			@PathVariable Integer novelId, @PathVariable Integer sectionId,
-			@RequestParam(defaultValue = "1") Integer currentPage) {
-
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+			@PathVariable Integer novelId,
+			@PathVariable Integer sectionId, @RequestParam(defaultValue = "1") Integer currentPage) {
+		
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		
+		// 결제 여부 확인 !!!!!!! 나중에 변경
+		UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId, sectionId);
+		System.out.println(userPayment.toString()); 
+		
+		if(userPayment.getPurchaseSectionId() == null && userPayment.getEndRental() == null) {
+			//userPay 페이지에 띄울 정보
+			NovelSection paySection = novelService.selectNovelSectionById(sectionId);
+			int userGold = payService.selectUserGold(principal.getId());
+			model.addAttribute("paySection",paySection);
+			model.addAttribute("userGold",userGold);
+			return "/pay/userPay";
+		}
+		
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//

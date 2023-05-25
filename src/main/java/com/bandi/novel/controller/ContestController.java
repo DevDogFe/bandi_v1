@@ -63,6 +63,9 @@ public class ContestController {
 	 */
 	@GetMapping("/detail/{id}")
 	public String getContestEntry(@PathVariable Integer id, Model model) {
+		
+		Contest contest = contestService.selectContestById(id);
+		model.addAttribute("contest",contest);
 
 		return "/contest/contestDetail";
 	}
@@ -82,6 +85,7 @@ public class ContestController {
 
 		// 공모전
 		List<Contest> contestList = contestService.selectContestListByLimit();
+		System.out.println(contestList.toString());
 		// 공모전 소설
 		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
 		// 마지막으로 본 소설 조회
@@ -153,7 +157,6 @@ public class ContestController {
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
-
 		contestService.updateContest(contest);
 
 		return "redirect:/contest/list";

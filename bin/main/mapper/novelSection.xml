@@ -38,10 +38,13 @@
 	<select id="selectNovelSectionCount">
 		SELECT count(id)
 		FROM novel_section_tb
-		WHERE novel_id = #{novelId}
+		WHERE novel_id =
+		#{novelId}
 	</select>
 
-	<select id="selectNovelByPage" resultType="com.bandi.novel.dto.response.SectionDto">
+
+	<select id="selectNovelByPage"
+		resultType="com.bandi.novel.dto.response.SectionDto">
 		SELECT *
 		FROM(
 		SELECT
@@ -64,6 +67,58 @@
 		from novel_section_tb
 		where id = #{id}
 	</delete>
-	<!-- -->
+
+	<!-- 유저 구매 대여 기록 조회 -->
+	<!-- FORMATDATETIME MYSQL로 변환 시에 DATE_FORMAT으로 변경 -->
+	<select id="selectPurchaseRentalRecord" resultType="com.bandi.novel.dto.response.UserPurchaseRentalRecord">
+		select ns.id,up.section_id as purchase_section_id,
+					ur.section_id as rental_section_id
+					,FORMATDATETIME(ur.begin_rental, 'yyyy-MM-dd HH:mm') as begin_rental
+					,FORMATDATETIME(ur.end_rental, 'yyyy-MM-dd HH:mm') as end_rental
+		from novel_section_tb as ns
+		left join
+		(
+			select * 
+			from 
+			user_purchase_tb 
+			where user_id = #{userId}
+		) as up
+		on ns.id = up.section_id
+		left join
+		(
+			select * 
+			from user_rental_tb 
+			where user_id = #{userId} and (end_rental > now())
+		) as ur
+		on ns.id = ur.section_id
+		where ns.novel_id = #{novelId}
+		order by id desc
+	</select>
+	
+	<select id="selectPurchaseRentalRecordByIds" resultType="com.bandi.novel.dto.response.UserPurchaseRentalRecord">
+		select ns.id,up.section_id as purchase_section_id,
+					ur.section_id as rental_section_id
+					,ur.begin_rental
+					,ur.end_rental
+		from novel_section_tb as ns
+		left join
+		(
+			select * 
+			from 
+			user_purchase_tb 
+			where user_id = #{userId} and section_id = #{sectionId}
+		) as up
+		on ns.id = up.section_id
+		left join
+		(
+			select * 
+			from user_rental_tb 
+			where user_id = #{userId} and (end_rental > now()) and section_id = #{sectionId}
+			order by end_rental desc
+		) as ur
+		on ns.id = ur.section_id
+		where ns.novel_id = #{novelId} and ns.id = #{sectionId}
+		order by id desc
+	</select>
 
 </mapper>

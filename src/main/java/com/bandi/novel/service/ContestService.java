@@ -46,13 +46,25 @@ public class ContestService {
 	}
 	
 	/**
-	 * 공모전 조회
+	 * 공모전 날짜로 리스트 조회
 	 * @return 공모전 리스트
 	 */
 	@Transactional
 	public List<Contest> selectContestByDate() {
 		
 		List<Contest> contest = contestRepository.selectContestListByDate();
+		
+		return contest;
+	}
+	
+	/**
+	 * 공모전 id로 조회
+	 * @return 공모전
+	 */
+	@Transactional
+	public Contest selectContestById(Integer id) {
+		
+		Contest contest = contestRepository.selectContestById(id);
 		
 		return contest;
 	}
@@ -68,6 +80,10 @@ public class ContestService {
 		return contestList;
 	}
 	
+	/**
+	 * 공모전 업데이트
+	 * @return 공모전 리스트
+	 */
 	@Transactional
 	public void updateContest(Contest contest) {
 		

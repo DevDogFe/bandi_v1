@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserLibraryRepository">
+	
+	<insert id="insertUserLibrary">
+		INSERT INTO user_library_tb (user_id,section_id)
+		VALUES
+		(#{userId},#{sectionId})
+	</insert>
+	
+	<select id="selectUserLibrary" resultType="com.bandi.novel.model.UserLibrary">
+		SELECT *
+		FROM user_library_tb
+		WHERE user_id = #{userId} AND section_id = #{sectionId}
+	</select>
+	
+</mapper>
