@@ -58,7 +58,7 @@
 				for="male"> 남성 </label>
 		</div>
 		<input type="hidden" name="external" value="false">
-	</div>
+	</div>   
 
 	<button type="button" class="btn btn-primary" id="joinBtn">가입하기</button>
 </form>
