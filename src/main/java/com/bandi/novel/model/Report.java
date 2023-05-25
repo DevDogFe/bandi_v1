@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class Report {
 	
-	private int id;
-	private int userId;
-	private int boardId;
+	private Integer id;
+	private Integer userId;
+	private Integer boardId;
 	private String content;
-	private int categoryId;
-	private int proceed;
+	private Integer categoryId;
+	private Integer proceed;
 	private Timestamp createdAt;
 
 }

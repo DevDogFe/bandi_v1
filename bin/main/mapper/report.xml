@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.ReportRepository">
+	
+	<insert id="insert">
+		insert into report_tb (user_id, board_id, content, category_id, proceed)
+		values (#{userId}, #{boardId}, #{content}, #{categoryId}, #{proceed})
+	</insert>
+	
+	<select id="selectAll" resultType="com.bandi.novel.dto.AdminReportDto">
+		select r.id, u.username, rc.category_name, r.proceed, r.created_at
+		from report_tb as r
+		left join user_tb as u
+		on r.user_id = u.id
+		left join board_tb as b
+		on r.board_id = b.id
+		left join report_category_tb as rc
+		on r.category_id = rc.id
+	</select>
+	
+	<select id="selectReportDetailById" resultType="com.bandi.novel.model.Report">
+		select *
+		from report_tb as r
+		left join user_tb as u
+		on r.user_id = u.id
+		left join board_tb as b
+		on r.board_id = b.id
+		left join report_category_tb as rc
+		on r.category_id = rc.id
+		where r.id = #{id}
+	</select>
+	
+	<update id="updateProceedById">
+		update report_tb
+		set proceed = 1
+		where id = #{id}
+	</update>
+
+</mapper>
