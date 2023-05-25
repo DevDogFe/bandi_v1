@@ -126,7 +126,7 @@
 															<td>구매 중</td>
 														</c:when>
 														<c:otherwise>
-															<td>대여 : ${paymentList[vs.index].endRental}</td>
+															<td>대여 : ${paymentList[vs.index].endFormat()}까지</td>
 														</c:otherwise>
 													</c:choose>
 												</c:if>
@@ -154,7 +154,7 @@
 															<td>구매 중</td>
 														</c:when>
 														<c:otherwise>
-															<td>대여 : ${paymentList[vs.index].endRental}까지</td>
+															<td>대여 : ${paymentList[vs.index].endFormat()}까지</td>
 														</c:otherwise>
 													</c:choose>
 												</c:if>

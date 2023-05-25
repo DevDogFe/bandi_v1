@@ -245,18 +245,6 @@ public class NovelController {
 			return "/pay/userPay";
 		}
 		
-		/*
-		 * UserLibrary userLibrary = payService.selectUserLibrary(principal.getId(),
-		 * sectionId);
-		 * 
-		 * if(userLibrary == null) { NovelSection paySection =
-		 * novelService.selectNovelSectionById(sectionId); int userGold =
-		 * payService.selectUserGold(principal.getId());
-		 * model.addAttribute("paySection",paySection);
-		 * model.addAttribute("userGold",userGold); return "/pay/userPay"; }
-		 */
-		//
-		
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//

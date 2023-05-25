@@ -71,6 +71,62 @@ public class PayController {
 
 		return "/pay/chargeGold";
 	}
+	
+	/**
+	 * 골드 결제 처리
+	 * @return
+	 */
+	@PostMapping("/gold/purchase")
+	public String goldPurchase(KakaoPayRequestDto dto, HttpServletResponse response) {
+
+		// 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (!((payService.selectUserGold(principal.getId()) - dto.getTotalAmount()) >= 0)) {
+			PrintWriter out;
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('골드가 부족합니다.'); location.href='/payment/charge'</script>");
+				out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			// 골드 결제 처리
+			payService.purchaseNovel(principal.getId(), dto.getTotalAmount(),dto.getSectionId());
+		}
+		
+		return "redirect:/section/read/"+dto.getNovelId()+"/"+dto.getSectionId();
+	}
+	
+	/**
+	 * 골드 대여 처리
+	 * @return
+	 */
+	@PostMapping("/gold/rental")
+	public String goldRental(KakaoPayRequestDto dto, HttpServletResponse response) {
+
+		// 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (!((payService.selectUserGold(principal.getId()) - dto.getTotalAmount()) >= 0)) {
+			PrintWriter out;
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('골드가 부족합니다.'); location.href='/payment/charge'</script>");
+				out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			// 골드 대여 처리
+			payService.rentalNovel(principal.getId(), dto.getTotalAmount(),dto.getSectionId());
+		}
+		
+		return "redirect:/section/read/"+dto.getNovelId()+"/"+dto.getSectionId();
+	}
+	
+	
 
 	/**
 	 * 단편 결제, 대여 요청
@@ -170,7 +226,7 @@ public class PayController {
 		// 유저 결제 회차 삽입 !!!!!!
 		payService.insertUserLibrary(principal.getId(), sectionId);
 
-		return "redirect:/section/read/{novelId}/{sectionId}";
+		return "redirect:/section/read/"+novelId+"/"+sectionId;
 	}
 	
 	/**
@@ -187,12 +243,11 @@ public class PayController {
 		// 유저 골드 사용 대여 처리
 		payService.rentalNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(),sectionId);
 		
-		return "redirect:/section/read/{novelId}/{sectionId}";
+		return "redirect:/section/read/"+novelId+"/"+sectionId;
 	}
 
 	/**
 	 * 골드 결제 승인 요청
-	 * 
 	 * @return
 	 */
 	@GetMapping("/kakao/gold/success")
