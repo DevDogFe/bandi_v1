@@ -38,10 +38,10 @@
 <body>
 	<div class="sidebar">
 		<ul>
-			<a href="#">신고게시물 처리</a>
+			<a href="/report/reportList">신고게시물 처리</a>
 		</ul>
 		<ul>
-			<a href="#">카테고리 관리</a>
+			<a href="/admin/adminCategory">카테고리 관리</a>
 		</ul>
 		<ul>
 			<a href="#">장르 관리</a>

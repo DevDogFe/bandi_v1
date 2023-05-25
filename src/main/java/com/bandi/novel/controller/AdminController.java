@@ -191,4 +191,10 @@ public class AdminController {
 		return "/admin/adminForm";
 	}
 	
+	@GetMapping("/adminCategory")
+	public String createCategory() {
+		
+		return "/admin/adminCategory";
+	}
+	
 }
