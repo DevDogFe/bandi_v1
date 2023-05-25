@@ -251,11 +251,24 @@ insert into application_tb (user_id, tel, title, content, origin_filename , uplo
 
 -- 유저 골드 정보 
 INSERT INTO user_gold_tb(user_id,gold) VALUES
-(1,100),
+(1,1000),
 (2,1000),
 (3,5000);
 
--- 유저 결제 회차 기록
+-- 유저 결제 회차 기록(삭제 예정)
 INSERT INTO user_library_tb(user_id,section_id) VALUES
 (1,1);
 
+-- 유저 결제 소설 기록
+INSERT INTO user_purchase_tb(user_id,section_id,price) VALUES
+(1,1,100),
+(1,2,100),
+(1,3,100),
+(1,4,100);
+
+-- 유저 대여 소설 기록
+INSERT INTO user_rental_tb(user_id,section_id,price,end_rental) VALUES
+(1,11,100,now()),
+(1,4,100,now()+3),
+(1,5,100,now()+3),
+(1,6,100,now()+3);

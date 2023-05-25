@@ -10,5 +10,5 @@ public class KakaoPayRequestDto {
 	private String itemName;
 	private Integer quantity;
 	private Integer totalAmount;
-	private boolean isRental;
+	private Boolean isRental;
 }

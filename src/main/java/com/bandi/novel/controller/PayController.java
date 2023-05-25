@@ -104,12 +104,12 @@ public class PayController {
 		params.add("item_name", dto.getItemName()); // 상품명
 		params.add("quantity", dto.getQuantity().toString()); // 주문 수량
 		params.add("total_amount", dto.getTotalAmount().toString()); // 총금액
-
-		if (dto.isRental()) {
+		
+		if (dto.getIsRental() != null) {
 			// 성공 시 redirect url
-			params.add("approval_url","http://localhost/payment/kakao/purchase/success/" + dto.getNovelId() + "/" + dto.getSectionId());
+			params.add("approval_url","http://localhost/payment/kakao/rental/success/" + dto.getNovelId() + "/" + dto.getSectionId());
 		} else {
-			params.add("approval_url","http://localhost/payment/rental/kakao/success/" + dto.getNovelId() + "/" + dto.getSectionId()); 
+			params.add("approval_url","http://localhost/payment/kakao/purchase/success/" + dto.getNovelId() + "/" + dto.getSectionId()); 
 		}
 
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
@@ -166,7 +166,7 @@ public class PayController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
 		// 유저 골드 사용 구매 처리
-		payService.purchaseNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal());
+		payService.purchaseNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(),sectionId);
 		// 유저 결제 회차 삽입 !!!!!!
 		payService.insertUserLibrary(principal.getId(), sectionId);
 
@@ -185,8 +185,8 @@ public class PayController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
 		// 유저 골드 사용 대여 처리
-		payService.rentalNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal());
-
+		payService.rentalNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(),sectionId);
+		
 		return "redirect:/section/read/{novelId}/{sectionId}";
 	}
 
@@ -207,6 +207,7 @@ public class PayController {
 		return "redirect:/index";
 	}
 
+	
 	// 클래스화
 	/**
 	 * 결제 요청 헤더

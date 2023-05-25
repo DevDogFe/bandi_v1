@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.dto.response.SectionDto;
+import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.NovelSection;
 
 @Mapper
@@ -35,5 +36,11 @@ public interface NovelSectionRepository {
 
 	// 조회수 1 증가
 	int updateViewsById(Integer sectionId);
+	
+	// 소설에 따른 유저 구매 대여 기록 조회 리스트
+	List<UserPurchaseRentalRecord> selectPurchaseRentalRecord(@Param("userId") Integer userId,@Param("novelId") Integer novelId);
+	// 소설 회차에 따른 유저 구매 대여 기록 조회
+	UserPurchaseRentalRecord selectPurchaseRentalRecordByIds(@Param("userId") Integer userId,@Param("novelId") Integer novelId,
+															@Param("sectionId") Integer sectionId);
 
 }

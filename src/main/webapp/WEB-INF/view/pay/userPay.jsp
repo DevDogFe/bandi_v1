@@ -39,6 +39,10 @@ body {
 	height: 50px;
 }
 
+.pay-btn.rental {
+	background-color: chocolate;
+}
+
 .pay-btn.gold {
 	background-color: blue;
 }
@@ -56,22 +60,31 @@ body {
 			<hr>
 		</div>
 		<div class="bottom">
-		<form action="/payment/kakaoPay/ready" method="post">
 			<p>
 				<b> 구매하기</b>
 			</p>
 			<p>아래에서 방법을 선택해주세요</p>
 			<div class="bottom-inner">
+			<form action="/payment/kakaoPay/ready" method="post">
 				<input type="hidden" name="sectionId" value="${paySection.id}">
 				<input type="hidden" name="novelId" value="${paySection.novelId}">
 				<input type="hidden" name="quantity" value="1">
 				<input type="hidden" name="itemName" value="${paySection.title}">
 				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
 				<button type="submit" class="pay-btn gold">구매 ${paySection.currentPrice} G</button>
+			</form>
+			<form action="/payment/kakaoPay/ready" method="post">
+				<input type="hidden" name="sectionId" value="${paySection.id}">
+				<input type="hidden" name="novelId" value="${paySection.novelId}">
+				<input type="hidden" name="quantity" value="1">
+				<input type="hidden" name="itemName" value="${paySection.title}">
+				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
+				<input type="hidden" name="isRental" value="true">
+				<button type="submit" class="pay-btn rental">3일 대여 ${paySection.currentPrice} G</button>
+			</form>
 				<button type="button" class="pay-btn charge"
 					onclick="location.href='/payment/charge'">골드 충전하기</button>
 			</div>
-		</form>
 		</div>
 	</div>
 </body>

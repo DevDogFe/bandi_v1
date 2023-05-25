@@ -23,6 +23,7 @@ import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.SectionDto;
+import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -203,6 +204,9 @@ public class NovelController {
 		// 소설 회차 리스트
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
 				novelId);
+		// 소설 구매, 대여 여부 리스트
+		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(),novelId);
+		
 		// 즐겨찾기 여부
 		if (principal != null) {
 			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
@@ -210,6 +214,7 @@ public class NovelController {
 		}
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("detail", novelDetailDto);
+		model.addAttribute("paymentList",paymentList);
 
 		return "/novel/novelDetail";
 	}
@@ -228,15 +233,28 @@ public class NovelController {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		
 		// 결제 여부 확인 !!!!!!! 나중에 변경
-		UserLibrary userLibrary = payService.selectUserLibrary(principal.getId(), sectionId);
+		UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId, sectionId);
+		System.out.println(userPayment.toString()); 
 		
-		if(userLibrary == null) {
+		if(userPayment.getPurchaseSectionId() == null && userPayment.getEndRental() == null) {
+			//userPay 페이지에 띄울 정보
 			NovelSection paySection = novelService.selectNovelSectionById(sectionId);
 			int userGold = payService.selectUserGold(principal.getId());
 			model.addAttribute("paySection",paySection);
 			model.addAttribute("userGold",userGold);
 			return "/pay/userPay";
 		}
+		
+		/*
+		 * UserLibrary userLibrary = payService.selectUserLibrary(principal.getId(),
+		 * sectionId);
+		 * 
+		 * if(userLibrary == null) { NovelSection paySection =
+		 * novelService.selectNovelSectionById(sectionId); int userGold =
+		 * payService.selectUserGold(principal.getId());
+		 * model.addAttribute("paySection",paySection);
+		 * model.addAttribute("userGold",userGold); return "/pay/userPay"; }
+		 */
 		//
 		
 		// 이전글 다음글 기능

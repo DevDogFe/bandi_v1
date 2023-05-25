@@ -302,8 +302,8 @@ CREATE TABLE user_rental_tb(
 	section_id INT NOT NULL,
 	price INT NOT NULL,
 	begin_rental TIMESTAMP DEFAULT NOW(),
-	end_rental TIMESTAMP NOT NULL,
-	PRIMARY KEY (user_id, section_id),
+	end_rental TIMESTAMP DEFAULT NOW()+3,
+	PRIMARY KEY (user_id, section_id,end_rental),
 	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
