@@ -75,6 +75,9 @@ public class UserApiController {
 	 * 
 	 * @param nickName
 	 * @return
+	 * 
+	 * URL 설계 !!! Query String --> 정렬된 데이터 처리 사용 
+	 * path // 정렬되지 않은 데이터 !!! -- 일괄적으로 //
 	 */
 	@GetMapping("/api/nickname")
 	public Boolean nickNameCheck(String nickName) {

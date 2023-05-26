@@ -94,6 +94,7 @@ ul {
 				<div class="col-auto">
 					<input type="text" id="search" name="search" class="form-control">
 				</div>
+					<input type="hidden" name="sort" value="${sort }">					
 				<div class="col-auto">
 					<button type="submit" class="btn btn-primary">검색</button>
 				</div>

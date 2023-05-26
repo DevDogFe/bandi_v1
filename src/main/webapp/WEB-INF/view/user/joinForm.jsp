@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../layout/header.jsp"%>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>  <!--!!!! <----------  뭐죠 !!!!   -->
 <h1>회원가입</h1>
 <form action="/user" method="post">
 	<div class="mb-3">
@@ -33,6 +33,7 @@
 		<label for="email" class="form-label">이메일</label> <input type="email"
 			class="form-control" id="email" name="email" required
 			value="khl4459@naver.com">
+			<!-- btn-secondary" <---- 뭐죠 !!!!  -->
 		<button type="button" id="emailAuth" class="btn btn-secondary">이메일
 			인증</button>
 		<br> <label for="authKey" class="form-label">인증번호</label> <input
@@ -65,11 +66,11 @@
 <script type="text/javascript">
 	$(document).ready(()=>{
 		// 아이디 중복확인
-		$("#usernameCheck").on("click", () => {
+		$("#usernameJ").on("click", () => {
 			$.ajax({
 				type: "GET",
 				url: "/api/username",
-				data: {username: $("#usernameJ").val()}
+				data: {username: $("#usernameJ").val()}   // <--- 뭐죠??
 			}).done((response) => {
 				console.log(response)
 				if(response){
@@ -84,6 +85,7 @@
 		});
 		
 		// 닉네임 중복확인
+		// JSON ---> 
 		$("#nicknameCheck").on("click", () => {
 			$.ajax({
 				type: "GET",
@@ -171,13 +173,11 @@
 					//false;
 					alert("인증실패 확인 다시입력해주세요");
 				}else{
-					true;
+					true;   // <----- 뭐죠??? !!!!!! 
 					alert("인증 완료되었습니다");
 					$("#joinBtn").prop("type","submit");
 				}
-				
 			});
-			
 		}
 
 
