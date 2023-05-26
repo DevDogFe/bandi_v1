@@ -9,6 +9,12 @@ public class Define {
 	public final static String UPLOAD_DIRECTORY = "C:\\bandi\\upload";
 	
 	public final static String REQUEST_FAIL = "요청을 처리하지 못했습니다.";
+	
+	public final static int SORT_FAVORITE = 0;
+	public final static int SORT_SCORE = 1;
+	public final static int TYPE_PAY = 1;
+	public final static int TYPE_FREE = 2;
+	public final static int TYPE_CONTEST = 3;
 
 	/**
 	 * 로그인 해야 접속 가능한 페이지 목록

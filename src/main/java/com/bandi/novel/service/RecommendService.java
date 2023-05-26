@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto;
+import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.repository.RecommendRepository;
 import com.bandi.novel.utils.TotalRecommendUtil;
 
@@ -52,6 +53,22 @@ public class RecommendService {
 		List<MainRecommendDto> resultList = TotalRecommendUtil.getTotalRecommendList(genreList, tempList);
 
 		return resultList;
+	}
+
+	/**
+	 * 즐겨찾기 기준 랭크
+	 * @param serviceTypeId
+	 * @param limit
+	 * @return
+	 */
+	@Transactional
+	public List<RankPageDto> selectRankToFavorite(Integer serviceTypeId, Integer limit){
+		return recommendRepository.selectRankToFavoriteByServiceTypeId(serviceTypeId, limit);
+	}
+	
+	@Transactional
+	public List<RankPageDto> selectRankToScore(Integer serviceTypeId, Integer limit){
+		return recommendRepository.selectRankToScoreByServiceTypeId(serviceTypeId, limit);
 	}
 
 }

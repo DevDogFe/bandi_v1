@@ -3,15 +3,20 @@ package com.bandi.novel.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto;
+import com.bandi.novel.dto.response.RankPageDto;
 
 @Mapper
 public interface RecommendRepository {
 
 	List<MainRecommendDto> selectByAgeAndGender(AgeGenderRecommendDto ageGenderRecommendDto);
+	
+	List<RankPageDto> selectRankToFavoriteByServiceTypeId(@Param("serviceTypeId") Integer serviceTypeId, @Param("limit") Integer limit);
+	List<RankPageDto> selectRankToScoreByServiceTypeId(@Param("serviceTypeId") Integer serviceTypeId, @Param("limit") Integer limit);
 	
 	
 	
