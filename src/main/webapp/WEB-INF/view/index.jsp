@@ -76,14 +76,24 @@
 			</c:otherwise>
 		</c:choose>
 		<c:if test="${!empty principal }">
-			<h3>${principal.getGeneration() }대 ${principal.gender}이 좋아하는 작품</h3>
+			<h3>${principal.getGeneration() }대${principal.gender}이좋아하는 작품</h3>
 			<table class="table">
 				<c:forEach items="${ageGenderList }" var="novel">
 					<tr>
-						<td>${novel.title }</td>					
+						<td>${novel.title }</td>
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<h3>${principal.nickName}님이 좋아하는 장르소설 top 5 </h3>
+			<table class="table">
+				<c:forEach var="genre" items="${genreList}">
+					<tr>
+						<td>${genre.title}</td>
+					</tr>
+				</c:forEach>
+			</table>
+
 		</c:if>
 		<c:if test="${!empty principal }">
 			<h3>${principal.nickName }님이 좋아할만한 작품</h3>
@@ -95,6 +105,9 @@
 				</c:forEach>
 			</table>
 		</c:if>
+
+
+
 	</div>
 	<script type="text/javascript">
 		$(document).ready(()=>{

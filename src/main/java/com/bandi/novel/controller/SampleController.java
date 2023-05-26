@@ -33,10 +33,13 @@ public class SampleController {
 					generationUtil.getLeftPort(), generationUtil.getRightPort());
 
 			List<MainRecommendDto> ageGenderList = recommendService.selectNovelsByAgeAndGender(recommendDto);
-			
+
 			List<MainRecommendDto> totalRecommendList = recommendService.selectTotalRecommendedNovels(recommendDto);
 			model.addAttribute("ageGenderList", ageGenderList);
 			model.addAttribute("totalRecommendList", totalRecommendList);
+			List<MainRecommendDto> genreList = recommendService.selectByFavoriteGenre(principal.getId());
+			System.out.println(genreList);
+			model.addAttribute("genreList", genreList);
 
 		}
 

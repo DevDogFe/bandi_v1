@@ -27,7 +27,13 @@ public interface RecommendRepository {
 	 */
 	List<PreferGenreForTotalRecommendDto> selectPreferGenre(Integer userId);
 	List<MainRecommendDto> selectByAgeAndGenderForTotalRecommend(AgeGenderRecommendDto ageGenderRecommendDto);
-	// 맞춤 추천 알고리즘 위한 dao
+	
+	// 많이 본 장르 소설 추천 
+	List<MainRecommendDto> selectByFavoriteGenre(Integer userId);
+	
+
+	
+	
 	
 	
 	

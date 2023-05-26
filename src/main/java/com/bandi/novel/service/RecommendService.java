@@ -70,5 +70,19 @@ public class RecommendService {
 	public List<RankPageDto> selectRankToScore(Integer serviceTypeId, Integer limit){
 		return recommendRepository.selectRankToScoreByServiceTypeId(serviceTypeId, limit);
 	}
+	/**
+	 * 효린
+	 * 좋아하는 장르 소설
+	 * @param userId
+	 * @return 소설리스트
+	 */
+	@Transactional
+	public List<MainRecommendDto> selectByFavoriteGenre(Integer userId){
+		
+		List<MainRecommendDto> list = recommendRepository.selectByFavoriteGenre(null);
+		
+		return list;
+	}
+	
 
 }

@@ -113,4 +113,28 @@
 
 
 
+	<!-- 내 즐겨찾기 중 많은 장르 소설 (효린) -->
+	<select id="selectByFavoriteGenre" resultType="com.bandi.novel.dto.response.MainRecommendDto">
+		select n.*, g.name as genre_name
+		from novel_tb as n
+		LEFT JOIN user_favorite_tb as uf
+		on n.id = uf.novel_id
+		LEFT JOIN genre_tb as g
+		on n.genre_id = g.id
+		where genre_id =
+		(SELECT g.id
+		FROM user_favorite_tb as uf
+		LEFT JOIN novel_tb as n
+		on uf.novel_id = n.id
+		LEFT JOIN genre_tb as g
+		on n.genre_id = g.id
+		WHERE uf.user_id = 1
+		GROUP BY genre_id
+		ORDER BY count(*) DESC
+		LIMIT 1)
+		GROUP BY n.id
+		ORDER BY count(*) DESC
+		LIMIT 5 
+	</select>
+
 </mapper>
