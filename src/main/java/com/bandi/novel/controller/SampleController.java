@@ -37,7 +37,6 @@ public class SampleController {
 			List<MainRecommendDto> genreList = recommendService.selectByFavoriteGenre(principal.getId());		
 			System.out.println(genreList);
 			model.addAttribute("genreList", genreList);
-
 		}
 
 		return "/index";
