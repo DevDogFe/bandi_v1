@@ -13,8 +13,8 @@
 	<form action="/user" method="post">
 		<input type="hidden" name="username" value="${user.username}"> <input type="hidden" name="password" value="${user.password}"> <input type="hidden" name="external" value="kakao">
 		<div class="mb-3">
-			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="개">
-			<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>
+			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="소">
+			<div id="nickNameCheck"></div>
 		</div>
 		<div class="mb-3">
 			<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="khl4459@naver.com">
@@ -40,18 +40,20 @@
 	</form>
 	<script type="text/javascript">
 	$(document).ready(()=>{
-		
+		let nickNameOk = false;
 		// 닉네임 중복확인
-		$("#nicknameCheck").on("click", () => {
+		$("#nickName").on("keyup", () => {
 			$.ajax({
 				type: "GET",
-				url: "/api/nickname",
-				data: {nickName: $("#nickName").val()}
+				url: "/api/nickName?nickName=" + $("#nickName").val() 
 			}).done((response) => {
+				console.log(response);
 				if(response){
-					alert('이미 사용중인 아이디입니다.');
+					$("#nickNameCheck").text("이미 사용중인 닉네임입니다.");
+					nickNameOk = false;
 				} else{
-					alert('사용 가능한 아이디입니다.');
+					$("#nickNameCheck").text("사용 가능한 닉네임입니다.");
+					nickNameOk = true;
 				}
 			}).fail((error) => {
 				console.log(error);
@@ -106,10 +108,22 @@
 					//true;
 					alert("인증 완료되었습니다");
 					$("#email").attr('readonly',true);
-					$("#joinBtn").prop("type","submit");
+					if(nickNameOk){
+						$("#joinBtn").prop("type","submit");
+					}
 				}				
 			});			
 		}
+		
+		$("#joinBtn").on("click", () => {
+			if($("#joinBtn").attr("type") == "button"){
+				if(!nickNameOk){
+					alert("이미 사용중인 닉네임입니다.");
+				} else{
+					alert("이메일 인증을 진행해주세요.");
+				}
+			}
+		})
 		
 	});
 </script>

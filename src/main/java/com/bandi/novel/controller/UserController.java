@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import com.bandi.novel.dto.OAuthUserInfo;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.PurchaseRecordDto;
 import com.bandi.novel.dto.response.RentalRecordDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.User;
 import com.bandi.novel.model.UserGold;
 import com.bandi.novel.model.UserGoldCharge;
@@ -93,6 +95,9 @@ public class UserController {
 	public String joinProc(JoinDto joinDto) {
 		
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
+		if(!joinDto.getPassword().equals(joinDto.getPasswordCheck())) {
+			throw new CustomRestfulException("비밀번호란과 비밀번호 확인란의 값이 다릅니다.", HttpStatus.BAD_REQUEST);
+		}
 		userService.insertUser(joinDto);
 		
 		return "redirect:/index";
