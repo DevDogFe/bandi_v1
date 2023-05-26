@@ -303,8 +303,10 @@ CREATE TABLE user_gold_tb(
 
 -- 유저 골드 충전 기록
 CREATE TABLE user_gold_charge_tb(
-	user_id INT PRIMARY KEY,
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT NOT NULL,
 	price INT NOT NULL,
+	tid VARCHAR(255) NOT NULL,
 	created_at TIMESTAMP DEFAULT NOW(),
 	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE
 );

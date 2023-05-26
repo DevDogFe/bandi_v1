@@ -25,9 +25,16 @@ import com.bandi.novel.dto.FindPwdDto;
 import com.bandi.novel.dto.OAuthToken;
 import com.bandi.novel.dto.OAuthUserInfo;
 import com.bandi.novel.dto.response.MyFavoriteDto;
+import com.bandi.novel.dto.response.PurchaseRecordDto;
+import com.bandi.novel.dto.response.RentalRecordDto;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserGold;
+import com.bandi.novel.model.UserGoldCharge;
+import com.bandi.novel.model.UserPurchase;
+import com.bandi.novel.model.UserRental;
 import com.bandi.novel.service.MailService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.TempNumberUtill;
@@ -50,6 +57,8 @@ public class UserController {
 	private MailService mailService;
 	@Autowired
 	private NovelService novelService;
+	@Autowired
+	private PayService payService;
 
 
 	/**
@@ -187,8 +196,23 @@ public class UserController {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		List<MyFavoriteDto> favoriteList = novelService.selectUserFavoriteNovelList(principal.getId(), 3);
 		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), 3);
+		
+		// todo 마이페이지 안에 있는 결제 조회 페이지에 나누어서 넣을 예정
+		Integer gold = payService.selectUserGold(principal.getId());
+		
+		List<UserGoldCharge> goldChargeList = payService.selectGoldCharge(principal.getId());
+		List<PurchaseRecordDto> purchaseList = payService.selectPurchaseRecord(principal.getId());
+		List<RentalRecordDto> rentalList = payService.selectRentalRecord(principal.getId());
+		
+		model.addAttribute("gold", gold);
+		model.addAttribute("goldChargeList", goldChargeList);
+		model.addAttribute("purchaseList", purchaseList);
+		model.addAttribute("rentalList", rentalList);
+		//
+		
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("myNovelList", myNovelList);
+		
 		return "/user/userInfo";
 	}
 

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bandi.novel.dto.response.PurchaseRecordDto;
+import com.bandi.novel.dto.response.RentalRecordDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.UserGold;
 import com.bandi.novel.model.UserGoldCharge;
@@ -53,13 +55,54 @@ public class PayService {
 	}
 	//
 
+	/**
+	 * 사용자 골드 조회
+	 * @return 
+	 */
 	public int selectUserGold(Integer userId) {
 
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 
 		return userGold.getGold();
 	}
+	
+	/**
+	 * 사용자 골드 충전 기록 조회
+	 * @return 
+	 */
+	public List<UserGoldCharge> selectGoldCharge(Integer userId) {
+		
+		List<UserGoldCharge> userGoldCharge = userGoldChargeRepository.selectByUserId(userId);
+		
+		return userGoldCharge;
+	}
+	
+	/**
+	 * 소설 구매 기록 조회
+	 * @return 
+	 */
+	public List<PurchaseRecordDto> selectPurchaseRecord(Integer userId) {
+		
+		List<PurchaseRecordDto> userPurchaseRecord = userPurchaseRepository.selectByUserId(userId);
+		
+		return userPurchaseRecord;
+	}
+	
+	/**
+	 * 소설 대여 기록 조회
+	 * @return 
+	 */
+	public List<RentalRecordDto> selectRentalRecord(Integer userId) {
+		
+		List<RentalRecordDto> userRentalRecord = userRentalRepository.selectByUserId(userId);
+		
+		return userRentalRecord;
+	}
 
+	/**
+	 * 소설 구매
+	 * @return 
+	 */
 	public void purchaseNovel(Integer userId, Integer amount,Integer sectionId) {
 
 		// 유저 골드 정보
@@ -77,6 +120,10 @@ public class PayService {
 		//
 	}
 	
+	/**
+	 * 소설 대여
+	 * @return 
+	 */
 	public void rentalNovel(Integer userId, Integer amount,Integer sectionId) {
 
 		// 유저 골드 정보
@@ -98,7 +145,7 @@ public class PayService {
 	 * 골드 충전
 	 * @return 
 	 */
-	public void chargeGold(Integer userId, Integer amount) {
+	public void chargeGold(Integer userId, Integer amount,String tid) {
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 		userGold.setGold(userGold.getGold() + amount);
 		
@@ -108,9 +155,27 @@ public class PayService {
 		UserGoldCharge userGoldCharge = new UserGoldCharge();
 		userGoldCharge.setUserId(userId);
 		userGoldCharge.setPrice(amount);
+		userGoldCharge.setTid(tid);
 		
 		userGoldChargeRepository.insertGoldChargeRecord(userGoldCharge);
 		//
+	}
+	
+	/**
+	 * 골드 환불
+	 * @return 
+	 */
+	public void RefundGold(Integer userId, Integer amount,Integer goldChargeId) {
+		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
+		userGold.setGold(userGold.getGold() - amount);
+		
+		int updateResult = userGoldRepository.updateUserGold(userGold);
+		
+		int deleteResult = userGoldChargeRepository.deleteGoldChargeRecordById(goldChargeId);
+		
+		if(updateResult != 1 || deleteResult != 1) {
+			System.out.println("환불 처리 안됨 :" + updateResult + deleteResult);
+		}
 	}
 	
 	/**

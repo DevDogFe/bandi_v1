@@ -10,6 +10,15 @@
 		(#{userId},#{sectionId},#{price})
 	</insert>
 	
-	
+	<select id="selectByUserId" resultType="com.bandi.novel.dto.response.PurchaseRecordDto">
+		SELECT up.price,up.created_at,ns.title as sectionTitle
+				,n.title as novelTitle
+		FROM user_purchase_tb as up
+		LEFT JOIN novel_section_tb as ns
+		ON up.section_id = ns.id
+		LEFT JOIN novel_tb as n
+		ON ns.novel_id = n.id
+		WHERE up.user_id = #{userId}
+	</select>
 
 </mapper>

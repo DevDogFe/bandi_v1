@@ -405,7 +405,7 @@ insert into report_tb (user_id, board_id, content, category_id, created_at) valu
 
 -- 유저 골드 정보 
 INSERT INTO user_gold_tb(user_id,gold) VALUES
-(1,1000),
+(1,0),
 (2,1000),
 (3,5000);
 
