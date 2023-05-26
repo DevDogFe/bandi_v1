@@ -1,8 +1,11 @@
 package com.bandi.novel.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bandi.novel.dto.JoinDto;
+import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.UserUpdateDto;
 import com.bandi.novel.model.User;
 
@@ -26,5 +29,8 @@ public interface UserRepository {
 	
 	// 유저롤 변경
 	public Integer updateUserRole(User user);
+
+	// 유저 검색
+	public List<User> searchUser(UserSearchDto userSearchDto);
 
 }

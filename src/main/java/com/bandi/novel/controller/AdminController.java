@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bandi.novel.dto.AdminReportDto;
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
@@ -225,6 +226,18 @@ public class AdminController {
 	public String createGenreProc(Genre genre) {
 		adminService.createGenre(genre);
 		return "redirect:/admin/genre";
+	}
+	
+	@GetMapping("/user")
+	public String getUserRole(Model model, UserSearchDto userSearchDto) {
+		List<User> userList = adminService.searchUser(userSearchDto);
+		if("".equals(userSearchDto.getKeyword())) {
+			userSearchDto.setKeyword(null);
+		} else {
+			userList = adminService.searchUser(userSearchDto);
+		}
+		model.addAttribute("userList", userList);
+		return "/admin/adminUserRole";
 	}
 	
 }

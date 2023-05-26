@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
@@ -16,6 +17,7 @@ import com.bandi.novel.repository.AnswerRepository;
 import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.QuestionRepository;
+import com.bandi.novel.repository.UserRepository;
 
 @Service
 public class AdminService {
@@ -28,6 +30,8 @@ public class AdminService {
 	private BoardCategoryRepository boardCategoryRepository;
 	@Autowired
 	private GenreRepository genreRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	/**
 	 * @return Question 전체조회
@@ -149,9 +153,17 @@ public class AdminService {
 		return result;
 	}
 	
+	// 유저롤 수정
 	@Transactional
 	public void updateUserRole(User user) {
 		
+	}
+	
+	// 사용자 검색
+	@Transactional
+	public List<User> searchUser(UserSearchDto userSearchDto) {
+		List<User> list = userRepository.searchUser(userSearchDto);
+		return list;
 	}
 
 }

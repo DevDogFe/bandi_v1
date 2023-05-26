@@ -47,7 +47,7 @@
 			<a href="/admin/genre">장르 관리</a>
 		</ul>
 		<ul>
-			<a href="#">유저롤 변경</a>
+			<a href="/admin/user">유저롤 변경</a>
 		</ul>
 	</div>
 	<div class="main">

@@ -48,5 +48,15 @@
 		update user_tb
 		set user_role = #{userRole}
 	</update>
+	
+	<!-- 사용자 검색 (지운) -->
+	<select id="searchUser" resultType="com.bandi.novel.model.User">
+		<if test="type == 'all'">
+			select * from user_tb
+		</if>
+		<if test="type == 'nickName'">
+			select * from user_tb where nick_name = #{keyword}
+		</if>
+	</select>
 
 </mapper>
