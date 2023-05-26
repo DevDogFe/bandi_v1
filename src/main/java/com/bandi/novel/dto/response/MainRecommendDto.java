@@ -11,5 +11,6 @@ public class MainRecommendDto {
 	private String cover;
 	private Integer favoriteCount;
 	private Double score;
-
+	//
+	private String genreName;
 }

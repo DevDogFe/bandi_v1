@@ -11,7 +11,8 @@
 		ON uf.user_id = u.id
 		LEFT JOIN novel_tb AS n
 		ON uf.novel_id = n.id
-		WHERE gender = #{gender}
+		WHERE gender =
+		#{gender}
 		AND
 		(birth_date <![CDATA[ > ]]>
 		#{leftPort} AND birth_date <![CDATA[ <= ]]>
@@ -33,7 +34,7 @@
 	</select>
 
 	<select id="selectByAgeAndGenderForTotalRecommend" resultType="com.bandi.novel.dto.response.MainRecommendDto">
-		SELECT n.id, n.genre_id, count(*) AS favorite_count 
+		SELECT n.id, n.genre_id, count(*) AS favorite_count
 		FROM user_favorite_tb AS uf
 		LEFT JOIN user_tb AS u
 		ON uf.user_id = u.id
@@ -48,6 +49,30 @@
 		GROUP BY novel_id
 		ORDER BY favorite_count DESC
 		LIMIT 50;
+	</select>
+
+	<!-- 내 즐겨찾기 중 많은 장르 소설 (효린) -->
+	<select id="selectByFavoriteGenre" resultType="com.bandi.novel.dto.response.MainRecommendDto">
+		select n.*, g.name as genre_name
+		from novel_tb as n
+		LEFT JOIN user_favorite_tb as uf
+		on n.id = uf.novel_id
+		LEFT JOIN genre_tb as g
+		on n.genre_id = g.id
+		where genre_id =
+		(SELECT g.id
+		FROM user_favorite_tb as uf
+		LEFT JOIN novel_tb as n
+		on uf.novel_id = n.id
+		LEFT JOIN genre_tb as g
+		on n.genre_id = g.id
+		WHERE uf.user_id = 1
+		GROUP BY genre_id
+		ORDER BY count(*) DESC
+		LIMIT 1)
+		GROUP BY n.id
+		ORDER BY count(*) DESC
+		LIMIT 5 
 	</select>
 
 </mapper>

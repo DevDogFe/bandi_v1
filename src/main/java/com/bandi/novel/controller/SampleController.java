@@ -34,6 +34,9 @@ public class SampleController {
 
 			List<MainRecommendDto> ageGenderList = recommendService.selectNovelsByAgeAndGender(recommendDto);
 			model.addAttribute("ageGenderList", ageGenderList);
+			List<MainRecommendDto> genreList = recommendService.selectByFavoriteGenre(principal.getId());		
+			System.out.println(genreList);
+			model.addAttribute("genreList", genreList);
 
 		}
 
