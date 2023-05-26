@@ -145,6 +145,10 @@ a {
 
 	<header class="d-flex flex-column align-items-center">
 		<div class="header--top">
+			<c:if test="${principal.userRole.equals(\"admin\") }">
+				<button type="button" class="login--btn btn" onclick="location.href='/admin/adminPage'">관리자 페이지</button>
+			</c:if>
+				<button type="button" class="login--btn btn" onclick="location.href='/payment/charge'">골드충전</button>
 			<c:choose>
 				<c:when test="${empty principal}">
 					<button type="button" class="login--btn btn" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
@@ -178,39 +182,48 @@ a {
 					</div>
 					<div id="contest" class="header--menu text-center">
 						<div class="nav--menu">
-							<a href="#">공모전</a>
+							<a href="/contest/list">공모전</a>
 						</div>
-						<ul id="contestPanel" class="nav--panel">
+						<!-- <ul id="contestPanel" class="nav--panel">
 							<li><a href="#">공지</a></li>
 							<li><a href="#">출품작 보기</a></li>
-						</ul>
+						</ul> -->
+					</div>
+					<div id="best" class="header--menu text-center">
+						<div class="nav--menu">
+							<a href="/best">베스트</a>
+						</div>
+						<!-- <ul id="contestPanel" class="nav--panel">
+							<li><a href="#">공지</a></li>
+							<li><a href="#">출품작 보기</a></li>
+						</ul> -->
 					</div>
 					<div id="board" class="header--menu text-center">
 						<div class="nav--menu">
-							<a href="#">게시판</a>
+							<a href="/board/list">게시판</a>
 						</div>
 						<ul id="boardPanel" class="nav--panel">
-							<li><a href="#">자유게시판</a></li>
-							<li><a href="#">추천게시판</a></li>
-							<li><a href="#">홍보게시판</a></li>
-							<li><a href="#">팬아트게시판</a></li>
+							<li><a href="/board/list/1">자유게시판</a></li>
+							<li><a href="/board/list/2">추천게시판</a></li>
+							<li><a href="/board/list/3">팬아트게시판</a></li>
+							<li><a href="/board/list/4">홍보게시판</a></li>
 						</ul>
 					</div>
 					<div id="cs" class="header--menu text-center">
 						<div class="nav--menu">
-							<a href="#">고객지원</a>
+							<a href="/qna/list">고객지원</a>
 						</div>
 						<ul id="csPanel" class="nav--panel">
-							<li><a href="#">Q&A</a></li>
-							<li><a href="#">FAQ</a></li>
+							<li><a href="/qna/list">Q&A</a></li>
+							<li><a href="/faq/list">FAQ</a></li>
 						</ul>
 					</div>
 					<div id="myPage" class="header--menu text-center">
 						<div class="nav--menu">
-							<a href="#">마이페이지</a>
+							<a href="/myInfo">마이페이지</a>
 						</div>
 						<ul id="myPagePanel" class="nav--panel">
-							<li><a href="#">내 정보 조회</a></li>
+							<li><a href="/myInfo">내 정보 조회</a></li>
 							<li><a href="#">즐겨찾기</a></li>
 							<li><a href="#">내 작품</a></li>
 						</ul>
