@@ -176,16 +176,21 @@ public class NovelController {
 	public String getFreeList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort) {
+		
 		if ("".equals(search)) {
 			search = null;
 		}
 		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search, sort);
+		System.out.println("222");
 		List<Genre> genreList = novelService.selectGenreList();
+		System.out.println("333");
 		NovelPageUtil novelPageUtil = new NovelPageUtil(freeNovelList.size(), 20, currentPage, 5, freeNovelList);
+		System.out.println("444");
 		model.addAttribute("novelList", novelPageUtil);
 		model.addAttribute("serviceType", "무료");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "free");
+		
 
 		return "/novel/novelList";
 	}

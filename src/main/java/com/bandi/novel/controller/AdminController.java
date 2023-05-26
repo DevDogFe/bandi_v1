@@ -31,8 +31,8 @@ import com.bandi.novel.service.ReportService;
 import com.bandi.novel.utils.Define;
 
 /**
- * 관리자 페이지 
- * (Q&A, 연재문의, FAQ) 
+ * 관리자 페이지 (Q&A, 연재문의, FAQ)
+ * 
  * @author 효린
  */
 @Controller
@@ -57,7 +57,8 @@ public class AdminController {
 	 * @return 질문 리스트 전체조회
 	 */
 	@GetMapping("/qnaList")
-	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) String proceed, Model model) {
+	public String qnaPage(@RequestParam(name = "proceed", defaultValue = "-1", required = false) String proceed,
+			Model model) {
 
 		List<Question> questionList = null;
 		questionList = adminService.readAllQuestionList();
@@ -67,6 +68,7 @@ public class AdminController {
 
 	/**
 	 * 비동기 통신 처리
+	 * 
 	 * @return 질문 리스트 (전체)조회
 	 */
 	@GetMapping("/api/qnaList")
@@ -104,6 +106,7 @@ public class AdminController {
 
 	/**
 	 * 답변 등록
+	 * 
 	 * @param questionId
 	 * @param answer
 	 * @return 질문 상세보기
@@ -134,6 +137,7 @@ public class AdminController {
 
 	/**
 	 * 답변 수정
+	 * 
 	 * @param questionId
 	 * @param answerUpdateDto
 	 * @return 질문 상세보기
@@ -147,6 +151,7 @@ public class AdminController {
 
 	/**
 	 * 답변삭제
+	 * 
 	 * @param questionId
 	 * @return 질문 상세보기
 	 */
@@ -184,15 +189,15 @@ public class AdminController {
 
 		return "/admin/applicationDetail";
 	}
-	
+
 	@GetMapping("/adminPage")
 	public String getAdminPage() {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		return "/admin/adminForm";
 	}
-	
-	// 카테고리 조회 
-	@GetMapping({"/adminCategory/{boardTypeId}", "/adminCategory"})
+
+	// 카테고리 조회
+	@GetMapping({ "/adminCategory/{boardTypeId}", "/adminCategory" })
 	public String getCategory(Model model, @PathVariable(required = false) Integer boardTypeId) {
 		List<BoardType> boardTypeList = boardService.selectBoardType();
 		List<CategorySelectDto> categoryList = boardService.selectCategory(boardTypeId);
@@ -200,12 +205,19 @@ public class AdminController {
 		model.addAttribute("categoryList", categoryList);
 		return "/admin/adminCategory";
 	}
-	
-	// 카테고리 등록 
+
+	// 소설 타입 변경
+	@GetMapping("/novelChange")
+	public String getNovelTypeChange() {
+		
+		return "/admin/adminNovelChange";
+	}
+
+	// 카테고리 등록
 	@PostMapping("/category")
 	public String createBoardProc(CategorySelectDto categorySelectDto) {
 		adminService.createCategory(categorySelectDto);
 		return "redirect:/admin/adminCategory";
 	}
-	
+
 }
