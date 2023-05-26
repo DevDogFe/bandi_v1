@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserPurchaseRepository">
+
+	<insert id="insertPuchaseRecord">
+		INSERT INTO
+		user_purchase_tb(user_id,section_id,price)
+		VALUES
+		(#{userId},#{sectionId},#{price})
+	</insert>
+	
+	<select id="selectByUserId" resultType="com.bandi.novel.dto.response.PurchaseRecordDto">
+		SELECT up.price,up.created_at,ns.title as sectionTitle
+				,n.title as novelTitle
+		FROM user_purchase_tb as up
+		LEFT JOIN novel_section_tb as ns
+		ON up.section_id = ns.id
+		LEFT JOIN novel_tb as n
+		ON ns.novel_id = n.id
+		WHERE up.user_id = #{userId}
+	</select>
+
+</mapper>

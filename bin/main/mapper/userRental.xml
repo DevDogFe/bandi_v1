@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserRentalRepository">
+	
+	<insert id="insertRentalRecord">
+		INSERT INTO 
+		user_rental_tb(user_id,section_id,price)
+		VALUES
+		(#{userId},#{sectionId},#{price})
+	</insert>
+	
+	<select id="selectByUserId" resultType="com.bandi.novel.dto.response.RentalRecordDto">
+		SELECT ur.price,ur.begin_rental,ns.title as sectionTitle
+				,n.title as novelTitle
+		FROM user_rental_tb as ur
+		LEFT JOIN novel_section_tb as ns
+		ON ur.section_id = ns.id
+		LEFT JOIN novel_tb as n
+		ON ns.novel_id = n.id
+		WHERE ur.user_id = #{userId}
+	</select>
+	
+	
+	
+</mapper>

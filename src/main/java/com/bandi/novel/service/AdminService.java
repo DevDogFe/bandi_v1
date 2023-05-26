@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
+import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.repository.AnswerRepository;
+import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.QuestionRepository;
 
 @Service
@@ -19,6 +21,8 @@ public class AdminService {
 	private QuestionRepository questionRepository;
 	@Autowired
 	private AnswerRepository answerRepository;
+	@Autowired
+	private BoardCategoryRepository boardCategoryRepository;
 	
 	/**
 	 * @return Question 전체조회
@@ -106,6 +110,22 @@ public class AdminService {
 			System.out.println("처리변경 실패");
 		}
 		
+	}
+	
+	// 카테고리 등록
+	@Transactional
+	public void createCategory(CategorySelectDto categorySelectDto) {
+		int resultRowCount = boardCategoryRepository.insert(categorySelectDto);
+		if(resultRowCount != 1) {
+			System.out.println("등록 실패");
+		}
+	}
+	
+	// 카테고리 삭제 
+	@Transactional
+	public Integer deleteCategoryById(Integer id) {
+		int result = boardCategoryRepository.deleteById(id);
+		return result;
 	}
 
 }

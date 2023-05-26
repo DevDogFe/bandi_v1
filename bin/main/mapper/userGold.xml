@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserGoldRepository">
+	
+	<select id="selectUserGoldByUserId" resultType="com.bandi.novel.model.UserGold">
+		SELECT *
+		FROM user_gold_tb
+		WHERE user_id = #{userId}
+	</select>
+	
+	<update id="updateUserGold">
+		update user_gold_tb 
+		set gold = #{gold}
+		where user_id = #{userId}
+	</update>
+	
+</mapper>

@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bandi.novel.dto.AdminReportDto;
 import com.bandi.novel.dto.AnswerUpdateDto;
+import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
+import com.bandi.novel.model.BoardType;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.Report;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.ApplicationService;
+import com.bandi.novel.service.BoardService;
 import com.bandi.novel.service.QnaService;
 import com.bandi.novel.service.ReportService;
 import com.bandi.novel.utils.Define;
@@ -46,6 +49,8 @@ public class AdminController {
 	private ReportService reportService;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private BoardService boardService;
 
 	/**
 	 * @param model
@@ -184,6 +189,23 @@ public class AdminController {
 	public String getAdminPage() {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		return "/admin/adminForm";
+	}
+	
+	// 카테고리 조회 
+	@GetMapping({"/adminCategory/{boardTypeId}", "/adminCategory"})
+	public String getCategory(Model model, @PathVariable(required = false) Integer boardTypeId) {
+		List<BoardType> boardTypeList = boardService.selectBoardType();
+		List<CategorySelectDto> categoryList = boardService.selectCategory(boardTypeId);
+		model.addAttribute("boardTypeList", boardTypeList);
+		model.addAttribute("categoryList", categoryList);
+		return "/admin/adminCategory";
+	}
+	
+	// 카테고리 등록 
+	@PostMapping("/category")
+	public String createBoardProc(CategorySelectDto categorySelectDto) {
+		adminService.createCategory(categorySelectDto);
+		return "redirect:/admin/adminCategory";
 	}
 	
 }

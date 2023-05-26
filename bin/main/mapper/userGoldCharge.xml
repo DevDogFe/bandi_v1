@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.UserGoldChargeRepository">
+	
+	<insert id="insertGoldChargeRecord">
+		INSERT INTO
+		user_gold_charge_tb(user_id,tid,price)
+		VALUES
+		(#{userId},#{tid},#{price})
+	</insert>
+	
+	<select id="selectByUserId" resultType="com.bandi.novel.model.UserGoldCharge">
+		SELECT * FROM user_gold_charge_tb
+		WHERE user_id = #{userId}
+	</select>
+	
+	<delete id="deleteGoldChargeRecordById">
+		delete from user_gold_charge_tb where id = #{id}
+	</delete>
+	
+</mapper>
