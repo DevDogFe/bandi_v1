@@ -32,7 +32,7 @@
 	<div class="sidebar">
 		<ul><a href="/report/reportList">신고게시물 처리</a></ul>
 		<ul><a href="/admin/adminCategory">카테고리 관리</a></ul>
-		<ul><a href="#">장르 관리</a></ul>
+		<ul><a href="/admin/genre">장르 관리</a></ul>
 		<ul><a href="#">유저롤 변경</a></ul>
 	</div>
 	<div class="main">

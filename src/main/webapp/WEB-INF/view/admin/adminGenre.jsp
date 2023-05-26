@@ -8,7 +8,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <style>
 .sidebar {
@@ -51,39 +50,40 @@
 		</ul>
 	</div>
 	<div class="main">
+		<form action="/admin/genre" method="post">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" name="name">
+				<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+			</div>
+		</form>
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">신고자</th>
-					<th scope="col">신고사유</th>
-					<th scope="col">날짜</th>
-					<th scope="col">확인</th>
+					<th scope="col">장르</th>
 					<th scope="col"></th>
 				</tr>
 			</thead>
-			<c:forEach var="list" items="${reportList}">
-				<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-				<tbody id="reportList-${list.id}" class="reportList">
+			<c:forEach var="list" items="${genreList}">
+				<tbody id="genreList" class="genre">
 					<tr>
-						<td>${list.id}</td>
-						<td>${list.username}</td>
-						<td>${list.categoryName}</td>
-						<td>${list.createdAt()}</td>
-						<td>${list.proceed}</td>
-						<td><button class="btn btn-primary" onclick="detailPopup(${list.id})">확인</button></td>
+						<td>${list.name}</td>
+						<td><button class="btn btn-danger" onclick="deleteGenre(${list.id})">삭제</button></td>
 					</tr>
 				</tbody>
 			</c:forEach>
 		</table>
 	</div>
 	<script type="text/javascript">
-		function detailPopup(id) {
-			  var url = "/report/reportDetail/" + $("#id-" + id).val();
-			  var name = "신고접수확인";
-			  var option = "width=500,height=500,top=100,left=200,location=no";
-			  window.open(url, name, option);
-			}
+		function deleteGenre(id) {
+			$.ajax({
+				type: "DELETE",
+				url: "/api/genre/" + id,
+			}).done(function(response){
+				location.href = "/admin/genre"
+			}).fail(function(error){
+				alert("요청 실패");
+			});
+		}
 	</script>
 </body>
 </html>

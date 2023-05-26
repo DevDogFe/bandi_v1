@@ -23,5 +23,8 @@ public interface UserRepository {
 
 	// 비밀번호 변경 (효린)
 	public int updatePwd(User user);
+	
+	// 유저롤 변경
+	public Integer updateUserRole(User user);
 
 }

@@ -9,9 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.Answer;
+import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
+import com.bandi.novel.model.User;
 import com.bandi.novel.repository.AnswerRepository;
 import com.bandi.novel.repository.BoardCategoryRepository;
+import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.QuestionRepository;
 
 @Service
@@ -23,6 +26,8 @@ public class AdminService {
 	private AnswerRepository answerRepository;
 	@Autowired
 	private BoardCategoryRepository boardCategoryRepository;
+	@Autowired
+	private GenreRepository genreRepository;
 	
 	/**
 	 * @return Question 전체조회
@@ -126,6 +131,27 @@ public class AdminService {
 	public Integer deleteCategoryById(Integer id) {
 		int result = boardCategoryRepository.deleteById(id);
 		return result;
+	}
+	
+	// 장르 등록
+	@Transactional
+	public void createGenre(Genre genre) {
+		int resultRowCount = genreRepository.insert(genre);
+		if(resultRowCount != 1) {
+			System.out.println("등록 실패");
+		}
+	}
+	
+	// 장르 삭제
+	@Transactional
+	public Integer deleteGenreById(Integer id) {
+		int result = genreRepository.deleteById(id);
+		return result;
+	}
+	
+	@Transactional
+	public void updateUserRole(User user) {
+		
 	}
 
 }

@@ -44,7 +44,7 @@
 			<a href="/admin/adminCategory">카테고리 관리</a>
 		</ul>
 		<ul>
-			<a href="#">장르 관리</a>
+			<a href="/admin/genre">장르 관리</a>
 		</ul>
 		<ul>
 			<a href="#">유저롤 변경</a>
@@ -57,7 +57,8 @@
 					<c:forEach var="boardType" items="${boardTypeList}">
 						<option value="${boardType.id}">${boardType.boardName}</option>
 					</c:forEach>
-				</select> <input type="text" class="form-control"
+				</select>
+				 <input type="text" class="form-control"
 					aria-label="Recipient's username" aria-describedby="button-addon2"
 					name="categoryName">
 				<button class="btn btn-outline-secondary" type="submit"
@@ -81,7 +82,6 @@
 				<tr>
 					<th scope="col">카테고리</th>
 					<th scope="col"></th>
-					<th scope="col"></th>
 				</tr>
 			</thead>
 			<c:forEach var="list" items="${categoryList}">
@@ -89,7 +89,6 @@
 					<tr>
 						<td>${list.categoryName}</td>
 						<td><button class="btn btn-danger" onclick="deleteCategory(${list.id})">삭제</button></td>
-						<td><button class="btn btn-primary">수정</button></td>
 					</tr>
 				</tbody>
 			</c:forEach>

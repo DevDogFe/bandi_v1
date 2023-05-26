@@ -42,5 +42,11 @@
 		update user_tb 
 		set password = #{password} where id = #{id}
 	</update>
+	
+	<!-- 유저롤 변경 (지운) -->
+	<update id="updateUserRole">
+		update user_tb
+		set user_role = #{userRole}
+	</update>
 
 </mapper>
