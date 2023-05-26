@@ -154,7 +154,7 @@ public class NovelController {
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
 			@RequestParam(defaultValue = "default") String sort) {
 		if ("".equals(search)) {
-			search = "default";
+			search = null;
 		}
 		List<NovelDto> payNovelList = novelService.selectPayNovelList(genreId, search, sort);
 		List<Genre> genreList = novelService.selectGenreList();
@@ -178,7 +178,7 @@ public class NovelController {
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
 			@RequestParam(defaultValue = "default") String sort) {
 		if ("".equals(search)) {
-			search = "default";
+			search = null;
 		}
 		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search, sort);
 		List<Genre> genreList = novelService.selectGenreList();

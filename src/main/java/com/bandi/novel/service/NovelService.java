@@ -88,8 +88,11 @@ public class NovelService {
 	 */
 	@Transactional
 	public List<NovelDto> selectPayNovelList(Integer genreId, String search, String sort) {
+		
+		System.out.println(genreId + " / " + search);
 
 		if (genreId != null || search != null) {
+			System.out.println("11111111111");
 			return novelRepository.selectPayNovelsByGenreIdAndName(genreId, search, sort);
 		}
 		System.out.println(sort);
