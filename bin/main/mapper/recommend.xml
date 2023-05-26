@@ -51,7 +51,8 @@
 		GROUP BY section_id
 		) AS sc
 		ON ns.id = sc.section_id
-		GROUP BY ns.novel_id
+		GROUP BY
+		ns.novel_id
 		) AS sc
 		ON n.id = sc.novel_id
 		WHERE gender = #{gender}
@@ -63,5 +64,53 @@
 		ORDER BY favorite_count
 		LIMIT 50
 	</select>
+
+	<select id="selectRankToFavoriteByServiceTypeId" resultType="com.bandi.novel.dto.response.RankPageDto">
+		SELECT n.*, uf.favorite_count, st.name AS service_type_name, g.name AS genre_name
+		FROM novel_tb AS n
+		LEFT JOIN
+		(
+		SELECT novel_id, count(*) AS favorite_count
+		FROM user_favorite_tb
+		GROUP BY novel_id
+		) AS uf
+		ON n.id = uf.novel_id
+		LEFT JOIN service_type_tb AS st
+		ON n.service_type_id = st.id
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		WHERE service_type_id = #{serviceTypeId}
+		ORDER BY favorite_count DESC
+		LIMIT #{limit}
+	</select>
+
+	<select id="selectRankToScoreByServiceTypeId" resultType="com.bandi.novel.dto.response.RankPageDto">
+		SELECT n.*, s.score, g.name AS genre_name
+		FROM novel_tb AS n
+		LEFT JOIN
+		(
+		SELECT ns.novel_id, avg(score) AS
+		score
+		FROM novel_section_tb AS ns
+		INNER JOIN
+		(
+		SELECT section_id, avg(score) AS score, COUNT(*) AS count
+		FROM score_tb
+		GROUP BY section_id
+		HAVING count > 2
+		) AS s
+		ON ns.id = s.section_id
+		GROUP BY novel_id
+		) AS
+		s
+		ON n.id = s.novel_id
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		WHERE service_type_id = #{serviceTypeId}
+		ORDER BY score DESC
+		LIMIT #{limit};
+	</select>
+
+
 
 </mapper>

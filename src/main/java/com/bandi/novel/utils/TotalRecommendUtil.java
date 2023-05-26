@@ -28,6 +28,17 @@ public class TotalRecommendUtil {
 			if(dto.getScore() == null) {
 				dto.setScore(1.0);
 			}
+			if(dto.getFavoriteCount() > 10000) {
+				dto.setFavoriteCount(5);;
+			} else if(dto.getFavoriteCount() > 1000) {
+				dto.setFavoriteCount(4);;
+			} else if(dto.getFavoriteCount() > 100) {
+				dto.setFavoriteCount(3);;
+			} else if(dto.getFavoriteCount() > 10) {
+				dto.setFavoriteCount(2);;
+			} else {
+				dto.setFavoriteCount(1);;
+			}
 			System.out.println(dto);
 			totalScoreMap.put(dto.getId(), -(int)(genreMap.get(dto.getGenreId()) * dto.getScore() * dto.getFavoriteCount()));
 		}
