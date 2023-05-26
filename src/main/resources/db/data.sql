@@ -7,7 +7,7 @@ insert into user_tb(username, password, user_role, nick_name, email, birth_date,
 ('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨', 'aa@sample.com', '1997-01-11', '남성', null),
 ('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨', 'user@sample.com', '1992-12-12', '여성', null),
 ('qwq', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨', 'user2@sample.com', '1992-10-12', '여성', null),
-('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', null),
+-- ('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', null),
 ('hyun', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '지현씨', 'jhkim900726@gmail.com', '1990-07-26', '여성', null);
 
 insert into genre_tb(name) values
