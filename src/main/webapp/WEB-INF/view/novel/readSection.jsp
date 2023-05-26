@@ -86,10 +86,10 @@ ul {
 		</div>
 		<div>
 			<c:if test="${section.prevTitle != '이전글이 없습니다'}">
-				<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}'" class="btn btn-info">${section.prevTitle}</button>
+				<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}'" class="btn btn-info">${section.prevTitle}</button>
 			</c:if>
 			<c:if test="${section.nextTitle != '다음글이 없습니다'}">
-				<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}'" class="btn btn-success">${section.nextTitle}</button>
+				<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}'" class="btn btn-success">${section.nextTitle}</button>
 			</c:if>
 		</div>
 	</article>

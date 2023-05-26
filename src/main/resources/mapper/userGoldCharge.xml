@@ -10,4 +10,9 @@
 		(#{userId},#{price})
 	</insert>
 	
+	<select id="selectByUserId" resultType="com.bandi.novel.model.UserGoldCharge">
+		SELECT * FROM user_gold_charge_tb
+		WHERE user_id = #{userId}
+	</select>
+	
 </mapper>

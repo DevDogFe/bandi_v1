@@ -9,6 +9,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<style type="text/css">
+	.row{
+		display: flex;
+	}
+	
+	.row > *{
+		margin: 0px 20px;
+	}
+	
+	
+</style>
 </head>
 <body>
 	<h1>내 정보</h1>
@@ -36,8 +47,8 @@
 			<td>${principal.birthDate}(${principal.getAge()}세)</td>
 		</tr>
 	</table>
-	<div>
-		<div>
+	<div class="row">
+		<div style="width: 45%;">
 			<h3>
 				내 즐겨찾기 <span style="font-size: 16px"><a href="#">더보기</a></span>
 			</h3>
@@ -58,7 +69,7 @@
 				</c:forEach>
 			</table>
 		</div>
-		<div>
+		<div style="width: 45%;">
 			<h3>
 				내 작품 <span style="font-size: 16px"><a href="#">더보기</a></span>
 			</h3>
@@ -78,6 +89,92 @@
 							<tr>
 								<td>${novel.genreName }</td>
 								<td><a href="/novel/detail/${novel.id }">${novel.title }</a></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div style="width: 30%;">
+			<h3>
+				골드 충전 기록 <span style="font-size: 16px"><a href="/payment/charge">더보기</a></span>
+			</h3>
+			<c:choose>
+				<c:when test="${empty goldChargeList }">
+					<div>회원님이 등록한 작품이 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<table>
+						<thead>
+							<tr>
+								<th>날짜</th>
+								<th>금액</th>
+							</tr>
+						</thead>
+						<c:forEach items="${goldChargeList }" var="goldCharge">
+							<tr>
+								<td>${goldCharge.createdAt()}</td>
+								<td><a href="">${goldCharge.price}</a></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div style="width: 30%;">
+			<h3>
+				소설 구매 기록 <span style="font-size: 16px"><a href="#">더보기</a></span>
+			</h3>
+			<c:choose>
+				<c:when test="${empty purchaseList }">
+					<div>회원님이 등록한 작품이 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<table>
+						<thead>
+							<tr>
+								<th>날짜</th>
+								<th>제목</th>
+								<th>회차</th>
+								<th>금액</th>
+							</tr>
+						</thead>
+						<c:forEach items="${purchaseList }" var="purchase">
+							<tr>
+								<td>${purchase.createdAt()}</td>
+								<td><a href="">${purchase.novelTitle}</a></td>
+								<td><a href="">${purchase.sectionTitle}</a></td>
+								<td><a href="">${purchase.price}</a></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div style="width: 30%;">
+			<h3>
+				소설 대여 기록 <span style="font-size: 16px"><a href="#">더보기</a></span>
+			</h3>
+			<c:choose>
+				<c:when test="${empty rentalList }">
+					<div>회원님의 대여 기록이 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<table>
+						<thead>
+							<tr>
+								<th>날짜</th>
+								<th>제목</th>
+								<th>회차</th>
+								<th>금액</th>
+							</tr>
+						</thead>
+						<c:forEach items="${rentalList}" var="rental">
+							<tr>
+								<td>${rental.beginRental()}</td>
+								<td><a href="">${rental.novelTitle}</a></td>
+								<td><a href="">${rental.sectionTitle}</a></td>
+								<td><a href="">${rental.price}</a></td>
 							</tr>
 						</c:forEach>
 					</table>
