@@ -11,4 +11,5 @@ public interface UserGoldChargeRepository {
 
 	int insertGoldChargeRecord(UserGoldCharge userGoldCharge);
 	List<UserGoldCharge> selectByUserId(Integer userId);
+	int deleteGoldChargeRecordById(Integer id);
 }

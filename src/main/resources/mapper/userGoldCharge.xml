@@ -5,14 +5,18 @@
 	
 	<insert id="insertGoldChargeRecord">
 		INSERT INTO
-		user_gold_charge_tb(user_id,price)
+		user_gold_charge_tb(user_id,tid,price)
 		VALUES
-		(#{userId},#{price})
+		(#{userId},#{tid},#{price})
 	</insert>
 	
 	<select id="selectByUserId" resultType="com.bandi.novel.model.UserGoldCharge">
 		SELECT * FROM user_gold_charge_tb
 		WHERE user_id = #{userId}
 	</select>
+	
+	<delete id="deleteGoldChargeRecordById">
+		delete from user_gold_charge_tb where id = #{id}
+	</delete>
 	
 </mapper>

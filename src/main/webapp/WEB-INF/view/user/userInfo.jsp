@@ -46,6 +46,10 @@
 			<th>생년월일</th>
 			<td>${principal.birthDate}(${principal.getAge()}세)</td>
 		</tr>
+		<tr>
+			<th>골드</th>
+			<td>${gold}</td>
+		</tr>
 	</table>
 	<div class="row">
 		<div style="width: 45%;">
@@ -97,7 +101,7 @@
 		</div>
 		<div style="width: 30%;">
 			<h3>
-				골드 충전 기록 <span style="font-size: 16px"><a href="/payment/charge">더보기</a></span>
+				골드 충전 기록 <span style="font-size: 16px"><a href="/payment/charge">충전하기</a></span>
 			</h3>
 			<c:choose>
 				<c:when test="${empty goldChargeList }">
@@ -109,18 +113,33 @@
 							<tr>
 								<th>날짜</th>
 								<th>금액</th>
+								<th>환불</th>
 							</tr>
 						</thead>
 						<c:forEach items="${goldChargeList }" var="goldCharge">
-							<tr>
-								<td>${goldCharge.createdAt()}</td>
-								<td><a href="">${goldCharge.price}</a></td>
-							</tr>
+							<form action="/payment/gold/refund" method="post">
+								<input type="hidden" name="tid" value="${goldCharge.tid}">
+								<input type="hidden" name="RefundPrice" value="${goldCharge.price}">
+								<input type="hidden" name="id" value="${goldCharge.id}">
+								<tr>
+									<td>${goldCharge.createdAt()}</td>
+									<td><a href="">${goldCharge.price}</a></td>
+									<c:choose>
+										<c:when test="${(gold - goldCharge.price) >= 0}">
+											<td><button type="submit" class="btn btn-primary">환불 신청</button></td>
+										</c:when>
+										<c:otherwise>
+											<td><button type="submit" class="btn btn-primary" disabled>환불 신청</button></td>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+							</form>
 						</c:forEach>
 					</table>
 				</c:otherwise>
 			</c:choose>
 		</div>
+		
 		<div style="width: 30%;">
 			<h3>
 				소설 구매 기록 <span style="font-size: 16px"><a href="#">더보기</a></span>
@@ -182,6 +201,7 @@
 			</c:choose>
 		</div>
 	</div>
+	
 	<script type="text/javascript">
 		$(document).ready(() => {
 			

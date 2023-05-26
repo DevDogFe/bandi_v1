@@ -145,7 +145,7 @@ public class PayService {
 	 * 골드 충전
 	 * @return 
 	 */
-	public void chargeGold(Integer userId, Integer amount) {
+	public void chargeGold(Integer userId, Integer amount,String tid) {
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 		userGold.setGold(userGold.getGold() + amount);
 		
@@ -155,9 +155,27 @@ public class PayService {
 		UserGoldCharge userGoldCharge = new UserGoldCharge();
 		userGoldCharge.setUserId(userId);
 		userGoldCharge.setPrice(amount);
+		userGoldCharge.setTid(tid);
 		
 		userGoldChargeRepository.insertGoldChargeRecord(userGoldCharge);
 		//
+	}
+	
+	/**
+	 * 골드 환불
+	 * @return 
+	 */
+	public void RefundGold(Integer userId, Integer amount,Integer goldChargeId) {
+		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
+		userGold.setGold(userGold.getGold() - amount);
+		
+		int updateResult = userGoldRepository.updateUserGold(userGold);
+		
+		int deleteResult = userGoldChargeRepository.deleteGoldChargeRecordById(goldChargeId);
+		
+		if(updateResult != 1 || deleteResult != 1) {
+			System.out.println("환불 처리 안됨 :" + updateResult + deleteResult);
+		}
 	}
 	
 	/**
