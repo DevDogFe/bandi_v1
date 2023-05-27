@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bandi.novel.dto.AdminReportDto;
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
@@ -25,6 +26,7 @@ import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.Report;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserRole;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.ApplicationService;
 import com.bandi.novel.service.BoardService;
@@ -230,13 +232,15 @@ public class AdminController {
 	
 	@GetMapping("/user")
 	public String getUserRole(Model model, UserSearchDto userSearchDto) {
-		List<User> userList = adminService.searchUser(userSearchDto);
+		List<UserRoleDto> userList = adminService.searchUser(userSearchDto);
+		List<UserRole> userRoleList = adminService.selectUserRole();
 		if("".equals(userSearchDto.getKeyword())) {
 			userSearchDto.setKeyword(null);
 		} else {
 			userList = adminService.searchUser(userSearchDto);
 		}
 		model.addAttribute("userList", userList);
+		model.addAttribute("userRoleList", userRoleList);
 		return "/admin/adminUserRole";
 	}
 	

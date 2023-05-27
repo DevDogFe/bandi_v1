@@ -11,7 +11,7 @@ public class User {
 	private Integer id;
 	private String username;
 	private String password;
-	private String userRole;
+	private Integer userRole;
 	private String nickName;
 	private String email;
 	private Date birthDate;

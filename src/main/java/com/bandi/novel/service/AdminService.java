@@ -8,11 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserRole;
 import com.bandi.novel.repository.AnswerRepository;
 import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.GenreRepository;
@@ -155,15 +157,26 @@ public class AdminService {
 	
 	// 유저롤 수정
 	@Transactional
-	public void updateUserRole(User user) {
-		
+	public Integer updateUserRole(User user) {
+		int resultRowCount = userRepository.updateUserRole(user);
+		if(resultRowCount != 1) {
+			System.out.println("수정 실패");
+		}
+		return resultRowCount;
 	}
 	
 	// 사용자 검색
 	@Transactional
-	public List<User> searchUser(UserSearchDto userSearchDto) {
-		List<User> list = userRepository.searchUser(userSearchDto);
+	public List<UserRoleDto> searchUser(UserSearchDto userSearchDto) {
+		List<UserRoleDto> list = userRepository.searchUser(userSearchDto);
 		return list;
 	}
+	
+	@Transactional
+	public List<UserRole> selectUserRole() {
+		List<UserRole> list = userRepository.selectUserRole();
+		return list;
+	}
+	
 
 }

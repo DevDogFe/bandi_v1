@@ -3,12 +3,17 @@
 insert into test_tb values
 (1);
 
+insert into user_role_tb(role)
+values('admin'),
+('author'),
+('user');
+
 insert into user_tb(username, password, user_role, nick_name, email, birth_date, gender, external) values
-('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨', 'aa@sample.com', '1997-01-11', '남성', null),
-('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨', 'user@sample.com', '1992-12-12', '여성', null),
-('qwq', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨', 'user2@sample.com', '1992-10-12', '여성', null),
-('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', null),
-('hyun', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '지현씨', 'jhkim900726@gmail.com', '1990-07-26', '여성', null);
+('qwe', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 1, '현우씨', 'aa@sample.com', '1997-01-11', '남성', null),
+('asd', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '민우씨', 'user@sample.com', '1992-12-12', '여성', null),
+('qwq', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '용림씨', 'user2@sample.com', '1992-10-12', '여성', null),
+('hyo', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '효린씨', 'khl4459@naver.com', '1995-09-29', '여성', null),
+('hyun', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '지현씨', 'jhkim900726@gmail.com', '1990-07-26', '여성', null);
 
 insert into genre_tb(name) values
 ('무협'), ('판타지'), ('로맨스'), ('SF'), ('대체역사');
@@ -319,11 +324,11 @@ INSERT INTO user_favorite_tb VALUES
 (3, 14);
 
 insert into user_tb(username, password, user_role, nick_name, email, birth_date, gender, external) values
-('qwe3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'admin', '현우씨3', 'aa3@sample.com', '1997-01-11', '남성', null),
-('asd3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '민우씨3', 'user3@sample.com', '1992-12-12', '여성', null),
-('qwq3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '용림씨3', 'user23@sample.com', '1992-10-12', '여성', null),
-('hyo3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '효린씨3', 'khl44593@naver.com', '1995-09-29', '남성', null),
-('hyun3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 'user', '지현씨3', 'jhkim9030726@gmail.com', '1990-07-26', '여성', null);
+('qwe3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 1, '현우씨3', 'aa3@sample.com', '1997-01-11', '남성', null),
+('asd3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '민우씨3', 'user3@sample.com', '1992-12-12', '여성', null),
+('qwq3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '용림씨3', 'user23@sample.com', '1992-10-12', '여성', null),
+('hyo3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '효린씨3', 'khl44593@naver.com', '1995-09-29', '남성', null),
+('hyun3', '$2a$10$W4axy9AFhjle0fvi1Hh9aucyDv.lV9Ouq8swDKUae6b5qwNIldBy.', 3, '지현씨3', 'jhkim9030726@gmail.com', '1990-07-26', '여성', null);
 
 INSERT INTO score_tb VALUES
 (1, 1, 5),
