@@ -1,0 +1,72 @@
+#book-body {
+	width: 850px;
+	height: 650px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #eee;
+}
+
+#book {
+	margin-top: 10px;
+	width: 800px;
+	height: 500px;
+}
+
+#book .turn-page {
+	background-color: white;
+}
+
+#book .cover {
+	background: #333;
+}
+
+#book .cover h1 {
+	color: black;
+	text-align: center;
+	font-size: 30px;
+	line-height: 300px;
+	margin: 0px;
+}
+
+#book .loader {
+	background-image: url(loader.gif);
+	width: 24px;
+	height: 24px;
+	display: block;
+	position: absolute;
+	top: 238px;
+	left: 188px;
+}
+
+#book .data {
+	text-align: center;
+	font-size: 15px;
+	color: black;
+	margin: auto;
+}
+
+#controls {
+	width: 800px;
+	text-align: center;
+	margin: 20px 0px;
+	font: 30px arial;
+}
+
+#controls input, #controls label {
+	font: 30px arial;
+}
+
+#book .odd {
+	background-image: -webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
+	background-image: -moz-linear-gradient(left, #FFF 95%, #ddd 100%);
+	background-image: -o-linear-gradient(left, #FFF 95%, #ddd 100%);
+	background-image: -ms-linear-gradient(left, #FFF 95%, #ddd 100%);
+}
+
+#book .even {
+	background-image: -webkit-linear-gradient(right, #FFF 95%, #ddd 100%);
+	background-image: -moz-linear-gradient(right, #FFF 95%, #ddd 100%);
+	background-image: -o-linear-gradient(right, #FFF 95%, #ddd 100%);
+	background-image: -ms-linear-gradient(right, #FFF 95%, #ddd 100%);
+}

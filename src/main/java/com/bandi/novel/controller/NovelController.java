@@ -1,6 +1,7 @@
 package com.bandi.novel.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -176,7 +177,7 @@ public class NovelController {
 	public String getFreeList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort) {
-		
+
 		if ("".equals(search)) {
 			search = null;
 		}
@@ -190,7 +191,6 @@ public class NovelController {
 		model.addAttribute("serviceType", "무료");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "free");
-		
 
 		return "/novel/novelList";
 	}
@@ -209,11 +209,10 @@ public class NovelController {
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		// 소설 회차 리스트
-		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
-				novelId);
+		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		// 소설 구매, 대여 여부 리스트
-		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(),novelId);
-		
+		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
+
 		// 즐겨찾기 여부
 		if (principal != null) {
 			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
@@ -222,8 +221,7 @@ public class NovelController {
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("detail", novelDetailDto);
 		model.addAttribute("favorite", favorite);
-		model.addAttribute("paymentList",paymentList);
-
+		model.addAttribute("paymentList", paymentList);
 
 		return "/novel/novelDetail";
 	}
@@ -237,24 +235,24 @@ public class NovelController {
 	 */
 	@GetMapping("/section/read/{novelId}/{sectionId}")
 	public String getReadSection(HttpServletRequest request, HttpServletResponse response, Model model,
-			@PathVariable Integer novelId,
-			@PathVariable Integer sectionId, @RequestParam(defaultValue = "1") Integer currentPage) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		
+			@PathVariable Integer novelId, @PathVariable Integer sectionId,
+			@RequestParam(defaultValue = "1") Integer currentPage) {
+
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
 		// 결제 여부 확인 !!!!!!! 나중에 변경
-		UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId, sectionId);
-		System.out.println(userPayment.toString()); 
-		
-		if(userPayment.getPurchaseSectionId() == null && userPayment.getEndRental() == null) {
-			//userPay 페이지에 띄울 정보
+		UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId,
+				sectionId);
+
+		if (userPayment.getPurchaseSectionId() == null && userPayment.getEndRental() == null) {
+			// userPay 페이지에 띄울 정보
 			NovelSection paySection = novelService.selectNovelSectionById(sectionId);
 			int userGold = payService.selectUserGold(principal.getId());
-			model.addAttribute("paySection",paySection);
-			model.addAttribute("userGold",userGold);
+			model.addAttribute("paySection", paySection);
+			model.addAttribute("userGold", userGold);
 			return "/pay/userPay";
 		}
-		
+
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//
@@ -263,7 +261,6 @@ public class NovelController {
 		userNovelRecordService.NovelRecord(principal.getId(), novelId, sectionId);
 		//
 
-		// NovelSection novelSection = novelService.selectNovelSectionById(sectionId);
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
 		novelSection.setContent(novelSection.getContent().replace("\r\n", "<br>"));
@@ -301,6 +298,24 @@ public class NovelController {
 		}
 		// 조회수 up 여기까지
 
+		// section 페이징 처리
+		String section = novelSection.getContent();
+		int fixLength = 350;
+
+		// 배열의 크기를 구합니다.
+		int strArraySize = (int) Math.ceil((double) section.length() / fixLength);
+		System.out.println(strArraySize);
+
+		// 배열을 선언합니다.
+		List<String> subStringList = new ArrayList<>();
+		// 문자열을 순회하여 특정 길이만큼 분할된 문자열을 배열에 할당합니다.
+		for (int startIndex = 0; startIndex < section.length(); startIndex += fixLength) {
+			subStringList.add(section.substring(startIndex, Math.min(startIndex + fixLength, section.length())));
+		}
+		
+		//
+		model.addAttribute("numberOfPages",strArraySize);
+		model.addAttribute("subStringList",subStringList);
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
 
