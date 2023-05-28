@@ -90,6 +90,7 @@
 				<c:forEach var="genre" items="${genreList}">
 					<tr>
 						<td>${genre.title}</td>
+						<td>${genre.author}</td>
 					</tr>
 				</c:forEach>
 			</table>
