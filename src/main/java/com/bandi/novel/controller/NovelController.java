@@ -23,6 +23,7 @@ import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
+import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Contest;
@@ -35,6 +36,7 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.RecommendService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
@@ -62,6 +64,8 @@ public class NovelController {
 	private UserFavoriteService userFavoriteService;
 	@Autowired
 	private UserNovelRecordService userNovelRecordService;
+	@Autowired
+	private RecommendService recommendService;
 
 	/**
 	 * @param model
@@ -215,7 +219,6 @@ public class NovelController {
 
 	/**
 	 * 회차 조회
-	 * 
 	 * @param model
 	 * @param sectionId
 	 * @return
@@ -274,6 +277,9 @@ public class NovelController {
 
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
+		
+		List<RecommendFavoritesDto> favoriteList = recommendService.selectFavoriteNovelByUsers(novelId);
+		model.addAttribute("favoriteList", favoriteList);		
 
 		return "/novel/readSection";
 	}

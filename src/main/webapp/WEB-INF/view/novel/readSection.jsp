@@ -81,7 +81,6 @@ ul {
 						id="rate2"><label for="rate2">★</label> <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label> <input type="radio" name="reviewStar" value="2"
 						id="rate4"><label for="rate4">★</label> <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
 				</fieldset>
-
 			</form>
 		</div>
 		<div>
@@ -93,6 +92,19 @@ ul {
 			</c:if>
 		</div>
 	</article>
+
+	<!--효린 recommend-- TODO css 적용>
+<%-- 	<article>
+		<div class="">
+			<ul>
+				<c:forEach var="favorite" items="${favoriteList}">
+					<li>${favorite.title}-${favorite.author}</li>
+				</c:forEach>
+			</ul>
+
+		</div>
+	</article> --%>
+	<!-- 	-->
 	<article>
 		<c:choose>
 			<c:when test="${empty principal.id }">

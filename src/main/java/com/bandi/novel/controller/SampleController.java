@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
+import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.RecommendService;
 import com.bandi.novel.utils.Define;
@@ -34,10 +35,9 @@ public class SampleController {
 
 			List<MainRecommendDto> ageGenderList = recommendService.selectNovelsByAgeAndGender(recommendDto);
 			model.addAttribute("ageGenderList", ageGenderList);
-			List<MainRecommendDto> genreList = recommendService.selectByFavoriteGenre(principal.getId());		
+			List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());		
 			System.out.println(genreList);
 			model.addAttribute("genreList", genreList);
-
 		}
 
 		return "/index";

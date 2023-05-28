@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bandi.novel.dto.response.MainRecommendDto;
+import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.RecommendService;
 import com.bandi.novel.utils.Define;
@@ -26,7 +27,7 @@ public class RecommendController {
 	public String Recommend(Model model) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		List<MainRecommendDto> genreList = recommendService.selectByFavoriteGenre(principal.getId());		
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());		
 		model.addAttribute("genreList", genreList);
 		
 		return "/index";		
