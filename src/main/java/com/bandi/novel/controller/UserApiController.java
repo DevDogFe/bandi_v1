@@ -39,7 +39,7 @@ public class UserApiController {
 	 * @return
 	 */
 	@PutMapping("/update")
-	public UserUpdateDto updateProc(@RequestBody UserUpdateDto userUpdateDto) {
+	public ResponseDto<Boolean> updateProc(@RequestBody UserUpdateDto userUpdateDto) {
 		
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if(principal.getExternal() != null) {
@@ -55,7 +55,7 @@ public class UserApiController {
 		userUpdateDto.setPassword("***");
 		userUpdateDto.setPasswordCheck("***");
 
-		return userUpdateDto;
+		return new ResponseDto<Boolean>(200, "20000", "유저정보를 업데이트하였습니다.", "20000", true);
 	}
 
 	/**

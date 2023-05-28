@@ -10,6 +10,8 @@ public class Define {
 	
 	public final static String REQUEST_FAIL = "요청을 처리하지 못했습니다.";
 	
+	public final static String REQUEST_SUCCESS = "요청을 정상적으로 처리하였습니다.";
+	
 	public final static int SORT_FAVORITE = 0;
 	public final static int SORT_SCORE = 1;
 	public final static int TYPE_PAY = 1;
