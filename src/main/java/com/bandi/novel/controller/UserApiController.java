@@ -65,9 +65,10 @@ public class UserApiController {
 	 * @return
 	 */
 	@GetMapping("/api/username")
-	public Boolean usernameCheck(String username) {
+	public ResponseDto<Boolean> usernameCheck(String username) {
 		System.out.println(username);
-		return userService.checkUsername(username);
+		Boolean result = userService.checkUsername(username);
+		return new ResponseDto<Boolean>(200, "20000", "결과", "20000", result);
 	}
 
 	/**
