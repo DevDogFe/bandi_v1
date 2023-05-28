@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bandi.novel.dto.AdminReportDto;
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.model.Question;
-import com.bandi.novel.model.Report;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.ApplicationService;
@@ -205,8 +203,8 @@ public class AdminController {
 		model.addAttribute("categoryList", categoryList);
 		return "/admin/adminCategory";
 	}
-
-	// 소설 타입 변경
+	
+	// 소설 타입 변경 페이지
 	@GetMapping("/novelChange")
 	public String getNovelTypeChange() {
 		

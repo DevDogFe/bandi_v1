@@ -54,42 +54,110 @@
 		<nav class="navbar navbar-light bg-light">
   			<div class="container-fluid">
     			<form class="d-flex">
-      				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      				<button id="search" class="btn btn-outline-success" type="button"
-      					onclick="searchNovelList(${list.id})">Search</button>
+      				<input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      				<button id="search-btn" class="btn btn-outline-success" type="button">Search</button>
     			</form>
   			</div>
 		</nav>
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">소설 리스트</th>
-					<th scope="col"></th>
-					<th scope="col"></th>
+					<th scope="col">소설 제목</th>
+					<th scope="col">작가</th>
+					<th scope="col">서비스 타입</th>
+					<th scope="col">변경할 타입</th>
+					<th scope="col">수정</th>
+					<th scope="col">삭제</th>
 				</tr>
 			</thead>
-			<c:forEach var="list" items="${categoryList}">
-				<tbody id="categoryList" class="category">
-					<tr>
-						<td>${list.categoryName}</td>
-						<td><button class="btn btn-danger" onclick="deleteCategory(${list.id})">삭제</button></td>
-						<td><button class="btn btn-primary">수정</button></td>
-					</tr>
-				</tbody>
-			</c:forEach>
+			<tbody id="novelList" class="novelList">
+			</tbody>
 		</table>
 	</div>
 	<script>
-		function searchNovelList(id) {
-			var selectedOptionId = $("#boardTypeId option:selected").val();
+		$(document).ready(function() {
+			searchNovelList();
+		});
+		
+		// 소설 검색
+		function searchNovelList() {
+			$("#search-btn").on("click",function(e){
+				
+				let search = $("#search-input").val();
+				
+				$.ajax({
+					type: "GET",
+					url: "/api/novel/" + search,
+				}).done(function(e){
+					
+					let appendHtml = "";
+					
+					for(var i=0;i<e.length;i++){
+						appendHtml += '<tr id="tr'+e[i].id+'"><td>'+ e[i].title +'</td>';
+						appendHtml += '<td>'+ e[i].userName +'</td>';
+						appendHtml += '<td id="serviceType'+e[i].id+'">'+ e[i].serviceTypeName +'</td>';
+						appendHtml += '<td style="width:300px;">';
+						appendHtml += '<select id="select'+e[i].id+'" class="form-select" aria-label="Default select example">';
+						appendHtml += '<option value="1">유료</option>';
+						appendHtml += '<option value="2">무료</option>';
+						appendHtml += '<option value="3">공모전</option></select></td>';
+						appendHtml += '<td><button id="update-btn'+e[i].id+'" class="btn btn-primary" onclick="updateNovelType('+e[i].id+')">수정</button></td>';
+						appendHtml += '<td><button id="delete-btn'+e[i].id+'" class="btn btn-danger" onclick="deleteNovel('+e[i].id+')">삭제</button></td></tr>';
+					}
+					
+					$("#novelList").html(appendHtml);
+					
+				}).fail(function(error){
+					alert("검색어를 넣어주세요");
+				});
+				
+			});
+		}
+		
+		// 소설 서비스 타입 변경
+		function updateNovelType(id) {
+			console.log(id);
+			
+			let data = {
+					novelId : id,
+					serviceTypeId : $("#select"+id).val()
+				}
+				
+			let jsonData = JSON.stringify(data);
+			
+			$.ajax({
+				data : jsonData,
+				type: "PUT",
+				url: "/api/novel/update",
+				contentType : "application/json; charset=UTF-8",
+			}).done(function(e){
+				
+				if(e){
+					let selectNum = $("#select"+id).val() -1;
+					
+					$("#serviceType"+id).text($("#select"+id).children().eq(selectNum).text());
+				}
+			}).fail(function(error){
+				alert("업데이트 실패");
+			});
+		}
+		
+		// 소설 삭제
+		function deleteNovel(id) {
+			
 			$.ajax({
 				type: "DELETE",
-				url: "/api/category/" + id,
-			}).done(function(response){
-				location.href = '/admin/adminCategory/' + selectedOptionId;
+				url: "/api/novel/delete/" + id,
+			}).done(function(e){
+				
+				if(e){
+					$("#tr"+id).remove();
+				}
+				
 			}).fail(function(error){
-				alert("요청 실패");
+				alert("삭제 실패");
 			});
+			
 		}
 	</script>
 </body>

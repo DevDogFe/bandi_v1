@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.adminNovelUpdateFormDto;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
+import com.bandi.novel.dto.response.NovelSearchDto;
 import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
@@ -38,6 +40,7 @@ public class NovelService {
 	private NovelSectionRepository novelSectionRepository;
 	@Autowired
 	private ContestNovelRepository contestNovelRepository;
+
 	@Autowired
 
 	@Transactional
@@ -123,6 +126,38 @@ public class NovelService {
 		return novelRepository.selectNovelDetailByNovelId(id);
 	}
 
+	// 전체 소설 검색(관리자 페이지에서 사용함)
+	@Transactional
+	public List<NovelSearchDto> selectNovelListBySearch(String search) {
+
+		return novelRepository.selectNovelListBySearch(search);
+	}
+
+	// 소설 서비스 타입 변경(관리자 페이지에서 사용함)
+	@Transactional
+	public int updateNovelListBySearch(adminNovelUpdateFormDto dto) {
+
+		int result = novelRepository.updateNovelServiceType(dto);
+
+		if (result != 1) {
+			System.out.println("업데이트 실패");
+		}
+
+		return result;
+	}
+
+	// 소설 삭제(관리자 페이지에서 사용함)
+	@Transactional
+	public int deleteNovel(Integer id) {
+		
+		int result = novelRepository.deleteNovelById(id);
+
+		if (result != 1) {
+			System.out.println("삭제 실패");
+		}
+
+		return result;
+	}
 
 	/**
 	 * 회차 등록
@@ -188,16 +223,16 @@ public class NovelService {
 	public void updateCover(Integer novelId, String cover) {
 		novelRepository.updateCover(novelId, cover);
 	}
-	
+
 	// 내 즐겨찾기 목록
 	@Transactional
-	public List<MyFavoriteDto> selectUserFavoriteNovelList(Integer userId, Integer limit){
+	public List<MyFavoriteDto> selectUserFavoriteNovelList(Integer userId, Integer limit) {
 		return novelRepository.selectUserFavoriteListByUserId(userId, limit);
 	}
-	
+
 	// 내 작품 목록
 	@Transactional
-	public List<MyFavoriteDto> selectMyNovels(Integer userId, Integer limit){
+	public List<MyFavoriteDto> selectMyNovels(Integer userId, Integer limit) {
 		return novelRepository.selectMyNovelsByUserId(userId, limit);
 	}
 
