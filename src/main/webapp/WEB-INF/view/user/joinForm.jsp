@@ -47,7 +47,7 @@
 			$.ajax({
 				type: "GET",
 				url: "/api/username",
-				data: {username: $("#usernameJ").val()}   // <--- 뭐죠??
+				data: {username: $("#usernameJ").val()}   
 			}).done((response) => {
 				console.log(response)
 				if(response){

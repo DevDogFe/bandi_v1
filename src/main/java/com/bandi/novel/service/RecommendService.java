@@ -10,6 +10,7 @@ import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto;
 import com.bandi.novel.dto.response.RankPageDto;
+import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.repository.RecommendRepository;
 import com.bandi.novel.utils.TotalRecommendUtil;
 
@@ -77,12 +78,24 @@ public class RecommendService {
 	 * @return 소설리스트
 	 */
 	@Transactional
-	public List<MainRecommendDto> selectByFavoriteGenre(Integer userId){
+	public List<RecommendFavoritesDto> selectNovelByFavoriteGenre(Integer userId){
 		
-		List<MainRecommendDto> list = recommendRepository.selectByFavoriteGenre(null);
+		List<RecommendFavoritesDto> list = recommendRepository.selectByFavoriteGenre(userId);
 		
 		return list;
 	}
 	
+	/**
+	 * 효린
+	 * 이 소설을 좋아하는 유저들이 많이 보는 소설
+	 * @param novelId
+	 * @return 소설리스트
+	 */
+	@Transactional
+	public List<RecommendFavoritesDto> selectFavoriteNovelByUsers(Integer novelId){
+		
+		List<RecommendFavoritesDto> list = recommendRepository.selectFavoriteNovelByUsers(novelId);
+		return list;
+	}
 
 }

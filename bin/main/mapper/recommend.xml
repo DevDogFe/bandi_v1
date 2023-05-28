@@ -24,7 +24,8 @@
 
 	<select id="selectPreferGenre" resultType="com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto">
 		SELECT genre_id , count(*) AS genre_count
-		FROM user_favorite_tb AS uf
+		FROM
+		user_favorite_tb AS uf
 		LEFT JOIN novel_tb AS n
 		ON uf.novel_id = n.id
 		WHERE uf.user_id = #{userId}
@@ -38,7 +39,8 @@
 		FROM user_favorite_tb AS uf
 		LEFT JOIN user_tb AS u
 		ON uf.user_id = u.id
-		LEFT JOIN novel_tb AS n
+		LEFT
+		JOIN novel_tb AS n
 		ON uf.novel_id = n.id
 		LEFT JOIN
 		(
@@ -114,11 +116,14 @@
 
 
 	<!-- 내 즐겨찾기 중 많은 장르 소설 (효린) -->
-	<select id="selectByFavoriteGenre" resultType="com.bandi.novel.dto.response.MainRecommendDto">
-		select n.*, g.name as genre_name
+	<select id="selectByFavoriteGenre" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
+		select n.*, g.name as genre_name, nick_name as author
 		from novel_tb as n
 		LEFT JOIN user_favorite_tb as uf
-		on n.id = uf.novel_id
+		on n.id = uf.
+		novel_id
+		LEFT JOIN user_tb as u
+		on n.user_id = u.id
 		LEFT JOIN genre_tb as g
 		on n.genre_id = g.id
 		where genre_id =
@@ -127,18 +132,40 @@
 		LEFT JOIN novel_tb as n
 		on uf.novel_id = n.id
 		LEFT JOIN genre_tb as g
-		on n.genre_id = g.id
-		WHERE uf.user_id = 1
+		on n.genre_id
+		= g.id
+		WHERE uf.user_id = #{userId}
 		GROUP BY genre_id
-		ORDER BY count(*) DESC
+		ORDER BY
+		count(*) DESC
 		LIMIT 1)
 		GROUP BY n.id
 		ORDER BY count(*) DESC
-		LIMIT 5 
+		LIMIT 5
 	</select>
-	
-	<select id="">
-		
+
+	<!-- 이 소설을 본 사람들이 즐겨찾기한 소설 (효린) -->
+	<select id="selectFavoriteNovelByUsers" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
+		select n.*, g.name, nick_name as author
+		from novel_tb as n
+		INNER JOIN user_favorite_tb as uf
+		on n.id = uf.novel_id
+		LEFT JOIN genre_tb as g
+		on n.genre_id = g.id
+		LEFT JOIN user_tb as u
+		on n.user_id = u.id
+		WHERE uf.user_id IN
+		(SELECT
+		uf.user_id
+		FROM user_favorite_tb as uf
+		LEFT JOIN novel_tb as n
+		on uf.novel_id =
+		n.id
+		where n.id = #{id}
+		)
+		GROUP BY novel_id
+		ORDER BY count(*) DESC
+		LIMIT 5;
 	</select>
 
 </mapper>
