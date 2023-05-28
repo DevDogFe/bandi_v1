@@ -14,16 +14,16 @@
 	<form action="/user" method="post">
 		<c:choose>
 			<c:when test="${principal.external }">
-				<input type="hidden" class="form-control" id="beforePassword" name="beforePassword" required value="111111">
-				<input type="hidden" class="form-control" id="password" name="password" required value="111111">
-				<input type="hidden" class="form-control" id="passwordCheck" name="passwordCheck" minlength="3" required value="111111">
+				<input type="hidden" class="form-control" name="beforePassword" required value="111111">
+				<input type="hidden" class="form-control" name="password" required value="111111">
+				<input type="hidden" class="form-control" name="passwordCheck" required value="111111">
 			</c:when>
 			<c:otherwise>
 				<div class="mb-3">
-					<label for="beforePassword" class="form-label">비밀번호</label> <input type="password" class="form-control" id="beforePassword" name="beforePassword" required value="123">
+					<label for="beforePassword" class="form-label">비밀번호</label> <input type="password" class="form-control" id="beforePassword" minlength="3" name="beforePassword" required value="123">
 				</div>
 				<div class="mb-3">
-					<label for="password" class="form-label">새 비밀번호</label> <input type="password" class="form-control" id="password" name="password" required value="456">
+					<label for="password" class="form-label">새 비밀번호</label> <input type="password" class="form-control" id="password" name="password" minlength="3" required value="456">
 				</div>
 				<div class="mb-3">
 					<label for="passwordCheck" class="form-label">비밀번호 확인</label> <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" minlength="3" required value="456">
@@ -32,11 +32,7 @@
 		</c:choose>
 		<div class="mb-3">
 			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="${principal.nickName}">
-			<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>
-		</div>
-		<div class="mb-3">
-			<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="${principal.email}">
-			<button type="button" id="emailCheck" class="btn btn-secondary">이메일 중복 확인</button>
+			<div id="nickNameCheck"></div>
 		</div>
 
 		<button type="button" id="updateBtn" class="btn btn-primary">정보 수정</button>
@@ -53,7 +49,6 @@
 							nickName: $("#nickName").val(),
 							email: $("#email").val()
 							};
-					console.log(JSON.stringify(data));
 					
 					$.ajax({
 						type: "PUT",
@@ -62,10 +57,7 @@
 						data: JSON.stringify(data),
 						dataType:"json"
 					}).done((response) => {
-						console.log(response);
-						console.log(typeof response);
-						alert("성공");
-						location.href='/index';
+						location.href='/myInfo';
 					}).fail((error) => {
 						console.log(error);
 						alert("서버오류");
@@ -74,17 +66,21 @@
 					alert("비밀번호와 비밀번호확인의 값이 일치해야합니다.")
 				}
 			});
+			
 			// 닉네임 중복확인
-			$("#nicknameCheck").on("click", () => {
+			$("#nickName").on("keyup", () => {
+				console.log('111111');
 				$.ajax({
 					type: "GET",
-					url: "/api/nickname",
-					data: {nickName: $("#nickName").val()}
+					url: "/api/nickName?nickName=" + $("#nickName").val()
 				}).done((response) => {
-					if(response){
-						alert('이미 사용중인 아이디입니다.');
+				console.log(response);
+					if(response.data){
+						$("#nickNameCheck").text("이미 사용중인 닉네임입니다.");
+				console.log('111111');
 					} else{
-						alert('사용 가능한 아이디입니다.');
+						$("#nickNameCheck").text("사용 가능한 닉네임입니다.");
+				console.log('111111');
 					}
 				}).fail((error) => {
 					console.log(error);
@@ -92,7 +88,7 @@
 				});
 			});
 			// 이메일 중복 확인
-			$("#emailCheck").on("click", () => {
+			/* $("#emailCheck").on("click", () => {
 				$.ajax({
 					type: "GET",
 					url: "/api/email",
@@ -107,7 +103,7 @@
 					console.log(error);
 					alert("요청을 처리할 수 없습니다.");
 				});
-			});
+			}); */
 		});
 	</script>
 

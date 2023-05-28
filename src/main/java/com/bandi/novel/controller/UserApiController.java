@@ -40,9 +40,9 @@ public class UserApiController {
 	 */
 	@PutMapping("/update")
 	public ResponseDto<Boolean> updateProc(@RequestBody UserUpdateDto userUpdateDto) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		if(principal.getExternal() != null) {
+
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal.getExternal() != null) {
 			userUpdateDto.setPassword(bandiKey);
 		}
 		userUpdateDto.setId(principal.getId());
@@ -66,9 +66,15 @@ public class UserApiController {
 	 */
 	@GetMapping("/api/username")
 	public ResponseDto<Boolean> usernameCheck(String username) {
-		System.out.println(username);
 		Boolean result = userService.checkUsername(username);
-		return new ResponseDto<Boolean>(200, "20000", "결과", "20000", result);
+		String msg;
+		if (result) {
+			msg = "이미 사용중인 아이디입니다.";
+		} else {
+			msg = "사용 가능한 아이디입니다.";
+		}
+
+		return new ResponseDto<Boolean>(200, "20000", msg, "20000", result);
 	}
 
 	/**
@@ -76,32 +82,39 @@ public class UserApiController {
 	 * 
 	 * @param nickName
 	 * @return
-	 * 
-	 * URL 설계 !!! Query String --> 정렬된 데이터 처리 사용 
-	 * path // 정렬되지 않은 데이터 !!! -- 일괄적으로 //
 	 */
-	@GetMapping("/api/nickname")
-	public Boolean nickNameCheck(String nickName) {
-		return userService.checkNickName(nickName);
+	@GetMapping("/api/nickName")
+	public ResponseDto<Boolean> nickNameCheck(String nickName) {
+		System.out.println(nickName);
+		Boolean result = userService.checkNickName(nickName);
+		System.out.println(result);
+		String msg;
+		if (result) {
+			msg = "이미 사용중인 닉네임입니다.";
+		} else {
+			msg = "사용 가능한 닉네임입니다.";
+		}
+
+		return new ResponseDto<Boolean>(200, "20000", msg, "20000", result);
 	}
-	
+
 	@PostMapping("/api/login")
-	public ResponseDto<Boolean> loginProc(@RequestBody LoginDto loginDto){
+	public ResponseDto<Boolean> loginProc(@RequestBody LoginDto loginDto) {
 		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
 		Boolean result = true;
-		if(resUser.getData() == null) {
+		if (resUser.getData() == null) {
 			result = false;
 		}
 		User principal = resUser.getData();
 		session.setAttribute("principal", principal);
-		
-		return new ResponseDto<Boolean>(resUser.getStatusCode(), resUser.getCode(), resUser.getMessage(), resUser.getResultCode(), result);
+
+		return new ResponseDto<Boolean>(resUser.getStatusCode(), resUser.getCode(), resUser.getMessage(),
+				resUser.getResultCode(), result);
 	}
-	
 
 	/**
-	 * 효린 
-	 * 이메일 중복확인
+	 * 효린 이메일 중복확인
+	 * 
 	 * @param email
 	 * @return T/F
 	 */
@@ -114,20 +127,20 @@ public class UserApiController {
 			System.out.println("이미 가입된 사용자 이메일입니다");
 			return new ResponseDto<String>(500, "50000", "이미 가입된 사용자 이메일입니다.", "50000", null);
 		}
-		// 인증번호 생성 
+		// 인증번호 생성
 		String key = TempNumberUtill.getAuthKey();
 
-		AuthKey authKey = new AuthKey(email, key);		
+		AuthKey authKey = new AuthKey(email, key);
 		// 인증번호 저장
-		//userService.createAuthKey(authKey);
+		// userService.createAuthKey(authKey);
 		// 인증번호 메일 전송
 		mailService.sendAuthKey(authKey);
 		return new ResponseDto<String>(200, "20000", "인증번호가 발송되었습니다.", "20000", key);
 	}
 
 	/**
-	 * 효린
-	 * 이메일 인증번호	 
+	 * 효린 이메일 인증번호
+	 * 
 	 * @param inputKey
 	 * @param email
 	 * @return T/F

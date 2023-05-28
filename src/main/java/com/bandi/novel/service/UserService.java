@@ -1,5 +1,7 @@
 package com.bandi.novel.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,8 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private AuthRepository authRepository;
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 일반유저 로그인
@@ -125,7 +129,12 @@ public class UserService {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * 이메일 중복체크용
+	 * @param email
+	 * @return
+	 */
 	@Transactional
 	public Boolean checkEmail(String email) {
 		User userEntity = userRepository.selectByEmail(email);
@@ -135,12 +144,26 @@ public class UserService {
 		return false;
 	}
 
+	/**
+	 * 닉네임 중복체크용
+	 * @param nickName
+	 * @return
+	 */
 	@Transactional
 	public Boolean checkNickName(String nickName) {
-		User userEntity = userRepository.selectByNickName(nickName);
-		if (userEntity != null) {
-			return true;
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		if(principal == null) {
+			User userEntity = userRepository.selectByNickName(nickName);
+			if (userEntity != null) {
+				return true;
+			}
+		} else { // 로그인 되있을 때(즉 정보 수정시) 본인 닉네임은 중복체크에서 뺌
+			User userEntity = userRepository.selectByNickNameAndId(nickName, principal.getId());
+			if (userEntity != null) {
+				return true;
+			}
 		}
+		
 		return false;
 	}
 

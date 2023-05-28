@@ -5,7 +5,7 @@
 <form action="/user" method="post">
 	<div class="mb-3">
 		<label for="username" class="form-label">아이디</label> <input type="text" class="form-control" id="usernameJ" name="username" required value="hyo">
-		<button type="button" id="usernameCheck" class="btn btn-secondary">아이디 중복 확인</button>
+		<div id="usernameCheck"></div>
 	</div>
 	<div class="mb-3">
 		<label for="password" class="form-label">비밀번호</label> <input type="password" class="form-control" id="passwordJ" name="password" required value="456">
@@ -15,7 +15,7 @@
 	</div>
 	<div class="mb-3">
 		<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="효린씨">
-		<button type="button" id="nicknameCheck" class="btn btn-secondary">닉네임 중복 확인</button>
+		<div id="nickNameCheck"></div>
 	</div>
 	<div class="mb-3">
 		<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="khl4459@naver.com">
@@ -43,17 +43,19 @@
 <script type="text/javascript">
 	$(document).ready(()=>{
 		// 아이디 중복확인
-		$("#usernameJ").on("click", () => {
+		let usernameOk = false;
+		let nickNameOk = false;
+		$("#usernameJ").on("keyup", () => {
 			$.ajax({
 				type: "GET",
-				url: "/api/username",
-				data: {username: $("#usernameJ").val()}   // <--- 뭐죠??
+				url: "/api/username?username=" + $("#usernameJ").val()
 			}).done((response) => {
-				console.log(response)
-				if(response){
-					alert('이미 사용중인 아이디입니다.');
+				if(response.data){
+					$("#usernameCheck").text("이미 사용중인 아이디입니다.");
+					usernameOk = false;
 				} else{
-					alert('사용 가능한 아이디입니다.');
+					$("#usernameCheck").text("사용 가능한 아이디입니다.");
+					usernameOk = true;
 				}
 			}).fail((error) => {
 				console.log(error);
@@ -62,18 +64,17 @@
 		});
 		
 		// 닉네임 중복확인
-		// JSON ---> 
-		$("#nicknameCheck").on("click", () => {
+		$("#nickName").on("keyup", () => {
 			$.ajax({
 				type: "GET",
-				url: "/api/nickname",
-				data: {nickName: $("#nickName").val()}
+				url: "/api/nickName?nickName=" + $("#nickName").val() 
 			}).done((response) => {
-				console.log(response);
-				if(response){
-					alert(response.message);
+				if(response.data){
+					$("#nickNameCheck").text("이미 사용중인 닉네임입니다.");
+					nickNameOk = false;
 				} else{
-					alert('사용 가능한 아이디입니다.');
+					$("#nickNameCheck").text("사용 가능한 닉네임입니다.");
+					nickNameOk = true;
 				}
 			}).fail((error) => {
 				console.log(error);
@@ -152,10 +153,24 @@
 				}else{
 					alert("인증 완료되었습니다");
 					$("#email").attr('readonly',true);
-					$("#joinBtn").prop("type","submit");			
+					if(usernameOk && nickNameOk){
+						$("#joinBtn").prop("type","submit");
+					}
 				}				
 			});			
-		}			
+		}	
+		
+		$("#joinBtn").on("click", () => {
+			if($("#joinBtn").attr("type") == "button"){
+				if(!usernameOk){
+					alert("이미 사용중인 아이디입니다.");
+				} else if(!nickNameOk){
+					alert("이미 사용중인 닉네임입니다.");
+				} else{
+					alert("이메일 인증을 진행해주세요.");
+				}
+			}
+		})
 	});
 </script>
 <%@include file="../layout/footer.jsp"%>
