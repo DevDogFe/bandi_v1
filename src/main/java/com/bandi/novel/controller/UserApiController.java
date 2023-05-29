@@ -85,9 +85,7 @@ public class UserApiController {
 	 */
 	@GetMapping("/api/nickName")
 	public ResponseDto<Boolean> nickNameCheck(String nickName) {
-		System.out.println(nickName);
 		Boolean result = userService.checkNickName(nickName);
-		System.out.println(result);
 		String msg;
 		if (result) {
 			msg = "이미 사용중인 닉네임입니다.";
@@ -124,7 +122,6 @@ public class UserApiController {
 		// 가입 유무 확인
 		Boolean check = userService.checkEmail(email);
 		if (check) {
-			System.out.println("이미 가입된 사용자 이메일입니다");
 			return new ResponseDto<String>(500, "50000", "이미 가입된 사용자 이메일입니다.", "50000", null);
 		}
 		// 인증번호 생성

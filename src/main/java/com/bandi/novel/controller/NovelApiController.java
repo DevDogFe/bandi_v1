@@ -34,34 +34,31 @@ public class NovelApiController {
 	@Autowired
 	private NovelReplyService novelReplyService;
 	@Autowired
-	private NovelService novelService;
-	@Autowired
 	private ScoreService scoreService;
 
 	// 즐겨찾기 해제
 	@DeleteMapping("/api/unfavorite/{novelId}")
-	public Integer unfavoriteProc(@PathVariable Integer novelId) {
+	public ResponseDto<Boolean> unfavoriteProc(@PathVariable Integer novelId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		userFavoriteService.deleteUserFavorite(principal.getId(), novelId);
-		return novelId;
+		return new ResponseDto<Boolean>(200, "20000", Define.REQUEST_SUCCESS, "20000", true);
 
 	}
 
 	// 즐겨찾기 등록
 	@PostMapping("/api/favorite/{novelId}")
-	public Integer favoriteProc(@PathVariable Integer novelId) {
+	public ResponseDto<Boolean> favoriteProc(@PathVariable Integer novelId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		userFavoriteService.insertUserFavorite(principal.getId(), novelId);
-		return novelId;
+		return new ResponseDto<Boolean>(200, "20000", Define.REQUEST_SUCCESS, "20000", true);
 
 	}
 
 	// 댓글 삭제
 	@DeleteMapping("/api/reply/{replyId}")
-	public Integer deleteNovelReplyProc(@PathVariable Integer replyId) {
+	public ResponseDto<Boolean> deleteNovelReplyProc(@PathVariable Integer replyId) {
 		novelReplyService.deleteNovelReplyById(replyId);
-
-		return replyId;
+		return new ResponseDto<Boolean>(200, "20000", Define.REQUEST_SUCCESS, "20000", true);
 	}
 
 	// 별점 등록

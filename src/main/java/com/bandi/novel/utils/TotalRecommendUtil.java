@@ -12,6 +12,11 @@ import com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto;
 
 import lombok.Data;
 
+/**
+ * 종합 추천 알고리즘
+ * @author 김지현
+ *
+ */
 @Data
 public class TotalRecommendUtil {
 
@@ -39,7 +44,6 @@ public class TotalRecommendUtil {
 			} else {
 				dto.setFavoriteCount(1);;
 			}
-			System.out.println(dto);
 			totalScoreMap.put(dto.getId(), -(int)(genreMap.get(dto.getGenreId()) * dto.getScore() * dto.getFavoriteCount()));
 		}
 		
@@ -49,7 +53,6 @@ public class TotalRecommendUtil {
 		int count = 0;
 		entryList.sort(Map.Entry.comparingByValue());
 		for (Map.Entry<Integer, Integer> entry : entryList) {
-			System.out.println("novelId: " + entry.getKey() + "/ score: " + entry.getValue());
 			for (MainRecommendDto dto : tempList) {
 				if(dto.getId() == entry.getKey()) {
 					resultList.add(dto);
@@ -60,7 +63,6 @@ public class TotalRecommendUtil {
 				break;
 			}
 		}
-		System.out.println(resultList);
 		
 		return resultList;
 	}
