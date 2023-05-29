@@ -61,6 +61,7 @@ public class UserController {
 	private NovelService novelService;
 	@Autowired
 	private PayService payService;
+	
 
 
 	/**
@@ -221,4 +222,5 @@ public class UserController {
 		return "/user/userInfo";
 	}
 
+	
 }
