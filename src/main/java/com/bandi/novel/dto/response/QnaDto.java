@@ -1,4 +1,4 @@
-package com.bandi.novel.model;
+package com.bandi.novel.dto.response;
 
 import java.sql.Timestamp;
 
@@ -7,32 +7,32 @@ import com.bandi.novel.utils.TimestampFormat;
 import lombok.Data;
 
 @Data
-public class Question {
+public class QnaDto {
 	
 	private Integer id;
-	private Integer userId;
+	private String CategoryName;
 	private String title;
-	private String content;
-	private Integer faqCategoryId;
-	private Integer proceed;
+	private String nickName;
 	private Timestamp createdAt;
 	
-	private String username;
-	private String nickName;
-	private String CategoryName;
-	
 	private String answer;
-	private Timestamp answerCreatedAt; 
-	
+	private Timestamp answerCreatedAt;
 	
 	public String createdAt() {
 		
-		return TimestampFormat.dateFormat(createdAt);
+		return TimestampFormat.format(createdAt);
 	}
 	
 	public String answerCreatedAt() {
 		
 		return TimestampFormat.dateFormat(answerCreatedAt);
+	}
+	
+	public String nickName() {
+
+		String name = nickName.substring(0, 1) + "***";
+
+		return name;
 	}
 
 }

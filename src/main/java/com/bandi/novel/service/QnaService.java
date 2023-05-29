@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.QuestionUpdateDto;
+import com.bandi.novel.dto.response.QnaDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.repository.AnswerRepository;
@@ -20,6 +21,15 @@ public class QnaService {
 	private QuestionRepository questionRepository;
 	@Autowired
 	private AnswerRepository answerRepository;
+	
+	/**
+	 * @return 전체 Q&Alist
+	 */
+	public List<QnaDto> readAllQna(){
+		
+		List<QnaDto> list = questionRepository.findAllQna();
+		return list;
+	}
 
 
 	/**
@@ -28,7 +38,7 @@ public class QnaService {
 	 */
 	public List<Question> readQuestionByUserId(Integer principalId) {
 
-		List<Question> list = questionRepository.findByQnaUserId(principalId);
+		List<Question> list = questionRepository.findQnaByUserId(principalId);
 		return list;
 	}
 

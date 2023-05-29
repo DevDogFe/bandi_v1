@@ -22,16 +22,12 @@
 					<td>${question.createdAt()}</td>
 					<td>${question.proceed}</td>
 				</tr>
-				<c:choose>
-					<c:when test="${question.answer != null }">
+					<c:if test="${question.answer != null }">
 						<tr>
 							<td><a href="/qna/answer/${question.id}">${question.answer}</td>
 							<td>${question.answerCreatedAt()}</td>
 						</tr>
-					</c:when>
-					<c:otherwise>
-					</c:otherwise>
-				</c:choose>
+					</c:if>
 			</c:forEach>
 		</tbody>
 	</table>

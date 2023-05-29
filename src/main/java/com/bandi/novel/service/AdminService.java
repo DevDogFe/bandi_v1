@@ -29,7 +29,7 @@ public class AdminService {
 	 */
 	public List<Question> readAllQuestionList() {
 
-		List<Question> list = questionRepository.findAll();
+		List<Question> list = questionRepository.findAllQuestion();
 		return list;
 	}	
 	

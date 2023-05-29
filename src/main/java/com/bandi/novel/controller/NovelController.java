@@ -303,7 +303,7 @@ public class NovelController {
 
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
-		
+		// 효린
 		List<RecommendFavoritesDto> favoriteList = recommendService.selectFavoriteNovelByUsers(novelId);
 		model.addAttribute("favoriteList", favoriteList);		
 

@@ -4,28 +4,44 @@
 <mapper namespace="com.bandi.novel.repository.QuestionRepository">
 
 	<!-- Question 전체조회 (관리자) -->
-	<select id="findAll" resultType="com.bandi.novel.model.Question">
+	<select id="findAllQuestion" resultType="com.bandi.novel.model.Question">
 		select q.*, u.username, fc.category_name
 		from question_tb as q
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
 		on q.faq_category_id = fc.id
+		order by q.id desc
 	</select>
 
+	<!-- 처리/미처리 -->
 	<select id="findByProceed" resultType="com.bandi.novel.model.Question">
 		select q.*, u.username, fc.category_name
 		from question_tb as q
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
-		on
-		q.faq_category_id = fc.id
+		on q.faq_category_id = fc.id
 		where proceed = #{proceed}
+		order by q.id desc
+	</select>
+
+	<!-- Q&A 전체조회(CS) -->
+	<select id="findAllQna" resultType="com.bandi.novel.dto.response.QnaDto">
+		select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name, nick_name
+		from question_tb as q
+		left join answer_tb as a
+		on q.id =
+		a.question_id
+		inner join faq_category_tb as fc
+		on q.faq_category_id = fc.id
+		left join user_tb as u
+		on q.user_id = u.id
+		order by q.id desc
 	</select>
 
 	<!-- Q&A userId 전체조회 (마이페이지) -->
-	<select id="findByQnaUserId" resultType="com.bandi.novel.model.Question">
+	<select id="findQnaByUserId" resultType="com.bandi.novel.model.Question">
 		select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name
 		from question_tb as q
 		left join answer_tb as a
@@ -47,8 +63,7 @@
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
-		on q.faq_category_id =
-		fc.id
+		on q.faq_category_id = fc.id 
 		where q.id = #{id}
 	</select>
 
@@ -67,5 +82,9 @@
 		update question_tb set proceed = #{proceed}
 		WHERE id = #{id}
 	</update>
+
+	<!-- 검색 -->
+	<select id="findByKeyword">
+	</select>
 
 </mapper>

@@ -7,15 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/qna/question/update/${question.id}">수정</a>
-	<a href="/qna/question/delete/${question.id}">삭제</a>
-
+	<c:if test="${principalId == question.userId }">
+		<a href="/qna/question/update/${question.id}">수정</a>
+		<a href="/qna/question/delete/${question.id}">삭제</a>
+	</c:if>
 	<ul>
-	<li>${question.title}</li>
-	<li>${question.categoryName}</li>
-	<li>${question.username}</li>
-	<li>${question.content}</li>
-	<li>${question.createdAt()}</li>	    
+		<li>${question.title}</li>
+		<li>${question.categoryName}</li>
+		<li>${question.username}</li>
+		<li>${question.content}</li>
+		<li>${question.createdAt()}</li>
 	</ul>
 
 

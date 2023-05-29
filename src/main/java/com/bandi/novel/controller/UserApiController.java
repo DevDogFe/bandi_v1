@@ -18,7 +18,7 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.MailService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
-import com.bandi.novel.utils.TempNumberUtill;
+import com.bandi.novel.utils.TempNumberUtil;
 
 @RestController
 public class UserApiController {
@@ -114,7 +114,7 @@ public class UserApiController {
 			return new ResponseDto<String>(500, "50000", "이미 가입된 사용자 이메일입니다.", "50000", null);
 		}
 		// 인증번호 생성 
-		String key = TempNumberUtill.getAuthKey();
+		String key = TempNumberUtil.getAuthKey();
 
 		AuthKey authKey = new AuthKey(email, key);		
 		// 인증번호 저장
