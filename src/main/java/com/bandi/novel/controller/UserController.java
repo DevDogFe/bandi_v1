@@ -215,5 +215,7 @@ public class UserController {
 		
 		return "/user/userInfo";
 	}
+	
+	
 
 }

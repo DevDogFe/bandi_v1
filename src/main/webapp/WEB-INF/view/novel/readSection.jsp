@@ -61,6 +61,10 @@ ul {
 	resize: none;
 }
 
+.close-fullscreen {
+	display: none
+}
+
 </style>
 <section>
 	<article class="mb-3 p-3">
@@ -70,24 +74,46 @@ ul {
 				<img alt="이미지 없음" src="/assets/images/noimg.jpg">
 			</div>
 		</div>
-		<div>
 			<input type="hidden" id="sectionId" value="${section.id}"> <input type="hidden" id="novelId" value="${section.novelId}">
 			<div class="section--title mb-3">${section.title}</div>
+			
 			<div id="book-body">
-				<div id="book">
+			<div>
+				<button type="button" class="btn btn-outline-secondary fullscreen" onclick="openFullScreenMode()">확대</button>
+				<button type="button" class="btn btn-outline-secondary close-fullscreen" onclick="closeFullScreenMode()">축소</button>
+			</div>
+			
+				<%-- <div id="book" >
       				<div class="cover"><h1>${section.title}</h1></div>
       				<div class="cover"><h1>(주)반디</h1></div>
       				<c:forEach items="${subStringList}" var="subString" varStatus="vs">
-    					<div class="data"><p>${subString}</p></div>
+    						<div class="data"><p class="fontChange">${subString}</p>
+    					</div>
 					</c:forEach>
     			</div>
+    			
     			<div id="controls">
       				<label for="page-number">Page:</label>
       				<input type="text" size="3" id="page-number" />
-      				<span id="number-pages"></span>
+      				<span id="number-pages">${numberOfPages+2}</span>
+      				<button type="button" class="btn btn-outline-secondary fullscreen" onclick="openFullScreenMode()">확대</button>
+					<button type="button" class="btn btn-outline-secondary close-fullscreen" onclick="closeFullScreenMode()">축소</button>
+    			</div> --%>
+    		<div class="wrapper">
+  			<div class="aspect">
+    			<div class="aspect-inner">
+      				<div id="flipbook" class="flipbook" >
+      					<div class="page"><h1>${section.title}</h1></div>
+      					<div class="page"><h1>(주)반디</h1></div>
+      					<c:forEach items="${subStringList}" var="subString" varStatus="vs">
+    						<div class="page"><p id="page-font">${subString}</p></div>
+						</c:forEach>
+      				</div>
     			</div>
+  			</div>
 			</div>
-		</div>
+			</div>
+		
 		<div>
 			<a href="/novel/detail/${section.novelId }">목록</a>
 			<form class="mb-3" name="starScore" id="starScore" method="post">
@@ -193,114 +219,195 @@ ul {
 	</article>
 </section>
 <script type="text/javascript">
+	var numberOfPages = '${numberOfPages+2}';
+    let pageCount = '${subStringArray.size()}';  
+    let subStringArray = '${subStringArray}';
+    
+    let mode = "small";
+    //
+    var flipbookEL = document.getElementById('flipbook');
+    var doc = document.getElementById("book-body");
+
+    window.addEventListener('resize', function (e) {
+    	flipbookEL.style.width = '';
+      	flipbookEL.style.height = '';
+      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
+    });
+
+    $(flipbookEL).turn({
+        autoCenter: false
+    });
+    //
+    
+    $("#book").turn({
+		width: 800,
+		height: 600,
+		autoCenter: false
+		});	
+    
+    
+    /* $( window ).resize(function() {
+
+    	if(window.innerWidth<600){
+        	console.log(window.innerWidth);
+        	console.log(document.clientWidth);
+        	$("#book").turn({
+        		width: 800,
+        		height: 600,
+        		autoCenter: false
+        		});	
+        }else{
+        	console.log(Math.floor(window.innerWidth*0.6));
+        	$("#book").turn({
+        		width: Math.floor(window.innerWidth*0.6),
+        		height:	Math.floor(window.innerHeight*0.4),
+        		autoCenter: false
+        		});	
+        }
+    });
+    
+    $(window).resize(function(){
+    	var win = $(this); //this = window
+    	if (win.width() >= 820) { $("#book").turn('display','double');}
+    	else {
+    		$("#book").turn('display','single');
+    	}
+    	}); */
+    	
+    $("#flipbook").bind("turning", function(event, page, view) {
+  	  	//$('#page-number').val(page);
+  	  	if(mode=="small"){
+  	  		$("p").css("font-size","10px");
+  	  	}else{
+  	  		$("p").css("font-size","30px");
+  	  	}
+  	});
+    
+    $('#page-number').keydown(function (e) {
+        if (e.keyCode == 13){
+        	$('#book').turn('page', $('#page-number').val());
+        } 
+      });
+
+    $(window).bind('keydown', function (e) {
+      if (e.target && e.target.tagName.toLowerCase() != 'input') {
+    	  if (e.keyCode == 37) {
+    		  $('#book').turn('previous');
+    	  } else if (e.keyCode == 39) {
+    		  $('#book').turn('next');  
+    	  }
+      }
+    });
+    
+    
 	
-	function deleteReply(replyId,novelId,sectionId) {
-		$.ajax({
-			type: "DELETE",
-			url: "/api/reply/" + replyId
-		}).done((response) => {
-			location.href='/section/read/'+novelId+'/'+ sectionId;
-		}).fail((error) => {
-			console.log(error);
-			alert("요청을 처리할 수 없습니다.");
-		});
+  	//전체화면 설정
+    function openFullScreenMode() {
+  		mode = "big";
+  		
+		if (doc.requestFullscreen){
+			doc.requestFullscreen();
+		}
+		else if (doc.webkitRequestFullscreen){ // Chrome, Safari (webkit)
+			doc.webkitRequestFullscreen();
+		}
+		else if (doc.mozRequestFullScreen){ // Firefox
+			doc.mozRequestFullScreen();
+		}
+		else if (doc.msRequestFullscreen){ // IE or Edge
+			doc.msRequestFullscreen();
+		}
+		
+		window.addEventListener('resize', function (e) {
+	    	flipbookEL.style.width = '';
+	      	flipbookEL.style.height = '';
+	      	$(flipbookEL).turn('size', (flipbookEL.clientWidth*0.9), (flipbookEL.clientHeight*0.8));
+	      	$(flipbookEL).css('margin-top','3%');
+	      	$("p").css('font-size','30px');
+			$(".fullscreen").hide();
+			$(".close-fullscreen").show();
+	    });
+		 
+	}
+	//전체화면 해제
+	function closeFullScreenMode() {
+		mode = "small";
+		
+		if (document.exitFullscreen){
+			document.exitFullscreen();
+		}
+		else if(document.webkitExitFullscreen){ // Chrome, Safari (webkit)
+			document.webkitExitFullscreen();
+		} 
+		else if (document.mozCancelFullScreen){ // Firefox
+			document.mozCancelFullScreen();
+		}
+		else if (document.msExitFullscreen){ // IE or Edge
+			document.msExitFullscreen();
+		}
+		
+		window.addEventListener('resize', function (e) {
+	    	flipbookEL.style.width = '';
+	      	flipbookEL.style.height = '';
+	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
+	      	$(flipbookEL).css('margin-top','0%');
+	      	$("p").css('font-size','10px');
+	      	$(".close-fullscreen").hide();
+			$(".fullscreen").show();
+	    });
 	}
 	
-	$(document).ready(() => {
-		// 별점 등록
-		$("#starBtn").on("click", () => {
-			console.log('111111111');
-			const stars = $("input[name = reviewStar]");
-			console.log(stars);
-			let score;
-			for (let i = 0; i < stars.length; i++){
-				if(stars[i].checked){
-					score = stars[i].value;
-					let data = {
-							sectionId: $("#sectionId").val(),
-							score: score
-					};
-					
-					$.ajax({
-						type: "POST",
-						url: "/api/score",
-						contentType:"application/json; charset=utf-8",
-						data: JSON.stringify(data),
-						dataType:"json"
-					}).done((response) => {
-						location.href='/section/read/' + $("#novelId").val()+ '/' + $("#sectionId").val();
-					}).fail((error) => {
-						console.log(error);
-						alert("요청을 처리할 수 없습니다.");
-					});
-				}
+function deleteReply(replyId,novelId,sectionId) {
+	$.ajax({
+		type: "DELETE",
+		url: "/api/reply/" + replyId
+	}).done((response) => {
+		location.href='/section/read/'+novelId+'/'+ sectionId;
+	}).fail((error) => {
+		console.log(error);
+		alert("요청을 처리할 수 없습니다.");
+	});
+}
+
+
+$(document).ready(function() {
+	
+	// 별점 등록
+	$("#starBtn").on("click", () => {
+		console.log('111111111');
+		const stars = $("input[name = reviewStar]");
+		console.log(stars);
+		let score;
+		for (let i = 0; i < stars.length; i++){
+			if(stars[i].checked){
+				score = stars[i].value;
+				let data = {
+						sectionId: $("#sectionId").val(),
+						score: score
+				};
+				
+				$.ajax({
+					type: "POST",
+					url: "/api/score",
+					contentType:"application/json; charset=utf-8",
+					data: JSON.stringify(data),
+					dataType:"json"
+				}).done((response) => {
+					location.href='/section/read/' + $("#novelId").val()+ '/' + $("#sectionId").val();
+				}).fail((error) => {
+					console.log(error);
+					alert("요청을 처리할 수 없습니다.");
+				});
 			}
-			
-		})
+		}
 		
 	});
-	</script>
-	<script type="text/javascript">
+
+		 
 	
-      // Sample using dynamic pages with turn.js
-      var numberOfPages = '${numberOfPages+2}'
-      let pageCount = '${subStringArray.size()}';  
-      let subStringArray = '${subStringArray}';
-        
-      // Adds the pages that the book will need
-      function addPage(page, book,startPage) {
-        // 	First check if the page is already in the book
-        if (!book.turn('hasPage', page)) {
-          // Create an element for this page
-          var element = $('<div />', {
-            class: 'page ' + (page % 2 == 0 ? 'odd' : 'even'),
-            id: 'page-' + page,
-          }).html('<i class="loader"></i>');
-          // If not then add the page
-          book.turn('addPage', element, page);
-          // Let's assum that the data is comming from the server and the request takes 1s.
-
-          setTimeout(function () {
-            element.html('<div class="data"><p></p></div>');
-          }, 1000);
-        }
-      }
-
-      $(window).ready(function () {
-        $('#book').turn({
-          acceleration: true,
-          pages: numberOfPages,
-          elevation: 50,
-          gradients: !$.isTouch,
-          when: {
-            turning: function (e, page, view) {
-              // Gets the range of pages that the book needs right now
-              var range = $(this).turn('range', page)
-
-              // Check if each page is within the book
-              for (page = range[0]; page <= range[1]; page++)
-                addPage(page, $(this))
-            },
-
-            turned: function (e, page) {
-              $('#page-number').val(page)
-            },
-          },
-        })
-
-        $('#number-pages').html(numberOfPages)
-
-        $('#page-number').keydown(function (e) {
-          if (e.keyCode == 13) $('#book').turn('page', $('#page-number').val())
-        })
-      })
-
-      $(window).bind('keydown', function (e) {
-        if (e.target && e.target.tagName.toLowerCase() != 'input')
-          if (e.keyCode == 37) $('#book').turn('previous')
-          else if (e.keyCode == 39) $('#book').turn('next')
-      })
-    </script>
+	// end of ready 
+});
+	</script>
     
 <%@include file="../layout/footer.jsp"%>
 
