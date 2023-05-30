@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<br>
 <footer>
+<br>
+<br>
 	<div class="container text-center">
 		<p>
 			Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a> Distributed

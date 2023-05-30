@@ -182,11 +182,8 @@ public class NovelController {
 			search = null;
 		}
 		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search, sort);
-		System.out.println("222");
 		List<Genre> genreList = novelService.selectGenreList();
-		System.out.println("333");
 		NovelPageUtil novelPageUtil = new NovelPageUtil(freeNovelList.size(), 20, currentPage, 5, freeNovelList);
-		System.out.println("444");
 		model.addAttribute("novelList", novelPageUtil);
 		model.addAttribute("serviceType", "무료");
 		model.addAttribute("genreList", genreList);
@@ -300,7 +297,7 @@ public class NovelController {
 
 		// section 페이징 처리
 		String section = novelSection.getContent();
-		int fixLength = 350;
+		int fixLength = 150;
 
 		// 배열의 크기를 구합니다.
 		int strArraySize = (int) Math.ceil((double) section.length() / fixLength);

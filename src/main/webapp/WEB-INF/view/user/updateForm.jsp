@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+<%@include file="../layout/header.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-</head>
-<body>
+<section>
 	<h1>정보 수정</h1>
 	<form action="/user" method="post">
 		<c:choose>
@@ -75,13 +68,13 @@
 				}
 			});
 			// 닉네임 중복확인
-			$("#nicknameCheck").on("click", () => {
+			$("#nickname").on("keyup", () => {
 				$.ajax({
 					type: "GET",
 					url: "/api/nickname",
 					data: {nickName: $("#nickName").val()}
-				}).done((response) => {
-					if(response){
+				}).done(response) => {
+					if(response.data){
 						alert('이미 사용중인 아이디입니다.');
 					} else{
 						alert('사용 가능한 아이디입니다.');
@@ -110,6 +103,5 @@
 			});
 		});
 	</script>
-
-</body>
-</html>
+</section>
+<%@include file="../layout/footer.jsp"%>

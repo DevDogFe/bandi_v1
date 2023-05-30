@@ -55,7 +55,7 @@ public class BoardService {
 		return list;
 	}
 	
-	// 게시물 종류 리스트 불러오기
+	// 게시판 종류 리스트 불러오기
 	@Transactional
 	public List<BoardType> selectBoardType() {
 		List<BoardType> list = boardTypeRepository.selectBoardTypeAll();

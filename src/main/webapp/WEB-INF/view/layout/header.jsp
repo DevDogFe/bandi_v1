@@ -1,3 +1,11 @@
+<%@page import="com.bandi.novel.model.BoardType"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bandi.novel.service.BoardService"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.web.context.WebApplicationContext"%>
+<%@page import="com.bandi.novel.utils.Define"%>
+<%@page import="com.bandi.novel.model.User"%>
+<%@page import="com.bandi.novel.service.PayService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -93,10 +101,21 @@ a {
 	border: none;
 	color: white;
 }
+.login--btn:hover {
+	color: white;
+}
 </style>
 </head>
 
 <body>
+<%
+WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(((HttpServletRequest) request).getSession().getServletContext());
+PayService payService = wac.getBean(PayService.class);
+BoardService boardService = wac.getBean(BoardService.class);
+List<BoardType> boardTypeList = boardService.selectBoardType();
+User principal = (User)session.getAttribute(Define.PRINCIPAL);
+Integer gold = payService.selectUserGold(principal.getId());
+%>
 
 	<!-- ***** Preloader Start ***** -->
 	<div id="js-preloader" class="js-preloader">
@@ -145,6 +164,9 @@ a {
 
 	<header class="d-flex flex-column align-items-center">
 		<div class="header--top">
+		<c:if test="${principal != null }">
+				<button type="button" class="login--btn btn">${principal.nickName }님 반갑습니다. (골드: <%=gold %>G )</button>
+				</c:if>
 			<c:if test="${principal.userRole.equals(\"admin\") }">
 				<button type="button" class="login--btn btn" onclick="location.href='/admin/adminPage'">관리자 페이지</button>
 			</c:if>
@@ -203,10 +225,9 @@ a {
 							<a href="/board/list">게시판</a>
 						</div>
 						<ul id="boardPanel" class="nav--panel">
-							<li><a href="/board/list/1">자유게시판</a></li>
-							<li><a href="/board/list/2">추천게시판</a></li>
-							<li><a href="/board/list/3">팬아트게시판</a></li>
-							<li><a href="/board/list/4">홍보게시판</a></li>
+							<%for(int i = 0; i < boardTypeList.size(); i++){ %>
+							<li><a href="/board/list/<%=boardTypeList.get(i).getId()%>"><%=boardTypeList.get(i).getBoardName()%>게시판</a></li>
+							<%} %>
 						</ul>
 					</div>
 					<div id="cs" class="header--menu text-center">
@@ -224,8 +245,8 @@ a {
 						</div>
 						<ul id="myPagePanel" class="nav--panel">
 							<li><a href="/myInfo">내 정보 조회</a></li>
-							<li><a href="#">즐겨찾기</a></li>
-							<li><a href="#">내 작품</a></li>
+							<li><a href="/library">내 서재</a></li>
+							<li><a href="/purchase">구매기록</a></li>
 						</ul>
 					</div>
 				</nav>

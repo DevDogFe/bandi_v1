@@ -60,6 +60,12 @@ ul {
 	font-size: 16px;
 	resize: none;
 }
+
+.substring--container{
+	padding : 50px 30px;
+	font-size: 20px;
+	
+}
 </style>
 <section>
 	<article class="mb-3 p-3">
@@ -77,7 +83,7 @@ ul {
       				<div class="cover"><h1>시간을 달리는 소설가</h1></div>
       				<div class="cover"><h1>(주)반디</h1></div>
       				<c:forEach items="${subStringList}" var="subString" varStatus="vs">
-    					<div class="data"><p>${subString}</p></div>
+    					<div class="data"><p class="substring--container">${subString}</p></div>
 					</c:forEach>
     			</div>
     			<div id="controls">
