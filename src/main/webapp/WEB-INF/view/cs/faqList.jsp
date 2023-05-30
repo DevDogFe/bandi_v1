@@ -18,15 +18,26 @@
 	margin-right: 40px;
 }
 
-/**/
+/* CSS */
 * {
+	margin: 0px;
+	padding: 0px;
 	box-sizing: border-box;
+}
+
+body {
+	height: 100%;
+	box-sizing: border-box;
+	min-height: 100%;
+}
+
+.faq--list dl {
+	font-size: 20px;
 }
 </style>
 
 
 <div class="container">
-
 	<!-- 		<div class="row">
 		<div class="col-lg-12">
 			<div class="page-content">
@@ -58,16 +69,15 @@
 		<c:forEach var="faq" items="${faqList}">
 			<dl class="faq--content">
 				<dt>
-					<a class="question" id="que-${faq.id}" onclick="openCloseAnswer(${faq.id})">
-						<span>${faq.question}</span> <span id="toggle-${faq.id}" class="material-symbols-outlined"> expand_more </span>
+					<a class="question" id="que-${faq.id}" onclick="openCloseAnswer(${faq.id})"> <span>${faq.question}</span> <span id="toggle-${faq.id}" class="material-symbols-outlined"> expand_more </span>
 					</a>
 				</dt>
 				<dd class="answer" id="ans-${faq.id}">${faq.answer}</dd>
 			</dl>
 		</c:forEach>
 	</div>
-	
-	
+
+
 </div>
 
 
