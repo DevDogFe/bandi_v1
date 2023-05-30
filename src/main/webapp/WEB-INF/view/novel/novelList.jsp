@@ -49,7 +49,7 @@ h2{
 			<thead>
 				<tr class="table-secondary">
 					<td>장르</td>
-					<td>작품 제목</td>
+					<td style="text-align: left; padding-left: 20px">작품 제목</td>
 					<td>작가</td>
 					<td>평점</td>
 					<td>즐겨찾기</td>
@@ -58,8 +58,8 @@ h2{
 			<tbody>
 				<c:forEach items="${novelList.content}" var="novel">
 					<tr>
-						<td><a href="?genreId=${novel.genreId }" class="list--link">${novel.genreName}</a></td>
-						<td><a href="/novel/detail/${novel.id}" class="list--link">${novel.title}</a></td>
+						<td style="text-align: left; padding-left: 20px"><a href="?genreId=${novel.genreId }" class="list--link">${novel.genreName}</a></td>
+						<td style="text-align: left; padding-left: 20px"><a href="/novel/detail/${novel.id}" class="list--link">${novel.title}</a></td>
 						<td><a href="#" class="list--link">${novel.nickName}</a></td>
 						<c:choose>
 							<c:when test="${empty novel.score }">
@@ -81,7 +81,7 @@ h2{
 				</c:forEach>
 			</tbody>
 		</table>
-		<div class="col-sm-12 col-md-7">
+		<div class="d-flex justify-content-center">
 			<div>
 				<ul class="d-flex">
 					<!-- Previous 시작 -->
@@ -99,7 +99,7 @@ h2{
 			</div>
 		</div>
 		<form action="/${map }" method="get">
-			<div class="row g-3 align-items-center">
+			<div class="row g-3 align-items-center justify-content-center">
 				<div class="col-auto">
 					<label for="genreId" class="col-form-label">장르 선택</label>
 				</div>

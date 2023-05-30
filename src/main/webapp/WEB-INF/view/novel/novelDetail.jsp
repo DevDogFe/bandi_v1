@@ -11,87 +11,104 @@
 .list--link:visited {
 	color: #333;
 }
+
+.detail--table th {
+	padding: 8px 10px;
+}
+
+.left--col {
+	display: flex;
+	justify-content: space-between;
+}
+
+section img {
+	width: 150px;
+	height: 200px;
+}
+
+.btn--container button{
+	margin: 6px 0px 6px 8px;
+}
 </style>
 <input type="hidden" id="novelId" value="${detail.id}">
 <section>
 	<article>
-		<h1>소설 제목</h1>
-		<div class="novel--header d-flex">
-			<div>
-				<c:choose>
-					<c:when test="${detail.cover != null }">
-						<img alt="" src="/bandi/uploads/${detail.cover }">
-					</c:when>
-					<c:otherwise>
-
-						<img alt="이미지 없음" src="/assets/images/noimg.jpg">
-					</c:otherwise>
-				</c:choose>
-			</div>
-			<div>
-				<table>
+		<div class="novel--header d-flex justify-content-center align-items-start">
+			<div class="d-flex m-4">
+				<div class="me-5">
+					<c:choose>
+						<c:when test="${detail.cover != null }">
+							<img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }">
+						</c:when>
+						<c:otherwise>
+							<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<table class="detail--table">
 					<tr>
-						<td>제목</td>
-						<td>${detail.title}</td>
+						<th class="left--col"><span>제</span><span>목</span></th>
+						<th>${detail.title}</th>
 					</tr>
 					<tr>
-						<td>장르</td>
-						<td>${detail.genreName}</td>
-						<td>작가</td>
-						<td>${detail.username}</td>
+						<th class="left--col"><span>장</span><span>르</span></th>
+						<th>${detail.genreName}</th>
 					</tr>
 					<tr>
-						<td>작품 등록일</td>
-						<td>${detail.createdAt()}</td>
+						<th class="left--col"><span>작</span><span>가</span></th>
+						<th>${detail.username}</th>
 					</tr>
 					<tr>
-						<td>즐겨찾기</td>
-						<td>${favorite}</td>
+						<th class="left--col">작품 등록일</th>
+						<th>${detail.createdAt()}</th>
+					</tr>
+					<tr>
+						<th class="left--col"><span>즐</span><span>겨</span><span>찾</span><span>기</span></th>
+						<th>${favorite}</th>
 					</tr>
 
 				</table>
-				<c:if test="${detail.userId == principal.id}">
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">표지 등록하기</button>
-
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">표지 등록</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<form action="/novel/cover?novelId=${detail.id }&serviceTypeId=${detail.serviceTypeId}" method="post" enctype="multipart/form-data">
-									<div class="modal-body">
-										<div class="mb-3">
-											<label for="formFile" class="form-label">이미지 파일 선택</label> <input class="form-control" name="coverFile" type="file" id="formFile">
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-										<button type="submit" class="btn btn-primary">등록</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</c:if>
-				<c:if test="${principal != null }">
-					<c:choose>
-						<c:when test="${isFavorite }">
-							<button type="button" class="btn btn-secondary" id="unfavorite">즐겨찾기 해제</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" class="btn btn-success" id="favorite">즐겨찾기 추가</button>
-						</c:otherwise>
-					</c:choose>
-				</c:if>
 			</div>
 		</div>
-		<c:if test="${detail.userId == principal.id}">
-			<button onclick="location.href='/section/registration/${detail.id}'" class="btn btn btn-secondary">글 쓰기</button>
-		</c:if>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">표지 등록</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<form action="/novel/cover?novelId=${detail.id }&serviceTypeId=${detail.serviceTypeId}" method="post" enctype="multipart/form-data">
+						<div class="modal-body">
+							<div class="mb-3">
+								<label for="formFile" class="form-label">이미지 파일 선택</label> <input class="form-control" name="coverFile" type="file" id="formFile">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">등록</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-end btn--container">
+			<c:if test="${detail.userId == principal.id}">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">표지 등록하기</button>
+				<button onclick="location.href='/section/registration/${detail.id}'" class="btn btn btn-secondary">글 쓰기</button>
+			</c:if>
+			<c:if test="${principal != null }">
+				<c:choose>
+					<c:when test="${isFavorite }">
+						<button type="button" class="btn btn-secondary" id="unfavorite">즐겨찾기 해제</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn btn-success" id="favorite">즐겨찾기 추가</button>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</div>
 		<c:choose>
 			<c:when test="${empty sectionList}">
 				<h3>아직 글이 없습니다.</h3>
@@ -115,9 +132,7 @@
 								<c:when test="${section.userId != null}">
 									<tr class="table-info">
 										<td>${sectionList.size() - vs.index}</td>
-										<td><a
-											href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}"
-											class="list--link">${section.title}</a></td>
+										<td><a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link">${section.title}</a></td>
 										<c:choose>
 											<c:when test="${paymentList[vs.index] != null }">
 												<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
@@ -134,7 +149,7 @@
 											<c:otherwise>
 												<td>${vs.index}</td>
 											</c:otherwise>
-										</c:choose>	
+										</c:choose>
 										<td>${section.createdAt()}</td>
 										<td>${section.views}</td>
 										<td><c:choose>
@@ -150,9 +165,7 @@
 								<c:otherwise>
 									<tr class="table-default">
 										<td>${sectionList.size() - vs.index}</td>
-										<td><a
-											href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}"
-											class="list--link">${section.title}</a></td>
+										<td><a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link">${section.title}</a></td>
 										<c:choose>
 											<c:when test="${paymentList[vs.index] != null }">
 												<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
@@ -172,7 +185,7 @@
 											<c:otherwise>
 												<td>${vs.index}</td>
 											</c:otherwise>
-										</c:choose>	
+										</c:choose>
 										<td>${section.createdAt()}</td>
 										<td>${section.views}</td>
 										<td><c:choose>
