@@ -1,5 +1,6 @@
 package com.bandi.novel.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,6 +49,7 @@ import com.bandi.novel.utils.TempNumberUtill;
 @Controller
 public class UserController {
 
+	private static final URI TOKEN_REQUEST_URL = null;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -215,5 +218,6 @@ public class UserController {
 		
 		return "/user/userInfo";
 	}
+		
 
 }
