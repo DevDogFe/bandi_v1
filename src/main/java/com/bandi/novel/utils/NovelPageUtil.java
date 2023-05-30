@@ -20,8 +20,7 @@ public class NovelPageUtil {
 	private List<NovelDto> content;
 	private List<ContestNovelDto> contestContent;
 
-	public NovelPageUtil(int total, int size, int currentPage, int pagingCount,
-			List<NovelDto> novelList) {
+	public NovelPageUtil(int total, int size, int currentPage, int pagingCount, List<NovelDto> novelList) {
 		this.total = total;
 		this.currentPage = currentPage;
 		this.pagingCount = pagingCount;
@@ -57,8 +56,9 @@ public class NovelPageUtil {
 			}
 		}
 	}
-	
-	public NovelPageUtil(List<ContestNovelDto> contestNovelList,int total, int size, int currentPage, int pagingCount) {
+
+	public NovelPageUtil(List<ContestNovelDto> contestNovelList, int total, int size, int currentPage,
+			int pagingCount) {
 		this.total = total;
 		this.currentPage = currentPage;
 		this.pagingCount = pagingCount;

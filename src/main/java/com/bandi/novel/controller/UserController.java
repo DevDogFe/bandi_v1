@@ -41,7 +41,7 @@ import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
-import com.bandi.novel.utils.TempNumberUtill;
+import com.bandi.novel.utils.TempNumberUtil;
 
 /**
  * 유저 관련 로직 컨트롤러
@@ -185,7 +185,7 @@ public class UserController {
 
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
-		user.setPassword(TempNumberUtill.getTempPassword());		
+		user.setPassword(TempNumberUtil.getTempPassword());		
 		//userService.updateUserPwd(user);
 		// 메일 전송
 		mailService.sendTempPassword(user);

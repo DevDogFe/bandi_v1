@@ -4,16 +4,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.bandi.novel.dto.QnaSearchDto;
 import com.bandi.novel.dto.QuestionUpdateDto;
+import com.bandi.novel.dto.response.QnaDto;
 import com.bandi.novel.model.Question;
 
 @Mapper
 public interface QuestionRepository {
 
+	public List<QnaDto> findAllQna();	
 	
-	public List<Question> findAll();
+	public List<Question> findAllQuestion();
 	
-	public List<Question> findByQnaUserId(Integer userId);
+	public List<Question> findQnaByUserId(Integer userId);
 	
 	public List<Question> findByProceed(Integer proceed);
 
@@ -26,5 +29,7 @@ public interface QuestionRepository {
 	public int deleteById(Integer id);
 	
 	public int updateProceedById(Question question);
+	
+	public List<QnaDto> findByKeyword(QnaSearchDto qnaSearchDto);
 
 }

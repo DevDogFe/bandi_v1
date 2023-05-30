@@ -31,7 +31,17 @@
 					<td class="qna--table"><a href="/admin/question/${question.id}">${question.title}</a></td>
 					<td class="qna--table">${question.username}</td>
 					<td class="qna--table">${question.createdAt()}</td>
-					<td class="qna--table">${question.proceed}</td>
+
+					<c:choose>
+						<c:when test="${question.proceed == 0}">
+							<td class="qna--table">미처리</td>						
+						</c:when>
+						<c:otherwise>
+							<td class="qna--table">처리</td>					
+						</c:otherwise>
+					</c:choose>
+
+
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -59,10 +69,10 @@
 		        		 <td class="qna--table">\${response[i].categoryName}</td>
 		        		 <td class="qna--table"><a href="/admin/question/\${response[i].id}">\${response[i].title}</td>
 		        		 <td class="qna--table">\${response[i].userId}</td>
-		        		 <td class="qna--table">\${time}</td>
-		        		 <td class="qna--table">\${response[i].proceed}</td>
+		        		 <td class="qna--table">\${time}</td>					       			 
+		        		 <td class="qna--table"S>${response[i].proceed}</td>		        		 
 		        		 </tr>
-		        		 `;	        		
+		        		 `;	   
 	        	}        		 
 				 $("#qnaListBody").append(qnaNode);
 				 

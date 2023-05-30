@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bandi.novel.dto.QnaSearchDto;
 import com.bandi.novel.dto.QuestionUpdateDto;
+import com.bandi.novel.dto.response.QnaDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.model.Question;
@@ -20,16 +23,18 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.QnaService;
 import com.bandi.novel.utils.Define;
+import com.bandi.novel.utils.QnaPageUtil;
 
 /**
  * Q&A 컨트롤러
+ * 
  * @author 효린
  */
 
 @Controller
 @RequestMapping("/qna")
 public class QnaController {
-	
+
 	@Autowired
 	private HttpSession session;
 	@Autowired
@@ -37,18 +42,36 @@ public class QnaController {
 	@Autowired
 	private FaqService faqService;
 
+	@GetMapping("/list")
+	public String allList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, QnaSearchDto qnaSearchDto) {
+		
+		List<QnaDto> qnaList = null;
+		if (qnaSearchDto.getKeyword() == null) {
+			qnaList = qnaService.readAllQna();
+		} else {
+			qnaList = qnaService.readQnaListByKeyword(qnaSearchDto);
+		}
+		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
+		QnaPageUtil qnaPageUtil = new QnaPageUtil(qnaList.size(), 10, currentPage, 5, qnaList);
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("faqCategorylist", faqCategorylist);
+		model.addAttribute("qnaPageUtil", qnaPageUtil);
+		return "/cs/qna";
+	}
+
 	/**
 	 * 마이페이지
+	 * 
 	 * @param model
 	 * @return 1:1 문의 조회
 	 */
-	@GetMapping("/list")
+	@GetMapping("/myList")
 	public String list(Model model) {
 
-		// List<Question> questionList = qnaService.readQuestionByUserId(principal.getId);
+		// List<Question> questionList =
+		// qnaService.readQuestionByUserId(principal.getId);
 		List<Question> questionList = qnaService.readQuestionByUserId(1);
-		System.out.println(questionList);
-		model.addAttribute("questionList", questionList);		
+		model.addAttribute("questionList", questionList);
 
 		return "/cs/qnaList";
 	}
@@ -87,6 +110,7 @@ public class QnaController {
 
 		Question question = qnaService.readQuestionById(id);
 		model.addAttribute("question", question);
+		// model.addAttribute("principalId", 1);
 
 		return "/cs/questionDetail";
 	}
@@ -108,20 +132,22 @@ public class QnaController {
 
 	/**
 	 * 질문 수정
+	 * 
 	 * @param questionUpdateFormDto
 	 * @return Q&A 리스트
 	 */
 	@PostMapping("/question/update/{id}")
 	public String updateQuestionProc(@PathVariable Integer id, QuestionUpdateDto questionUpdateDto) {
 
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// qnaService.updateQuestion(questionUpdateFormDto, principal.getId);
 		qnaService.updateQuestion(questionUpdateDto, 1);
 		return "redirect:/qna/question/" + id;
 	}
 
 	/**
-	 * 질문 삭제
-ㄴ	 * @param id
+	 * 질문 삭제 ㄴ * @param id
+	 * 
 	 * @return Q&A 전체조회(마이페이지)
 	 */
 	@GetMapping("/question/delete/{id}")
@@ -130,7 +156,7 @@ public class QnaController {
 		qnaService.deleteQuestion(id);
 		return "redirect:/qna/list";
 	}
-	
+
 	/**
 	 * @param questionId
 	 * @param model
@@ -138,12 +164,12 @@ public class QnaController {
 	 */
 	@GetMapping("/answer/{questionId}")
 	public String getAnswer(@PathVariable Integer questionId, Model model) {
-		
+
 		Answer answer = qnaService.readAnswerByQuestionId(questionId);
 		model.addAttribute("answer", answer);
-		
+
 		return "/cs/answerDetail";
-		
+
 	}
 
 }

@@ -2,7 +2,7 @@ package com.bandi.novel.utils;
 
 import java.util.Random;
 
-public class TempNumberUtill {
+public class TempNumberUtil {
 		
 	// 임시 비밀번호 생성
 	public static String getTempPassword() {
