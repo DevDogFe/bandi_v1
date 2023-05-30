@@ -14,15 +14,38 @@ ul {
 .list--link:visited {
 	color: #333;
 }
+
+.article {
+	width: 1300px;
+	margin: 30px auto;
+}
+
+.sort--btn{
+	text-align: right;
+}
+
+th, td {
+	text-align: center;
+}
+h2{
+	font-weight: bold;
+}
 </style>
 
 <section>
-	<article>
-		<h1>${serviceType}소설</h1>
-		<a href="?sort=default">최신순</a>
-		<a href="?sort=favorite">즐겨찾기순</a>
-		<a href="?sort=score">평점순</a>
+	<div class="article">
+		<h2>${serviceType}소설</h2>
+		<div class="sort--btn mb-2">
+			<a href="?sort=default">최신순 </a>&nbsp;&nbsp; <a href="?sort=favorite"> 즐겨찾기순 </a>&nbsp;&nbsp; <a href="?sort=score"> 평점순 </a>
+		</div>
 		<table class="table">
+			<colgroup>
+				<col style="width: 10%">
+				<col style="width: 60%">
+				<col style="width: 10%">
+				<col style="width: 10%">
+				<col style="width: 10%">
+			</colgroup>
 			<thead>
 				<tr class="table-secondary">
 					<td>장르</td>
@@ -94,13 +117,13 @@ ul {
 				<div class="col-auto">
 					<input type="text" id="search" name="search" class="form-control">
 				</div>
-					<input type="hidden" name="sort" value="${sort }">					
+				<input type="hidden" name="sort" value="${sort }">
 				<div class="col-auto">
 					<button type="submit" class="btn btn-primary">검색</button>
 				</div>
 			</div>
 		</form>
-	</article>
+	</div>
 </section>
 
 <%@include file="../layout/footer.jsp"%>

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bandi.novel.dto.AdminReportDto;
-import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.model.Report;
 
 @Mapper

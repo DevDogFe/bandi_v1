@@ -12,6 +12,12 @@
 		SELECT * FROM user_tb
 		WHERE nick_name = #{nickName}
 	</select>
+	
+	<select id="selectByNickNameAndId" resultType="com.bandi.novel.model.User">
+		SELECT * FROM user_tb
+		WHERE nick_name = #{nickName}
+		AND id != #{id}
+	</select>
 
 	<select id="selectByUserId" resultType="com.bandi.novel.model.User">
 		SELECT * FROM user_tb

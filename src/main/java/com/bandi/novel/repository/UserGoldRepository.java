@@ -1,7 +1,6 @@
 package com.bandi.novel.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.model.UserGold;
 

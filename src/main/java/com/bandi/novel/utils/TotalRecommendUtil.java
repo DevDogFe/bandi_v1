@@ -12,6 +12,11 @@ import com.bandi.novel.dto.response.PreferGenreForTotalRecommendDto;
 
 import lombok.Data;
 
+/**
+ * 종합 추천 알고리즘
+ * @author 김지현
+ *
+ */
 @Data
 public class TotalRecommendUtil {
 
@@ -39,8 +44,13 @@ public class TotalRecommendUtil {
 			} else {
 				dto.setFavoriteCount(1);;
 			}
-			System.out.println(dto);
-			totalScoreMap.put(dto.getId(), -(int)(genreMap.get(dto.getGenreId()) * dto.getScore() * dto.getFavoriteCount()));
+			
+			if(genreMap.get(dto.getGenreId()) != null) {
+				totalScoreMap.put(dto.getId(), -(int)(genreMap.get(dto.getGenreId()) * (dto.getScore() + dto.getFavoriteCount())));
+			} else {
+				totalScoreMap.put(dto.getId(), -(int)(dto.getScore() + dto.getFavoriteCount()));
+			}
+			
 		}
 		
 		
@@ -49,7 +59,6 @@ public class TotalRecommendUtil {
 		int count = 0;
 		entryList.sort(Map.Entry.comparingByValue());
 		for (Map.Entry<Integer, Integer> entry : entryList) {
-			System.out.println("novelId: " + entry.getKey() + "/ score: " + entry.getValue());
 			for (MainRecommendDto dto : tempList) {
 				if(dto.getId() == entry.getKey()) {
 					resultList.add(dto);
@@ -60,12 +69,19 @@ public class TotalRecommendUtil {
 				break;
 			}
 		}
-		System.out.println(resultList);
 		
 		return resultList;
 	}
 	
-	
+	public static <K, V> K getKey(Map<K, V> map, V value) {
+		 
+        for (K key : map.keySet()) {
+            if (value.equals(map.get(key))) {
+                return key;
+            }
+        }
+        return null;
+    }
 	
 	
 }

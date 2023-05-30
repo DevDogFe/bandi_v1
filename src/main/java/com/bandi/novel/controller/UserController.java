@@ -1,8 +1,5 @@
 package com.bandi.novel.controller;
 
-import java.net.URI;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,28 +15,18 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import com.bandi.novel.dto.JoinDto;
-import com.bandi.novel.dto.LoginDto;
-import com.bandi.novel.dto.NaverOAuthToken;
 import com.bandi.novel.dto.FindPwdDto;
+import com.bandi.novel.dto.JoinDto;
+import com.bandi.novel.dto.NaverOAuthToken;
 import com.bandi.novel.dto.OAuthToken;
 import com.bandi.novel.dto.OAuthUserInfo;
 import com.bandi.novel.dto.OAuthUserInfoForNaver;
-import com.bandi.novel.dto.response.MyFavoriteDto;
-import com.bandi.novel.dto.response.PurchaseRecordDto;
-import com.bandi.novel.dto.response.RentalRecordDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.User;
-import com.bandi.novel.model.UserGold;
-import com.bandi.novel.model.UserGoldCharge;
-import com.bandi.novel.model.UserPurchase;
-import com.bandi.novel.model.UserRental;
 import com.bandi.novel.service.MailService;
-import com.bandi.novel.service.NovelService;
-import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.UserService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.TempNumberUtil;
@@ -51,7 +39,6 @@ import com.bandi.novel.utils.TempNumberUtil;
 @Controller
 public class UserController {
 
-	private static final URI TOKEN_REQUEST_URL = null;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -60,10 +47,7 @@ public class UserController {
 	private String bandiKey;	
 	@Autowired
 	private MailService mailService;
-	@Autowired
-	private NovelService novelService;
-	@Autowired
-	private PayService payService;
+	
 
 
 	/**
@@ -98,6 +82,9 @@ public class UserController {
 	public String joinProc(JoinDto joinDto) {
 		
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
+		if(!joinDto.getPassword().equals(joinDto.getPasswordCheck())) {
+			throw new CustomRestfulException("비밀번호란과 비밀번호 확인란의 값이 다릅니다.", HttpStatus.BAD_REQUEST);
+		}
 		userService.insertUser(joinDto);
 		
 		return "redirect:/index";
@@ -131,7 +118,6 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "/user/joinFormForKakao";
 		}
-		System.out.println("principal: " + principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 
 		return "redirect:/index";
@@ -194,33 +180,6 @@ public class UserController {
 		return "redirect:/index";
 	}
 	
-	// 내정보
-	@GetMapping("/myInfo")
-	private String getMyInfo(Model model) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		List<MyFavoriteDto> favoriteList = novelService.selectUserFavoriteNovelList(principal.getId(), 3);
-		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), 3);
-		
-		// todo 마이페이지 안에 있는 결제 조회 페이지에 나누어서 넣을 예정
-		Integer gold = payService.selectUserGold(principal.getId());
-		
-		List<UserGoldCharge> goldChargeList = payService.selectGoldCharge(principal.getId());
-		List<PurchaseRecordDto> purchaseList = payService.selectPurchaseRecord(principal.getId());
-		List<RentalRecordDto> rentalList = payService.selectRentalRecord(principal.getId());
-		
-		model.addAttribute("gold", gold);
-		model.addAttribute("goldChargeList", goldChargeList);
-		model.addAttribute("purchaseList", purchaseList);
-		model.addAttribute("rentalList", rentalList);
-		//
-		
-		model.addAttribute("favoriteList", favoriteList);
-		model.addAttribute("myNovelList", myNovelList);
-		
-		return "/user/userInfo";
-	}		
-	
 	private HttpEntity<MultiValueMap<String, String>> generateAuthCodeRequest(String code, String state) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -250,7 +209,6 @@ public class UserController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-		System.out.println(headers);
 		return new HttpEntity<>(headers);
 	}
 

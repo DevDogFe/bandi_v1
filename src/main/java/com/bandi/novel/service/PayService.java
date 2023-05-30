@@ -2,13 +2,14 @@ package com.bandi.novel.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.bandi.novel.dto.response.PurchaseRecordDto;
 import com.bandi.novel.dto.response.RentalRecordDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.UserGold;
 import com.bandi.novel.model.UserGoldCharge;
 import com.bandi.novel.model.UserLibrary;
@@ -20,6 +21,7 @@ import com.bandi.novel.repository.UserGoldRepository;
 import com.bandi.novel.repository.UserLibraryRepository;
 import com.bandi.novel.repository.UserPurchaseRepository;
 import com.bandi.novel.repository.UserRentalRepository;
+import com.bandi.novel.utils.Define;
 
 @Service
 public class PayService {
@@ -109,6 +111,9 @@ public class PayService {
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 		userGold.setGold(userGold.getGold() - amount);
 		int result = userGoldRepository.updateUserGold(userGold);
+		if(result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
 		// 유저 구매 기록(user_purchase_tb)
 		UserPurchase userPurchase = new UserPurchase();
@@ -130,6 +135,9 @@ public class PayService {
 		UserGold userGold = userGoldRepository.selectUserGoldByUserId(userId);
 		userGold.setGold(userGold.getGold() - amount);
 		int result = userGoldRepository.updateUserGold(userGold);
+		if(result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
 		// 유저 대여 기록(user_rental_tb)
 		UserRental userRental = new UserRental();
@@ -150,6 +158,9 @@ public class PayService {
 		userGold.setGold(userGold.getGold() + amount);
 		
 		int result = userGoldRepository.updateUserGold(userGold);
+		if(result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
 		// 골드 충전 기록 하기(user_gold_tb)
 		UserGoldCharge userGoldCharge = new UserGoldCharge();

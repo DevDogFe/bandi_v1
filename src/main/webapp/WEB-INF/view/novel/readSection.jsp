@@ -61,6 +61,14 @@ ul {
 	resize: none;
 }
 
+<<<<<<< HEAD
+=======
+.substring--container{
+	padding : 50px 30px;
+	font-size: 20px;
+	
+}
+>>>>>>> feature/responseDto
 </style>
 <section>
 	<article class="mb-3 p-3">
@@ -78,7 +86,7 @@ ul {
       				<div class="cover"><h1>${section.title}</h1></div>
       				<div class="cover"><h1>(주)반디</h1></div>
       				<c:forEach items="${subStringList}" var="subString" varStatus="vs">
-    					<div class="data"><p>${subString}</p></div>
+    					<div class="data"><p class="substring--container">${subString}</p></div>
 					</c:forEach>
     			</div>
     			<div id="controls">

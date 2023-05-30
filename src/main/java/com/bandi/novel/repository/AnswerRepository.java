@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.model.Answer;
-import com.bandi.novel.model.Question;
 
 @Mapper
 public interface AnswerRepository {

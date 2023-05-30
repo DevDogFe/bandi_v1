@@ -240,9 +240,7 @@ public class ContestController {
 		Integer userId = -1;
 		if (principal != null) {
 			userId = principal.getId();
-		} else {
-			userId = -1;
-		}
+		} 
 
 		Cookie[] cookies = request.getCookies();
 		boolean isSectionCookie = false;

@@ -2,8 +2,6 @@ package com.bandi.novel.dto.response;
 
 import java.sql.Timestamp;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.bandi.novel.utils.TimestampFormat;
 
 import lombok.AllArgsConstructor;

@@ -4,19 +4,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.UserUpdateDto;
@@ -48,9 +40,9 @@ public class UserApiController {
 	 */
 	@PutMapping("/update")
 	public ResponseDto<Boolean> updateProc(@RequestBody UserUpdateDto userUpdateDto) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		if(principal.getExternal() != null) {
+
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal.getExternal() != null) {
 			userUpdateDto.setPassword(bandiKey);
 		}
 		userUpdateDto.setId(principal.getId());
@@ -73,9 +65,16 @@ public class UserApiController {
 	 * @return
 	 */
 	@GetMapping("/api/username")
-	public Boolean usernameCheck(String username) {
-		System.out.println(username);
-		return userService.checkUsername(username);
+	public ResponseDto<Boolean> usernameCheck(String username) {
+		Boolean result = userService.checkUsername(username);
+		String msg;
+		if (result) {
+			msg = "이미 사용중인 아이디입니다.";
+		} else {
+			msg = "사용 가능한 아이디입니다.";
+		}
+
+		return new ResponseDto<Boolean>(200, "20000", msg, "20000", result);
 	}
 
 	/**
@@ -83,13 +82,18 @@ public class UserApiController {
 	 * 
 	 * @param nickName
 	 * @return
-	 * 
-	 * URL 설계 !!! Query String --> 정렬된 데이터 처리 사용 
-	 * path // 정렬되지 않은 데이터 !!! -- 일괄적으로 //
 	 */
-	@GetMapping("/api/nickname")
-	public Boolean nickNameCheck(String nickName) {
-		return userService.checkNickName(nickName);
+	@GetMapping("/api/nickName")
+	public ResponseDto<Boolean> nickNameCheck(String nickName) {
+		Boolean result = userService.checkNickName(nickName);
+		String msg;
+		if (result) {
+			msg = "이미 사용중인 닉네임입니다.";
+		} else {
+			msg = "사용 가능한 닉네임입니다.";
+		}
+
+		return new ResponseDto<Boolean>(200, "20000", msg, "20000", result);
 	}
 
 	@PostMapping("/api/login")
@@ -118,7 +122,6 @@ public class UserApiController {
 		// 가입 유무 확인
 		Boolean check = userService.checkEmail(email);
 		if (check) {
-			System.out.println("이미 가입된 사용자 이메일입니다");
 			return new ResponseDto<String>(500, "50000", "이미 가입된 사용자 이메일입니다.", "50000", null);
 		}
 		// 인증번호 생성 
