@@ -30,6 +30,6 @@ public interface QuestionRepository {
 	
 	public int updateProceedById(Question question);
 	
-	public List<QnaSearchDto> findByKeyword(QnaSearchDto qnaSearchDto);
+	public List<QnaDto> findByKeyword(QnaSearchDto qnaSearchDto);
 
 }

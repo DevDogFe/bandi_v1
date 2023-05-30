@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<%@include file="../layout/header.jsp"%>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 	<table>
 		<thead>
 			<tr>
@@ -18,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="qna" items="${qnaList}">
+			<c:forEach var="qna" items="${qnaPageUtil.content}">
 				<tr>
 					<td>${qna.id}</td>
 					<td>${qna.categoryName}</td>
@@ -38,7 +34,7 @@
 		</tbody>
 	</table>
 
-	<form action="/qna/lsit" method="get">
+	<form action="/qna/list" method="get">
 		<select name="faqCategoryId">
 			<option value="0">카테고리</option>
 			<c:forEach var="category" items="${faqCategorylist}">
@@ -49,17 +45,16 @@
 		<button type="submit">검색</button>
 	</form>
 	<!-- 페이징 처리 -->
-	<%-- <div class="col-sm-12 col-md-7">
+  <div class="col-sm-12 col-md-7">
 		<div>
 			<ul class="d-flex">
-				<li class="<c:if test='${qnaList.currentPage == 1}'>d-none</c:if>" ><a href="/qna/list?currentPage=${qnaList.currentPage - 1}" class="page-link">Previous</a></li>
-				<c:forEach var="pNo" begin="${qnaList.startPage}" end="${qnaList.endPage}" step="1">
-					<li <c:if test="${pNo == qnaList.currentPage}">class="active"</c:if>><a href="/qna/list/currentPage=${pNo}" class="page-link">${pNo}</a></li>
+				<li class="<c:if test='${qnaPageUtil.currentPage == 1}'>d-none</c:if>" ><a href="/qna/list?currentPage=${qnaPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+				<c:forEach var="pNo"  begin="${qnaPageUtil.startPage}" end="${qnaPageUtil.endPage}" step="1">
+					<li <c:if test="${pNo == qnaPageUtil.currentPage}">class="active"</c:if>><a href="/qna/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 				</c:forEach>
-				<li class="<c:if test='${qnaList.endPage == qnaList.currentPage }'>d-none</c:if>" ><a href="/qna/list?currentPage=${qnaList.currentPage + 1}" class="page-link">Next</a></li>
+				<li class="<c:if test='${qnaPageUtil.endPage == qnaPageUtil.currentPage }'>d-none</c:if>" ><a href="/qna/list?currentPage=${qnaPageUtil.currentPage + 1}" class="page-link">Next</a></li>
 			</ul>
 		</div>
-	</div>    --%>
+	</div>     
 
-</body>
-</html>
+<%@include file="../layout/footer.jsp"%>

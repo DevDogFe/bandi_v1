@@ -10,7 +10,8 @@
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
-		on q.faq_category_id = fc.id
+		on
+		q.faq_category_id = fc.id
 		order by q.id desc
 	</select>
 
@@ -21,7 +22,8 @@
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
-		on q.faq_category_id = fc.id
+		on
+		q.faq_category_id = fc.id
 		where proceed = #{proceed}
 		order by q.id desc
 	</select>
@@ -63,7 +65,8 @@
 		inner join user_tb as u
 		on q.user_id = u.id
 		INNER join faq_category_tb as fc
-		on q.faq_category_id = fc.id 
+		on q.faq_category_id =
+		fc.id
 		where q.id = #{id}
 	</select>
 
@@ -84,7 +87,33 @@
 	</update>
 
 	<!-- 검색 -->
-	<select id="findByKeyword">
+	<select id="findByKeyword" resultType="com.bandi.novel.dto.response.QnaDto">
+		<if test="faqCategoryId == 0">
+			select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name, nick_name
+			from question_tb as q
+			left join answer_tb as a
+			on q.id = a.question_id
+			inner join faq_category_tb as fc
+			on q.faq_category_id = fc.id
+			left join user_tb as u
+			on q.user_id = u.id
+			where title like concat('%', #{keyword}, '%')
+			order by q.id desc
+		</if>
+		<if test="faqCategoryId != 0">
+			select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name, nick_name
+			from question_tb as q
+			left join answer_tb as a
+			on q.id = a.question_id
+			inner join faq_category_tb as fc
+			on q.faq_category_id = fc.id
+			left join user_tb as u
+			on q.user_id = u.id
+			where q.faq_category_id = #{faqCategoryId}
+			and title like concat('%', #{keyword}, '%')
+			order by q.id desc
+		</if>
+
 	</select>
 
 </mapper>
