@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -52,6 +53,7 @@ public class PayController {
 
 	/**
 	 * 결제 페이지 이동
+	 * 
 	 * @return
 	 */
 	@GetMapping("/userPay")
@@ -62,6 +64,7 @@ public class PayController {
 
 	/**
 	 * 골드 충전 페이지 이동
+	 * 
 	 * @return
 	 */
 	@GetMapping("/charge")
@@ -77,6 +80,7 @@ public class PayController {
 
 	/**
 	 * 골드 결제 환불 요청
+	 * 
 	 * @return
 	 */
 	@PostMapping("/gold/refund")
@@ -92,35 +96,36 @@ public class PayController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("cid", KAKAO_TEST_CID);
 		params.add("tid", dto.getTid());
-		params.add("cancel_amount", dto.getRefundPrice().toString());	//취소 금액
-		params.add("cancel_tax_free_amount", "0");	//취소 비과세 금액
-		
+		params.add("cancel_amount", dto.getRefundPrice().toString()); // 취소 금액
+		params.add("cancel_tax_free_amount", "0"); // 취소 비과세 금액
+
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
 
 		try {
-			ResponseEntity<KakaoRefundResponse> responseToken = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
-					KakaoRefundResponse.class);
-			
-			if(responseToken.getBody().getAmount().getTotal() != 0) {
-				payService.RefundGold(principal.getId(), responseToken.getBody().getAmount().getTotal(),dto.getId());
-				
-			}else {
+			ResponseEntity<KakaoRefundResponse> responseToken = restTemplate.exchange(uri, HttpMethod.POST,
+					requestEntity, KakaoRefundResponse.class);
+
+			if (responseToken.getBody().getAmount().getTotal() != 0) {
+				payService.RefundGold(principal.getId(), responseToken.getBody().getAmount().getTotal(), dto.getId());
+
+			} else {
 				System.out.println("환불 처리 실패");
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
 
 		return "redirect:/myInfo";
 	}
 
 	/**
 	 * 골드 결제 처리
+	 * 
 	 * @return
 	 */
-	@PostMapping("/gold/purchase")
-	public String goldPurchase(KakaoPayRequestDto dto, HttpServletResponse response) {
+	@PostMapping("/gold/purchase/{serviceTypeId}")
+	public String goldPurchase(@PathVariable Integer serviceTypeId, KakaoPayRequestDto dto,
+			HttpServletResponse response) {
 
 		// 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -139,15 +144,18 @@ public class PayController {
 			payService.purchaseNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId();
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "?serviceTypeId="
+				+ serviceTypeId;
 	}
 
 	/**
 	 * 골드 대여 처리
+	 * 
 	 * @return
 	 */
-	@PostMapping("/gold/rental")
-	public String goldRental(KakaoPayRequestDto dto, HttpServletResponse response) {
+	@PostMapping("/gold/rental/{serviceTypeId}")
+	public String goldRental(@PathVariable Integer serviceTypeId, KakaoPayRequestDto dto,
+			HttpServletResponse response) {
 
 		// 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -166,15 +174,18 @@ public class PayController {
 			payService.rentalNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId();
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "?serviceTypeId="
+				+ serviceTypeId;
 	}
 
 	/**
 	 * 단편 결제, 대여 요청
+	 * 
 	 * @return
 	 */
-	@PostMapping("/kakaoPay/ready")
-	public String KakaoPayReadyController(KakaoPayRequestDto dto, HttpServletResponse response) {
+	@PostMapping("/kakaoPay/ready/{serviceTypeId}")
+	public String KakaoPayReadyController(@PathVariable Integer serviceTypeId, KakaoPayRequestDto dto,
+			HttpServletResponse response) {
 
 		// 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -204,11 +215,11 @@ public class PayController {
 
 		if (dto.getIsRental() != null) {
 			// 성공 시 redirect url
-			params.add("approval_url",
-					"http://localhost/payment/kakao/rental/success/" + dto.getNovelId() + "/" + dto.getSectionId());
+			params.add("approval_url", "http://localhost/payment/kakao/rental/success/" + dto.getNovelId() + "/"
+					+ dto.getSectionId() + "?serviceTypeId=" + serviceTypeId);
 		} else {
-			params.add("approval_url",
-					"http://localhost/payment/kakao/purchase/success/" + dto.getNovelId() + "/" + dto.getSectionId());
+			params.add("approval_url", "http://localhost/payment/kakao/purchase/success/" + dto.getNovelId() + "/"
+					+ dto.getSectionId() + "?serviceTypeId=" + serviceTypeId);
 		}
 
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
@@ -224,6 +235,7 @@ public class PayController {
 
 	/**
 	 * 골드 충전 요청
+	 * 
 	 * @return
 	 */
 	@PostMapping("/kakaoPay/gold/ready")
@@ -255,11 +267,12 @@ public class PayController {
 
 	/**
 	 * 단편 결제 승인 요청
+	 * 
 	 * @return
 	 */
 	@GetMapping("/kakao/purchase/success/{novelId}/{sectionId}")
 	public String KaKaoPaySuccessController(@PathVariable Integer novelId, @PathVariable Integer sectionId,
-			String pg_token) {
+			@RequestParam Integer serviceTypeId, String pg_token) {
 
 		KakaoPaySuccessResponse kakaoSinglePayment = getKakaoSuccess(pg_token);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -269,16 +282,17 @@ public class PayController {
 		// 유저 결제 회차 삽입 !!!!!!
 		payService.insertUserLibrary(principal.getId(), sectionId);
 
-		return "redirect:/section/read/" + novelId + "/" + sectionId;
+		return "redirect:/section/read/" + novelId + "/" + sectionId + "?serviceTypeId=" + serviceTypeId;
 	}
 
 	/**
 	 * 단편 대여 결제 승인 요청
+	 * 
 	 * @return
 	 */
 	@GetMapping("/kakao/rental/success/{novelId}/{sectionId}")
 	public String KaKaoPayRentalSuccessController(@PathVariable Integer novelId, @PathVariable Integer sectionId,
-			String pg_token) {
+			@RequestParam Integer serviceTypeId, String pg_token) {
 
 		KakaoPaySuccessResponse kakaoSinglePayment = getKakaoSuccess(pg_token);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -286,11 +300,12 @@ public class PayController {
 		// 유저 골드 사용 대여 처리
 		payService.rentalNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(), sectionId);
 
-		return "redirect:/section/read/" + novelId + "/" + sectionId;
+		return "redirect:/section/read/" + novelId + "/" + sectionId + "?serviceTypeId=" + serviceTypeId;
 	}
 
 	/**
 	 * 골드 결제 승인 요청
+	 * 
 	 * @return
 	 */
 	@GetMapping("/kakao/gold/success")
@@ -300,15 +315,16 @@ public class PayController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
 		// 유저 골드 정보 변경
-		payService.chargeGold(principal.getId(), kakaoSinglePayment.getAmount().getTotal()
-								,kakaoSinglePayment.getTid());
-		
+		payService.chargeGold(principal.getId(), kakaoSinglePayment.getAmount().getTotal(),
+				kakaoSinglePayment.getTid());
+
 		return "redirect:/index";
 	}
 
 	// 클래스화
 	/**
 	 * 결제 요청 헤더
+	 * 
 	 * @return
 	 */
 	public HttpHeaders getPayReadyHeader() {
@@ -323,6 +339,7 @@ public class PayController {
 
 	/**
 	 * 결제 요청 바디
+	 * 
 	 * @return
 	 */
 	public MultiValueMap<String, String> getPayReadyBody() {
@@ -342,6 +359,7 @@ public class PayController {
 
 	/**
 	 * 결제 승인 요청
+	 * 
 	 * @return
 	 */
 	public KakaoPaySuccessResponse getKakaoSuccess(String pg_token) {

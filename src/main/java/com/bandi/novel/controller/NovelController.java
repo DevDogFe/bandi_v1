@@ -181,12 +181,11 @@ public class NovelController {
 		if ("".equals(search)) {
 			search = null;
 		}
+		
 		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search, sort);
-		System.out.println("222");
 		List<Genre> genreList = novelService.selectGenreList();
-		System.out.println("333");
 		NovelPageUtil novelPageUtil = new NovelPageUtil(freeNovelList.size(), 20, currentPage, 5, freeNovelList);
-		System.out.println("444");
+		
 		model.addAttribute("novelList", novelPageUtil);
 		model.addAttribute("serviceType", "무료");
 		model.addAttribute("genreList", genreList);
@@ -239,18 +238,22 @@ public class NovelController {
 			@RequestParam(defaultValue = "1") Integer currentPage) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		int serviceTypeId = Integer.parseInt(request.getParameter("serviceTypeId"));
 
 		// 결제 여부 확인 !!!!!!! 나중에 변경
-		UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId,
-				sectionId);
+		if(serviceTypeId == 1) {
+			UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId,
+					sectionId);
 
-		if (userPayment.getPurchaseSectionId() == null && userPayment.getEndRental() == null) {
-			// userPay 페이지에 띄울 정보
-			NovelSection paySection = novelService.selectNovelSectionById(sectionId);
-			int userGold = payService.selectUserGold(principal.getId());
-			model.addAttribute("paySection", paySection);
-			model.addAttribute("userGold", userGold);
-			return "/pay/userPay";
+			if (userPayment.getPurchaseSectionId() == null && userPayment.getEndRental() == null) {
+				// userPay 페이지에 띄울 정보
+				NovelSection paySection = novelService.selectNovelSectionById(sectionId);
+				int userGold = payService.selectUserGold(principal.getId());
+				model.addAttribute("paySection", paySection);
+				model.addAttribute("userGold", userGold);
+				model.addAttribute("serviceTypeId", serviceTypeId);
+				return "/pay/userPay";
+			}
 		}
 
 		// 이전글 다음글 기능
@@ -304,7 +307,6 @@ public class NovelController {
 
 		// 배열의 크기를 구합니다.
 		int strArraySize = (int) Math.ceil((double) section.length() / fixLength);
-		System.out.println(strArraySize);
 
 		// 배열을 선언합니다.
 		List<String> subStringList = new ArrayList<>();
@@ -314,6 +316,7 @@ public class NovelController {
 		}
 		
 		//
+		model.addAttribute("serviceTypeId",serviceTypeId);
 		model.addAttribute("numberOfPages",strArraySize);
 		model.addAttribute("subStringList",subStringList);
 		model.addAttribute("section", novelSection);
@@ -329,12 +332,12 @@ public class NovelController {
 	 * @return
 	 */
 	@PostMapping("/novel/reply")
-	public String replyProc(NovelReply novelReply) {
+	public String replyProc(NovelReply novelReply,@RequestParam Integer serviceTypeId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
 
-		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId();
+		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId()+"?serviceTypeId="+serviceTypeId;
 	}
 
 	/**
