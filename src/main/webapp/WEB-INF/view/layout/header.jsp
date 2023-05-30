@@ -117,9 +117,9 @@ a {
 	<%
 	WebApplicationContext wac = WebApplicationContextUtils
 			.getWebApplicationContext(((HttpServletRequest) request).getSession().getServletContext());
-	PayService payService = wac.getBean(PayService.class);
 	BoardService boardService = wac.getBean(BoardService.class);
 	List<BoardType> boardTypeList = boardService.selectBoardType();
+	PayService payService = wac.getBean(PayService.class);
 	User principal = (User) session.getAttribute(Define.PRINCIPAL);
 	Integer gold = null;
 	if (principal != null) {

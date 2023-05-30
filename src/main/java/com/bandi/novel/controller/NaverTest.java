@@ -29,7 +29,6 @@ public class NaverTest {
      String responseBody = get(apiURL,requestHeaders);
 
 
-     System.out.println(responseBody);
  }
 
 

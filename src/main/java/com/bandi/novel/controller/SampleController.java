@@ -40,7 +40,6 @@ public class SampleController {
 			model.addAttribute("totalRecommendList", totalRecommendList);
 			
 			List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());		
-			System.out.println(genreList);
 			model.addAttribute("genreList", genreList);
 		}
 
