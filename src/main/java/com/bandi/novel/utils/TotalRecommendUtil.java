@@ -44,7 +44,13 @@ public class TotalRecommendUtil {
 			} else {
 				dto.setFavoriteCount(1);;
 			}
-			totalScoreMap.put(dto.getId(), -(int)(genreMap.get(dto.getGenreId()) * dto.getScore() * dto.getFavoriteCount()));
+			
+			if(genreMap.get(dto.getGenreId()) != null) {
+				totalScoreMap.put(dto.getId(), -(int)(genreMap.get(dto.getGenreId()) * (dto.getScore() + dto.getFavoriteCount())));
+			} else {
+				totalScoreMap.put(dto.getId(), -(int)(dto.getScore() + dto.getFavoriteCount()));
+			}
+			
 		}
 		
 		
@@ -67,7 +73,15 @@ public class TotalRecommendUtil {
 		return resultList;
 	}
 	
-	
+	public static <K, V> K getKey(Map<K, V> map, V value) {
+		 
+        for (K key : map.keySet()) {
+            if (value.equals(map.get(key))) {
+                return key;
+            }
+        }
+        return null;
+    }
 	
 	
 }

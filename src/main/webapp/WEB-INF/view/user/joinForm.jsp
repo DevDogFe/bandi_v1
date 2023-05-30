@@ -1,46 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../layout/header.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<h1>회원가입</h1>
-<form action="/user" method="post">
-	<div class="mb-3">
-		<label for="username" class="form-label">아이디</label> <input type="text" class="form-control" id="usernameJ" name="username" required value="hyo">
-		<div id="usernameCheck"></div>
-	</div>
-	<div class="mb-3">
-		<label for="password" class="form-label">비밀번호</label> <input type="password" class="form-control" id="passwordJ" name="password" required value="456">
-	</div>
-	<div class="mb-3">
-		<label for="passwordCheck" class="form-label">비밀번호 확인</label> <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" required value="456">
-	</div>
-	<div class="mb-3">
-		<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="효린씨">
-		<div id="nickNameCheck"></div>
-	</div>
-	<div class="mb-3">
-		<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="khl4459@naver.com">
-		<button type="button" id="emailAuth" class="btn btn-secondary">이메일 인증</button>
-		<br> <label for="authKey" class="form-label">인증번호</label> <input type="text" class="form-control" id="authKey" name="authKey" disabled="disabled">
-		<button type="button" id="confirm" class="btn btn-secondary">인증확인</button>
-	</div>
-	<div class="mb-3">
-		<label for="birthDate" class="form-label">생년월일</label> <input type="date" class="form-control" id="birthDate" name="birthDate" required value="1991-09-29">
-	</div>
-	<div class="mb-3 d-flex">
-		<div>성별 &nbsp;&nbsp;&nbsp;</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="gender" id="female" value="여성"> <label class="form-check-label" for="female"> 여성 </label>
+<section>
+	<h1>회원가입</h1>
+	<form action="/user" method="post">
+		<div class="mb-3">
+			<label for="username" class="form-label">아이디</label> <input type="text" class="form-control" id="usernameJ" name="username" required value="hyo">
+			<div id="usernameCheck"></div>
 		</div>
-		&nbsp;&nbsp;&nbsp;
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="gender" id="male" value="남성" checked> <label class="form-check-label" for="male"> 남성 </label>
+		<div class="mb-3">
+			<label for="password" class="form-label">비밀번호</label> <input type="password" class="form-control" id="passwordJ" name="password" required value="456">
 		</div>
-	</div>
+		<div class="mb-3">
+			<label for="passwordCheck" class="form-label">비밀번호 확인</label> <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" required value="456">
+		</div>
+		<div class="mb-3">
+			<label for="nickName" class="form-label">닉네임</label> <input type="text" class="form-control" id="nickName" name="nickName" required value="효린씨">
+			<div id="nickNameCheck"></div>
+		</div>
+		<div class="mb-3">
+			<label for="email" class="form-label">이메일</label> <input type="email" class="form-control" id="email" name="email" required value="khl4459@naver.com">
+			<button type="button" id="emailAuth" class="btn btn-secondary">이메일 인증</button>
+			<br> <label for="authKey" class="form-label">인증번호</label> <input type="text" class="form-control" id="authKey" name="authKey" disabled="disabled">
+			<button type="button" id="confirm" class="btn btn-secondary">인증확인</button>
+		</div>
+		<div class="mb-3">
+			<label for="birthDate" class="form-label">생년월일</label> <input type="date" class="form-control" id="birthDate" name="birthDate" required value="1991-09-29">
+		</div>
+		<div class="mb-3 d-flex">
+			<div>성별 &nbsp;&nbsp;&nbsp;</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="gender" id="female" value="여성"> <label class="form-check-label" for="female"> 여성 </label>
+			</div>
+			&nbsp;&nbsp;&nbsp;
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="gender" id="male" value="남성" checked> <label class="form-check-label" for="male"> 남성 </label>
+			</div>
+		</div>
 
-	<button type="button" class="btn btn-primary" id="joinBtn">가입하기</button>
-</form>
+		<button type="button" class="btn btn-primary" id="joinBtn">가입하기</button>
+	</form>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(()=>{
 		// 아이디 중복확인
 		let usernameOk = false;
@@ -173,4 +174,6 @@
 		})
 	});
 </script>
+
+</section>
 <%@include file="../layout/footer.jsp"%>

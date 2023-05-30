@@ -132,7 +132,6 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "/user/joinFormForKakao";
 		}
-		System.out.println("principal: " + principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 
 		return "redirect:/index";
@@ -187,7 +186,6 @@ public class UserController {
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
 		user.setPassword(TempNumberUtill.getTempPassword());		
-		//userService.updateUserPwd(user);
 		// 메일 전송
 		mailService.sendTempPassword(user);
 		// 비밀번호변경
@@ -195,32 +193,7 @@ public class UserController {
 		return "redirect:/index";
 	}
 	
-	// 내정보
-	@GetMapping("/myInfo")
-	private String getMyInfo(Model model) {
-		
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		List<MyFavoriteDto> favoriteList = novelService.selectUserFavoriteNovelList(principal.getId(), 3);
-		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), 3);
-		
-		// todo 마이페이지 안에 있는 결제 조회 페이지에 나누어서 넣을 예정
-		Integer gold = payService.selectUserGold(principal.getId());
-		
-		List<UserGoldCharge> goldChargeList = payService.selectGoldCharge(principal.getId());
-		List<PurchaseRecordDto> purchaseList = payService.selectPurchaseRecord(principal.getId());
-		List<RentalRecordDto> rentalList = payService.selectRentalRecord(principal.getId());
-		
-		model.addAttribute("gold", gold);
-		model.addAttribute("goldChargeList", goldChargeList);
-		model.addAttribute("purchaseList", purchaseList);
-		model.addAttribute("rentalList", rentalList);
-		//
-		
-		model.addAttribute("favoriteList", favoriteList);
-		model.addAttribute("myNovelList", myNovelList);
-		
-		return "/user/userInfo";
-	}
+	
 
 	
 }
