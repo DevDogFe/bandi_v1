@@ -116,7 +116,7 @@
 									<tr class="table-info">
 										<td>${sectionList.size() - vs.index}</td>
 										<td><a
-											href="/section/read/${detail.id}/${section.id}"
+											href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}"
 											class="list--link">${section.title}</a></td>
 										<c:choose>
 											<c:when test="${paymentList[vs.index] != null }">
@@ -151,7 +151,7 @@
 									<tr class="table-default">
 										<td>${sectionList.size() - vs.index}</td>
 										<td><a
-											href="/section/read/${detail.id}/${section.id}"
+											href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}"
 											class="list--link">${section.title}</a></td>
 										<c:choose>
 											<c:when test="${paymentList[vs.index] != null }">

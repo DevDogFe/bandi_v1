@@ -75,7 +75,7 @@ body {
 		<div class="bottom">
 			<p><b>골드 사용하기</b></p>
 			<div class="bottom-inner">
-				<form action="/payment/gold/purchase" method="post">
+				<form action="/payment/gold/purchase/${serviceTypeId}" method="post">
 				<input type="hidden" name="sectionId" value="${paySection.id}">
 				<input type="hidden" name="novelId" value="${paySection.novelId}">
 				<input type="hidden" name="quantity" value="1">
@@ -83,7 +83,7 @@ body {
 				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
 				<button type="submit" class="pay-btn gold-purchase">구매 ${paySection.currentPrice} G</button>
 			</form>
-			<form action="/payment/gold/rental" method="post">
+			<form action="/payment/gold/rental/${serviceTypeId}" method="post">
 				<input type="hidden" name="sectionId" value="${paySection.id}">
 				<input type="hidden" name="novelId" value="${paySection.novelId}">
 				<input type="hidden" name="quantity" value="1">
@@ -96,7 +96,7 @@ body {
 			
 			<p><b>결제 방법을 선택해주세요</b></p>
 			<div class="bottom-inner">
-			<form action="/payment/kakaoPay/ready" method="post">
+			<form action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
 				<input type="hidden" name="sectionId" value="${paySection.id}">
 				<input type="hidden" name="novelId" value="${paySection.novelId}">
 				<input type="hidden" name="quantity" value="1">
@@ -104,7 +104,7 @@ body {
 				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
 				<button type="submit" class="pay-btn purchase">구매 ${paySection.currentPrice} G</button>
 			</form>
-			<form action="/payment/kakaoPay/ready" method="post">
+			<form action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
 				<input type="hidden" name="sectionId" value="${paySection.id}">
 				<input type="hidden" name="novelId" value="${paySection.novelId}">
 				<input type="hidden" name="quantity" value="1">

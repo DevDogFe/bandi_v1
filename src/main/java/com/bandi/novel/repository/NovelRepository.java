@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.bandi.novel.dto.adminNovelUpdateFormDto;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
+import com.bandi.novel.dto.response.NovelSearchDto;
 import com.bandi.novel.model.Novel;
 
 /**
@@ -59,7 +61,14 @@ public interface NovelRepository {
 	// 유저 내작품 목록
 	List<MyFavoriteDto> selectMyNovelsByUserId(@Param("userId") Integer userId, @Param("limit") Integer limit);
 	
+	/**
+	 * @auth 김경은 전체 소설 검색(관리자 페이지)
+	 */
+	List<NovelSearchDto> selectNovelListBySearch(String search);
 	
-
+	/**
+	 * @auth 김경은 서비스 타입 수정(관리자 페이지)
+	 */
+	int updateNovelServiceType(adminNovelUpdateFormDto dto);
 
 }

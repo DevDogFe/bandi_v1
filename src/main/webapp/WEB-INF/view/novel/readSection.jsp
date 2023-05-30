@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../layout/header.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link href="/assets/css/book.css" rel="stylesheet">
+<script src="/assets/js/turn.min.js"></script>
 <style type="text/css">
 .list--link {
 	text-decoration: none;
@@ -58,6 +60,7 @@ ul {
 	font-size: 16px;
 	resize: none;
 }
+
 </style>
 <section>
 	<article class="mb-3 p-3">
@@ -70,7 +73,20 @@ ul {
 		<div>
 			<input type="hidden" id="sectionId" value="${section.id}"> <input type="hidden" id="novelId" value="${section.novelId}">
 			<div class="section--title mb-3">${section.title}</div>
-			<div class="section--content mb-3">${section.content}</div>
+			<div id="book-body">
+				<div id="book">
+      				<div class="cover"><h1>${section.title}</h1></div>
+      				<div class="cover"><h1>(주)반디</h1></div>
+      				<c:forEach items="${subStringList}" var="subString" varStatus="vs">
+    					<div class="data"><p>${subString}</p></div>
+					</c:forEach>
+    			</div>
+    			<div id="controls">
+      				<label for="page-number">Page:</label>
+      				<input type="text" size="3" id="page-number" />
+      				<span id="number-pages"></span>
+    			</div>
+			</div>
 		</div>
 		<div>
 			<a href="/novel/detail/${section.novelId }">목록</a>
@@ -85,10 +101,10 @@ ul {
 		</div>
 		<div>
 			<c:if test="${section.prevTitle != '이전글이 없습니다'}">
-				<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}'" class="btn btn-info">${section.prevTitle}</button>
+				<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}&serviceTypeId=${serviceTypeId}'" class="btn btn-info">${section.prevTitle}</button>
 			</c:if>
 			<c:if test="${section.nextTitle != '다음글이 없습니다'}">
-				<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}'" class="btn btn-success">${section.nextTitle}</button>
+				<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}&serviceTypeId=${serviceTypeId}'" class="btn btn-success">${section.nextTitle}</button>
 			</c:if>
 		</div>
 	</article>
@@ -118,7 +134,7 @@ ul {
 				</div>
 			</c:when>
 			<c:otherwise>
-				<form action="/novel/reply" method="post">
+				<form action="/novel/reply?serviceTypeId=${serviceTypeId}" method="post">
 					<div class="mb-3 ps-3">
 						<label for="content" class="form-label">댓글 등록</label>
 						<textarea class="form-control" id="content" name="content" rows="3" placeholder="작가나 작품에 대한 비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
@@ -158,16 +174,16 @@ ul {
 				<div>
 					<ul class="d-flex">
 						<!-- Previous 시작 -->
-						<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage - 1}"
+						<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage - 1}&serviceTypeId=${serviceTypeId}"
 							class="page-link">Previous</a></li>
 						<!-- Previous 끝 -->
 						<!-- Page번호 시작 -->
 						<c:forEach var="pNo" begin="${replyList.startPage }" end="${replyList.endPage }" step="1">
-							<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.novelId}/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+							<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.novelId}/${section.id}?currentPage=${pNo}&serviceTypeId=${serviceTypeId}" class="page-link">${pNo}</a></li>
 						</c:forEach>
 						<!-- Page번호 끝 -->
 						<!-- Next 시작 -->
-						<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage + 1}"
+						<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage + 1}&serviceTypeId=${serviceTypeId}"
 							class="page-link">Next</a></li>
 						<!-- Next 끝 -->
 					</ul>
@@ -224,6 +240,68 @@ ul {
 		
 	});
 	</script>
+	<script type="text/javascript">
+	
+      // Sample using dynamic pages with turn.js
+      var numberOfPages = '${numberOfPages+2}'
+      let pageCount = '${subStringArray.size()}';  
+      let subStringArray = '${subStringArray}';
+        
+      // Adds the pages that the book will need
+      function addPage(page, book,startPage) {
+        // 	First check if the page is already in the book
+        if (!book.turn('hasPage', page)) {
+          // Create an element for this page
+          var element = $('<div />', {
+            class: 'page ' + (page % 2 == 0 ? 'odd' : 'even'),
+            id: 'page-' + page,
+          }).html('<i class="loader"></i>');
+          // If not then add the page
+          book.turn('addPage', element, page);
+          // Let's assum that the data is comming from the server and the request takes 1s.
+
+          setTimeout(function () {
+            element.html('<div class="data"><p></p></div>');
+          }, 1000);
+        }
+      }
+
+      $(window).ready(function () {
+        $('#book').turn({
+          acceleration: true,
+          pages: numberOfPages,
+          elevation: 50,
+          gradients: !$.isTouch,
+          when: {
+            turning: function (e, page, view) {
+              // Gets the range of pages that the book needs right now
+              var range = $(this).turn('range', page)
+
+              // Check if each page is within the book
+              for (page = range[0]; page <= range[1]; page++)
+                addPage(page, $(this))
+            },
+
+            turned: function (e, page) {
+              $('#page-number').val(page)
+            },
+          },
+        })
+
+        $('#number-pages').html(numberOfPages)
+
+        $('#page-number').keydown(function (e) {
+          if (e.keyCode == 13) $('#book').turn('page', $('#page-number').val())
+        })
+      })
+
+      $(window).bind('keydown', function (e) {
+        if (e.target && e.target.tagName.toLowerCase() != 'input')
+          if (e.keyCode == 37) $('#book').turn('previous')
+          else if (e.keyCode == 39) $('#book').turn('next')
+      })
+    </script>
+    
 <%@include file="../layout/footer.jsp"%>
 
 
