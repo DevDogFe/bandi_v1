@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bandi.novel.dto.adminNovelUpdateFormDto;
 import com.bandi.novel.dto.response.NovelSearchDto;
+import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.AdminService;
+import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.NovelService;
 
 @RestController
@@ -24,6 +26,8 @@ public class AdminApiController {
 	private AdminService adminService;
 	@Autowired
 	private NovelService novelService;
+	@Autowired
+	private FaqService faqService;
 
 	
 	// 카테고리 삭제
@@ -74,5 +78,12 @@ public class AdminApiController {
 		int userRolse = adminService.updateUserRole(user);
 		System.out.println(user.toString());
 		return userRolse;
+	}
+	
+	// FAQ 카테고리 리스트 (효린)
+	@GetMapping("/api/faq/{categoryId}")
+	public List<Faq> getFaqList(@PathVariable Integer categoryId){
+		List<Faq> list = faqService.readFaqList(categoryId);
+		return list;
 	}
 }

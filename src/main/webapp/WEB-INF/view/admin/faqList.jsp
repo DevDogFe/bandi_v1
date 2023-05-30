@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +17,7 @@
 	<h4>FAQ (관리자페이지)</h4>
 	<div class="faqCategory">
 		<!--<form action="" method="get">  TODO 카테고리 조회-->
-		<select name="categoryId">
+		<select id="category" name="categoryId">
 			<option value="0">전체</option>
 			<c:forEach var="category" items="${faqCategoryList}">
 				<option value="${category.id}">${category.categoryName}</option>
@@ -43,7 +43,7 @@
 					<th>삭제</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="faqListBody">
 
 				<c:forEach var="faq" items="${faqList}">
 					<tr>
@@ -70,25 +70,42 @@
 				<dd class="answer" id="ans-${faq.id}">${faq.answer}</dd>
 			</dl>
 		</c:forEach>
-	</div>
+	</div>--%>
 
-	<script>	
-	 const items = document.querySelectorAll('.question');
+
+
+
+	<script>
+		$(document).ready(()=>{
+			$("#category").on("change", () => {				
+				
+				$.ajax({
+					type: "GET",
+					url: "/api/faq/" + $(this).val(),
+				}).done((response) => {
+					$(".faq-table").remove();
+					
+					let faqList;
+					
+					for(i=0; i < response.length; i++){
+						
+						faqList += 					
+						`<tr class="faq-table">
+						<td>\${response[i].question}</td>
+						<td><a href="/admin/faq/update/\${response[i].id}"><button>수정</button></a></td>
+						<td><a href="/admin/faq/delete/\${response[i].id}"><button>삭제</button></a></td>
+						</tr>`
+					}
+					$("#faqListBody").append(faqList);
+					
 	
-	 function openCloseAnswer(id) {
-	   console.log(id);	   
-	   const answerId = document.getElementById('que-' + id).id.replace('que', 'ans');
-	
-	   if(document.getElementById(answerId).style.display === 'block') {
-	     document.getElementById(answerId).style.display = 'none';
-	     document.getElementById('toggle-'+id ).innerText = 'expand_more';
-	   } else {
-	     document.getElementById(answerId).style.display = 'block';
-	     document.getElementById('toggle-'+id).innerText = 'expand_less';
-	   }
-	 }
-	
- </script> --%>
+				}).fail((error) => {
+					console.log(error);
+					alert("요청을 처리할 수 없습니다.");
+				});
+			});
+		});
+	</script>
 
 
 
