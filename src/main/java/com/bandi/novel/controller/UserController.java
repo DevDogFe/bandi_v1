@@ -1,5 +1,6 @@
 package com.bandi.novel.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,14 +17,17 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.bandi.novel.dto.JoinDto;
 import com.bandi.novel.dto.LoginDto;
+import com.bandi.novel.dto.NaverOAuthToken;
 import com.bandi.novel.dto.FindPwdDto;
 import com.bandi.novel.dto.OAuthToken;
 import com.bandi.novel.dto.OAuthUserInfo;
+import com.bandi.novel.dto.OAuthUserInfoForNaver;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.PurchaseRecordDto;
 import com.bandi.novel.dto.response.RentalRecordDto;
@@ -47,6 +51,7 @@ import com.bandi.novel.utils.TempNumberUtill;
 @Controller
 public class UserController {
 
+	private static final URI TOKEN_REQUEST_URL = null;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -214,6 +219,57 @@ public class UserController {
 		model.addAttribute("myNovelList", myNovelList);
 		
 		return "/user/userInfo";
+	}		
+	
+	private HttpEntity<MultiValueMap<String, String>> generateAuthCodeRequest(String code, String state) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", "BbvLPxHgxKiCdntADysv");
+		params.add("client_secret", "lJW7tHYXp6");
+		params.add("code", code);
+		return new HttpEntity<>(params, headers);
 	}
 
+	private ResponseEntity<NaverOAuthToken> requestAccessToken(HttpEntity request) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		ResponseEntity<NaverOAuthToken> token = restTemplate.exchange("https://nid.naver.com/oauth2.0/token", HttpMethod.POST, request, NaverOAuthToken.class);
+		
+		return token;
+	}
+
+	private ResponseEntity<OAuthUserInfoForNaver> requestProfile(HttpEntity request) {
+		RestTemplate restTemplate = new RestTemplate();
+		return restTemplate.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET, request, OAuthUserInfoForNaver.class);
+	}
+
+	private HttpEntity<MultiValueMap<String, String>> generateProfileRequest(String accessToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer " + accessToken);
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		System.out.println(headers);
+		return new HttpEntity<>(headers);
+	}
+
+	@GetMapping("/naver/auth")
+	public String authNaver(@RequestParam String code, @RequestParam String state, Model model) {
+		ResponseEntity<NaverOAuthToken> token = requestAccessToken(generateAuthCodeRequest(code, state));
+		System.out.println(token);
+		HttpEntity<MultiValueMap<String, String>> entity = generateProfileRequest(token.getBody().getAccessToken());
+		String username =  requestProfile(entity).getBody().getResponse().getId();
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(bandiKey);
+		User principal = userService.loginByNaver(user);
+		if(principal.getEmail() == null) {
+			model.addAttribute("user", user);
+			return "/user/joinFormForNaver";
+		}
+		session.setAttribute(Define.PRINCIPAL, principal);
+		return "redirect:/index";
+	}
+	
 }

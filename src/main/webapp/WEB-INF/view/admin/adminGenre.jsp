@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -51,57 +50,36 @@
 		</ul>
 	</div>
 	<div class="main">
-		<form action="/admin/category" method="post">
+		<form action="/admin/genre" method="post">
 			<div class="input-group mb-3">
-				<select name="boardTypeId" id="boardTypeId">
-					<c:forEach var="boardType" items="${boardTypeList}">
-						<option value="${boardType.id}">${boardType.boardName}</option>
-					</c:forEach>
-				</select>
-				 <input type="text" class="form-control"
-					aria-label="Recipient's username" aria-describedby="button-addon2"
-					name="categoryName">
-				<button class="btn btn-outline-secondary" type="submit"
-					id="button-addon2">등록</button>
+				<input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" name="name">
+				<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
 			</div>
 		</form>
-		<div class="category-list-table">
-			<table>
-				<tr>
-					<c:forEach items="${boardTypeList}" var="type">
-						<td class="category-list">
-							<button type="submit"
-								onclick="location.href='/admin/adminCategory/${type.id}'">${type.boardName}</button>
-						</td>
-					</c:forEach>
-				</tr>
-			</table>
-		</div>
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">카테고리</th>
+					<th scope="col">장르</th>
 					<th scope="col"></th>
 				</tr>
 			</thead>
-			<c:forEach var="list" items="${categoryList}">
-				<tbody id="categoryList" class="category">
+			<c:forEach var="list" items="${genreList}">
+				<tbody id="genreList" class="genre">
 					<tr>
-						<td>${list.categoryName}</td>
-						<td><button class="btn btn-danger" onclick="deleteCategory(${list.id})">삭제</button></td>
+						<td>${list.name}</td>
+						<td><button class="btn btn-danger" onclick="deleteGenre(${list.id})">삭제</button></td>
 					</tr>
 				</tbody>
 			</c:forEach>
 		</table>
 	</div>
-	<script>
-		function deleteCategory(id) {
-			var selectedOptionId = $("#boardTypeId option:selected").val();
+	<script type="text/javascript">
+		function deleteGenre(id) {
 			$.ajax({
 				type: "DELETE",
-				url: "/api/category/" + id,
+				url: "/api/genre/" + id,
 			}).done(function(response){
-				location.href = '/admin/adminCategory/' + selectedOptionId;
+				location.href = "/admin/genre"
 			}).fail(function(error){
 				alert("요청 실패");
 			});

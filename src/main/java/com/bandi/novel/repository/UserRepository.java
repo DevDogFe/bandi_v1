@@ -1,10 +1,15 @@
 package com.bandi.novel.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bandi.novel.dto.JoinDto;
+import com.bandi.novel.dto.UserRoleDto;
+import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.UserUpdateDto;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserRole;
 
 @Mapper
 public interface UserRepository {
@@ -22,6 +27,15 @@ public interface UserRepository {
 	public User selectByNickName(String nickName);
 
 	// 비밀번호 변경 (효린)
-	public int updatePwd(User user);
+	public Integer updatePwd(User user);
+	
+	// 유저롤 변경
+	public Integer updateUserRole(User user);
 
+	// 유저 검색
+	public List<UserRoleDto> searchUser(UserSearchDto userSearchDto);
+	
+	// 유저롤 리스트 
+	public List<UserRole> selectUserRole();
+	
 }

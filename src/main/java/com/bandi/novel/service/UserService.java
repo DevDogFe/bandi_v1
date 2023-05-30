@@ -226,5 +226,21 @@ public class UserService {
 		}
 
 	}
+	
+	@Transactional
+	public User loginByNaver(User user) {
+
+		User userEntity = userRepository.selectByUsername(user.getUsername());
+
+		if (userEntity == null) {
+			return user;
+		}
+
+		if (!passwordEncoder.matches(user.getPassword(), userEntity.getPassword())) {
+			throw new CustomRestfulException("비밀번호가 틀렸습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return userEntity;
+	}
 
 }

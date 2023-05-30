@@ -7,4 +7,13 @@
 		SELECT * FROM genre_tb
 	</select>
 
+	<insert id="insert">
+		insert into genre_tb(name)
+		values(#{name})
+	</insert>
+	
+	<delete id="deleteById">
+		delete from genre_tb
+		where id = #{id}
+	</delete>
 </mapper>

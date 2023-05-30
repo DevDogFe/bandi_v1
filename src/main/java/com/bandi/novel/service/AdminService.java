@@ -8,11 +8,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.UserRoleDto;
+import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
+import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
+import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserRole;
 import com.bandi.novel.repository.AnswerRepository;
 import com.bandi.novel.repository.BoardCategoryRepository;
+import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.QuestionRepository;
+import com.bandi.novel.repository.UserRepository;
 
 @Service
 public class AdminService {
@@ -23,6 +30,10 @@ public class AdminService {
 	private AnswerRepository answerRepository;
 	@Autowired
 	private BoardCategoryRepository boardCategoryRepository;
+	@Autowired
+	private GenreRepository genreRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	/**
 	 * @return Question 전체조회
@@ -127,5 +138,45 @@ public class AdminService {
 		int result = boardCategoryRepository.deleteById(id);
 		return result;
 	}
+	
+	// 장르 등록
+	@Transactional
+	public void createGenre(Genre genre) {
+		int resultRowCount = genreRepository.insert(genre);
+		if(resultRowCount != 1) {
+			System.out.println("등록 실패");
+		}
+	}
+	
+	// 장르 삭제
+	@Transactional
+	public Integer deleteGenreById(Integer id) {
+		int result = genreRepository.deleteById(id);
+		return result;
+	}
+	
+	// 유저롤 수정
+	@Transactional
+	public Integer updateUserRole(User user) {
+		int resultRowCount = userRepository.updateUserRole(user);
+		if(resultRowCount != 1) {
+			System.out.println("수정 실패");
+		}
+		return resultRowCount;
+	}
+	
+	// 사용자 검색
+	@Transactional
+	public List<UserRoleDto> searchUser(UserSearchDto userSearchDto) {
+		List<UserRoleDto> list = userRepository.searchUser(userSearchDto);
+		return list;
+	}
+	
+	@Transactional
+	public List<UserRole> selectUserRole() {
+		List<UserRole> list = userRepository.selectUserRole();
+		return list;
+	}
+	
 
 }

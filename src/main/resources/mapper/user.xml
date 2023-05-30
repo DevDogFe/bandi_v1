@@ -42,5 +42,33 @@
 		update user_tb 
 		set password = #{password} where id = #{id}
 	</update>
-
+	
+	<!-- 유저롤 변경 (지운) -->
+	<update id="updateUserRole">
+		update user_tb
+		set user_role = #{userRole} where id = #{id}
+	</update>
+	
+	<!-- 사용자 검색 (지운) -->
+	<select id="searchUser" resultType="com.bandi.novel.dto.UserRoleDto">
+		<if test="type == 'all'">
+			select u.id, u.username, u.user_role, ur.role, u.nick_name 
+			from user_tb as u
+			left join user_role_tb as ur
+			on u.user_role = ur.id
+		</if>
+		<if test="type == 'nickName'">
+			select u.id, u.username, u.user_role, ur.role, u.nick_name 
+			from user_tb as u
+			left join user_role_tb as ur
+			on u.user_role = ur.id
+			where nick_name = #{keyword}
+		</if>
+	</select>
+	
+	<!-- userrole 리스트 -->
+	<select id="selectUserRole" resultType="com.bandi.novel.model.UserRole">
+		select * from user_role_tb
+	</select>
+	
 </mapper>

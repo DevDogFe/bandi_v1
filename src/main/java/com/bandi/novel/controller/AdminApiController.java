@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bandi.novel.dto.adminNovelUpdateFormDto;
-import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelSearchDto;
+import com.bandi.novel.model.User;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.NovelService;
 
@@ -24,6 +25,8 @@ public class AdminApiController {
 	@Autowired
 	private NovelService novelService;
 
+	
+	// 카테고리 삭제
 	@DeleteMapping("/api/category/{id}")
 	public Integer deleteCategoryProc(@PathVariable Integer id) {
 		int resultRow = adminService.deleteCategoryById(id);
@@ -57,4 +60,19 @@ public class AdminApiController {
 		return result;
 	}
 
+	
+	// 장르 삭제
+	@DeleteMapping("/api/genre/{id}")
+	public Integer deleteGenreProc(@PathVariable Integer id) {
+		int resultRow = adminService.deleteGenreById(id);
+		return resultRow;
+	}
+	
+	// 유저롤 수정 
+	@PostMapping("/api/userRole")
+	public Integer updateUserRoleProc(@RequestBody User user) {
+		int userRolse = adminService.updateUserRole(user);
+		System.out.println(user.toString());
+		return userRolse;
+	}
 }

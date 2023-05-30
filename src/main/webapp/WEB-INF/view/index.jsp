@@ -1,3 +1,6 @@
+<%@page import="java.math.BigInteger"%>
+<%@page import="java.security.SecureRandom"%>
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -58,8 +61,11 @@
 			<c:otherwise>
 				<h3>로그인 되었습니다.</h3>
 				<c:choose>
-					<c:when test="${principal.external == true }">
+					<c:when test="${\"kakao\".equals(principal.external) }">
 						<button onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://localhost/logout'" class="btn btn-primary">로그아웃</button>
+					</c:when>
+					<c:when test="${\"naver\".equals(principal.external) }">
+						<button onclick="logoutNaver();" class="btn btn-primary">로그아웃</button>
 					</c:when>
 					<c:otherwise>
 						<button onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
@@ -76,7 +82,7 @@
 			</c:otherwise>
 		</c:choose>
 		<c:if test="${!empty principal }">
-			<h3>${principal.getGeneration() }대${principal.gender}이좋아하는 작품</h3>
+			<h3>${principal.getGeneration() }대${principal.gender}이좋아하는작품</h3>
 			<table class="table">
 				<c:forEach items="${ageGenderList }" var="novel">
 					<tr>
@@ -84,8 +90,8 @@
 					</tr>
 				</c:forEach>
 			</table>
-			
-			<h3>${principal.nickName}님이 좋아하는 장르소설 top 5 </h3>
+
+			<h3>${principal.nickName}님이좋아하는장르소설top 5</h3>
 			<table class="table">
 				<c:forEach var="genre" items="${genreList}">
 					<tr>
@@ -97,16 +103,18 @@
 
 		</c:if>
 		<c:if test="${!empty principal }">
-			<h3>${principal.nickName }님이 좋아할만한 작품</h3>
+			<h3>${principal.nickName }님이좋아할만한작품</h3>
 			<table class="table">
 				<c:forEach items="${totalRecommendList }" var="novel">
 					<tr>
-						<td>${novel.title }</td>					
+						<td>${novel.title }</td>
 					</tr>
 				</c:forEach>
 			</table>
 		</c:if>
 
+		<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=BbvLPxHgxKiCdntADysv&redirect_uri=http://localhost/naver/auth&state=test"><img height="50"
+			src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
 
 
 	</div>
@@ -136,7 +144,18 @@
 					alert("요청을 처리할 수 없습니다.");
 				});
 			});
+
 		});
+			function logoutNaver() {
+				var naverPopUp;
+			      naverPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_self", "width=10, height=10, left=-9999, top=-9999, visible=0");
+			      naverPopUp.blur();
+			      naverPopUp.close();
+			      setTimeout(function() {
+			         closePopUp1();
+			         location.href = "http://localhost/logout";
+			      }, 40);
+			}
 	</script>
 </body>
 </html>

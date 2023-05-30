@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.UserRoleDto;
+import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
+import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserRole;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.ApplicationService;
 import com.bandi.novel.service.BoardService;
+import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.QnaService;
 import com.bandi.novel.service.ReportService;
 import com.bandi.novel.utils.Define;
@@ -49,6 +54,8 @@ public class AdminController {
 	private HttpSession session;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private NovelService novelService;
 
 	/**
 	 * @param model
@@ -213,9 +220,39 @@ public class AdminController {
 
 	// 카테고리 등록
 	@PostMapping("/category")
-	public String createBoardProc(CategorySelectDto categorySelectDto) {
+	public String createCategoryProc(CategorySelectDto categorySelectDto) {
 		adminService.createCategory(categorySelectDto);
 		return "redirect:/admin/adminCategory";
 	}
 
+	
+	// 장르 목록
+	@GetMapping("/genre")
+	public String getGenre(Model model) {
+		List<Genre> genreList = novelService.selectGenreList();
+		model.addAttribute("genreList", genreList);
+		return "/admin/adminGenre";
+	}
+	
+	// 장르 등록
+	@PostMapping("/genre")
+	public String createGenreProc(Genre genre) {
+		adminService.createGenre(genre);
+		return "redirect:/admin/genre";
+	}
+	
+	@GetMapping("/user")
+	public String getUserRole(Model model, UserSearchDto userSearchDto) {
+		List<UserRoleDto> userList = adminService.searchUser(userSearchDto);
+		List<UserRole> userRoleList = adminService.selectUserRole();
+		if("".equals(userSearchDto.getKeyword())) {
+			userSearchDto.setKeyword(null);
+		} else {
+			userList = adminService.searchUser(userSearchDto);
+		}
+		model.addAttribute("userList", userList);
+		model.addAttribute("userRoleList", userRoleList);
+		return "/admin/adminUserRole";
+	}
+	
 }

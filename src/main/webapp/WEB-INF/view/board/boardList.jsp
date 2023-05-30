@@ -10,17 +10,6 @@
 	font-weight: bold;
 }
 </style>
-	<div class="category-list-table">
-		<table>
-			<tr>
-				<c:forEach items="${boardTypeList }" var="type">
-					<td class="category-list">
-						<button type="submit" onclick="location.href='/board/list/${type.id}'">${type.boardName}</button>
-					</td>
-				</c:forEach>
-			</tr>
-		</table>
-	</div>
 	<table class="table">
 		<thead>
 			<tr>

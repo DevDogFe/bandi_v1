@@ -4,17 +4,24 @@ create table test_tb(
 	id int primary key
 );
 
+-- user_role 
+CREATE TABLE user_role_tb(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    role VARCHAR(10) NOT NULL
+);
+
 -- 회원
 CREATE TABLE user_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
-    user_role VARCHAR(10) NOT NULL DEFAULT 'user',
+    user_role INT NOT NULL DEFAULT 3,
     nick_name VARCHAR(10) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     birth_date DATE NOT NULL,
     gender VARCHAR(2) NOT NULL,
-    external VARCHAR(10)
+    external VARCHAR(10),
+    FOREIGN KEY(user_role) REFERENCES user_role_tb(id)
 );
 
 -- 게시판 종류
@@ -334,3 +341,5 @@ CREATE TABLE user_purchase_tb(
 	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
+
+

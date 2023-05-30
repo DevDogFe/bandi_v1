@@ -68,7 +68,7 @@ public class BoardController {
 		if("".equals(boardSearchDto.getKeyword())) {
 			boardSearchDto.setKeyword(null);
 		} 
-		if(boardSearchDto.getKeyword() == null) {
+		if(boardSearchDto.getCategoryId() == null) {
 			boardList = boardService.selectBoardList(boardTypeId);
 		} else {
 			boardList = boardService.searchList(boardSearchDto);
