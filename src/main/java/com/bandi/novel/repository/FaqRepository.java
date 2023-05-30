@@ -9,11 +9,22 @@ import com.bandi.novel.model.FaqCategory;
 
 @Mapper
 public interface FaqRepository {
-	
+
 	public List<FaqCategory> findCategoryList();
+
+	public List<Faq> findAll();
+
+	public List<Faq> findByCategoryId(Integer id);
+
+	public int insert(Faq faq);
+
+	public int updateFaqById(Integer id);
+
+	// 카테고리 수정
+	public int updateCategoryById();
 	
-	public List<Faq> findAll();	
-	public List<Faq> findByCategoryId(int id);	
+	public int deleteFaq(Integer id);
 	
+	public Faq findById(Integer id);
 
 }

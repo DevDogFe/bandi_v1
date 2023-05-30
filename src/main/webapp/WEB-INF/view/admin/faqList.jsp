@@ -1,71 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<%@include file="../layout/header.jsp"%>
-
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 <style>
-
-/* toggle 적용 */
-.answer {
+/* .answer {
 	display: none;
-}
-
-.faqCategory ul {
-	display: flex;
-}
-
-.faqCategory ul li {
-	margin-right: 40px;
-}
-
-/* CSS */
-* {
-	margin: 0px;
-	padding: 0px;
-	box-sizing: border-box;
-}
-
-body {
-	height: 100%;
-	box-sizing: border-box;
-	min-height: 100%;
-}
-
-.faq--list dl {
-	font-size: 20px;
-}
+} */
 </style>
-
-
-<div class="container">
-	<!-- 		<div class="row">
-		<div class="col-lg-12">
-			<div class="page-content">
-
-						<div class="heading-section"> -->
-	<div class="title--faq">
-		<h4>FAQ 자주 묻는 질문</h4>
-	</div>
+<body>
+	<h4>FAQ (관리자페이지)</h4>
 	<div class="faqCategory">
-		<ul>
+		<!--<form action="" method="get">  TODO 카테고리 조회-->
+		<select name="categoryId">
+			<option value="0">전체</option>
 			<c:forEach var="category" items="${faqCategoryList}">
-				<li><a href="/faq/list/${category.id}">${category.categoryName}</a></li>
+				<option value="${category.id}">${category.categoryName}</option>
 			</c:forEach>
-		</ul>
+		</select>
+		<!-- </form> -->
 	</div>
 
-	<%-- 	<!-- 질문 & 답 내용 -->
-	<c:forEach var="faq" items="${faqList}">
-		<div class="faq-content">
-			<button class="question" id="que-${faq.id}">
-				<span>${faq.question}</span> <span id="toggle-${faq.id}" class="material-symbols-outlined"> expand_more </span>
-			</button>
-			<div class="answer" id="ans-${faq.id}">${faq.answer}</div>
-		</div>
-	</c:forEach> --%>
+	<div>
+		<a href="/admin/faq"><button>글쓰기</button></a>
+	</div>
 
+	<!-- 질문 & 답 내용 -->
+	<div class="faq--list">
+
+
+
+		<table>
+			<thead>
+				<tr>
+					<th>질문</th>
+					<th>수정</th>
+					<th>삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<c:forEach var="faq" items="${faqList}">
+					<tr>
+						<td>${faq.question}</td>
+						<td><a href="/admin/faq/update/${faq.id}"><button>수정</button></a></td>
+						<td><a href="/admin/faq/delete/${faq.id}"><button>삭제</button></a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
+	</div>
+
+	<!-- 질문 ------------------------------ -->
+	<%-- 
 	<div class="faq--list">
 		<!-- 질문 & 답 내용 -->
 		<c:forEach var="faq" items="${faqList}">
@@ -79,14 +72,7 @@ body {
 		</c:forEach>
 	</div>
 
-
-</div>
-
-
-
-
-
-<script>	
+	<script>	
 	 const items = document.querySelectorAll('.question');
 	
 	 function openCloseAnswer(id) {
@@ -102,7 +88,12 @@ body {
 	   }
 	 }
 	
- </script>
+ </script> --%>
 
 
-<%@include file="../layout/footer.jsp"%>
+
+
+
+
+</body>
+</html>

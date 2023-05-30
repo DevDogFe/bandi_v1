@@ -18,33 +18,29 @@ public class FaqService {
 	/**
 	 * @return FAQ 전체조회
 	 */
-	public List<Faq> readAllFaqList(){
+	public List<Faq> readAllFaqList(){	
 		
-		List<Faq> list = faqRepository.findAll();
-		return list;
+		return faqRepository.findAll();
 	}
 	
 	/**
 	 * @return FAQ Category 전체 조회
 	 */
-	public List<FaqCategory> readFaqCategory(){
+	public List<FaqCategory> readFaqCategory(){		
 		
-		List<FaqCategory> list = faqRepository.findCategoryList();
-		return list;
+		return faqRepository.findCategoryList();
 	}
 	
 	/**
 	 * @param id
 	 * @return Category별 FAQ 조회
 	 */
-	public List<Faq> readFaqList(int id) {
+	public List<Faq> readFaqList(int id) {	
 		
-		List<Faq> list = faqRepository.findByCategoryId(id);
-		
-		return list;
+		return faqRepository.findByCategoryId(id);
 	}
 	
-	
+
 	
 	
 
