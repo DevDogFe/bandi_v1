@@ -308,7 +308,7 @@ public class NovelController {
 
 		// section 페이징 처리
 		String section = novelSection.getContent();
-		int fixLength = 200;
+		int fixLength = 180;
 
 		// 배열의 크기를 구합니다.
 		int strArraySize = (int) Math.ceil((double) section.length() / fixLength);

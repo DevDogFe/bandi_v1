@@ -82,16 +82,7 @@ ul {
 				<button type="button" class="btn btn-outline-secondary fullscreen" onclick="openFullScreenMode()">확대</button>
 				<button type="button" class="btn btn-outline-secondary close-fullscreen" onclick="closeFullScreenMode()">축소</button>
 			</div>
-			
-				<%-- <div id="book" >
-      				<div class="cover"><h1>${section.title}</h1></div>
-      				<div class="cover"><h1>(주)반디</h1></div>
-      				<c:forEach items="${subStringList}" var="subString" varStatus="vs">
-    						<div class="data"><p class="fontChange">${subString}</p>
-    					</div>
-					</c:forEach>
-    			</div>
-    			
+				<%-- 
     			<div id="controls">
       				<label for="page-number">Page:</label>
       				<input type="text" size="3" id="page-number" />
@@ -106,7 +97,7 @@ ul {
       					<div class="page"><h1>${section.title}</h1></div>
       					<div class="page"><h1>(주)반디</h1></div>
       					<c:forEach items="${subStringList}" var="subString" varStatus="vs">
-    						<div class="page"><p id="page-font">${subString}</p></div>
+    						<div class="page"><p>${subString}</p></div>
 						</c:forEach>
       				</div>
     			</div>
@@ -223,8 +214,9 @@ ul {
     let pageCount = '${subStringArray.size()}';  
     let subStringArray = '${subStringArray}';
     
-    let mode = "small";
-    //
+    //let mode = "small";
+    let mode = "middle";
+    
     var flipbookEL = document.getElementById('flipbook');
     var doc = document.getElementById("book-body");
 
@@ -232,69 +224,38 @@ ul {
     	flipbookEL.style.width = '';
       	flipbookEL.style.height = '';
       	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
+      	
     });
 
     $(flipbookEL).turn({
+    	width: flipbookEL.clientWidth,
+		height: flipbookEL.clientHeight,
         autoCenter: false
     });
-    //
     
-    $("#book").turn({
-		width: 800,
-		height: 600,
-		autoCenter: false
-		});	
-    
-    
-    /* $( window ).resize(function() {
-
-    	if(window.innerWidth<600){
-        	console.log(window.innerWidth);
-        	console.log(document.clientWidth);
-        	$("#book").turn({
-        		width: 800,
-        		height: 600,
-        		autoCenter: false
-        		});	
-        }else{
-        	console.log(Math.floor(window.innerWidth*0.6));
-        	$("#book").turn({
-        		width: Math.floor(window.innerWidth*0.6),
-        		height:	Math.floor(window.innerHeight*0.4),
-        		autoCenter: false
-        		});	
-        }
-    });
-    
-    $(window).resize(function(){
-    	var win = $(this); //this = window
-    	if (win.width() >= 820) { $("#book").turn('display','double');}
-    	else {
-    		$("#book").turn('display','single');
-    	}
-    	}); */
-    	
     $("#flipbook").bind("turning", function(event, page, view) {
   	  	//$('#page-number').val(page);
-  	  	if(mode=="small"){
-  	  		$("p").css("font-size","10px");
+  	  	if(mode=="middle"){
+  	  		$("p").css('font-size','20px');
+  	  	}else if(mode=='big'){
+  	  		$("p").css('font-size','30px');
   	  	}else{
-  	  		$("p").css("font-size","30px");
+  	  		$("p").css('font-size','5px');
   	  	}
   	});
     
     $('#page-number').keydown(function (e) {
         if (e.keyCode == 13){
-        	$('#book').turn('page', $('#page-number').val());
+        	$('#flipbook').turn('page', $('#page-number').val());
         } 
       });
 
     $(window).bind('keydown', function (e) {
       if (e.target && e.target.tagName.toLowerCase() != 'input') {
     	  if (e.keyCode == 37) {
-    		  $('#book').turn('previous');
+    		  $('#flipbook').turn('previous');
     	  } else if (e.keyCode == 39) {
-    		  $('#book').turn('next');  
+    		  $('#flipbook').turn('next');  
     	  }
       }
     });
@@ -331,7 +292,7 @@ ul {
 	}
 	//전체화면 해제
 	function closeFullScreenMode() {
-		mode = "small";
+		mode = "middle";
 		
 		if (document.exitFullscreen){
 			document.exitFullscreen();
@@ -351,7 +312,7 @@ ul {
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
 	      	$(flipbookEL).css('margin-top','0%');
-	      	$("p").css('font-size','10px');
+	      	$("p").css('font-size','20px');
 	      	$(".close-fullscreen").hide();
 			$(".fullscreen").show();
 	    });
