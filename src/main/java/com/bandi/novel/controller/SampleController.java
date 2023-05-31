@@ -87,4 +87,16 @@ public class SampleController {
 
 		return "/cssTest";
 	}
+	
+	@GetMapping("/novelList")
+	public String getNovelList() {
+
+		return "/cssLayout/cssNovelList";
+	}
+	
+	@GetMapping("/boardList")
+	public String getBoardList() {
+
+		return "/cssLayout/cssBoardList";
+	}
 }
