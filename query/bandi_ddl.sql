@@ -1,5 +1,16 @@
 -- ddl
 
+-- DROP DATABASE bandi_db;
+-- CREATE DATABASE bandi_db;
+-- USE bandi_db;
+
+-- drop DATABASE temp;
+CREATE DATABASE temp;
+USE temp;
+
+
+-- ddl
+
 create table test_tb(
 	id int primary key
 );
@@ -321,16 +332,30 @@ CREATE TABLE user_gold_charge_tb(
 
 
 -- 유저 대여 기록
-CREATE TABLE user_rental_tb(
-	user_id INT NOT NULL,
-	section_id INT NOT NULL,
-	price INT NOT NULL,
-	begin_rental TIMESTAMP DEFAULT NOW(),
-	end_rental TIMESTAMP DEFAULT NOW()+3,
-	PRIMARY KEY (user_id, section_id,end_rental),
-	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
-	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
+CREATE TABLE user_rental_tb (
+    user_id INT NOT NULL,
+    section_id INT NOT NULL,
+    price INT NOT NULL,
+    begin_rental TIMESTAMP,
+    end_rental TIMESTAMP,
+    PRIMARY KEY (user_id, section_id, end_rental),
+    FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
+
+DELIMITER $$
+CREATE TRIGGER set_default_rental_dates
+BEFORE INSERT ON user_rental_tb
+FOR EACH ROW
+BEGIN
+    SET NEW.begin_rental = CURRENT_TIMESTAMP();
+    SET NEW.end_rental = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 3 DAY);
+END$$
+DELIMITER ;
+
+drop TABLE user_rental_tb;
+
+
 
 -- 유저 구매 기록
 CREATE TABLE user_purchase_tb(
@@ -351,5 +376,6 @@ CREATE TABLE account_tb(
 	memo VARCHAR(50),
 	created_at TIMESTAMP DEFAULT now()
 );
+
 
 

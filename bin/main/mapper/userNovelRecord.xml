@@ -16,22 +16,22 @@
 		AND section_id = #{sectionId}
 	</select>
 
-<!-- 추후 novelSection.xml로 옮길 것 -->
+	<!-- 추후 novelSection.xml로 옮길 것 -->
 	<select id="selectNovelRecord" resultType="com.bandi.novel.dto.response.NovleRecordSectionDto">
 		SELECT *
 		FROM novel_section_tb as ns
 		LEFT JOIN
 		(
-			select *
-			from user_novel_record_tb
-			where user_id = #{userId}
+		select *
+		from user_novel_record_tb
+		where user_id = #{userId}
 		) as unr
 		ON ns.id = unr.section_id
 		LEFT JOIN
 		(
-			SELECT section_id, avg(score) AS score
-			FROM score_tb
-			GROUP BY section_id
+		SELECT section_id, avg(score) AS score
+		FROM score_tb
+		GROUP BY section_id
 		) AS s
 		ON ns.id = s.section_id
 		WHERE ns.novel_id = #{novelId}
@@ -54,5 +54,31 @@
 		where user_id = #{userId} AND novel_id = #{novelId}
 		AND section_id = #{sectionId}
 	</update>
+
+	<select id="selectTodayBestSection" resultType="com.bandi.novel.dto.response.BestSectionDto">
+		SELECT unr.novel_id, unr.section_id, ns.title AS section_title, n.title AS novel_title, count(*) AS count
+		FROM user_novel_record_tb AS unr
+		LEFT JOIN novel_section_tb AS ns
+		ON unr.section_id = ns.id
+		LEFT JOIN novel_tb AS n
+		ON unr.novel_id = n.id
+		WHERE date_format(unr.created_at, '%y-%m-%d') = date_format(now(), '%y-%m-%d')
+		GROUP BY section_id
+		ORDER BY count DESC
+		LIMIT 1
+	</select>
+
+	<select id="selectMonthBestSection" resultType="com.bandi.novel.dto.response.BestSectionDto">
+		SELECT unr.novel_id, unr.section_id, ns.title AS section_title, n.title AS novel_title, count(*) AS count
+		FROM user_novel_record_tb AS unr
+		LEFT JOIN novel_section_tb AS ns
+		ON unr.section_id = ns.id
+		LEFT JOIN novel_tb AS n
+		ON unr.novel_id = n.id
+		WHERE date_format(unr.created_at, '%y-%m') = date_format(now(), '%y-%m')
+		GROUP BY section_id
+		ORDER BY count DESC
+		LIMIT 1
+	</select>
 
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.bandi.novel.dto.adminNovelUpdateFormDto;
+import com.bandi.novel.dto.response.GenreCountDto;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
@@ -20,6 +21,8 @@ import com.bandi.novel.model.Novel;
  */
 @Mapper
 public interface NovelRepository {
+	
+	List<GenreCountDto> selectGenreCount();
 
 	int insertNovel(Novel novel);
 

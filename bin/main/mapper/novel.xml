@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.NovelRepository">
 
+	<select id="selectGenreCount" resultType="com.bandi.novel.dto.response.GenreCountDto">
+		SELECT g.name, count(*) AS count
+		FROM novel_tb AS n
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		GROUP BY n.genre_id
+	</select>
+
 	<select id="selectUserFavoriteListByUserId" resultType="com.bandi.novel.dto.response.MyFavoriteDto">
 		<if test="limit != null">
 			SELECT n.id, n.title, g.name AS genre_name, u.nick_name AS author_name
@@ -979,26 +987,29 @@
 		SET cover = #{cover}
 		WHERE id = #{novelId}
 	</update>
-	
+
 	<select id="selectNovelListBySearch" resultType="com.bandi.novel.dto.response.NovelSearchDto">
 		SELECT n.id,u.username AS user_name,n.title,n.serial_cycle,n.cover,n.created_at,
-		 		g.name AS genre_name, st.name AS service_type_name
-		FROM novel_tb AS n
+		g.name AS genre_name, st.name AS service_type_name
+		FROM novel_tb
+		AS n
 		LEFT JOIN genre_tb AS g
 		ON n.genre_id = g.id
 		LEFT JOIN service_type_tb AS st
 		ON n.service_type_id = st.id
 		LEFT JOIN user_tb AS u
-		ON n.user_id = u.id
+		ON n.user_id
+		= u.id
 		WHERE title LIKE CONCAT('%',#{search}, '%')
-		order by id desc
+		order by
+		id desc
 	</select>
-	
+
 	<update id="updateNovelServiceType">
 		UPDATE novel_tb
 		SET service_type_id = #{serviceTypeId}
 		WHERE id = #{novelId}
 	</update>
-	
+
 	<!-- -->
 </mapper>

@@ -430,6 +430,18 @@ INSERT INTO user_rental_tb(user_id,section_id,price,end_rental) VALUES
 (1,5,100,now()+3),
 (1,6,100,now()+3);
 
+-- 매출 기록
+INSERT INTO account_tb(sales, memo) VALUES 
+(100, '소설구매'),
+(100, '소설구매'),
+(100, '소설구매'),
+(100, '소설구매'),
+(100, '소설대여'),
+(100, '소설대여'),
+(100, '소설대여'),
+(100, '소설대여');
+
+
 INSERT INTO score_tb VALUES
 (2, 1, 4),
 (2, 11, 4),

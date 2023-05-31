@@ -3,16 +3,25 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.UserRepository">
 
+	<select id="selectTodayJoinUserCount" resultType="integer">
+		SELECT count FROM
+		(
+		SELECT *, date_format(created_at, '%y-%m-%d') AS created_date, count(*) AS count FROM user_tb
+		WHERE date_format(created_at, '%y-%m-%d') = date_format(now(), '%y-%m-%d')
+		GROUP BY created_date
+		) AS c;
+	</select>
+
 	<select id="selectByEmail" resultType="com.bandi.novel.model.User">
 		SELECT * FROM user_tb
 		WHERE email = #{email}
 	</select>
-	
+
 	<select id="selectByNickName" resultType="com.bandi.novel.model.User">
 		SELECT * FROM user_tb
 		WHERE nick_name = #{nickName}
 	</select>
-	
+
 	<select id="selectByNickNameAndId" resultType="com.bandi.novel.model.User">
 		SELECT * FROM user_tb
 		WHERE nick_name = #{nickName}
@@ -23,7 +32,7 @@
 		SELECT * FROM user_tb
 		WHERE id = #{id}
 	</select>
-	
+
 	<select id="selectByUsername" resultType="com.bandi.novel.model.User">
 		SELECT * FROM user_tb
 		WHERE username = #{username}
@@ -42,39 +51,39 @@
 		email = #{email}
 		WHERE id = #{id};
 	</update>
-	
-	<!-- 비밀번호 변경 (효린)-->
+
+	<!-- 비밀번호 변경 (효린) -->
 	<update id="updatePwd">
-		update user_tb 
+		update user_tb
 		set password = #{password} where id = #{id}
 	</update>
-	
+
 	<!-- 유저롤 변경 (지운) -->
 	<update id="updateUserRole">
 		update user_tb
 		set user_role = #{userRole} where id = #{id}
 	</update>
-	
+
 	<!-- 사용자 검색 (지운) -->
 	<select id="searchUser" resultType="com.bandi.novel.dto.UserRoleDto">
 		<if test="type == 'all'">
-			select u.id, u.username, u.user_role, ur.role, u.nick_name 
+			select u.id, u.username, u.user_role, ur.role, u.nick_name
 			from user_tb as u
 			left join user_role_tb as ur
 			on u.user_role = ur.id
 		</if>
 		<if test="type == 'nickName'">
-			select u.id, u.username, u.user_role, ur.role, u.nick_name 
+			select u.id, u.username, u.user_role, ur.role, u.nick_name
 			from user_tb as u
 			left join user_role_tb as ur
 			on u.user_role = ur.id
 			where nick_name = #{keyword}
 		</if>
 	</select>
-	
+
 	<!-- userrole 리스트 -->
 	<select id="selectUserRole" resultType="com.bandi.novel.model.UserRole">
 		select * from user_role_tb
 	</select>
-	
+
 </mapper>

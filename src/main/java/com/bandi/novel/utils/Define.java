@@ -12,6 +12,11 @@ public class Define {
 	
 	public final static String REQUEST_SUCCESS = "요청을 정상적으로 처리하였습니다.";
 	
+	public final static String BUY = "소설구매";
+	public final static String RENT = "소설대여";
+	public final static String CHARGE = "포인트충전";
+	public final static String REFUND = "환불";
+	
 	public final static int SORT_FAVORITE = 0;
 	public final static int SORT_SCORE = 1;
 	public final static int TYPE_PAY = 1;

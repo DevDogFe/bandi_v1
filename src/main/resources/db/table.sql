@@ -21,6 +21,7 @@ CREATE TABLE user_tb(
     birth_date DATE NOT NULL,
     gender VARCHAR(2) NOT NULL,
     external VARCHAR(10),
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
     FOREIGN KEY(user_role) REFERENCES user_role_tb(id)
 );
 
@@ -340,6 +341,15 @@ CREATE TABLE user_purchase_tb(
 	PRIMARY KEY (user_id, section_id),
 	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
 	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
+);
+
+-- 매출 관리
+CREATE TABLE account_tb(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	sales INT,
+	refund INT,
+	memo VARCHAR(50),
+	created_at TIMESTAMP DEFAULT now()
 );
 
 

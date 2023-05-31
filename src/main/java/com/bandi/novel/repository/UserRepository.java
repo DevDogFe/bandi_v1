@@ -14,6 +14,12 @@ import com.bandi.novel.model.UserRole;
 
 @Mapper
 public interface UserRepository {
+	
+	/**
+	 * 
+	 * @return 오늘 가입한 유저숫자
+	 */
+	public Integer selectTodayJoinUserCount();
 
 	public User selectByUserId(Integer id);
 

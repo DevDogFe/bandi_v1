@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.adminNovelUpdateFormDto;
+import com.bandi.novel.dto.response.GenreCountDto;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
@@ -237,6 +238,13 @@ public class NovelService {
 	@Transactional
 	public List<MyFavoriteDto> selectMyNovels(Integer userId, Integer limit) {
 		return novelRepository.selectMyNovelsByUserId(userId, limit);
+	}
+	
+	// 장르 점유 조회
+	@Transactional
+	public List<GenreCountDto> selectGenreCount(){
+		List<GenreCountDto> GenreCountlist = novelRepository.selectGenreCount();
+		return GenreCountlist;
 	}
 
 }
