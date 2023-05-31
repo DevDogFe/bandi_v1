@@ -4,32 +4,52 @@
 <mapper namespace="com.bandi.novel.repository.FaqRepository">
 
 	<select id="findCategoryList" resultType="com.bandi.novel.model.FaqCategory">
-		select * from faq_category_tb order by id 
+		select * from faq_category_tb order by id
 	</select>
-	
+
 	<select id="findAll" resultType="com.bandi.novel.model.Faq">
 		select * from faq_tb
 	</select>
-	
+
 	<select id="findByCategoryId" resultType="com.bandi.novel.model.Faq">
-		SELECT * from faq_tb where faq_category_id = #{categoryId}		
+		SELECT * from faq_tb where faq_category_id = #{categoryId}
 	</select>
-	
+
 	<insert id="insert">
 		insert into faq_tb(faq_category_id, question, answer)
 		values(#{faqCategoryId}, #{question}, #{answer})
 	</insert>
-	
+
+	<!-- FAQ 수정 -->
 	<update id="updateFaqById">
-		update faq_tb 
+		update faq_tb
 		set faq_category_id = #{faqCategoryId}, question = #{question}, answer = #{answer}
 		where id = #{id}
 	</update>
-	
+
+	<!-- 카테고리 수정 -->
 	<update id="updateCategoryById">
 		update faq_category_tb
 		set category_name = #{categoryName}
 		where id = #{id}
-	</update>	
+	</update>
+
+	<select id="findById" resultType="com.bandi.novel.model.Faq">
+		select f.*, fc.category_name
+		from faq_tb as f
+		INNER join faq_category_tb as fc
+		ON f.faq_category_id = fc.id
+		where f.id = #{id}
+	</select>
+
+	<!-- FAQ 삭제 -->
+	<delete id="deleteFaq" parameterType="java.util.List">
+		delete from faq_tb where id in
+		<foreach collection="list" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+
 
 </mapper>

@@ -19,12 +19,15 @@ import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
+import com.bandi.novel.model.Faq;
+import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.UserRole;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.ApplicationService;
 import com.bandi.novel.service.BoardService;
+import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.QnaService;
 
@@ -47,6 +50,8 @@ public class AdminController {
 	private BoardService boardService;
 	@Autowired
 	private NovelService novelService;
+	@Autowired
+	private FaqService faqService;
 
 	/**
 	 * @param model
@@ -108,7 +113,7 @@ public class AdminController {
 	 * @return 질문 상세보기
 	 */
 	@PostMapping("/answer/{questionId}")
-	public String answer(@PathVariable Integer questionId, Answer answer) {
+	public String getAnswer(@PathVariable Integer questionId, Answer answer) {
 
 		adminService.createAnswer(answer, 1);
 		adminService.updateQuestion(questionId, 1);
@@ -200,11 +205,11 @@ public class AdminController {
 		model.addAttribute("categoryList", categoryList);
 		return "/admin/adminCategory";
 	}
-	
+
 	// 소설 타입 변경 페이지
 	@GetMapping("/novelChange")
 	public String getNovelTypeChange() {
-		
+
 		return "/admin/adminNovelChange";
 	}
 
@@ -215,7 +220,6 @@ public class AdminController {
 		return "redirect:/admin/adminCategory";
 	}
 
-	
 	// 장르 목록
 	@GetMapping("/genre")
 	public String getGenre(Model model) {
@@ -223,19 +227,19 @@ public class AdminController {
 		model.addAttribute("genreList", genreList);
 		return "/admin/adminGenre";
 	}
-	
+
 	// 장르 등록
 	@PostMapping("/genre")
 	public String createGenreProc(Genre genre) {
 		adminService.createGenre(genre);
 		return "redirect:/admin/genre";
 	}
-	
+
 	@GetMapping("/user")
 	public String getUserRole(Model model, UserSearchDto userSearchDto) {
 		List<UserRoleDto> userList = adminService.searchUser(userSearchDto);
 		List<UserRole> userRoleList = adminService.selectUserRole();
-		if("".equals(userSearchDto.getKeyword())) {
+		if ("".equals(userSearchDto.getKeyword())) {
 			userSearchDto.setKeyword(null);
 		} else {
 			userList = adminService.searchUser(userSearchDto);
@@ -244,5 +248,65 @@ public class AdminController {
 		model.addAttribute("userRoleList", userRoleList);
 		return "/admin/adminUserRole";
 	}
+
+	/**
+	 * FAQ 전체조회
+	 * @param model
+	 * @return
+	 */
+	@GetMapping({"/faqList/{categoryId}", "/faqList"})
+	public String getFaqlist(Model model, Integer categoryId) {
+		List<Faq> faqList = null;
+		if (categoryId == null) {
+			faqList = faqService.readAllFaqList();			
+		}else {
+			faqList = faqService.readFaqList(categoryId);			
+		}		
+		 List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		 model.addAttribute("faqList", faqList);
+		 model.addAttribute("faqCategoryList", faqCategoryList);
+		 
+		return "/admin/faqList";
+	}
 	
+	@GetMapping("/faq")
+	public String createFaq(Model model) {
+		
+		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		model.addAttribute("faqCategoryList", faqCategoryList);
+		
+		return "/admin/faqWrite";
+		
+	}
+	
+	@PostMapping("/faq")
+	public String createFaqProc(Faq faq) {
+		
+		adminService.createFaq(faq);
+	
+		return "redirect:/admin/faqList";		
+	}
+	
+	
+	@GetMapping("/faq/update/{id}")
+	public String updateFaq(@PathVariable Integer id, Model model) {
+		
+		Faq faq = adminService.readFaq(id);		
+		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		model.addAttribute("faq", faq);
+		model.addAttribute("faqCategoryList", faqCategoryList);
+		
+		return "/admin/faqUpdate";
+		
+	}
+	
+	@PostMapping("/faq/update/{id}")
+	public String updateFaqProc(@PathVariable Integer id) {
+		
+		adminService.updateFaq(id);
+		
+		return "redirect:/admin/faqList";		
+	}
+
+
 }
