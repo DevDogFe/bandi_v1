@@ -6,7 +6,7 @@
 <%@include file="../layout/header.jsp"%>
 
 <style>
-/* toggle 적용 TODO 색 변경 */ 
+/* toggle 적용 TODO 색 변경 */
 .answer {
 	display: none;
 	box-sizing: content-box;
@@ -22,9 +22,9 @@ body {
 	min-height: 100%;
 }
 
-.category--cs{
-	  display: flex;
-  align-items: center;
+.category--cs {
+	display: flex;
+	align-items: center;
 }
 
 .category--cs ul {
@@ -38,7 +38,7 @@ body {
 	padding: 0 20px;
 }
 
-.category--cs ul li a{
+.category--cs ul li a {
 	font-size: 20px;
 }
 
@@ -49,15 +49,16 @@ body {
 	margin: 0;
 }
 
-.category--faq ul li{
+.category--faq ul li {
 	width: 25%;
 	border: 1px solid black;
 	margin: 0px;
-	padding: 10px 0px;	
+	padding: 10px 0px;
 }
 
-.category--faq ul li :hover{
+.category--faq ul li :hover {
 	/* background-color: ; */
+	
 }
 
 .container--faq--title {
@@ -83,7 +84,6 @@ body {
 
 .category--faq {
 	border: 1px solid black;
-	
 }
 
 .faq--list {
@@ -112,9 +112,14 @@ body {
 	display: flex;
 }
 
-
 .category--line {
 	justify-content: space-between;
+}
+
+.page--faq{
+	display: flex;
+	justify-content: center;
+
 }
 </style>
 <section>
@@ -148,28 +153,34 @@ body {
 		<div class="faq--list">
 			<!-- 질문 & 답 내용 -->
 			<dl class="faq--content">
-				<c:forEach var="faq" items="${faqList}">
+				<c:forEach var="faq" items="${faqPageUtil.content}">
 					<dt class="category--line" onclick="openCloseAnswer(${faq.id})">
-						<span>${faq.question}</span><a class="question" id="que-${faq.id}">
-						<span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
+						<span>${faq.question}</span><a class="question" id="que-${faq.id}"> <span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
 						</a>
 					</dt>
 					<!-- 답 -->
-					<dd class="answer" id="ans-${faq.id}"><p><span>[${faq.categoryName}]</span>&nbsp;${faq.answer}</p></dd>
+					<dd class="answer" id="ans-${faq.id}">
+						<p>
+							<span>[${faq.categoryName}]</span>&nbsp;${faq.answer}
+						</p>
+					</dd>
 				</c:forEach>
 			</dl>
 		</div>
 
-
-		<%-- 	<!-- 질문 & 답 내용 -->
-	<c:forEach var="faq" items="${faqList}">
-		<div class="faq-content">
-			<button class="question" id="que-${faq.id}">
-				<span>${faq.question}</span> <span id="toggle-${faq.id}" class="material-symbols-outlined"> expand_more </span>
-			</button>
-			<div class="answer" id="ans-${faq.id}">${faq.answer}</div>
+		<!-- 페이징 처리 -->
+		<div class="col-sm-12 col-md-7 page--faq">
+			<div class="page--faq">
+				<ul class="d-flex">
+					<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+					<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+						<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/qna/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+					</c:forEach>
+					<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+				</ul>
+			</div>
 		</div>
-	</c:forEach> --%>
+		
 	</div>
 </section>
 

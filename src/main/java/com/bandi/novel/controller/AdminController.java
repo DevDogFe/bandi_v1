@@ -255,7 +255,7 @@ public class AdminController {
 	 * @return
 	 */
 	@GetMapping({"/faqList/{categoryId}", "/faqList"})
-	public String getFaqlist(Model model, Integer categoryId) {
+	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId) {
 		List<Faq> faqList = null;
 		if (categoryId == null) {
 			faqList = faqService.readAllFaqList();			
