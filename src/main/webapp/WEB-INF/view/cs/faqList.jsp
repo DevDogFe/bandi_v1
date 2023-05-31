@@ -6,10 +6,11 @@
 <%@include file="../layout/header.jsp"%>
 
 <style>
-
-/* toggle 적용 */
+/* toggle 적용 TODO 색 변경 */ 
 .answer {
 	display: none;
+	box-sizing: content-box;
+	/* background-color: #f5f6f7; */
 }
 
 * {
@@ -21,15 +22,24 @@ body {
 	min-height: 100%;
 }
 
+.category--cs{
+	  display: flex;
+  align-items: center;
+}
+
 .category--cs ul {
-	text-align: center;
 	border: 1px solid black;
-	padding: 0 20px;
+	margin: 0 10px;
 }
 
 .category--cs ul li {
 	display: inline-block;
 	border: 1px solid black;
+	padding: 0 20px;
+}
+
+.category--cs ul li a{
+	font-size: 20px;
 }
 
 .category--faq ul {
@@ -39,11 +49,15 @@ body {
 	margin: 0;
 }
 
-.category--faq ul li {
+.category--faq ul li{
 	width: 25%;
 	border: 1px solid black;
 	margin: 0px;
-	padding: 10px 0px;
+	padding: 10px 0px;	
+}
+
+.category--faq ul li :hover{
+	/* background-color: ; */
 }
 
 .container--faq--title {
@@ -64,10 +78,12 @@ body {
 
 .title--faq h3 {
 	font-size: 40px;
+	padding: 10px;
 }
 
 .category--faq {
 	border: 1px solid black;
+	
 }
 
 .faq--list {
@@ -96,13 +112,6 @@ body {
 	display: flex;
 }
 
-.answer {
-	box-sizing: content-box;
-}
-
-.material-symbols-outlined {
-	justify-content: flex-end;
-}
 
 .category--line {
 	justify-content: space-between;
@@ -141,11 +150,12 @@ body {
 			<dl class="faq--content">
 				<c:forEach var="faq" items="${faqList}">
 					<dt class="category--line" onclick="openCloseAnswer(${faq.id})">
-						<span>${faq.question}</span> <a class="question" id="que-${faq.id}"> <span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
+						<span>${faq.question}</span><a class="question" id="que-${faq.id}">
+						<span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
 						</a>
 					</dt>
 					<!-- 답 -->
-					<dd class="answer" id="ans-${faq.id}">${faq.answer}</dd>
+					<dd class="answer" id="ans-${faq.id}"><p><span>[${faq.categoryName}]</span>&nbsp;${faq.answer}</p></dd>
 				</c:forEach>
 			</dl>
 		</div>

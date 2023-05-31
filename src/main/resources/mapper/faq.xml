@@ -8,11 +8,18 @@
 	</select>
 
 	<select id="findAll" resultType="com.bandi.novel.model.Faq">
-		select * from faq_tb
+		select f.*, fc.category_name
+		from faq_tb AS f
+		inner join faq_category_tb AS fc
+		on f.faq_category_id = fc.id
 	</select>
 
 	<select id="findByCategoryId" resultType="com.bandi.novel.model.Faq">
-		SELECT * from faq_tb where faq_category_id = #{categoryId}
+		select f.*, fc.category_name
+		from faq_tb AS f
+		inner join faq_category_tb AS fc
+		on f.faq_category_id = fc.id
+		where faq_category_id = #{categoryId}
 	</select>
 
 	<insert id="insert">
