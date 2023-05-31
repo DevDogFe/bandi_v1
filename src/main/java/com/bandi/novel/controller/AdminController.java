@@ -297,13 +297,6 @@ public class AdminController {
 		return "redirect:/admin/faqList";		
 	}
 	
-	@GetMapping("/faq/delete/{id}")
-	public String deleteFaq(@PathVariable Integer id) {
-		
-		adminService.deleteFaq(id);
-		
-		return "redirect:/admin/faqList";
-	}
 	
 	@GetMapping("/faq/update/{id}")
 	public String updateFaq(@PathVariable Integer id, Model model) {

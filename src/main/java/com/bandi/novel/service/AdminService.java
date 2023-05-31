@@ -204,7 +204,7 @@ public class AdminService {
 	 * FAQ 삭제
 	 * @param id
 	 */
-	public void deleteFaq(Integer id) {
+	public void deleteFaq(List<Integer> id) {
 		
 		faqRepository.deleteFaq(id);
 		

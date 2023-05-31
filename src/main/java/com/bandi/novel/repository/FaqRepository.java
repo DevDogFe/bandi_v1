@@ -23,7 +23,7 @@ public interface FaqRepository {
 	// 카테고리 수정
 	public int updateCategoryById();
 	
-	public int deleteFaq(Integer id);
+	public int deleteFaq(List<Integer> id);
 	
 	public Faq findById(Integer id);
 

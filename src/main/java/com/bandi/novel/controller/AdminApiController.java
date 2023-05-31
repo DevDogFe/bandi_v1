@@ -83,7 +83,22 @@ public class AdminApiController {
 	// FAQ 카테고리 리스트 (효린)
 	@GetMapping("/api/faq/{categoryId}")
 	public List<Faq> getFaqList(@PathVariable Integer categoryId){
-		List<Faq> list = faqService.readFaqList(categoryId);
+		
+		List<Faq> list = null;
+		if(categoryId == 0) {
+			list = faqService.readAllFaqList();
+		}else {			
+			list = faqService.readFaqList(categoryId);
+		}
 		return list;
 	}
+	
+	@DeleteMapping("/api/faq/{id}")
+	public void deleteFaq(@PathVariable List<Integer> id) {
+		adminService.deleteFaq(id);
+		/*
+		 * id.forEach((i)->{ System.out.println(i); });
+		 */
+	}
+	
 }

@@ -34,17 +34,22 @@
 		where id = #{id}
 	</update>
 
-	<select id="findById"  resultType="com.bandi.novel.model.Faq">
+	<select id="findById" resultType="com.bandi.novel.model.Faq">
 		select f.*, fc.category_name
 		from faq_tb as f
 		INNER join faq_category_tb as fc
 		ON f.faq_category_id = fc.id
-		where f.id =  #{id}
+		where f.id = #{id}
 	</select>
-	
+
 	<!-- FAQ 삭제 -->
-	<delete id="deleteFaq">
-		delete from faq_tb where id = #{id}
+	<delete id="deleteFaq" parameterType="java.util.List">
+		delete from faq_tb where id in
+		<foreach collection="list" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
 	</delete>
+
+
 
 </mapper>
