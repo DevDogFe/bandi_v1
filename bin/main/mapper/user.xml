@@ -60,17 +60,18 @@
 
 	<!-- 유저롤 변경 (지운) -->
 	<update id="updateUserRole">
-		update user_tb
-		set user_role = #{userRole} where id = #{id}
+		UPDATE user_tb
+		SET user_role = #{userRole} 
+		WHERE id = #{id}
 	</update>
 
 	<!-- 사용자 검색 (지운) -->
 	<select id="searchUser" resultType="com.bandi.novel.dto.UserRoleDto">
 		<if test="type == 'all'">
-			select u.id, u.username, u.user_role, ur.role, u.nick_name
-			from user_tb as u
-			left join user_role_tb as ur
-			on u.user_role = ur.id
+			SELECT u.id, u.username, u.user_role, ur.role, u.nick_name
+			FROM user_tb AS u
+			LEFT JOIN user_role_tb AS ur
+			ON u.user_role = ur.id
 		</if>
 		<if test="type == 'nickName'">
 			select u.id, u.username, u.user_role, ur.role, u.nick_name

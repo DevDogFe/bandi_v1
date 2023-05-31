@@ -171,8 +171,8 @@ public class ContestController {
 	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, 
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
 
-		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		// contest.setUserId(principal.getId());
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		
 		if("".equals(search)) {
 			search = null;
 		}
@@ -197,6 +197,11 @@ public class ContestController {
 	public String getContestNovelDetail(@PathVariable Integer novelId, Model model) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		
+		if(principal == null) {
+			return "redirect:/index";
+		}
+		
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		// 소설 회차 리스트

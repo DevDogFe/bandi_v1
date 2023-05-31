@@ -73,8 +73,8 @@
 	<select id="selectPurchaseRentalRecord" resultType="com.bandi.novel.dto.response.UserPurchaseRentalRecord">
 		select ns.id,up.section_id as purchase_section_id,
 					ur.section_id as rental_section_id
-					,FORMATDATETIME(ur.begin_rental, 'yyyy-MM-dd HH:mm') as begin_rental
-					,FORMATDATETIME(ur.end_rental, 'yyyy-MM-dd HH:mm') as end_rental
+					,DATE_FORMAT(ur.begin_rental, '%Y-%m-%d %H:%i:%s') as begin_rental
+					,DATE_FORMAT(ur.end_rental, '%Y-%m-%d %H:%i:%s') as end_rental
 		from novel_section_tb as ns
 		left join
 		(

@@ -286,7 +286,7 @@ public class NovelController {
 					isSectionCookie = true;
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
-						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
+						//System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						cookie.setMaxAge(60 * 60 * 24);
 						response.addCookie(cookie);
 						novelService.sectionViewsPlus(sectionId);
@@ -308,7 +308,8 @@ public class NovelController {
 
 		// section 페이징 처리
 		String section = novelSection.getContent();
-		int fixLength = 150;
+
+		int fixLength = 180;
 
 		// 배열의 크기를 구합니다.
 		int strArraySize = (int) Math.ceil((double) section.length() / fixLength);
@@ -324,6 +325,7 @@ public class NovelController {
 		model.addAttribute("serviceTypeId",serviceTypeId);
 		model.addAttribute("numberOfPages",strArraySize);
 		model.addAttribute("subStringList",subStringList);
+		
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
 		// 효린

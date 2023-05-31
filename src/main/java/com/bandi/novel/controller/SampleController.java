@@ -81,5 +81,10 @@ public class SampleController {
 	public String handleError() {
 		return "/error/notFound";
 	}
+	
+	@GetMapping("/sample")
+	public String getJoinForm() {
 
+		return "/cssTest";
+	}
 }

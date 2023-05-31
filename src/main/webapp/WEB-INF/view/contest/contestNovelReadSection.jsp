@@ -22,6 +22,53 @@
 ul {
 	list-style: none;
 }
+
+#starScore fieldset {
+	display: inline-block;
+	direction: rtl;
+	border: 0;
+}
+
+#starScore fieldset legend {
+	text-align: right;
+}
+
+#starScore input[type=radio] {
+	display: none;
+}
+
+#starScore label {
+	font-size: 3em;
+	color: transparent;
+	text-shadow: 0 0 0 #f0f0f0;
+}
+
+#starScore label:hover {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#starScore label:hover ~ label {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#starScore input[type=radio]:checked ~ label {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#reviewContents {
+	width: 100%;
+	height: 150px;
+	padding: 10px;
+	box-sizing: border-box;
+	border: solid 1.5px #D3D3D3;
+	border-radius: 5px;
+	font-size: 16px;
+	resize: none;
+}
+
+.close-fullscreen {
+	display: none
+}
 </style>
 </head>
 <body>
@@ -34,12 +81,21 @@ ul {
 				</div>
 			</div>
 			<div>
+				<input type="hidden" id="sectionId" value="${section.id}"> <input type="hidden" id="novelId" value="${section.novelId}">
 				<div class="section--title mb-3">${section.title}</div>
 				<div class="section--content mb-3">${section.content}</div>
 			</div>
 			<div>
 				<a href="/contest/novel/section/delete/${section.id}">삭제</a>
 				<a href="/novel/detail/${section.novelId }">목록</a>
+				<form class="mb-3" name="starScore" id="starScore" method="post">
+					<fieldset>
+						<button type="button" class="btn btn-primary" id="starBtn">별점 등록</button>
+						<span class="text-bold">별점을 선택해주세요</span> <input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label> <input type="radio" name="reviewStar" value="4"
+							id="rate2"><label for="rate2">★</label> <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label> <input type="radio" name="reviewStar" value="2"
+							id="rate4"><label for="rate4">★</label> <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
+					</fieldset>
+				</form>
 			</div>
 			<div>
 				<c:if test="${section.prevTitle != '이전글이 없습니다'}">
@@ -138,6 +194,43 @@ ul {
 	}
 	$(document).ready(() => {
 		
+	});
+	
+	$(document).ready(function() {
+		
+		// 별점 등록
+		$("#starBtn").on("click", () => {
+			const stars = $("input[name = reviewStar]");
+			console.log(stars);
+			let score;
+			for (let i = 0; i < stars.length; i++){
+				if(stars[i].checked){
+					score = stars[i].value;
+					let data = {
+							sectionId: $("#sectionId").val(),
+							score: score
+					};
+					
+					$.ajax({
+						type: "POST",
+						url: "/api/score",
+						contentType:"application/json; charset=utf-8",
+						data: JSON.stringify(data),
+						dataType:"json"
+					}).done((response) => {
+						location.href='/contest/novel/read/' + $("#novelId").val()+ '/' + $("#sectionId").val();
+					}).fail((error) => {
+						console.log(error);
+						alert("요청을 처리할 수 없습니다.");
+					});
+				}
+			}
+			
+		});
+
+			 
+		
+		// end of ready 
 	});
 	</script>
 </body>

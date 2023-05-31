@@ -176,6 +176,9 @@ public class AdminService {
 	// 사용자 검색
 	@Transactional
 	public List<UserRoleDto> searchUser(UserSearchDto userSearchDto) {
+		if(userSearchDto.getType() == null) {
+			userSearchDto.setType("all");
+		}
 		List<UserRoleDto> list = userRepository.searchUser(userSearchDto);
 		return list;
 	}
