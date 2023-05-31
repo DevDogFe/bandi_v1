@@ -215,6 +215,7 @@ ul {
     let subStringArray = '${subStringArray}';
     
     //let mode = "small";
+    let prevMode = "";
     let mode = "middle";
     
     var flipbookEL = document.getElementById('flipbook');
@@ -223,9 +224,37 @@ ul {
     window.addEventListener('resize', function (e) {
     	flipbookEL.style.width = '';
       	flipbookEL.style.height = '';
-      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
       	
+      	// 책 크기에 따른 폰트 크기 수정
+      	if($(window).width()<1080){
+      		mode = "small";
+      		//$("p").css('font-size','5px');
+      		console.log(mode);
+      	}else if($(window).width()>=1080&&$(flipbookEL).width()<1600){
+      		mode = "middle";
+      		//$("p").css('font-size','20px');
+      		console.log(mode);
+      	}else{
+      		mode = "big";
+      		$("p").css('font-size','30px');
+      		console.log(mode);
+      	}
+      	
+      	//화면 크기에따른 책 사이즈 변경
+      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
     });
+    
+    // 책넘길때 폰트 초기화
+    $("#flipbook").bind("turning", function(event, page, view) {
+  	  	
+  	  	if(mode=="middle"){
+  	  		$("p").css('font-size','20px');
+  	  	}else if(mode=='small'){
+  	  		$("p").css('font-size','5px');
+  	  	}else{
+  	  		$("p").css('font-size','30px');
+  	  	}
+  	});
 
     $(flipbookEL).turn({
     	width: flipbookEL.clientWidth,
@@ -233,16 +262,6 @@ ul {
         autoCenter: false
     });
     
-    $("#flipbook").bind("turning", function(event, page, view) {
-  	  	//$('#page-number').val(page);
-  	  	if(mode=="middle"){
-  	  		$("p").css('font-size','20px');
-  	  	}else if(mode=='big'){
-  	  		$("p").css('font-size','30px');
-  	  	}else{
-  	  		$("p").css('font-size','5px');
-  	  	}
-  	});
     
     $('#page-number').keydown(function (e) {
         if (e.keyCode == 13){
@@ -260,10 +279,10 @@ ul {
       }
     });
     
-    
 	
   	//전체화면 설정
     function openFullScreenMode() {
+  		pervMode = mode;
   		mode = "big";
   		
 		if (doc.requestFullscreen){
@@ -311,8 +330,8 @@ ul {
 	    	flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
-	      	$(flipbookEL).css('margin-top','0%');
 	      	$("p").css('font-size','20px');
+	      	$(flipbookEL).css('margin-top','0%');
 	      	$(".close-fullscreen").hide();
 			$(".fullscreen").show();
 	    });
@@ -354,7 +373,7 @@ $(document).ready(function() {
 					data: JSON.stringify(data),
 					dataType:"json"
 				}).done((response) => {
-					location.href='/section/read/' + $("#novelId").val()+ '/' + $("#sectionId").val();
+					location.href='/section/read/' + $("#novelId").val()+ '/' + $("#sectionId").val()+'?serviceTypeId='+'${serviceTypeId}';
 				}).fail((error) => {
 					console.log(error);
 					alert("요청을 처리할 수 없습니다.");
