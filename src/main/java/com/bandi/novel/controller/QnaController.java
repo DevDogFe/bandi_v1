@@ -146,8 +146,8 @@ public class QnaController {
 	}
 
 	/**
-	 * 질문 삭제 ㄴ * @param id
-	 * 
+	 * 질문 삭제
+	 * * @param id
 	 * @return Q&A 전체조회(마이페이지)
 	 */
 	@GetMapping("/question/delete/{id}")

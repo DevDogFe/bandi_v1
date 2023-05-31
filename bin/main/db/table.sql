@@ -140,8 +140,8 @@ CREATE TABLE answer_tb(
     content TEXT NOT NULL,
     question_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
-	FOREIGN KEY(user_id) REFERENCES user_tb(id),
-	FOREIGN KEY(question_id) REFERENCES question_tb(id) on update cascade on delete cascade
+	FOREIGN KEY(user_id) REFERENCES user_tb(id) on delete cascade,
+	FOREIGN KEY(question_id) REFERENCES question_tb(id) on update cascade 
 );
 
 
@@ -152,7 +152,7 @@ CREATE TABLE faq_tb(
     faq_category_id INT NOT NULL,
     question TEXT NOT NULL,
     answer TEXT NOT NULL,
-    FOREIGN KEY(faq_category_id) REFERENCES faq_category_tb(id)
+    FOREIGN KEY(faq_category_id) REFERENCES faq_category_tb(id) 
 );
 
 -- 연재문의

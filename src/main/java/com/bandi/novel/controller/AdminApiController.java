@@ -16,9 +16,11 @@ import com.bandi.novel.dto.adminNovelUpdateFormDto;
 import com.bandi.novel.dto.response.GenreCountDto;
 import com.bandi.novel.dto.response.NovelSearchDto;
 import com.bandi.novel.dto.response.ResponseDto;
+import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.AccountService;
 import com.bandi.novel.service.AdminService;
+import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.utils.Define;
 
@@ -31,6 +33,8 @@ public class AdminApiController {
 	private NovelService novelService;
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private FaqService faqService;
 
 	
 	// 카테고리 삭제
@@ -109,4 +113,25 @@ public class AdminApiController {
 		}
 		return new ResponseDto<List<GenreCountDto>>(200, "20000", Define.REQUEST_SUCCESS, "20000", genreCountList);
 	}
+	// FAQ 카테고리 리스트 (효린)
+	@GetMapping("/api/faq/{categoryId}")
+	public List<Faq> getFaqList(@PathVariable Integer categoryId){
+		
+		List<Faq> list = null;
+		if(categoryId == 0) {
+			list = faqService.readAllFaqList();
+		}else {			
+			list = faqService.readFaqList(categoryId);
+		}
+		return list;
+	}
+	
+	@DeleteMapping("/api/faq/{id}")
+	public void deleteFaq(@PathVariable List<Integer> id) {
+		adminService.deleteFaq(id);
+		/*
+		 * id.forEach((i)->{ System.out.println(i); });
+		 */
+	}
+	
 }

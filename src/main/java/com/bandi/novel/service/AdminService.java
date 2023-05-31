@@ -1,7 +1,5 @@
 package com.bandi.novel.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,14 @@ import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.response.BestSectionDto;
 import com.bandi.novel.model.Answer;
+import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Question;
 import com.bandi.novel.model.User;
 import com.bandi.novel.model.UserRole;
 import com.bandi.novel.repository.AnswerRepository;
 import com.bandi.novel.repository.BoardCategoryRepository;
+import com.bandi.novel.repository.FaqRepository;
 import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.QuestionRepository;
 import com.bandi.novel.repository.UserNovelRecordRepository;
@@ -40,6 +40,8 @@ public class AdminService {
 	private UserRepository userRepository;
 	@Autowired
 	private UserNovelRecordRepository userNovelRecordRepository;
+	@Autowired
+	private FaqRepository faqRepository;
 	
 	/**
 	 * @return Question 전체조회
@@ -218,8 +220,41 @@ public class AdminService {
 		BestSectionDto dto = userNovelRecordRepository.selectMonthBestSection();
 		return dto;
 	}
+	/**
+	 * FAQ 생성
+	 * @param faq
+	 */
+	public void createFaq(Faq faq) {
+		
+		faqRepository.insert(faq);		
+	}
 	
+	/**
+	 * FAQ 수정
+	 * @param id
+	 */
+	public void updateFaq(Integer id) {
+		faqRepository.updateFaqById(id);
+	}
 	
+	/**
+	 * FAQ 삭제
+	 * @param id
+	 */
+	public void deleteFaq(List<Integer> id) {
+		
+		faqRepository.deleteFaq(id);
+		
+	}
+	
+	/**
+	 * FAQ 조회 
+	 * @param id
+	 * @return
+	 */
+	public Faq readFaq(Integer id) {
+		return faqRepository.findById(id);
+	}
 	
 
 }
