@@ -79,8 +79,21 @@
 					data.addRows([rowArr,]);
 				}
     	        let options = {'title':'장르 점유',
-    	                       'width':420,
-    	                       'height':350
+    	                       'width':480,
+    	                       'height':350,
+    	                       chartArea: {
+    	                           backgroundColor: {
+    	                             fill: '#FF0000',
+    	                             fillOpacity: 0.1
+    	                           },
+    	                         },
+    	                         // Colors the entire chart area, simple version
+    	                         // backgroundColor: '#FF0000',
+    	                         // Colors the entire chart area, with opacity
+    	                         backgroundColor: {
+    	                           fill: '#FF0000',
+    	                           fillOpacity: 0
+    	                         }
     	                       };
 
     	        let chart = new google.visualization.PieChart(document.getElementById('chart2'));
@@ -290,7 +303,7 @@
 	margin: 18px
 }
 
-ul{
+ul {
 	padding-left: 0;
 }
 
@@ -330,8 +343,7 @@ ul{
 		<div class="main d-flex flex-wrap justify-content-center align-items-center">
 			<div class="card card1 d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
 				<h2>오늘의 가입자 수</h2>
-				<br>
-				<br>
+				<br> <br>
 				<h3>${userCount}명</h3>
 			</div>
 			<div class="card card1 d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
