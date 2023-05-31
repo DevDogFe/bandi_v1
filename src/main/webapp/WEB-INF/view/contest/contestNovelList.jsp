@@ -46,7 +46,7 @@ ul{
 				<div>
 					<ul class="d-flex">
 						<!-- Previous 시작 -->
-						<li class=" <c:if test='${contestNovelList.currentPage == 1}'>d-none</c:if>" id=""><a href="/${map}?currentPage=${novelList.currentPage - 1}" class="page-link">Previous</a></li>
+						<li class=" <c:if test='${contestNovelList.currentPage == 1}'>d-none</c:if>" id=""><a href="/${map}?currentPage=${contestNovelList.currentPage -1}" class="page-link">Previous</a></li>
 						<!-- Previous 끝 -->
 						<!-- Page번호 시작 -->
 						<c:forEach var="pNo" begin="${contestNovelList.startPage }" end="${contestNovelList.endPage }" step="1">

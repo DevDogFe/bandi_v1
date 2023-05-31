@@ -9,11 +9,11 @@
 }
 
 body {
-    font-size: 15px;
+    font-size: 16px;
     margin: 0;
     color: #222;
     line-height: 1.5em;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* Reset CSS (초기화 css) */
@@ -52,18 +52,19 @@ ul {
 
 /* 1300px의 크기에 맞추고 싶으면 class에 inner를 사용 */
 .inner {
-    width: 1300px;
+    width: 1200px;
     margin: auto;
 }
 
 /* Header */
 header {
     /* 사진이 겹쳐져 버림(inline-block이 되기 때문에) */
-    position: fixed;
-    background-color: rgba(50, 50, 50, 0.1);
+    z-index: 2;
+    position: relative;
+    background-color: white;
     /* position: absolute; */
     /* width 100%로 width값 줘야함 */
-    width: 100%;
+    /* width: 100%; */
     /* header 변경 시간 */
     transition: 0.5s;
 }
@@ -89,7 +90,7 @@ header.active nav {
 /* Intro */
 .intro {
     height: 100vh;
-    background: url(images/bandi-intro1.jpg) no-repeat center center;
+    /* background: url(/assets/images/main/bandi-intro1.jpg) no-repeat center center; */
     background-size: cover;
     /* 가득 채우기 */
     display: flex;
@@ -122,7 +123,7 @@ header.active nav {
 
 /* 맨위 배너 */
 .lnb {
-    width: 1300px;
+    width: 1200px;
     margin: auto;
     text-align: right;
 }
@@ -143,12 +144,14 @@ header.active nav {
 
 /* nav바 */
 nav {
-    width: 1300px;
+    width: 1200px;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .logo {}
@@ -159,8 +162,8 @@ nav {
 }
 
 .gnb li a {
-    margin: 100px;
-    color: #fff;
+    margin: 30px;
+    color: #000;
 }
 
 .gnb li a:hover {
@@ -168,14 +171,10 @@ nav {
 }
 
 .gnb li a:last-child {
-    margin-right: 0;
-}
-
-.dropbtn{
-    
 }
 
 
+/* 헤더 드롭다운  */
 li.dropdown {
     display: inline-block;
 }
@@ -192,6 +191,7 @@ li.dropdown {
 .dropdown:hover .dropdown-content{
     display: block;
 }
+
 
 /* About Section */
 
@@ -248,7 +248,7 @@ li.dropdown {
 
 /* 유료 */
 .ranking.pay {
-    background-color: #f3f3f3;
+    background-color: white;
 }
 
 /* 무료 */
@@ -263,13 +263,13 @@ li.dropdown {
 
 
 .ranking-content {
-    padding: 50px 0px;
+    padding: 20px 0px;
 }
 
 .ranking-content h2 {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .items {
@@ -278,17 +278,19 @@ li.dropdown {
 }
 
 .item {
-    width: 250px;
-    height: 550px;
-    border-radius: 30px 0 30px 0px;
+	margin: 0px 10px;
+    width: 260px;
+    height: 350px;
+    /* border-radius: 30px 30px 0px 0px; */
+    border-radius: 5px;
     background-color: white;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
 .up-image {
-    width: 250px;
-    height: 290px;
+    width: 180px;
+    height: 260px;
 }
 
 .up-image img {
@@ -297,11 +299,12 @@ li.dropdown {
 }
 
 .down-desc {
-    padding: 25px;
+    padding: 5px;
 }
 
 .down-desc h3 {
-    font-size: 20px;
+    font-size: 16px;
+    text-align:center;
     padding: 15px 0px;
     /* letter-spacing: -1px;  텍스트 사이 간격 줄이기*/
     overflow: hidden;
@@ -310,7 +313,7 @@ li.dropdown {
 }
 
 .down-desc p {
-    font-size: 16px;
+    font-size: 13px;
     /* 최소 높이 지정 */
     height: 70px;
     overflow: hidden;
@@ -344,21 +347,21 @@ li.dropdown {
 
 .badge.pay {
     color: #fff;
-    padding: 5px 10px;
+    padding: 2px 10px;
     font-size: 16px;
     background-color: red;
 }
 
 .badge.free {
     color: #fff;
-    padding: 5px 10px;
+    padding: 2px 10px;
     font-size: 16px;
     background-color: blue;
 }
 
 .badge.contest {
     color: #fff;
-    padding: 5px 10px;
+    padding: 2px 10px;
     font-size: 16px;
     background-color: violet;
 }
@@ -368,7 +371,7 @@ li.dropdown {
 /* Testimonial Section */
 .testimonial {
     padding: 10px 0;
-    height: 400px;
+    height: 450px;
 }
 
 .testimonial-content {
@@ -397,6 +400,8 @@ li.dropdown {
 }
 
 .mySlider div {
+	display: flex;
+	justify-content: center;
     outline: none;
 }
 
@@ -407,8 +412,9 @@ li.dropdown {
 }
 
 .client img {
-    width: 85px;
-    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    border-radius: 5%;
     margin-right: 15px;
 }
 
@@ -429,11 +435,39 @@ li.dropdown {
     padding-right: 25px;
 }
 
+/* 상단 큰 슬라이더  */
+.big-testimonial {
+    height: 450px;
+}
+
+.big-testimonial-content {
+    text-align: center;
+}
+
+.bigSlider div {
+    outline: none;
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.big-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:1200;
+    height:430px;
+}
+
+.big-banner img {
+    width: 100%;
+    height: 100%;
+}
 
 /* 허접한 슬라이더 */
 /* top Slider */
 .testimonial2 {
-    padding: 20px 0;
+    
     height: 130px;
 }
 
@@ -443,7 +477,7 @@ li.dropdown {
 
 .topSlider div {
     outline: none;
-    margin: 0 20px;
+    margin: 0px 5px;
 }
 
 .top-banner {
@@ -453,7 +487,7 @@ li.dropdown {
 }
 
 .top-banner img {
-    width: 500px;
+    width: 400px;
     height: 100px;
 }
 
@@ -472,7 +506,7 @@ li.dropdown {
 /* CallAction Section */
 .callaction {
     height: 450px;
-    background: url(images/callaction-01.jpg) no-repeat center center;
+    background: url(/assets/images/main/callaction-01.jpg) no-repeat center center;
     background-size: cover;
     position: relative;
     display: flex;
@@ -647,6 +681,80 @@ footer {
 .help li:last-child {
     margin-top: 30px;
     color: #eee;
+}
+
+/* 세로 list 레이아웃  */
+.vertical-list{
+	height: 550px;
+}
+
+.list-header{
+	height: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items:center;
+}
+
+.list-header h2{
+	font-size: 20px;
+    font-weight: 600;
+}
+
+.list-body{
+	padding: 10px 0px;
+	height: 500px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.list-body ul{
+	list-style: none;
+	display: inline-block;
+}
+
+.list-body ul li{
+	width: 400px;
+	margin: 15px 0px;
+}
+
+.list-body ul li a{
+	display: flex;
+	color: black;
+}
+
+.li-thumbnail{
+	width: 40%;
+	height: 80px;
+	border-radius: 10px;
+}
+
+.li-thumbnail img{
+	width: 100%;
+	height: 100%;
+}
+
+.li-info-area{
+	width: 60%;
+	height: 80px;
+}
+
+.li-info-area p{
+	text-align: left;
+	margin: 0;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0px 20px;
+}
+
+.li-title{
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.li-desc{
+	font-size: 13px;
+	font-weight: 300;
 }
 
 
