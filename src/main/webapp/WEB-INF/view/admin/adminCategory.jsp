@@ -173,19 +173,13 @@
 	width: calc(100% - 78px);
 	transition: all 0.5s ease;
 	z-index: 2;
+	/* background: #f3f3f3; */
+	background: #ccc;
 }
 
 .sidebar.open ~ .main-section {
 	left: 250px;
 	width: calc(100% - 250px);
-}
-
-.main-section .main-content {
-	display: inline-block;
-	color: #11101d;
-	font-size: 25px;
-	font-weight: 500;
-	margin: 18px
 }
 
 @media ( max-width : 420px) {
@@ -261,7 +255,8 @@ input:focus ~ search-span, input:valid ~ search-span {
 	font-size: 20px;
 	width: 50px;
 	height: 35px;
-	border: none; background-color : #062647;
+	border: none;
+	background-color: #062647;
 	color: #ffffff;
 	background-color: #062647;
 	cursor: pointer;
@@ -323,11 +318,52 @@ table.table td {
 .delete-category:hover {
 	font-weight: bold;
 }
+
 .container {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
+	margin-bottom: 10px;
+	margin-top: 30px;
+	display: inline-block;
+}
+
+.main-container {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 	margin-top: 10px;
+	margin-top: 10px;
+	width: 90%;
+	height: 90%;
+	background: #ffffff;
+	margin-top: 25px;
+	box-shadow: 30px 30px 70px rgba(0, 0, 0, 0.2);
+}
+
+.nav {
+	background-color: #ffffff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	justify-content: flex-end;
+}
+
+.menu {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+}
+
+.menu li {
+	padding: 0 15px;
+	font-size: 15px;
+}
+
+.menu li a {
+	text-decoration: none;
+	color: black;
 }
 </style>
 <body>
@@ -355,7 +391,13 @@ table.table td {
 		</ul>
 	</div>
 	<section class="main-section">
-		<div class="main-content">
+		<section class="nav">
+			<ul class="menu">
+				<li><a href="#">Main</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</section>
+		<div class="main-container">
 			<div class="container">
 				<form action="/admin/category" method="post">
 					<div class="board">
@@ -365,9 +407,7 @@ table.table td {
 							</c:forEach>
 						</select>
 						<div class="search">
-							<input type="text" name="categoryName"> 
-							<label class="searchlabel">Name</label> 
-							<span class="search-span"></span>
+							<input type="text" name="categoryName"> <label class="searchlabel">Name</label> <span class="search-span"></span>
 						</div>
 						<button type="submit" id="button-add">등록</button>
 					</div>
