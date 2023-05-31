@@ -5,14 +5,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <style>
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins" , sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 .sidebar{
   position: fixed;
@@ -195,7 +195,6 @@
 		</ul>
 	</div>
 	<section class="main-section">
-		<div class="main-content">메인화면</div>
 	</section>
 	<script>
 		  let sidebar = document.querySelector(".sidebar");
