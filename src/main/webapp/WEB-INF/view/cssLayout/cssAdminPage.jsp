@@ -28,7 +28,6 @@
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin.css" />
-<link rel="stylesheet" href="/assets/css/adminReport.css" />
 
 </head>
 <body>
@@ -55,65 +54,35 @@
 				</nav>
 			</header>
 		</div>
-		<div class="sectind-flex">
-			<section>
-				<div class="sidebar">
-					<div class="logo_content">
-						<div class="logo">
-							<i class='bx bx-leaf'></i>
-							<div class="logo_name">반디</div>
-						</div>
+		<section>
+			
+			<div class="sidebar">
+				<div class="logo_content">
+					<div class="logo">
+						<i class='bx bx-leaf'></i>
+						<div class="logo_name">반디</div>
 					</div>
-					<ul class="nav_list">
-						<li><a href="/report/reportList"> <i class='bx bx-chalkboard'></i> <span class="links_name">대시보드</span>
-						</a></li>
-						<li><a href="/report/reportList"> <i class='bx bxs-bell-minus'></i> <span class="links_name">신고 게시물 처리</span>
-						</a></li>
-						<li><a href="/admin/adminCategory"> <i class='bx bx-bookmark-alt-plus'></i> <span class="links_name">카테고리 관리</span>
-						</a></li>
-						<li><a href="/admin/novelChange"> <i class='bx bx-book-reader'></i> <span class="links_name">소설 타입 변경</span>
-						</a></li>
-						<li><a href="/admin/genre"> <i class='bx bx-book-add'></i> <span class="links_name">장르 관리</span>
-						</a></li>
-						<li><a href="/admin/user"> <i class='bx bx-user'></i> <span class="links_name">사용자 변경</span>
-						</a></li>
-						<li><a href="#"> <i class='bx bx-conversation'></i> <span class="links_name">자주 묻는 질문</span>
-						</a></li>
-						<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">질의 응답</span>
-						</a></li>
-					</ul>
 				</div>
-			</section>
-			<section>
-				<div class="reportList">
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="cols">#</th>
-								<th scope="cols">신고자</th>
-								<th scope="cols">신고사유</th>
-								<th scope="cols">날짜</th>
-								<th scope="cols">확인</th>
-								<th scope="cols"></th>
-							</tr>
-						</thead>
-						<c:forEach var="list" items="${reportList}">
-							<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-							<tbody id="reportList-${list.id}" class="reportList">
-								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.username}</td>
-									<td>${list.categoryName}</td>
-									<td>${list.createdAt()}</td>
-									<td>${list.proceed}</td>
-									<td><button class="btncheck" onclick="detailPopup(${list.id})">확인</button></td>
-								</tr>
-							</tbody>
-						</c:forEach>
-					</table>
-				</div>
-			</section>
-		</div>
+				<ul class="nav_list">
+					<li><a href="/report/reportList"> <i class='bx bx-chalkboard'></i> <span class="links_name">대시보드</span>
+					</a></li>
+					<li><a href="/report/reportList"> <i class='bx bxs-bell-minus'></i> <span class="links_name">신고 게시물 처리</span>
+					</a></li>
+					<li><a href="/admin/adminCategory"> <i class='bx bx-bookmark-alt-plus'></i> <span class="links_name">카테고리 관리</span>
+					</a></li>
+					<li><a href="/admin/novelChange"> <i class='bx bx-book-reader'></i> <span class="links_name">소설 타입 변경</span>
+					</a></li>
+					<li><a href="/admin/genre"> <i class='bx bx-book-add'></i> <span class="links_name">장르 관리</span>
+					</a></li>
+					<li><a href="/admin/user"> <i class='bx bx-user'></i> <span class="links_name">사용자 변경</span>
+					</a></li>
+					<li><a href="#"> <i class='bx bx-conversation'></i> <span class="links_name">자주 묻는 질문</span>
+					</a></li>
+					<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">질의 응답</span>
+					</a></li>
+				</ul>
+			</div>
+		</section>
 	</div>
 	<footer>
 		<div class="inner">
@@ -149,13 +118,5 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript">
-			function detailPopup(id) {
-				  var url = "/report/reportDetail/" + $("#id-" + id).val();
-				  var name = "신고접수확인";
-				  var option = "width=600,height=730,top=100,left=200, location=no";
-				  window.open(url, name, option);
-				}
-		</script>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

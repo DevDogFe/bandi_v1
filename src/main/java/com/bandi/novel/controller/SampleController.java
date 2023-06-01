@@ -99,4 +99,10 @@ public class SampleController {
 
 		return "/cssLayout/cssBoardList";
 	}
+	
+	@GetMapping("/admin")
+	public String getAdmin() {
+		
+		return "/cssLayout/cssAdminPage";
+	}
 }
