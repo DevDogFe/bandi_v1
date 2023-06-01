@@ -1,0 +1,437 @@
+/* Google Web Font */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500&display=swap');
+
+/* Fontawesome 4.7 */
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+/*  reset css */
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-size: 16px;
+    margin: 0;
+    color: #222;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+/* Reset CSS (초기화 css) */
+
+a {
+    text-decoration: none;
+    cursor:pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-weight: 500;
+}
+
+input,
+button,
+textarea {
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Common CSS (공통적으로 사용되는 CSS) */
+
+/* 1300px의 크기에 맞추고 싶으면 class에 inner를 사용 */
+.inner {
+    width: 1200px;
+    margin: auto;
+}
+
+/* Header */
+header {
+    /* 사진이 겹쳐져 버림(inline-block이 되기 때문에) */
+    z-index: 2;
+    position: relative;
+    background-color: white;
+    /* position: absolute; */
+    /* width 100%로 width값 줘야함 */
+    /* width: 100%; */
+    /* header 변경 시간 */
+    transition: 0.5s;
+}
+
+/* header with active class*/
+header.active {
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+header.active .gnb li a {
+    color: #000;
+}
+
+header.active .banner {
+    display: none;
+}
+
+header.active nav {
+    padding-bottom: 5px;
+}
+
+/* Intro */
+.intro {
+    height: 100vh;
+    /* background: url(/assets/images/main/bandi-intro1.jpg) no-repeat center center; */
+    background-size: cover;
+    /* 가득 채우기 */
+    display: flex;
+    align-items: center;
+}
+
+.heading {
+    color: #ddd;
+    text-align: center;
+}
+
+.heading h1 {
+    font-size: 70px;
+    margin-bottom: 80px;
+}
+
+.heading p {
+    font-size: 22px;
+    line-height: 1.5em;
+    padding: 0 150px;
+    /* 글자 패딩 */
+}
+
+.banner {
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* 맨위 배너 */
+.lnb {
+    width: 1200px;
+    margin: auto;
+    text-align: right;
+}
+
+.lnb a {
+    color: black;
+    margin: 10px;
+}
+
+/* 배너 맨 마지막 마진없애기 */
+.lnb a:last-child {
+    margin: 0;
+}
+
+.lnb a em {
+    color: #555;
+}
+
+/* nav바 */
+nav {
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {}
+
+/* ul */
+.gnb {
+    display: flex;
+}
+
+.gnb li a {
+    margin: 30px;
+    color: #000;
+}
+
+.gnb li a:hover {
+    color: #333;
+}
+
+.gnb li a:last-child {
+}
+
+
+/* Footer */
+footer {
+    background-color: #444;
+    padding: 30px 0;
+}
+
+.footer-content {
+    display: flex;
+}
+
+/*(주) 반디*/
+.footer-top {
+    margin: 0px 0px 40px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-top ul {
+    display: flex;
+}
+
+.footer-top ul li:first-child {
+    color: #eee;
+    font-weight: 500;
+}
+
+.footer-top ul li {
+    margin: 0 20px;
+}
+
+.footer-top ul li a {
+    color: #959595;
+}
+
+.footer-top ul li a:hover {
+    text-decoration: underline;
+}
+
+/*  */
+.footer-content ul {
+    text-align: center;
+}
+
+.footer-content ul li:first-child {
+    color: #eee;
+    font-weight: 500;
+}
+
+.footer-content ul li a {
+    color: #959595;
+}
+
+.footer-content ul li a:hover {
+    text-decoration: underline;
+}
+
+.community {
+    flex: 1;
+}
+
+.network {
+    flex: 1;
+}
+
+.help {
+    flex: 2;
+}
+
+.help li {
+    color: #959595;
+}
+
+.help li:last-child {
+    margin-top: 30px;
+    color: #eee;
+}
+
+/* 상단 스크롤 바 */
+.top-wrap{
+	margin-bottom: 30px;
+}
+
+.top-wrap-nav{
+	display: flex;
+}
+
+.top-wrap-content{
+	border-bottom: 1px solid blue;
+	height: 100px;
+	display: flex;
+	align-items: center;
+}
+
+.novel-type{
+	display: inline-block;
+	margin-top:50px;
+	width: 130px;
+}
+
+.novel-type h1{
+	font-size: 30px;
+	font-weight: 500;
+}
+
+/*  여기서부터 novelList */
+
+.one-tab-list{
+	
+}
+
+.work-list{
+	display: inline-block;
+}
+
+.work-list li{
+	display: inline-block;
+	position: relative;
+	height: 310px;
+}
+
+.work-box{
+	width: 590px;
+	height: 260px;
+	display: flex;
+}
+
+.cover{
+	position:relative;
+	width: 170px;
+	height: 260px;
+}
+
+.cover a img{
+	width: 100%;
+	height: 100%;
+	border-radius:2px;
+}
+
+.detail{
+	position:relative;
+	width: 400px;
+	height: 260px;
+	margin: 0 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.desc div{
+	padding-top:10px;
+}
+
+.detail-title{
+	font-size: 21px;
+	font-weight: 500;
+	padding:5px;
+	line-height: 30px;
+}
+
+.detail-aurthor, .detail-intro{
+	font-size: 15px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-aurthor{
+	color: blue;
+	display: flex;
+	align-items: center;
+}
+
+.icon{
+	margin: 0 5px 0 0px;
+}
+
+.detail-intro{
+	height: 100px;
+}
+
+.scale span{
+	margin-right: 10px;
+}
+
+.paging{
+	padding: 30px 0px;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* 여기까지 novelList */
+
+
+/* 여기서부터 boardList */
+.board-type{
+	margin-top:50px;
+	display: flex;
+	align-items: center;
+}
+
+.board-type a{
+	color: #888;
+	font-size: 18px;
+	font-weight: bold;
+	border-right: 1px solid blue;
+	padding-right: 20px;
+	margin-right: 20px;
+}
+
+
+
+.top-footer{
+	height: 50px;
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+}
+
+.top-footer-item a{
+	font-size: 18px;
+	margin: 0px 10px;
+}
+
+.border-list-item{
+	height: 70px;
+	margin: 15px 0px;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #ddd;
+	border-radius: 1px;
+	color: #333;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.board-list-title{
+	font-size: 20px;
+	font-weight: 500;
+	margin: 7px 0px;
+}
+
+.board-list-desc{
+	font-size: 15px;
+}
+
+.list-desc-span{
+	border-right: 1px solid #aaa;
+	padding-right: 8px;
+	margin-right: 8px;
+}
+
+
+/* 여기까지 boardList */
+.blue-span{
+	color: dodgerblue;
+}

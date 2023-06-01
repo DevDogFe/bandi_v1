@@ -2,16 +2,20 @@ package com.bandi.novel.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.service.FaqService;
+import com.bandi.novel.utils.FaqPageUtil;
+import com.bandi.novel.utils.QnaPageUtil;
 
 /**
  * FAQ Controller
@@ -29,35 +33,19 @@ public class FaqController {
 	 * @param model
 	 * @return FAQ 전체조회
 	 */
-	@GetMapping("/list")	
-	public String list(Model model) {
-		
-		List<Faq> faqList = faqService.readAllFaqList();
+	@GetMapping({"/list","/list/{categoryId}"})	
+	public String list(Model model, @PathVariable(required = false) Integer categoryId, @RequestParam(defaultValue = "1") Integer currentPage) {
+		List<Faq> faqList = null;
+		if(categoryId == null) {
+			faqList = faqService.readAllFaqList();			
+		}else {
+			faqList = faqService.readFaqList(categoryId);
+		}		
 		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 10, currentPage, 5, faqList);
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("faqCategoryList",faqCategoryList);
-		
-		return "/cs/faqList";
-		
-	}
-	
-	/**
-	 * @param categoryId
-	 * @param model
-	 * @return FAQ 카테고리별 조회
-	 */
-	@GetMapping("/list/{categoryId}")
-	public String faqList(@PathVariable int categoryId, Model model) {
-		
-		List<Faq> faqList = faqService.readFaqList(categoryId);
-		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
-		model.addAttribute("faqList", faqList);		
-		model.addAttribute("faqCategoryList",faqCategoryList);
-		model.addAttribute("categoryId", categoryId);				
-		
+		model.addAttribute("faqPageUtil", faqPageUtil);
 		return "/cs/faqList";		
-	}
-	
-	
-
+	}	
 }

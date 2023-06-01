@@ -20,6 +20,12 @@
 		</select> <br>
 		<textarea rows="50" cols="50" name="content"></textarea>
 		<br>
+		
+		<input type="checkbox" name="isSecret">
+		<label> 비밀글 : 
+		<input type="text" name="password">
+		</label>
+		<br>
 		<button type="submit">질문하기</button>
 	</form>
 

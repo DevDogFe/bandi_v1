@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandi.novel.repository.AccountRepository">
+
+	<select id="selectAll" resultType="com.bandi.novel.model.Account">
+		SELECT * FROM account_tb
+	</select>
+
+	<select id="selectByMonth" resultType="com.bandi.novel.model.Account">
+		SELECT *, date_format(created_at, '%y-%m') FROM account_tb
+		where date_format(created_at, '%y-%m') = #{month}
+		ORDER BY id DESC
+	</select>
+
+	<select id="selectMonthSalesByMonth" resultType="integer">
+		SELECT *, date_format(created_at, '%y-%m') AS month, sum(sales) - sum(refund) AS minus FROM account_tb
+		where date_format(created_at, '%y-%m') = #{month}
+		GROUP BY month
+	</select>
+
+	<select id="selectMonths" resultType="string">
+		SELECT date_format(created_at, '%y-%m') AS month FROM account_tb
+		GROUP BY month;
+	</select>
+
+	<insert id="insertSalesHistory">
+		INSERT INTO account_tb (sales, memo)
+		VALUES (#{sales}, #{memo});
+	</insert>
+
+	<insert id="insertRefundHistory">
+		INSERT INTO account_tb (refund, memo)
+		VALUES (#{refund}, #{memo});
+	</insert>
+
+
+</mapper>

@@ -6,81 +6,183 @@
 <%@include file="../layout/header.jsp"%>
 
 <style>
-
-/* toggle 적용 */
+/* toggle 적용 TODO 색 변경 */
 .answer {
 	display: none;
+	box-sizing: content-box;
+	/* background-color: #f5f6f7; */
 }
 
-.faqCategory ul {
-	display: flex;
-}
-
-.faqCategory ul li {
-	margin-right: 40px;
-}
-
-/* CSS */
 * {
-	margin: 0px;
-	padding: 0px;
 	box-sizing: border-box;
 }
 
 body {
 	height: 100%;
-	box-sizing: border-box;
 	min-height: 100%;
 }
 
-.faq--list dl {
+.category--cs {
+	display: flex;
+	align-items: center;
+}
+
+.category--cs ul {
+	border: 1px solid black;
+	margin: 0 10px;
+}
+
+.category--cs ul li {
+	display: inline-block;
+	border: 1px solid black;
+	padding: 0 20px;
+}
+
+.category--cs ul li a {
 	font-size: 20px;
 }
+
+.category--faq ul {
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+	margin: 0;
+}
+
+.category--faq ul li {
+	width: 25%;
+	border: 1px solid black;
+	margin: 0px;
+	padding: 10px 0px;
+}
+
+.category--faq ul li :hover {
+	/* background-color: ; */
+	
+}
+
+.container--faq--title {
+	border: 1px solid black;
+	display: flex;
+}
+
+.container--faq {
+	width: 100%;
+	border: 1px solid black;
+	padding: 40px 50px 0;
+	margin: 50px 50px;
+}
+
+.title--faq {
+	border: 1px solid black;
+}
+
+.title--faq h3 {
+	font-size: 40px;
+	padding: 10px;
+}
+
+.category--faq {
+	border: 1px solid black;
+}
+
+.faq--list {
+	border: 1px solid black;
+}
+
+.faq--list dt {
+	padding: 10px;
+}
+
+.faq--list dt {
+	border: 1px solid black;
+	height: 48px;
+	font-weight: bold;
+	display: flex;
+}
+
+.faq--list dd {
+	border: 1px solid black;
+	height: 48px;
+	margin-bottom: 0;
+	padding: 10px;
+}
+
+.question {
+	display: flex;
+}
+
+.category--line {
+	justify-content: space-between;
+}
+
+.page--faq{
+	display: flex;
+	justify-content: center;
+
+}
 </style>
+<section>
 
-
-<div class="container">
-	<!-- 		<div class="row">
-		<div class="col-lg-12">
-			<div class="page-content">
-
-						<div class="heading-section"> -->
-	<div class="title--faq">
-		<h4>FAQ 자주 묻는 질문</h4>
-	</div>
-	<div class="faqCategory">
-		<ul>
-			<c:forEach var="category" items="${faqCategoryList}">
-				<li><a href="/faq/list/${category.id}">${category.categoryName}</a></li>
-			</c:forEach>
-		</ul>
-	</div>
-
-	<%-- 	<!-- 질문 & 답 내용 -->
-	<c:forEach var="faq" items="${faqList}">
-		<div class="faq-content">
-			<button class="question" id="que-${faq.id}">
-				<span>${faq.question}</span> <span id="toggle-${faq.id}" class="material-symbols-outlined"> expand_more </span>
-			</button>
-			<div class="answer" id="ans-${faq.id}">${faq.answer}</div>
+	<div class="container--faq">
+		<div class="container--faq--title">
+			<div class="title--faq">
+				<h3>고객 센터</h3>
+			</div>
+			<div class="category--cs">
+				<ul>
+					<li>Q&A</li>
+					<li>FAQ</li>
+					<li>공지</li>
+					<li>제휴문의</li>
+				</ul>
+			</div>
 		</div>
-	</c:forEach> --%>
 
-	<div class="faq--list">
-		<!-- 질문 & 답 내용 -->
-		<c:forEach var="faq" items="${faqList}">
+		<div class="category--faq">
+			<ul>
+				<li><a href="/faq/list">전체</a></li>
+				<c:forEach var="category" items="${faqCategoryList}">
+					<li><a href="/faq/list/${category.id}">${category.categoryName}</a></li>
+				</c:forEach>
+			</ul>
+		</div>
+
+
+
+		<div class="faq--list">
+			<!-- 질문 & 답 내용 -->
 			<dl class="faq--content">
-				<dt>
-					<a class="question" id="que-${faq.id}" onclick="openCloseAnswer(${faq.id})"> <span>${faq.question}</span> <span id="toggle-${faq.id}" class="material-symbols-outlined"> expand_more </span>
-					</a>
-				</dt>
-				<dd class="answer" id="ans-${faq.id}">${faq.answer}</dd>
+				<c:forEach var="faq" items="${faqPageUtil.content}">
+					<dt class="category--line" onclick="openCloseAnswer(${faq.id})">
+						<span>${faq.question}</span><a class="question" id="que-${faq.id}"> <span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
+						</a>
+					</dt>
+					<!-- 답 -->
+					<dd class="answer" id="ans-${faq.id}">
+						<p>
+							<span>[${faq.categoryName}]</span>&nbsp;${faq.answer}
+						</p>
+					</dd>
+				</c:forEach>
 			</dl>
-		</c:forEach>
+		</div>
+
+		<!-- 페이징 처리 -->
+		<div class="col-sm-12 col-md-7 page--faq">
+			<div class="page--faq">
+				<ul class="d-flex">
+					<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+					<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+						<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/qna/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+					</c:forEach>
+					<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+				</ul>
+			</div>
+		</div>
+		
 	</div>
-
-
-</div>
+</section>
 
 
 
