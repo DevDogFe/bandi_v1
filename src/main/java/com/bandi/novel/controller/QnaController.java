@@ -86,7 +86,7 @@ public class QnaController {
 		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
 		model.addAttribute("faqCategorylist", faqCategorylist);
 
-		return "/cs/questionForm";
+		return "/cs/questionWriteForm";
 	}
 
 	@PostMapping("/write")

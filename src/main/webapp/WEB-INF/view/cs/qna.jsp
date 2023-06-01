@@ -25,18 +25,21 @@
 
 .qna--button a {
 	border: 1px solid black;
-	padding: 10px;
-	margin-top: 10px; 
+	padding: 0 20px;
 }
 
 .qna--page {
 	display: flex;
 	justify-content: center;
 }
+
+table{
+	text-align: center;
+}
 </style>
 
 <div class="qna--container">
-
+	<br>
 	<div class="qna--table">
 		<table class="table">
 			<thead>
@@ -74,7 +77,7 @@
 			</tbody>
 		</table>
 	</div>
-
+	<br>
 	<div class="qna--bottom">
 		<!-- 검색 -->
 		<div class="qna--search">
@@ -88,7 +91,7 @@
 				<button type="submit">검색</button>
 			</form>
 		</div>
-
+		
 		<!-- button -->
 		<div class="qna--button">
 			<a href="/qna/write">문의하기</a> <a href="/faq/list">자주묻는질문</a>
