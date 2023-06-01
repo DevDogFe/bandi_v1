@@ -99,4 +99,10 @@ public class SampleController {
 
 		return "/cssLayout/cssBoardList";
 	}
+	
+	@GetMapping("/readSection")
+	public String getReadSection() {
+
+		return "/cssLayout/cssReadSection";
+	}
 }
