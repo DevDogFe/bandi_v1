@@ -58,7 +58,7 @@ section img {
 }
 
 .favorite--star {
-	color: #FFEB3B;
+	color: #FDD835;
 	font-size: 40px;
 }
 
@@ -91,7 +91,7 @@ section img {
 							<div>장르</div>
 							<div>${detail.genreName}</div>
 							<div>작가</div>
-							<div>${detail.username}</div>
+							<div>${detail.nickName}</div>
 							<div>작품 등록일</div>
 							<div>${detail.createdAt()}</div>
 							<div>즐겨찾기</div>

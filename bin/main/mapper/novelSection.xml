@@ -3,14 +3,21 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.NovelSectionRepository">
 
+	<select id="selectFirstSectionByNovelId" resultType="integer">
+		SELECT id
+		FROM novel_section_tb
+		WHERE novel_id = #{novel_id}
+		LIMIT 1
+	</select>
+
 	<select id="selectListByNovelId" resultType="com.bandi.novel.dto.response.SectionListDto">
 		SELECT ns.*, s.score
 		FROM novel_section_tb AS ns
 		LEFT JOIN
 		(
-			SELECT section_id, avg(score) AS score
-			FROM score_tb
-			GROUP BY section_id
+		SELECT section_id, avg(score) AS score
+		FROM score_tb
+		GROUP BY section_id
 		) AS s
 		ON ns.id = s.section_id
 		ORDER BY ns.id DESC
@@ -43,14 +50,14 @@
 	</select>
 
 
-	<select id="selectNovelByPage"
-		resultType="com.bandi.novel.dto.response.SectionDto">
+	<select id="selectNovelByPage" resultType="com.bandi.novel.dto.response.SectionDto">
 		SELECT *
 		FROM(
 		SELECT
 		id,novel_id,title,content,created_at,recommend,
 		favorite,views,list_price,current_price,
-		LAG(id, 1, 0) OVER(ORDER BY id ASC) AS prev_id,
+		LAG(id, 1, 0) OVER(ORDER BY id ASC) AS
+		prev_id,
 		LAG(title, 1, '이전글이 없습니다') OVER (ORDER BY id) AS prev_title,
 		LEAD(id, 1, 0) OVER(ORDER BY id ASC) AS next_id,
 		LEAD(title, 1, '다음글이 없습니다')
@@ -72,53 +79,55 @@
 	<!-- FORMATDATETIME MYSQL로 변환 시에 DATE_FORMAT으로 변경 -->
 	<select id="selectPurchaseRentalRecord" resultType="com.bandi.novel.dto.response.UserPurchaseRentalRecord">
 		select ns.id,up.section_id as purchase_section_id,
-					ur.section_id as rental_section_id
-					,DATE_FORMAT(ur.begin_rental, '%Y-%m-%d %H:%i:%s') as begin_rental
-					,DATE_FORMAT(ur.end_rental, '%Y-%m-%d %H:%i:%s') as end_rental
+		ur.section_id as rental_section_id
+		,DATE_FORMAT(ur.begin_rental, '%Y-%m-%d %H:%i:%s') as begin_rental
+		,DATE_FORMAT(ur.end_rental, '%Y-%m-%d %H:%i:%s') as end_rental
 		from novel_section_tb as ns
 		left join
 		(
-			select * 
-			from 
-			user_purchase_tb 
-			where user_id = #{userId}
+		select *
+		from
+		user_purchase_tb
+		where user_id = #{userId}
 		) as up
 		on ns.id = up.section_id
 		left join
 		(
-			select * 
-			from user_rental_tb 
-			where user_id = #{userId} and (end_rental > now())
+		select *
+		from user_rental_tb
+		where user_id = #{userId} and (end_rental > now())
 		) as ur
 		on ns.id = ur.section_id
 		where ns.novel_id = #{novelId}
 		order by id desc
 	</select>
-	
+
 	<select id="selectPurchaseRentalRecordByIds" resultType="com.bandi.novel.dto.response.UserPurchaseRentalRecord">
 		select ns.id,up.section_id as purchase_section_id,
-					ur.section_id as rental_section_id
-					,ur.begin_rental
-					,ur.end_rental
+		ur.section_id as rental_section_id
+		,ur.begin_rental
+		,ur.end_rental
 		from novel_section_tb as ns
 		left join
 		(
-			select * 
-			from 
-			user_purchase_tb 
-			where user_id = #{userId} and section_id = #{sectionId}
+		select *
+		from
+		user_purchase_tb
+		where user_id = #{userId} and section_id = #{sectionId}
 		) as up
 		on ns.id = up.section_id
 		left join
 		(
-			select * 
-			from user_rental_tb 
-			where user_id = #{userId} and (end_rental > now()) and section_id = #{sectionId}
-			order by end_rental desc
+		select *
+		from user_rental_tb
+		where user_id = #{userId} and (end_rental > now()) and section_id = #{sectionId}
+		order by end_rental desc
 		) as ur
 		on ns.id = ur.section_id
 		where ns.novel_id = #{novelId} and ns.id = #{sectionId}
 		order by id desc
 	</select>
+
+
 
 </mapper>
