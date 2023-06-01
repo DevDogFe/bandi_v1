@@ -36,5 +36,5 @@ public interface RecommendRepository {
 	 */
 	List<RecommendFavoritesDto> selectByFavoriteGenre(Integer userId);
 	// 이 소설을 본 사람들이 좋아하는 소설추천
-	List<RecommendFavoritesDto> selectFavoriteNovelByUsers(Integer novelId);
+	List<RecommendFavoritesDto> selectRecommendedNovelByNovelId(Integer novelId);
 }

@@ -92,9 +92,9 @@ public class RecommendService {
 	 * @return 소설리스트
 	 */
 	@Transactional
-	public List<RecommendFavoritesDto> selectFavoriteNovelByUsers(Integer novelId){
+	public List<RecommendFavoritesDto> selectOtherRecommendedNovelByNovelId(Integer novelId){
 		
-		List<RecommendFavoritesDto> list = recommendRepository.selectFavoriteNovelByUsers(novelId);
+		List<RecommendFavoritesDto> list = recommendRepository.selectRecommendedNovelByNovelId(novelId);
 		return list;
 	}
 

@@ -145,8 +145,8 @@
 	</select>
 
 	<!-- 이 소설을 본 사람들이 즐겨찾기한 소설 (효린) -->
-	<select id="selectFavoriteNovelByUsers" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
-		select n.*, g.name, nick_name as author
+	<select id="selectRecommendedNovelByNovelId" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
+		select n.*, g.name AS genre_name, nick_name as author
 		from novel_tb as n
 		INNER JOIN user_favorite_tb as uf
 		on n.id = uf.novel_id
@@ -163,6 +163,7 @@
 		n.id
 		where n.id = #{id}
 		)
+		AND n.id != #{id}
 		GROUP BY novel_id
 		ORDER BY count(*) DESC
 		LIMIT 5;

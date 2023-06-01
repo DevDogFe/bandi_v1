@@ -217,6 +217,9 @@ public class NovelController {
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		// 소설 구매, 대여 여부 리스트
 		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
+		
+		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
+		
 
 		// 즐겨찾기 여부
 		if (principal != null) {
@@ -227,6 +230,7 @@ public class NovelController {
 		model.addAttribute("detail", novelDetailDto);
 		model.addAttribute("favorite", favorite);
 		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("recommendList", recommendList);
 
 		return "/novel/novelDetail";
 	}
@@ -329,7 +333,7 @@ public class NovelController {
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
 		// 효린
-		List<RecommendFavoritesDto> favoriteList = recommendService.selectFavoriteNovelByUsers(novelId);
+		List<RecommendFavoritesDto> favoriteList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
 		model.addAttribute("favoriteList", favoriteList);		
 
 		return "/novel/readSection";

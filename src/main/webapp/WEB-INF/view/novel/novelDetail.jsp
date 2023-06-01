@@ -22,9 +22,9 @@
 	justify-content: space-between;
 }
 
-section img {
-	width: 150px;
-	height: 200px;
+.novel--header img {
+	width: 180px;
+	height: 240px;
 }
 
 .btn--container button {
@@ -62,9 +62,115 @@ section img {
 	font-size: 40px;
 }
 
-.favorite--container{
-	text-align: right;
+.favorite--container {
 	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+
+.first--btn {
+	font-size: 18px;
+	padding: 8px 15px;
+	background-color: #92D400;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	margin-right: 15px;
+}
+
+.list--title {
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	padding-left: 15px;
+}
+
+.list--detail {
+	color: #aaa;
+	margin-top: 5px;
+	padding-left: 15px;
+}
+
+.list--status {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.status--td div {
+	text-align: center;
+}
+
+.status--td {
+	height: 100%;
+}
+
+.status--buy {
+	margin-top: 20px;
+}
+
+.status--rent {
+	margin-top: 8px;
+}
+
+.bottom--container {
+	display: flex;
+	border-top: 1px solid #ccc;
+	margin-top: 30px;
+}
+
+.bottom--article {
+	flex: 10;
+	border-right: 1px solid #aaa;
+	padding: 30px;
+}
+
+.bottom--aside {
+	flex: 3;
+	padding: 30px;
+}
+
+.list--head {
+	border-bottom: 3px solid black;
+}
+
+.rec--box {
+	display: flex;
+	margin-bottom: 15px;
+	max-width: 290px;
+	overflow: hidden;
+}
+
+.rec--box img {
+	width: 120px;
+	height: 150px;
+	margin-right: 30px;
+}
+
+.rec--title {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+    display: block;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.rec--detail {
+	color: #aaa;
+}
+
+.rec--info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.aside--head{
+	text-align: center;
+	margin-bottom: 20px;
 }
 </style>
 <input type="hidden" id="novelId" value="${detail.id}">
@@ -72,7 +178,7 @@ section img {
 	<article>
 		<div class="novel--header d-flex justify-content-start align-items-start">
 			<div class="d-flex flex-fill">
-				<div class="me-3">
+				<div class="me-4">
 					<c:choose>
 						<c:when test="${detail.cover != null }">
 							<img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }">
@@ -104,6 +210,7 @@ section img {
 					</div>
 				</div>
 				<div class="favorite--container">
+					<button class="first--btn" onclick="location.href='/section/read/${detail.id}/${detail.firstSectionId}?serviceTypeId=${detail.serviceTypeId}'">1회 보기</button>
 					<c:if test="${principal != null }">
 						<c:choose>
 							<c:when test="${isFavorite }">
@@ -151,101 +258,125 @@ section img {
 			</c:if>
 
 		</div>
-		<c:choose>
-			<c:when test="${empty sectionList}">
-				<h3>아직 글이 없습니다.</h3>
-			</c:when>
-			<c:otherwise>
-				<table class="table">
-					<thead>
-						<tr class="table-secondary">
-							<td>번호</td>
-							<td>제목</td>
-							<td>상태</td>
-							<td>등록일</td>
-							<td>조회수</td>
-							<td>평점</td>
-						</tr>
-					</thead>
-					<tbody>
-						<c:set var="count" value="${sectionList.size()}"></c:set>
-						<c:forEach items="${sectionList}" var="section" varStatus="vs">
-							<c:choose>
-								<c:when test="${section.userId != null}">
-									<tr class="table-info">
-										<td>${sectionList.size() - vs.index}</td>
-										<td><a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link">${section.title}</a></td>
-										<c:choose>
-											<c:when test="${paymentList[vs.index] != null }">
-												<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
+		<div class="bottom--container">
+			<div class="bottom--article">
+				<c:choose>
+					<c:when test="${empty sectionList}">
+						<h3>아직 글이 없습니다.</h3>
+					</c:when>
+					<c:otherwise>
+						<table class="table section--list">
+							<colgroup>
+								<col style="width: 70%;">
+								<col style="width: 30%;">
+							</colgroup>
+							<tr class="list--head">
+								<td colspan="2"><div class="list--title" style="text-align: center">회차목록</div></td>
+							</tr>
+							<c:forEach items="${sectionList}" var="section" varStatus="vs">
+								<c:choose>
+									<c:when test="${section.userId != null}">
+										<tr class="table-info">
+											<td>
+												<div class="list--title">
+													<a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
+												</div>
+												<div class="list--detail">
+													${section.createdAt()}&nbsp;&nbsp;<i class='bx bx-show'></i>&nbsp;${section.views}&nbsp;&nbsp;<i class='bx bxs-star'></i>
 													<c:choose>
-														<c:when test="${paymentList[vs.index].purchaseSectionId != null}">
-															<td>구매 중</td>
-														</c:when>
-														<c:otherwise>
-															<td>대여 : ${paymentList[vs.index].endFormat()}까지</td>
-														</c:otherwise>
-													</c:choose>
-												</c:if>
-											</c:when>
-											<c:otherwise>
-												<td>${vs.index}</td>
-											</c:otherwise>
-										</c:choose>
-										<td>${section.createdAt()}</td>
-										<td>${section.views}</td>
-										<td><c:choose>
-												<c:when test="${empty section.score }">
+														<c:when test="${empty section.score }">
 													-
 												</c:when>
-												<c:otherwise>
+														<c:otherwise>
 													${section.score()}
 												</c:otherwise>
-											</c:choose></td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<tr class="table-default">
-										<td>${sectionList.size() - vs.index}</td>
-										<td><a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link">${section.title}</a></td>
-										<c:choose>
-											<c:when test="${paymentList[vs.index] != null }">
-												<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
-													<c:choose>
-														<c:when test="${paymentList[vs.index].purchaseSectionId != null}">
-															<td>구매 중</td>
-														</c:when>
-														<c:otherwise>
-															<td>대여 : ${paymentList[vs.index].endFormat()}까지</td>
-														</c:otherwise>
 													</c:choose>
-												</c:if>
-												<c:if test="${paymentList[vs.index].purchaseSectionId == null && paymentList[vs.index].rentalSectionId == null}">
-													<td></td>
-												</c:if>
-											</c:when>
-											<c:otherwise>
-												<td>${vs.index}</td>
-											</c:otherwise>
-										</c:choose>
-										<td>${section.createdAt()}</td>
-										<td>${section.views}</td>
-										<td><c:choose>
-												<c:when test="${empty section.score }">
-													-
+												</div>
+											</td>
+											<c:choose>
+												<c:when test="${paymentList[vs.index] != null }">
+													<c:if test="${paymentList[vs.index].purchaseSectionId != null || paymentList[vs.index].rentalSectionId != null}">
+														<c:choose>
+															<c:when test="${paymentList[vs.index].purchaseSectionId != null}">
+																<td class="status--td">
+																	<div class="list--status status--buy">구매 완료</div>
+																</td>
+															</c:when>
+															<c:otherwise>
+																<td class="status--td">
+																	<div class="list--status status--rent">대여 중</div>
+																	<div class="list--detail">(만료: ${paymentList[vs.index].endFormat()})</div>
+																</td>
+															</c:otherwise>
+														</c:choose>
+													</c:if>
 												</c:when>
 												<c:otherwise>
-													${section.score}
+													<td class="status--td">
+														<div class="list--status status--buy">🟡${section.listPrice}G</div>
+													</td>
 												</c:otherwise>
-											</c:choose></td>
-									</tr>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</tbody>
-				</table>
-			</c:otherwise>
-		</c:choose>
+											</c:choose>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<tr class="table-default">
+											<td>
+												<div class="list--title">
+													<a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
+												</div>
+												<div class="list--detail">
+													${section.createdAt()}&nbsp;&nbsp;<i class='bx bx-show'></i>&nbsp;${section.views}&nbsp;&nbsp;<i class='bx bxs-star'></i>
+													<c:choose>
+														<c:when test="${empty section.score }">
+													-
+												</c:when>
+														<c:otherwise>
+													${section.score()}
+												</c:otherwise>
+													</c:choose>
+												</div>
+											</td>
+											<td class="status--td">
+												<div class="list--status status--buy">${section.listPrice}G</div>
+											</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</table>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div class="bottom--aside">
+				<div>
+					<h3 class="mb-3 aside--head">
+						<b>맞춤 추천</b>
+					</h3>
+					<c:forEach items="${recommendList }" var="novel">
+						<div class="rec--box">
+							<div>
+								<a href="/novel/detail/${novel.id }"> <c:choose>
+										<c:when test="${novel.cover != null }">
+											<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+										</c:when>
+										<c:otherwise>
+											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+										</c:otherwise>
+									</c:choose>
+								</a>
+							</div>
+							<div class="rec--info">
+								<div class="rec--title">
+									<a href="/novel/detail/${novel.id }">${novel.title }</a>
+								</div>
+								<div class="rec--detail">${novel.genreName }&nbsp;&nbsp;${novel.author}</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
 	</article>
 </section>
 <script type="text/javascript">

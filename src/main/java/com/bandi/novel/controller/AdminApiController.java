@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,10 +82,9 @@ public class AdminApiController {
 	
 	// 유저롤 수정 
 	@PostMapping("/api/userRole")
-	public Integer updateUserRoleProc(@RequestBody User user) {
-		int userRolse = adminService.updateUserRole(user);
-		System.out.println(user.toString());
-		return userRolse;
+	public ResponseDto<Integer> updateUserRoleProc(@RequestBody User user) {
+		Integer userRolse = adminService.updateUserRole(user);
+		return new ResponseDto<Integer>(200, "20000", "수정완료", "20000", userRolse);
 	}
 	
 	/**

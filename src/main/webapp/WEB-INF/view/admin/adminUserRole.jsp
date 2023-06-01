@@ -475,7 +475,7 @@ table.table td {
 	        userRole: selectedUserRole
 	      })
 	    }).done(function(response) {
-	    	alert("수정 성공");
+	    	alert(response.message);
 	    }).fail(function(error) {
 	      alert("요청 실패");
 	    });
