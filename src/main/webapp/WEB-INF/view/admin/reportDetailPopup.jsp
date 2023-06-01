@@ -45,7 +45,7 @@ input[type='text'], textarea {
 	border: none;
 	border-radius: 12px;
 	color: #ffffff;
-	background-color: #4b77cd;
+	background-color: #3b6bc9;
 	padding: 0.8rem 1rem;
 	width: 30%;
 }
