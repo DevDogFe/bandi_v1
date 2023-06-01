@@ -173,18 +173,13 @@
 	width: calc(100% - 78px);
 	transition: all 0.5s ease;
 	z-index: 2;
+	/* background: #f3f3f3; */
+	background: #ccc;
 }
 
 .sidebar.open ~ .main-section {
 	left: 250px;
 	width: calc(100% - 250px);
-}
-
-.main-section .main-content {
-	display: inline-block;
-	font-size: 25px;
-	font-weight: 500;
-	margin: 18px
 }
 
 @media ( max-width : 420px) {
@@ -235,11 +230,52 @@ table.table td {
 .btn-check:hover {
 	font-weight: bold;
 }
+
 .container {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
+	margin-bottom: 10px;
+	margin-top: 30px;
+	display: inline-block;
+}
+
+.main-container {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 	margin-top: 10px;
+	margin-top: 10px;
+	width: 90%;
+	height: 90%;
+	background: #ffffff;
+	margin-top: 25px;
+	box-shadow: 30px 30px 70px rgba(0, 0, 0, 0.2);
+}
+
+.nav {
+	background-color: #ffffff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	justify-content: flex-end;
+}
+
+.menu {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+}
+
+.menu li {
+	padding: 0 15px;
+	font-size: 15px;
+}
+
+.menu li a {
+	text-decoration: none;
+	color: black;
 }
 </style>
 <body>
@@ -268,32 +304,40 @@ table.table td {
 		</ul>
 	</div>
 	<section class="main-section">
-		<div class="container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="cols">#</th>
-						<th scope="cols">신고자</th>
-						<th scope="cols">신고사유</th>
-						<th scope="cols">날짜</th>
-						<th scope="cols">확인</th>
-						<th scope="cols"></th>
-					</tr>
-				</thead>
-				<c:forEach var="list" items="${reportList}">
-					<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-					<tbody id="reportList-${list.id}" class="reportList">
+		<section class="nav">
+			<ul class="menu">
+				<li><a href="#">Main</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</section>
+		<div class="main-container">
+			<div class="container">
+				<table class="table">
+					<thead>
 						<tr>
-							<th scope="row">${list.id}</th>
-							<td>${list.username}</td>
-							<td>${list.categoryName}</td>
-							<td>${list.createdAt()}</td>
-							<td>${list.proceed}</td>
-							<td><button class="btn-check" onclick="detailPopup(${list.id})">확인</button></td>
+							<th scope="cols">#</th>
+							<th scope="cols">신고자</th>
+							<th scope="cols">신고사유</th>
+							<th scope="cols">날짜</th>
+							<th scope="cols">확인</th>
+							<th scope="cols"></th>
 						</tr>
-					</tbody>
-				</c:forEach>
-			</table>
+					</thead>
+					<c:forEach var="list" items="${reportList}">
+						<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
+						<tbody id="reportList-${list.id}" class="reportList">
+							<tr>
+								<th scope="row">${list.id}</th>
+								<td>${list.username}</td>
+								<td>${list.categoryName}</td>
+								<td>${list.createdAt()}</td>
+								<td>${list.proceed}</td>
+								<td><button class="btn-check" onclick="detailPopup(${list.id})">확인</button></td>
+							</tr>
+						</tbody>
+					</c:forEach>
+				</table>
+			</div>
 		</div>
 	</section>
 	<script>

@@ -173,6 +173,8 @@
 	width: calc(100% - 78px);
 	transition: all 0.5s ease;
 	z-index: 2;
+	/* background: #f3f3f3; */
+	background: #ccc;
 }
 
 .sidebar.open ~ .main-section {
@@ -288,7 +290,22 @@ table.table td {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
+	margin-bottom: 10px;
+	margin-top: 30px;
+	display: inline-block;
+}
+
+.main-container {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 	margin-top: 10px;
+	margin-top: 10px;
+	width: 90%;
+	height: 90%;
+	background: #ffffff;
+	margin-top: 25px;
+	box-shadow: 30px 30px 70px rgba(0, 0, 0, 0.2);
 }
 
 #delete-genre {
@@ -300,6 +317,31 @@ table.table td {
 
 #delete-genre:hover {
 	font-weight: bold;
+}
+
+.nav {
+	background-color: #ffffff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	justify-content: flex-end;
+}
+
+.menu {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+}
+
+.menu li {
+	padding: 0 15px;
+	font-size: 15px;
+}
+
+.menu li a {
+	text-decoration: none;
+	color: black;
 }
 </style>
 <body>
@@ -328,29 +370,37 @@ table.table td {
 		</ul>
 	</div>
 	<section class="main-section">
-		<div class="container">
-			<form action="/admin/genre" method="post">
-				<div class="search">
-					<input type="text" name="name"> <label class="searchlabel">Name</label> <span class="search-span"></span>
-				</div>
-				<button type="submit" id="button-add">등록</button>
-			</form>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">장르</th>
-						<th scope="col"></th>
-					</tr>
-				</thead>
-				<c:forEach var="list" items="${genreList}">
-					<tbody id="genreList" class="genre">
+		<section class="nav">
+			<ul class="menu">
+				<li><a href="#">Main</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</section>
+		<div class="main-container">
+			<div class="container">
+				<form action="/admin/genre" method="post">
+					<div class="search">
+						<input type="text" name="name"> <label class="searchlabel">Name</label> <span class="search-span"></span>
+					</div>
+					<button type="submit" id="button-add">등록</button>
+				</form>
+				<table class="table">
+					<thead>
 						<tr>
-							<td>${list.name}</td>
-							<td><button id="delete-genre" onclick="deleteGenre(${list.id})">삭제</button></td>
+							<th scope="col">장르</th>
+							<th scope="col"></th>
 						</tr>
-					</tbody>
-				</c:forEach>
-			</table>
+					</thead>
+					<c:forEach var="list" items="${genreList}">
+						<tbody id="genreList" class="genre">
+							<tr>
+								<td>${list.name}</td>
+								<td><button id="delete-genre" onclick="deleteGenre(${list.id})">삭제</button></td>
+							</tr>
+						</tbody>
+					</c:forEach>
+				</table>
+			</div>
 		</div>
 	</section>
 	<script>

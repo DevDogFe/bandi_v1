@@ -38,6 +38,7 @@
 			<label for="formFileMultiple" class="form-label">파일 선택</label> <input class="form-control" type="file" name="files" id="formFileMultiple" multiple>
 		</div>
 		<button type="submit" class="btn btn-light">수정</button>
+		<button type="button" class="btn btn-light" onclick="location.href='/board/detail/${boardDetail.id}'">취소</button>
 	</form>
 	<script type="text/javascript">
 		function deleteFile(id) {
