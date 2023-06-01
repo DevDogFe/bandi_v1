@@ -12,6 +12,9 @@ import com.bandi.novel.model.NovelSection;
 
 @Mapper
 public interface NovelSectionRepository {
+	
+	// 첫화 찾기
+	Integer selectFirstSectionByNovelId(Integer novelId);
 
 	List<SectionListDto> selectListByNovelId(Integer id);
 

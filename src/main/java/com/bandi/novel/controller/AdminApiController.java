@@ -1,6 +1,7 @@
 package com.bandi.novel.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bandi.novel.dto.adminNovelUpdateFormDto;
+import com.bandi.novel.dto.response.GenreCountDto;
 import com.bandi.novel.dto.response.NovelSearchDto;
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.User;
+import com.bandi.novel.service.AccountService;
 import com.bandi.novel.service.AdminService;
 import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.utils.Define;
 
 @RestController
 public class AdminApiController {
@@ -26,6 +31,8 @@ public class AdminApiController {
 	private AdminService adminService;
 	@Autowired
 	private NovelService novelService;
+	@Autowired
+	private AccountService accountService;
 	@Autowired
 	private FaqService faqService;
 
@@ -80,6 +87,32 @@ public class AdminApiController {
 		return userRolse;
 	}
 	
+	/**
+	 * @author 김지현
+	 * @return 이달 매출과 환불 금액
+	 */
+	@GetMapping("/api/monthSales")
+	public ResponseDto<?> getMonthSales(){
+		Map<String, Integer> salesMap = accountService.selectSalesAndRefundOfThisMonth();
+		if(salesMap == null) {
+			return new ResponseDto<Boolean>(500, "50000", Define.REQUEST_FAIL, "50000", null);
+		}
+		
+		return new ResponseDto<Map<String, Integer>>(200, "20000", Define.REQUEST_SUCCESS, "20000", salesMap);
+	}
+
+	/**
+	 * @author 김지현
+	 * @return 장르 점유
+	 */
+	@GetMapping("/api/genre")
+	public ResponseDto<?> getGenreCount(){
+		List<GenreCountDto> genreCountList = novelService.selectGenreCount();
+		if(genreCountList == null) {
+			return new ResponseDto<Boolean>(500, "50000", Define.REQUEST_FAIL, "50000", null);
+		}
+		return new ResponseDto<List<GenreCountDto>>(200, "20000", Define.REQUEST_SUCCESS, "20000", genreCountList);
+	}
 	// FAQ 카테고리 리스트 (효린)
 	@GetMapping("/api/faq/{categoryId}")
 	public List<Faq> getFaqList(@PathVariable Integer categoryId){

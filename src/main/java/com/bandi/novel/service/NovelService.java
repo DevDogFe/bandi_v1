@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.adminNovelUpdateFormDto;
+import com.bandi.novel.dto.response.GenreCountDto;
 import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
@@ -80,7 +81,6 @@ public class NovelService {
 
 		if (result != 1) {
 			// 던지기
-			System.out.println("insertNovelResult: " + result);
 		}
 	}
 
@@ -92,13 +92,10 @@ public class NovelService {
 	@Transactional
 	public List<NovelDto> selectPayNovelList(Integer genreId, String search, String sort) {
 		
-		System.out.println(genreId + " / " + search);
 
 		if (genreId != null || search != null) {
-			System.out.println("11111111111");
 			return novelRepository.selectPayNovelsByGenreIdAndName(genreId, search, sort);
 		}
-		System.out.println(sort);
 		return novelRepository.selectPayNovels(sort);
 	}
 
@@ -126,7 +123,10 @@ public class NovelService {
 	@Transactional
 	public NovelDetailDto selectNovelDetailById(Integer id) {
 
-		return novelRepository.selectNovelDetailByNovelId(id);
+		NovelDetailDto dto = novelRepository.selectNovelDetailByNovelId(id);
+		dto.setFirstSectionId(novelSectionRepository.selectFirstSectionByNovelId(id));
+		
+		return dto;
 	}
 
 	// 전체 소설 검색(관리자 페이지에서 사용함)
@@ -237,6 +237,13 @@ public class NovelService {
 	@Transactional
 	public List<MyFavoriteDto> selectMyNovels(Integer userId, Integer limit) {
 		return novelRepository.selectMyNovelsByUserId(userId, limit);
+	}
+	
+	// 장르 점유 조회
+	@Transactional
+	public List<GenreCountDto> selectGenreCount(){
+		List<GenreCountDto> GenreCountlist = novelRepository.selectGenreCount();
+		return GenreCountlist;
 	}
 
 }

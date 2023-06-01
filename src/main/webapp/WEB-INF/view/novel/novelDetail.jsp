@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../layout/header.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <style type="text/css">
 .list--link {
 	text-decoration: none;
@@ -26,16 +27,52 @@ section img {
 	height: 200px;
 }
 
-.btn--container button{
+.btn--container button {
 	margin: 6px 0px 6px 8px;
+}
+
+.detail--information {
+	color: gray;
+}
+
+.detail--information div {
+	margin-right: 10px;
+}
+
+.novel--header {
+	width: 100%;
+}
+
+.detail--overview {
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.novel--title {
+	font-weight: bold;
+}
+
+.favorite--btn {
+	background: none;
+	border: none;
+}
+
+.favorite--star {
+	color: #FDD835;
+	font-size: 40px;
+}
+
+.favorite--container{
+	text-align: right;
+	flex: 1;
 }
 </style>
 <input type="hidden" id="novelId" value="${detail.id}">
 <section>
 	<article>
-		<div class="novel--header d-flex justify-content-center align-items-start">
-			<div class="d-flex m-4">
-				<div class="me-5">
+		<div class="novel--header d-flex justify-content-start align-items-start">
+			<div class="d-flex flex-fill">
+				<div class="me-3">
 					<c:choose>
 						<c:when test="${detail.cover != null }">
 							<img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }">
@@ -45,29 +82,43 @@ section img {
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<table class="detail--table">
-					<tr>
-						<th class="left--col"><span>제</span><span>목</span></th>
-						<th>${detail.title}</th>
-					</tr>
-					<tr>
-						<th class="left--col"><span>장</span><span>르</span></th>
-						<th>${detail.genreName}</th>
-					</tr>
-					<tr>
-						<th class="left--col"><span>작</span><span>가</span></th>
-						<th>${detail.username}</th>
-					</tr>
-					<tr>
-						<th class="left--col">작품 등록일</th>
-						<th>${detail.createdAt()}</th>
-					</tr>
-					<tr>
-						<th class="left--col"><span>즐</span><span>겨</span><span>찾</span><span>기</span></th>
-						<th>${favorite}</th>
-					</tr>
-
-				</table>
+				<div class="d-flex flex-column justify-content-between">
+					<div>
+						<div>
+							<h2 class="d-flex novel--title">${detail.title}</h2>
+						</div>
+						<div class="d-flex detail--information detail">
+							<div>장르</div>
+							<div>${detail.genreName}</div>
+							<div>작가</div>
+							<div>${detail.nickName}</div>
+							<div>작품 등록일</div>
+							<div>${detail.createdAt()}</div>
+							<div>즐겨찾기</div>
+							<div>${favorite}</div>
+						</div>
+					</div>
+					<div class="detail--overview">
+						<div>작품소개</div>
+						<div>${detail.overview}</div>
+					</div>
+				</div>
+				<div class="favorite--container">
+					<c:if test="${principal != null }">
+						<c:choose>
+							<c:when test="${isFavorite }">
+								<button type="button" class="favorite--btn" id="unfavorite">
+									<i class='bx bxs-star favorite--star'></i>
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="favorite--btn" id="favorite">
+									<i class='bx bx-star favorite--star'></i>
+								</button>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</div>
 			</div>
 		</div>
 		<!-- Modal -->
@@ -98,16 +149,7 @@ section img {
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">표지 등록하기</button>
 				<button onclick="location.href='/section/registration/${detail.id}'" class="btn btn btn-secondary">글 쓰기</button>
 			</c:if>
-			<c:if test="${principal != null }">
-				<c:choose>
-					<c:when test="${isFavorite }">
-						<button type="button" class="btn btn-secondary" id="unfavorite">즐겨찾기 해제</button>
-					</c:when>
-					<c:otherwise>
-						<button type="button" class="btn btn-success" id="favorite">즐겨찾기 추가</button>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
+
 		</div>
 		<c:choose>
 			<c:when test="${empty sectionList}">

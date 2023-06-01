@@ -9,9 +9,9 @@ import lombok.Data;
 @Data
 public class NovelDetailDto {
 	
-	private int id;
-	private int userId;
-	private int serviceTypeId;
+	private Integer id;
+	private Integer userId;
+	private Integer serviceTypeId;
 	private String serviceTypeName;
 	private String title;
 	private String overview;
@@ -20,6 +20,8 @@ public class NovelDetailDto {
 	private Timestamp createdAt;
 	private String username;
 	private String genreName;
+	private String nickName;
+	private Integer firstSectionId;
 	
 	public String createdAt() {
 		return TimestampFormat.format(createdAt);

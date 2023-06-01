@@ -16,6 +16,7 @@ import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
+import com.bandi.novel.dto.response.BestSectionDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
@@ -267,6 +268,26 @@ public class AdminController {
 		 model.addAttribute("faqCategoryList", faqCategoryList);
 		 
 		return "/admin/faqList";
+	}
+	
+	/**
+	 * 관리자 페이지 대시보드
+	 * @author 김지현
+	 * @return
+	 */
+	@GetMapping("/dashboard")
+	public String getDashboard(Model model) {
+		
+		Integer userCount = adminService.selectTodayJoinUserCount();
+		BestSectionDto todayBest = adminService.selectTodayBest();
+		BestSectionDto monthBest = adminService.selectMonthBest();
+		model.addAttribute("userCount", userCount);
+		model.addAttribute("todayBest", todayBest);
+		model.addAttribute("monthBest", monthBest);
+		
+		
+		
+		return "/admin/adminDashBoard";
 	}
 	
 	@GetMapping("/faq")

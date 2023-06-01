@@ -211,6 +211,7 @@ public class NovelController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		// 즐겨찾기 카운트
 		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		// 소설 회차 리스트
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);

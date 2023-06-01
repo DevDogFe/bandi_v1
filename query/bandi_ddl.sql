@@ -1,5 +1,16 @@
 -- ddl
 
+-- DROP DATABASE bandi_db;
+-- CREATE DATABASE bandi_db;
+-- USE bandi_db;
+
+-- drop DATABASE temp;
+CREATE DATABASE temp;
+USE temp;
+
+
+-- ddl
+
 create table test_tb(
 	id int primary key
 );
@@ -140,8 +151,8 @@ CREATE TABLE answer_tb(
     content TEXT NOT NULL,
     question_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
-	FOREIGN KEY(user_id) REFERENCES user_tb(id) on delete cascade,
-	FOREIGN KEY(question_id) REFERENCES question_tb(id) on update cascade 
+	FOREIGN KEY(user_id) REFERENCES user_tb(id),
+	FOREIGN KEY(question_id) REFERENCES question_tb(id) on update cascade on delete cascade
 );
 
 
@@ -152,7 +163,7 @@ CREATE TABLE faq_tb(
     faq_category_id INT NOT NULL,
     question TEXT NOT NULL,
     answer TEXT NOT NULL,
-    FOREIGN KEY(faq_category_id) REFERENCES faq_category_tb(id) 
+    FOREIGN KEY(faq_category_id) REFERENCES faq_category_tb(id)
 );
 
 -- 연재문의
@@ -321,16 +332,30 @@ CREATE TABLE user_gold_charge_tb(
 
 
 -- 유저 대여 기록
-CREATE TABLE user_rental_tb(
-	user_id INT NOT NULL,
-	section_id INT NOT NULL,
-	price INT NOT NULL,
-	begin_rental TIMESTAMP DEFAULT NOW(),
-	end_rental TIMESTAMP DEFAULT NOW()+3,
-	PRIMARY KEY (user_id, section_id,end_rental),
-	FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
-	FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
+CREATE TABLE user_rental_tb (
+    user_id INT NOT NULL,
+    section_id INT NOT NULL,
+    price INT NOT NULL,
+    begin_rental TIMESTAMP,
+    end_rental TIMESTAMP,
+    PRIMARY KEY (user_id, section_id, end_rental),
+    FOREIGN KEY (user_id) REFERENCES user_tb(id) ON DELETE CASCADE,
+    FOREIGN KEY (section_id) REFERENCES novel_section_tb(id) ON DELETE CASCADE
 );
+
+DELIMITER $$
+CREATE TRIGGER set_default_rental_dates
+BEFORE INSERT ON user_rental_tb
+FOR EACH ROW
+BEGIN
+    SET NEW.begin_rental = CURRENT_TIMESTAMP();
+    SET NEW.end_rental = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 3 DAY);
+END$$
+DELIMITER ;
+
+drop TABLE user_rental_tb;
+
+
 
 -- 유저 구매 기록
 CREATE TABLE user_purchase_tb(
@@ -351,5 +376,6 @@ CREATE TABLE account_tb(
 	memo VARCHAR(50),
 	created_at TIMESTAMP DEFAULT now()
 );
+
 
 

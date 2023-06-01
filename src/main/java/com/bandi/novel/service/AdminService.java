@@ -10,6 +10,7 @@ import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
+import com.bandi.novel.dto.response.BestSectionDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.Genre;
@@ -21,6 +22,7 @@ import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.FaqRepository;
 import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.QuestionRepository;
+import com.bandi.novel.repository.UserNovelRecordRepository;
 import com.bandi.novel.repository.UserRepository;
 
 @Service
@@ -36,6 +38,8 @@ public class AdminService {
 	private GenreRepository genreRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserNovelRecordRepository userNovelRecordRepository;
 	@Autowired
 	private FaqRepository faqRepository;
 	
@@ -172,6 +176,9 @@ public class AdminService {
 	// 사용자 검색
 	@Transactional
 	public List<UserRoleDto> searchUser(UserSearchDto userSearchDto) {
+		if(userSearchDto.getType() == null) {
+			userSearchDto.setType("all");
+		}
 		List<UserRoleDto> list = userRepository.searchUser(userSearchDto);
 		return list;
 	}
@@ -182,7 +189,40 @@ public class AdminService {
 		return list;
 	}
 	
+	/**
+	 * @author 김지현
+	 * @return 오늘 가입자수
+	 */
+	@Transactional
+	public Integer selectTodayJoinUserCount() {
+		Integer count = userRepository.selectTodayJoinUserCount();
+		if(count == null) {
+			count = 0;
+		}
+		return count;
+	}
 	
+	/**
+	 * 오늘 가장 많이 조회된 회차
+	 * @author 김지현
+	 * @return
+	 */
+	@Transactional
+	public BestSectionDto selectTodayBest() {
+		BestSectionDto dto = userNovelRecordRepository.selectTodayBestSection();
+		return dto;
+	}
+	
+	/**
+	 * 이달 가장 많이 조회된 회차
+	 * @author 김지현
+	 * @return
+	 */
+	@Transactional
+	public BestSectionDto selectMonthBest() {
+		BestSectionDto dto = userNovelRecordRepository.selectMonthBestSection();
+		return dto;
+	}
 	/**
 	 * FAQ 생성
 	 * @param faq
@@ -218,9 +258,6 @@ public class AdminService {
 	public Faq readFaq(Integer id) {
 		return faqRepository.findById(id);
 	}
-	
-	
-	
 	
 
 }
