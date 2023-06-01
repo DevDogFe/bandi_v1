@@ -55,9 +55,19 @@ public class RecommendService {
 
 		return resultList;
 	}
+	
+	/**
+	 * 전체서비스 즐겨찾기 기준 랭크
+	 * @param limit
+	 * @return
+	 */
+	@Transactional
+	public List<RankPageDto> selectTotalRankToFavorite(Integer limit){
+		return recommendRepository.selectTotalRankToFavorite(limit);
+	}
 
 	/**
-	 * 즐겨찾기 기준 랭크
+	 * 특정서비스 즐겨찾기 기준 랭크
 	 * @param serviceTypeId
 	 * @param limit
 	 * @return
@@ -67,10 +77,18 @@ public class RecommendService {
 		return recommendRepository.selectRankToFavoriteByServiceTypeId(serviceTypeId, limit);
 	}
 	
+	/**
+	 * 특정서비스 별점 기준 랭크
+	 * @param serviceTypeId
+	 * @param limit
+	 * @return
+	 */
 	@Transactional
 	public List<RankPageDto> selectRankToScore(Integer serviceTypeId, Integer limit){
 		return recommendRepository.selectRankToScoreByServiceTypeId(serviceTypeId, limit);
 	}
+	
+	
 	/**
 	 * 효린
 	 * 좋아하는 장르 소설
@@ -81,6 +99,10 @@ public class RecommendService {
 	public List<RecommendFavoritesDto> selectNovelByFavoriteGenre(Integer userId){
 		
 		List<RecommendFavoritesDto> list = recommendRepository.selectByFavoriteGenre(userId);
+		
+		if(list == null || list.size() < 6) {
+			// todo 즐겨찾기 없을 때 로직 
+		}
 		
 		return list;
 	}

@@ -85,6 +85,24 @@
 		ORDER BY favorite_count DESC
 		LIMIT #{limit}
 	</select>
+	
+	<select id="selectTotalRankToFavorite" resultType="com.bandi.novel.dto.response.RankPageDto">
+		SELECT n.*, uf.favorite_count, st.name AS service_type_name, g.name AS genre_name
+		FROM novel_tb AS n
+		LEFT JOIN
+		(
+		SELECT novel_id, count(*) AS favorite_count
+		FROM user_favorite_tb
+		GROUP BY novel_id
+		) AS uf
+		ON n.id = uf.novel_id
+		LEFT JOIN service_type_tb AS st
+		ON n.service_type_id = st.id
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		ORDER BY favorite_count DESC
+		LIMIT #{limit}
+	</select>
 
 	<select id="selectRankToScoreByServiceTypeId" resultType="com.bandi.novel.dto.response.RankPageDto">
 		SELECT n.*, s.score, g.name AS genre_name
@@ -141,7 +159,7 @@
 		LIMIT 1)
 		GROUP BY n.id
 		ORDER BY count(*) DESC
-		LIMIT 5
+		LIMIT 6
 	</select>
 
 	<!-- 이 소설을 본 사람들이 즐겨찾기한 소설 (효린) -->

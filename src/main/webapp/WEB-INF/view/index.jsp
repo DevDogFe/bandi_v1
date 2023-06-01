@@ -23,6 +23,8 @@
 		<c:choose>
 			<c:when test="${empty principal}">
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
+				<a data-toggle="modal" href="#loginModal">로그인</a>
+				<a href="#loginModal" data-bs-toggle="modal" role="button">Log In</a>
 
 				<!-- Modal -->
 				<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

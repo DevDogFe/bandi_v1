@@ -28,7 +28,6 @@ public class TotalRecommendUtil {
 		
 		Map<Integer, Integer> genreMap = genreList.stream().collect(Collectors.toMap(PreferGenreForTotalRecommendDto::getGenreId, PreferGenreForTotalRecommendDto::getGenreCount));
 		Map<Integer, Integer> totalScoreMap = new HashMap<>();
-		
 		for (MainRecommendDto dto : tempList) {
 			if(dto.getScore() == null) {
 				dto.setScore(1.0);
@@ -50,7 +49,6 @@ public class TotalRecommendUtil {
 			} else {
 				totalScoreMap.put(dto.getId(), -(int)(dto.getScore() + dto.getFavoriteCount()));
 			}
-			
 		}
 		
 		
@@ -65,7 +63,7 @@ public class TotalRecommendUtil {
 				}
 			}
 			count ++;
-			if(count == 5) {
+			if(count == 6) {
 				break;
 			}
 		}
