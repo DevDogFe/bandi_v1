@@ -3,64 +3,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
 <style>
-table {
-	border-spacing: 0;
+.table_container {
+	max-width: 80vw;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.boardlist {
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	text-align: left;
+	box-sizing: border-box;
 	border-collapse: collapse;
-	table-layout: fixed;
-}
-
-table.table thead {
-	display: table-header-group;
-	vertical-align: middle;
-	border-color: inherit;
-}
-
-table.table thead tr th {
-	height: 37px;
-}
-
-table.table tbody {
-	display: table-row-group;
-	vertical-align: middle;
-	border-color: inherit;
-}
-
-table.table tbody tr td {
-	padding: 10px 8px 8px;
-	font-size: 1.2rem;
-	letter-spacing: 0px;
-	border: none;
-	border-bottom: 1px solid #ededed;
-	color: #333;
-	font-family: "Lato", "Noto Sans KR";
-}
-
-table.table tbody tr td a {
-	height: 51px;
-	line-height: 1.2ren;
-	color: #333;
-	font-family: "Lato", "Noto Sans KR";
-}
-
-table.table tbody tr td .username {
-	text-align: center;
-	color: #333;
-	font-size: 1.4rem;
-	letter-spacing: -0.7px;
-}
-
-.categoryId {
 	width: 100%;
-	height: 32px;
-	color: #666;
-	background: #fff;
-	padding: 0 33px 0 10px;
-	border: 1px solid #d5d5d5;
+	margin-bottom: 1rem;
+	background-color: transparent;
+}
+
+table.boardlist thead th {
+	font-size: 1rem;
+	line-height: 1.5;
+	color: #212529;
+	border-collapse: collapse;
+	box-sizing: border-box;
+	text-align: inherit;
+	padding: .75rem;
+	border-top: 1px solid #dee2e6;
+	vertical-align: bottom;
+	border-bottom: 2px solid #dee2e6;
+}
+
+table.boardlist td {
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	text-align: left;
+	border-collapse: collapse;
+	box-sizing: border-box;
+	padding: .75rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}
+
+select {
+	width: 85px;
 	border-radius: 5px;
-	font-size: 1.3rem;
-	letter-spacing: -0.65px;
-	line-height: 1.3;
-	webkit-appearance: none;
+	color: #666;
+	border: 1px solid #666;
+	height: 33px;
+	cursor: pointer;
 }
 
 .search {
@@ -79,6 +73,8 @@ table.table tbody tr td .username {
 }
 
 .btn-write {
+	position: absolute;
+	left: 200px;
 	color: #666;
 	background: #fff;
 	border-radius: 30px;
@@ -91,32 +87,41 @@ table.table tbody tr td .username {
 	margin-right: 3px;
 	font-size: 15px;
 }
-</style>
-<table class="table">
-	<thead>
-		<tr>
-			<th scope="col">#</th>
-			<th scope="col">작성자</th>
-			<th scope="col">제목</th>
-			<th scope="col">분류</th>
-			<th scope="col">날짜</th>
-			<th scope="col">조회수</th>
-		</tr>
-	</thead>
-	<c:forEach var="list" items="${boardList.content}">
-		<tbody id="boardList" class="category">
-			<tr>
-				<td>${list.id}</td>
-				<td class="username">${list.username}</td>
-				<td class="title"><a href="/board/detail/${list.id}" style="text-decoration: none;">${list.title}</a></td>
-				<td>${list.categoryName}</td>
-				<td>${list.createdAt()}</td>
-				<td>${list.views}</td>
-			</tr>
-		</tbody>
-	</c:forEach>
-</table>
 
+input {
+	border-radius: 5px;
+	border: 1px solid #666;
+	width: 350px;
+	height: 33px;
+}
+
+</style>
+<div class="table_container">
+	<table class="boardlist">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">작성자</th>
+				<th scope="col">제목</th>
+				<th scope="col">분류</th>
+				<th scope="col">날짜</th>
+				<th scope="col">조회수</th>
+			</tr>
+		</thead>
+		<c:forEach var="list" items="${boardList.content}">
+			<tbody id="boardList" class="category">
+				<tr>
+					<td>${list.id}</td>
+					<td class="username">${list.username}</td>
+					<td class="title"><a href="/board/detail/${list.id}" style="text-decoration: none;">${list.title}</a></td>
+					<td>${list.categoryName}</td>
+					<td>${list.createdAt()}</td>
+					<td>${list.views}</td>
+				</tr>
+			</tbody>
+		</c:forEach>
+	</table>
+</div>
 <div class="search">
 	<form action="/board/list/${boardTypeId}" method="get">
 		<select name="categoryId" id="categoryId">
@@ -127,14 +132,14 @@ table.table tbody tr td .username {
 		</select> <select name="type">
 			<option value="title">제목</option>
 			<option value="content">내용</option>
-		</select> <input type="text" name="keyword"></input>
+		</select> <input type="text" name="keyword" placeholder="검색어를 입력해주세요."></input>
 		<button type="submit" class="btn-search">검색</button>
 	</form>
+	<button type="button" class="btn-write" onclick="location.href='/board/write/${boardTypeId}'">
+		<i class='bx bx-pencil'></i>글쓰기
+	</button>
 </div>
-<button type="button" class="btn-write" onclick="location.href='/board/write/${boardTypeId}'">
-	<i class='bx bx-pencil'></i>글쓰기
-</button>
-<div class="col-sm-12 col-md-7">
+<div class="mb-5">
 	<div>
 		<ul class="d-flex">
 			<li class="<c:if test='${boardList.currentPage == 1}'>d-none</c:if>" id=""><a href="/board/list/${boardTypeId}?currentPage=${boardList.currentPage - 1}" class="page-link">Previous</a></li>
