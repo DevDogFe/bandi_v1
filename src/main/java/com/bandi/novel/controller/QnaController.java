@@ -165,7 +165,11 @@ public class QnaController {
 	@GetMapping("/answer/{questionId}")
 	public String getAnswer(@PathVariable Integer questionId, Model model) {
 
+		Question question = qnaService.readQuestionById(questionId);
 		Answer answer = qnaService.readAnswerByQuestionId(questionId);
+		System.out.println(question);
+		System.out.println(answer);
+		model.addAttribute("question", question);
 		model.addAttribute("answer", answer);
 
 		return "/cs/answerDetail";

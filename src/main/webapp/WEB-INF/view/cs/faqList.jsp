@@ -1,88 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
 <%@include file="../layout/header.jsp"%>
+<%@include file="layout/csCategory.jsp"%>
 
 <style>
 /* toggle 적용 TODO 색 변경 */
-.answer {
+.faq--answer {
 	display: none;
 	box-sizing: content-box;
 	/* background-color: #f5f6f7; */
 }
 
-* {
-	box-sizing: border-box;
-}
-
-body {
-	height: 100%;
-	min-height: 100%;
-}
-
-.category--cs {
-	display: flex;
-	align-items: center;
-}
-
-.category--cs ul {
-	border: 1px solid black;
-	margin: 0 10px;
-}
-
-.category--cs ul li {
-	display: inline-block;
-	border: 1px solid black;
-	padding: 0 20px;
-}
-
-.category--cs ul li a {
-	font-size: 20px;
-}
-
-.category--faq ul {
+.faq--category ul {
 	display: flex;
 	flex-wrap: wrap;
 	text-align: center;
 	margin: 0;
 }
 
-.category--faq ul li {
+.faq--category ul li {
 	width: 25%;
 	border: 1px solid black;
 	margin: 0px;
 	padding: 10px 0px;
 }
 
-.category--faq ul li :hover {
-	/* background-color: ; */
-	
+.faq--category ul li :hover {
+	/* background-color: ; */	
 }
 
-.container--faq--title {
-	border: 1px solid black;
-	display: flex;
-}
-
-.container--faq {
-	width: 100%;
-	border: 1px solid black;
-	padding: 40px 50px 0;
-	margin: 50px 50px;
-}
-
-.title--faq {
-	border: 1px solid black;
-}
-
-.title--faq h3 {
-	font-size: 40px;
-	padding: 10px;
-}
-
-.category--faq {
+.faq--category {
 	border: 1px solid black;
 }
 
@@ -108,7 +55,7 @@ body {
 	padding: 10px;
 }
 
-.question {
+.faq--question {
 	display: flex;
 }
 
@@ -116,77 +63,55 @@ body {
 	justify-content: space-between;
 }
 
-.page--faq{
+.faq--page {
 	display: flex;
 	justify-content: center;
-
 }
 </style>
-<section>
 
-	<div class="container--faq">
-		<div class="container--faq--title">
-			<div class="title--faq">
-				<h3>고객 센터</h3>
-			</div>
-			<div class="category--cs">
-				<ul>
-					<li>Q&A</li>
-					<li>FAQ</li>
-					<li>공지</li>
-					<li>제휴문의</li>
-				</ul>
-			</div>
-		</div>
-
-		<div class="category--faq">
-			<ul>
-				<li><a href="/faq/list">전체</a></li>
-				<c:forEach var="category" items="${faqCategoryList}">
-					<li><a href="/faq/list/${category.id}">${category.categoryName}</a></li>
-				</c:forEach>
-			</ul>
-		</div>
+<div class="faq--category">
+	<ul>
+		<li><a href="/faq/list">전체</a></li>
+		<c:forEach var="category" items="${faqCategoryList}">
+			<li><a href="/faq/list/${category.id}">${category.categoryName}</a></li>
+		</c:forEach>
+	</ul>
+</div>
 
 
 
-		<div class="faq--list">
-			<!-- 질문 & 답 내용 -->
-			<dl class="faq--content">
-				<c:forEach var="faq" items="${faqPageUtil.content}">
-					<dt class="category--line" onclick="openCloseAnswer(${faq.id})">
-						<span>${faq.question}</span><a class="question" id="que-${faq.id}"> <span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
-						</a>
-					</dt>
-					<!-- 답 -->
-					<dd class="answer" id="ans-${faq.id}">
-						<p>
-							<span>[${faq.categoryName}]</span>&nbsp;${faq.answer}
-						</p>
-					</dd>
-				</c:forEach>
-			</dl>
-		</div>
+<div class="faq--list">
+	<!-- 질문 & 답 내용 -->
+	<dl class="faq--content">
+		<c:forEach var="faq" items="${faqPageUtil.content}">
+			<dt class="category--line" onclick="openCloseAnswer(${faq.id})">
+				<span>[${faq.categoryName}]&nbsp;${faq.question}</span><a class="faq--question" id="que-${faq.id}"> <span id="toggle-${faq.id}" class="material-symbols-outlined">expand_more </span>
+				</a>
+			</dt>
+			<!-- 답 -->
+			<dd class="faq--answer" id="ans-${faq.id}">
+				<p>${faq.answer}</p>
+			</dd>
+		</c:forEach>
+	</dl>
+</div>
 
-		<!-- 페이징 처리 -->
-		<div class="col-sm-12 col-md-7 page--faq">
-			<div class="page--faq">
-				<ul class="d-flex">
-					<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
-					<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
-						<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/qna/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
-					</c:forEach>
-					<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
-				</ul>
-			</div>
-		</div>
-		
+<!-- 페이징 처리 -->
+<div class="faq--page mt-2">
+	<div>
+		<ul class="d-flex">
+			<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+			<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+				<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/faq	/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+			</c:forEach>
+			<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+		</ul>
 	</div>
+</div>
+
+<!---------------------------------  -->
+</div>
 </section>
-
-
-
-
 
 <script>	
 	 const items = document.querySelectorAll('.question');
