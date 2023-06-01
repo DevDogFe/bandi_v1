@@ -12,19 +12,19 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
-	$("#novel").on('mouseenter', function() {
+	$("#novel").on('click', function() {
 		$("#novelPanel").slideToggle();
 	});
-	$("#contest").on('mouseenter', function() {
+	$("#contest").on('click', function() {
 		$("#contestPanel").slideToggle();
 	});
-	$("#board").on('mouseenter', function() {
+	$("#board").on('click', function() {
 		$("#boardPanel").slideToggle();
 	});
-	$("#cs").on('mouseenter', function() {
+	$("#cs").on('click', function() {
 		$("#csPanel").slideToggle();
 	});
-	$("#myPage").on('mouseenter', function() {
+	$("#myPage").on('click', function() {
 		$("#myPagePanel").slideToggle();
 	});
 </script>

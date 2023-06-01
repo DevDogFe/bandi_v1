@@ -37,7 +37,7 @@
 }
 
 section {
-	width: 1300px;
+	width: 1200px;
 	margin: 0 auto;
 }
 
