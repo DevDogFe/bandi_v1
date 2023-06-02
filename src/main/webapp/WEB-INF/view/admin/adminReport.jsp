@@ -27,8 +27,8 @@
 <script src="/assets/js/custom-slick.js"></script>
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
-<link rel="stylesheet" href="/assets/css/admin.css" />
-<link rel="stylesheet" href="/assets/css/adminReport.css" />
+<link rel="stylesheet" href="/assets/css/admin/admin.css" />
+<link rel="stylesheet" href="/assets/css/admin/adminReport.css" />
 
 </head>
 <body>
@@ -37,7 +37,7 @@
 			<header>
 				<div class="banner">
 					<div class="lnb">
-						<a href="#none"><em>for</em> admin</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
+						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
 					</div>
 				</div>
 				<nav>
@@ -65,7 +65,7 @@
 						</div>
 					</div>
 					<ul class="nav_list">
-						<li><a href="/report/reportList"> <i class='bx bx-chalkboard'></i> <span class="links_name">대시보드</span>
+						<li><a href="/admin/dashboard"> <i class='bx bx-chalkboard'></i> <span class="links_name">대시보드</span>
 						</a></li>
 						<li><a href="/report/reportList"> <i class='bx bxs-bell-minus'></i> <span class="links_name">신고 게시물 처리</span>
 						</a></li>
@@ -79,7 +79,9 @@
 						</a></li>
 						<li><a href="#"> <i class='bx bx-conversation'></i> <span class="links_name">자주 묻는 질문</span>
 						</a></li>
-						<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">질의 응답</span>
+						<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">FAQ</span>
+						</a></li>
+						<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">연재 문의</span>
 						</a></li>
 					</ul>
 				</div>

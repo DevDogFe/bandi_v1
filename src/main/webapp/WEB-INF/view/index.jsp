@@ -78,7 +78,7 @@
 				<a href="/free">무료 작품 목록</a>
 				<a href="#">내 즐겨찾기</a>
 				<a href="#">내 작품</a>
-				<a href="/admin/adminPage">관리자 페이지</a>
+				<a href="/admin/dashboard">관리자 페이지</a>
 			</c:otherwise>
 		</c:choose>
 		<c:if test="${!empty principal }">

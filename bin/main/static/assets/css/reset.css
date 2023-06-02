@@ -1,4 +1,4 @@
-@charset "UTF-8";/* Google Web Font */
+/* Google Web Font */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500&display=swap');
 
 /* Fontawesome 4.7 */
@@ -42,6 +42,7 @@ textarea {
 }
 
 button {
+	
     cursor: pointer;
 }
 
@@ -253,3 +254,31 @@ footer {
     margin-top: 30px;
     color: #eee;
 }
+
+/* 상단 스크롤 바 */
+/* .top-wrap{
+	margin-bottom: 30px;
+}
+
+.top-wrap-nav{
+	display: flex;
+}
+
+.top-wrap-content{
+	border-bottom: 1px solid blue;
+	height: 100px;
+	display: flex;
+	align-items: center;
+}
+
+.novel-type{
+	display: inline-block;
+	margin-top:50px;
+	width: 130px;
+}
+
+.novel-type h1{
+	font-size: 30px;
+	font-weight: 500;
+}
+ */

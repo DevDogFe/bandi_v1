@@ -27,7 +27,7 @@
 <script src="/assets/js/custom-slick.js"></script>
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
-<link rel="stylesheet" href="/assets/css/admin.css" />
+<link rel="stylesheet" href="/assets/css/admin/admin.css" />
 
 </head>
 <body>
