@@ -86,16 +86,17 @@ public class QnaController {
 		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
 		model.addAttribute("faqCategorylist", faqCategorylist);
 
-		return "/cs/questionForm";
+		 /*return "/cs/questionWriteForm";*/
+		return "/cs/test"; 
 	}
 
 	@PostMapping("/write")
 	public String writeProc(Question question) {
-
+		System.out.println(question);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 유효성
 		// qnaService.createQuestion(question, principal.getId);
-		qnaService.createQuestion(question, 1);
+//		qnaService.createQuestion(question, 1);
 
 		return "redirect:/qna/list";
 	}
@@ -165,7 +166,11 @@ public class QnaController {
 	@GetMapping("/answer/{questionId}")
 	public String getAnswer(@PathVariable Integer questionId, Model model) {
 
+		Question question = qnaService.readQuestionById(questionId);
 		Answer answer = qnaService.readAnswerByQuestionId(questionId);
+		System.out.println(question);
+		System.out.println(answer);
+		model.addAttribute("question", question);
 		model.addAttribute("answer", answer);
 
 		return "/cs/answerDetail";

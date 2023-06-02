@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="/assets/css/style.css" rel="stylesheet">	
 <%@include file="../layout/header.jsp"%>
 
 <section>
@@ -22,7 +23,7 @@
 					<td>${question.createdAt()}</td>
 					<td>${question.proceed}</td>
 				</tr>
-					<c:if test="${question.answer != null }">
+					<c:if test="${question.answer != null}">
 						<tr>
 							<td><a href="/qna/answer/${question.id}">${question.answer}</td>
 							<td>${question.answerCreatedAt()}</td>
