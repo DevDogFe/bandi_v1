@@ -1,220 +1,157 @@
-/* 기본 레이아웃 처리 */
+@charset "UTF-8";
+
+/* 메인  */
 .main-layout{
 	margin-top:30px;
 	display:flex;
+	justify-content: space-between;
 }
 
-.left-sidebar{
-	width:250px;
-};
-
-.novel-content{
-	width: 60%;
-	padding-right: 10px;
+/* 등록 폼 */
+.main-form{
+	display:flex;
+	justify-content:center;
+	padding: 0px 15px;
+	width:85%;
 }
 
+.registration-form{
+	position: relative;
+	max-width: 850px;
+	width: 100%;
+	background: #fff;
+	padding: 15px 55px;
+	border-radius: 8px;
+	box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.registration-form h1{
+	font-size: 1.5rem;
+	color: #333;
+	font-weight: 500;
+	text-align: center;
+}
+
+.registration-form .form{
+	margin-top: 30px;
+}
+
+.registration-form .input-box{
+	width: 100%;
+	margin-top: 20px;
+}
+
+.input-box label{
+	color: #333;
+}
+
+.form :where(.input-box input, .select-box){
+	position: relative;
+	height: 50px;
+	width:100%;
+	outline: none;
+	font-size: 1rem;
+	color: #707070;
+	margin-top: 8px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	padding: 0 15px;
+}
+
+.form .column{
+	display: flex;
+	column-gap: 15px;
+}
+
+.form .gender-box{
+	margin-top: 20px;
+}
+
+.gender-box h3{
+	color: #333;
+	font-size: 1rem;
+	font-weight: 400;
+	margin-bottom: 8px;
+}
+
+.form :where(.gender-option, .gender){
+	display: flex;
+	align-items: center;
+	column-gap: 50px;
+	flex-wrap: wrap;
+}
+
+.form .gender{
+	column-gap: 5px;
+	cursor: pointer;
+}
+
+.gender input{
+	accent-color: #3b6bc9;
+}
+
+.form :where(.gender input,.gender label){
+	cursor: pointer;
+}
+
+.address :where(input, .select-box){
+	margin-top: 15px;
+}
+
+.select-box select{
+	height: 100%;
+	width: 100%;
+	outline:none;
+	border: none;
+	color: #707070;
+	font-size: 1rem;
+}
+
+.form button{
+	color: #fff;
+	font-size: 1rem;
+	border:none;
+	cursor:pointer;
+	border-radius: 6px;
+	font-weight: 400;
+	margin-top: 10px;
+	transition: all 0.2s ease;
+	background-color: #3b6bc9;
+}
+
+.form .submit-button{
+	margin-top: 30px;
+	height: 55px;
+	width: 100%;
+}
+
+.form button:hover{
+	background-color: #3b3399;
+}
+
+/* Responsive  */
+@media screen and (max-width: 500px){
+	.form .column{
+		flex-wrap: wrap;
+	}
+	
+	.form :where(.gender-option, .gender){
+		row-gap: 15px;
+	}
+}
+
+
+
+/* 우측면 바  */
 .right-sidebar{
 	width:220px;
 	display: inline-block;
 }
 
-/* 메인 */
-.novel-content-item{
-	padding: 10px;
-}
-
-/* 상단 소설 디테일 */
-.detail-box{
-	width: 100%;
-}
-
-.work-box{
-	display:flex;
-}
-
-.cover{
-	position:relative;
-	width: 170px;
-	height: 260px;
-}
-
-.cover a img{
+.right-sidebar-contents{
 	width: 100%;
 	height: 100%;
-	border-radius:2px;
-}
-
-.detail{
-	position:relative;
-	width: 80%;
-	height: 260px;
-	margin: 0 20px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.desc div{
-	padding-top:10px;
-}
-
-.detail-title{
-	font-size: 21px;
-	font-weight: 500;
-	padding:5px;
-	line-height: 30px;
-}
-
-.detail-aurthor, .detail-intro{
-	font-size: 15px;
-	overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.detail-aurthor{
-	color: #1a237e;
-	display: flex;
-	align-items: center;
-}
-
-.icon{
-	margin: 0 5px 0 0px;
-}
-
-.detail-intro{
-	height: 100px;
-}
-
-.scale span{
-	margin-right: 10px;
-}
-
-
-/* 상단 작은 헤더  */
-.top-wrap{
-	margin-bottom: 30px;
-}
-
-.top-wrap-nav{
-	display: flex;
-}
-
-.top-wrap-content{
-	margin-top: 10px;
-	border-bottom: 1px solid #7986cb;
-	height: 50px;
-	display: flex;
-	align-items: center;
-}
-
-.novel-type{
-	display: inline-block;
-}
-
-.novel-type h1{
-	font-size: 30px;
-	font-weight: 500;
-}
-
-/*  */
-
-
-/*  */
-
-/* 좌측 사이드 바 */
-.left-sidebar-contents{
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	width: 100%;
-}
-
-.contents-top{
-	margin-bottom: 5px;
-}
-
-.contents-title{
-	border-bottom: 1px solid #ddd;
-}
-
-.contents-title h2{
-	padding: 10px;
-	font-weight: 600;
-	font-size: 18px;
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.contents-list{
-	font-size: 18px;
-	
-}
-
-.contents-category{
-	display:flex;
-}
-
-.contents-category a{
-	flex: 1;
-	display: flex;
-	justify-content: center;
-	border: 1px solid #ddd;
-}
-
-.contents-search{
-	display:flex;
-	border-bottom: 1px solid dodgerblue;
-}
-
-.contents-list ul{
-	font-size: 14px;
-}
-
-.list-item{
-	height: 26px;
-	padding:0px 5px;
-	display: flex;
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.list-item span{
-	padding-right: 10px; 
-}
-
-.list-item span{
-	width:10%;
-	padding-right: 10px; 
-}
-
-.item-author{
-	width:30%;
-	color: dodgerblue;
-	padding-right: 10px; 
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.item-title{
-	width:60%;
-	color:black;
-	padding-right: 10px; 
-	overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.bold{
-	background-color: #eee;
-}
-
-/* 우측 myinfo */
-.right-sidebar-contents{
-	
-	width: 100%;
-	height: 60vh;
+	margin-bottom: 15px;
 }
 
 .my-info{
@@ -393,13 +330,4 @@
 	margin-top: 10px;
 	padding:10px;
 	border-bottom: 1px solid #3b6bc9;
-}
-
-/*  */
-.blue-span{
-	color: #7986cb;
-}
-
-.bold-font{
-	font-weight: bold;
 }

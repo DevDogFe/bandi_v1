@@ -121,4 +121,30 @@ public class SampleController {
 
 		return "/cssLayout/cssBoardList";
 	}
+	
+	@GetMapping("/readSection")
+	public String getReadSection() {
+
+		return "/cssLayout/cssReadSection";
+	}
+	
+	@GetMapping("/novelRegistration")
+	public String getNovelRegistration() {
+
+		return "/cssLayout/cssNovelRegistration";
+	}
+	
+	@GetMapping("/sectionRegistration")
+	public String getSectionRegistration() {
+
+		return "/cssLayout/cssSectionRegistration";
+	}
+	
+	@GetMapping("/userRegistration")
+	public String getUserRegistration() {
+
+		return "/cssLayout/cssUserRegistration";
+	}
+
 }
+	
