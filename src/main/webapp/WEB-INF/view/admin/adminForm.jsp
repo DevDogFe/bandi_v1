@@ -192,32 +192,6 @@
 		display: none;
 	}
 }
-
-.nav {
-	background-color: #ffffff;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 15px;
-	justify-content: flex-end;
-}
-
-.menu {
-	list-style: none;
-	display: flex;
-	flex-direction: row;
-}
-
-.menu li {
-	padding: 0 15px;
-	font-size: 15px;
-}
-
-.menu li a {
-	text-decoration: none;
-	color: black;
-}
-
 </style>
 <body>
 
@@ -245,12 +219,6 @@
 		</ul>
 	</div>
 	<section class="main-section">
-		<section class="nav">
-			<ul class="menu">
-				<li><a href="#">Main</a></li>
-				<li><a href="#">Logout</a></li>
-			</ul>
-		</section>
 	</section>
 	<script>
 		  let sidebar = document.querySelector(".sidebar");

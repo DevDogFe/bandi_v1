@@ -64,6 +64,7 @@ public class ReportController {
 	public String getReportList(Model model) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<AdminReportDto> reportList = reportService.selectReport();
+		System.out.println(reportList.toString());
 		model.addAttribute("reportList", reportList);
 		return "/admin/adminReport";
 	}

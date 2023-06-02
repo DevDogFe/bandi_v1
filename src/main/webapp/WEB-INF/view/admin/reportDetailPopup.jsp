@@ -15,7 +15,6 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: #093666;
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 17px;
@@ -23,15 +22,16 @@ body {
 .form-card {
 	width: 26rem;
 	gap: 1rem;
-	background-color: #ffffff;
 	border-radius: 0.3rem;
 	padding: 1.5rem;
+	border: 5px solid #5f9bd1;
+	border-radius: 12px;
 }
 
 input[type='text'], textarea {
 	width: 23rem;
 	border: none;
-	border-radius: 0.2rem;
+	border-radius: 12px;
 	background-color: #e6ebf0;
 	padding: 0.8rem 1rem;
 	margin-bottom: 1rem;
@@ -43,8 +43,9 @@ input[type='text'], textarea {
 	font-size: 0.9rem;
 	font-weight: 600;
 	border: none;
+	border-radius: 12px;
 	color: #ffffff;
-	background-color: #062647;
+	background-color: #3b6bc9;
 	padding: 0.8rem 1rem;
 	width: 30%;
 }

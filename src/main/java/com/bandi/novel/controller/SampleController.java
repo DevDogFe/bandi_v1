@@ -121,7 +121,7 @@ public class SampleController {
 
 		return "/cssLayout/cssBoardList";
 	}
-	
+
 	@GetMapping("/readSection")
 	public String getReadSection() {
 
@@ -146,5 +146,11 @@ public class SampleController {
 		return "/cssLayout/cssUserRegistration";
 	}
 
+	@GetMapping("/admin")
+	public String getAdmin() {
+		
+		return "/cssLayout/cssAdminPage";
+	}
+	
 }
 	
