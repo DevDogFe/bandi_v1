@@ -22,8 +22,7 @@ public class GenerationUtil {
 		int currentYear = LocalDate.now().getYear();
 		leftPort = new Date(currentYear - generation - 9 - 1900, 0, 1);
 		rightPort = new Date(currentYear- generation + 1 - 1900, 0, 1);
-		System.out.println(leftPort);
-		System.out.println(rightPort);
+		System.out.println(leftPort.toString() + rightPort.toString());
 		
 	}
 
