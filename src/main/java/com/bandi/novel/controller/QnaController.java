@@ -86,16 +86,17 @@ public class QnaController {
 		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
 		model.addAttribute("faqCategorylist", faqCategorylist);
 
-		return "/cs/questionWriteForm";
+		 /*return "/cs/questionWriteForm";*/
+		return "/cs/test"; 
 	}
 
 	@PostMapping("/write")
 	public String writeProc(Question question) {
-
+		System.out.println(question);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 유효성
 		// qnaService.createQuestion(question, principal.getId);
-		qnaService.createQuestion(question, 1);
+//		qnaService.createQuestion(question, 1);
 
 		return "redirect:/qna/list";
 	}
