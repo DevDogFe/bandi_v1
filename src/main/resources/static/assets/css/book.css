@@ -107,6 +107,10 @@
 	}
 }
 
+.novel-viewer{
+	display: flex;
+	justify-content: center;
+}
 
 
 
@@ -122,4 +126,8 @@
 	background-image: -moz-linear-gradient(right, #FFF 95%, #ddd 100%);
 	background-image: -o-linear-gradient(right, #FFF 95%, #ddd 100%);
 	background-image: -ms-linear-gradient(right, #FFF 95%, #ddd 100%);
+}
+
+.close-fullscreen{
+	display: none;
 }

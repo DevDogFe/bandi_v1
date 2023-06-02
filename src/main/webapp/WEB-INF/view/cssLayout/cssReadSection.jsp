@@ -187,7 +187,8 @@
       			</div>
       		</aside>
       		<section class="novel-content">
-      			<div class="detail-box">
+      			<div class="novel-content-item">
+      				<div class="detail-box">
       				<div class="work-box">
       					<div class="cover">
       						<a ><img src="/assets/images/main/ai1.jpg"></a>
@@ -215,7 +216,7 @@
       			</div>
       			<div class="novel-viewer">
       				<div id="book-body">
-						<div>
+						<div class="d-flex justify-content-end col-md-12">
 							<button type="button" class="btn btn-outline-secondary fullscreen" onclick="openFullScreenMode()">확대</button>
 							<button type="button" class="btn btn-outline-secondary close-fullscreen" onclick="closeFullScreenMode()">축소</button>
 						</div>
@@ -232,8 +233,163 @@
 						</div>
 					</div>
       			</div>
-      			<div class="comments">
-      				
+      			</div>
+      			
+      			
+      			<div class="reply">
+      				<div>
+      					<div class="comments-content">
+      						<!-- 댓글 등록 -->
+      						<div class="bg-light comment-form">
+      							<div class="comment-header ms-1">
+      								<h5 class="me-2">댓글</h5><span>11</span>
+      							</div>
+      							<div class="d-flex flex-row align-items-start">
+      								<img src="/assets/images/main/ai1.jpg" class="rounded-circle" width="40">
+      								<textarea class="form-control ml-1 shadow-none textarea"></textarea>
+      							</div>
+      							<div class="mt-2 text-right float-end">
+      								<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
+      								<button class="btn btn-outline-danger btn-sm ml-1 shadow-none" type="button">삭제</button>
+      							</div>
+      						</div>
+      						<div class="comment-top">
+      							<div>
+      								
+      							</div>
+      						</div>
+      						<!-- 등록된 댓글 -->
+      						<div class="comment-item">
+      							<div class="col-md-12">
+      								<div class="bg-white p-2">
+      									<div class="d-flex flex-row user-info">
+      										<img src="/assets/images/main/ai1.jpg" width="40" class="rounded-circle">
+      										<div class="d-flex flex-column justify-content-start ml-2">
+      											<span class="d-block font-weight-bold name">김경은</span>
+      											<span class="date text-black-50">Shared publically - Jan 2021</span>
+      										</div>
+      									</div>
+      								</div>
+      								<div class="mt-2">
+      									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks!  Thanks! Thanks! Yeah! I Liked Thanks! Yeah! I Liked</p>
+      								</div>
+      							</div>
+      							<div class="bg-white">
+      								<div class="d-flex flex-row justify-content-end fs-12">
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-thumbs-o-up"></i>
+      										<span class="ml-1">Like</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-commenting-o"></i>
+      										<span class="ml-1">Comment</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-share"></i>
+      										<span class="ml-1">Share</span>
+      									</div>
+      								</div>
+      							</div>
+      						</div>
+      						<!--  -->
+      						<div class="comment-item">
+      							<div class="col-md-12">
+      								<div class="bg-white p-2">
+      									<div class="d-flex flex-row user-info">
+      										<img src="/assets/images/main/ai2.jpg" width="40" class="rounded-circle">
+      										<div class="d-flex flex-column justify-content-start ml-2">
+      											<span class="d-block font-weight-bold name">김경은</span>
+      											<span class="date text-black-50">Shared publically - Jan 2021</span>
+      										</div>
+      									</div>
+      								</div>
+      								<div class="mt-2">
+      									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks!</p>
+      								</div>
+      							</div>
+      							<div class="bg-white">
+      								<div class="d-flex flex-row justify-content-end fs-12">
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-thumbs-o-up"></i>
+      										<span class="ml-1">Like</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-commenting-o"></i>
+      										<span class="ml-1">Comment</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-share"></i>
+      										<span class="ml-1">Share</span>
+      									</div>
+      								</div>
+      							</div>
+      						</div>
+      						<div class="comment-item">
+      							<div class="col-md-12">
+      								<div class="bg-white p-2">
+      									<div class="d-flex flex-row user-info">
+      										<img src="/assets/images/main/ai3.jpg" width="40" class="rounded-circle">
+      										<div class="d-flex flex-column justify-content-start ml-2">
+      											<span class="d-block font-weight-bold name">김경은</span>
+      											<span class="date text-black-50">Shared publically - Jan 2021</span>
+      										</div>
+      									</div>
+      								</div>
+      								<div class="mt-2">
+      									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks!</p>
+      								</div>
+      							</div>
+      							<div class="bg-white">
+      								<div class="d-flex flex-row justify-content-end fs-12">
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-thumbs-o-up"></i>
+      										<span class="ml-1">Like</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-commenting-o"></i>
+      										<span class="ml-1">Comment</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-share"></i>
+      										<span class="ml-1">Share</span>
+      									</div>
+      								</div>
+      							</div>
+      						</div>
+      						<div class="comment-item">
+      							<div class="col-md-12">
+      								<div class="bg-white p-2">
+      									<div class="d-flex flex-row user-info">
+      										<img src="/assets/images/main/ai4.jpg" width="40" class="rounded-circle">
+      										<div class="d-flex flex-column justify-content-start ml-2">
+      											<span class="d-block font-weight-bold name">김경은</span>
+      											<span class="date text-black-50">Shared publically - Jan 2021</span>
+      										</div>
+      									</div>
+      								</div>
+      								<div class="mt-2">
+      									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Thanks! Yeah! I Liked Thanks! Yeah! I Liked</p>
+      								</div>
+      							</div>
+      							<div class="bg-white">
+      								<div class="d-flex flex-row justify-content-end fs-12">
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-thumbs-o-up"></i>
+      										<span class="ml-1">Like</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-commenting-o"></i>
+      										<span class="ml-1">Comment</span>
+      									</div>
+      									<div class="like p-2 cursor">
+      										<i class="fa fa-share"></i>
+      										<span class="ml-1">Share</span>
+      									</div>
+      								</div>
+      							</div>
+      						</div>
+      					</div>
+      				</div>
       			</div>
       		</section>
       		<aside class="right-sidebar">
