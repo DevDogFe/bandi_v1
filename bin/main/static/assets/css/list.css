@@ -264,7 +264,7 @@ footer {
 }
 
 .top-wrap-content{
-	border-bottom: 1px solid blue;
+	border-bottom: 1px solid #7986cb;
 	height: 100px;
 	display: flex;
 	align-items: center;
@@ -343,7 +343,7 @@ footer {
 }
 
 .detail-aurthor{
-	color: blue;
+	color: #1a237e;
 	display: flex;
 	align-items: center;
 }
@@ -380,7 +380,7 @@ footer {
 	color: #888;
 	font-size: 18px;
 	font-weight: bold;
-	border-right: 1px solid blue;
+	border-right: 1px solid #7986cb;
 	padding-right: 20px;
 	margin-right: 20px;
 }
@@ -433,5 +433,5 @@ footer {
 
 /* 여기까지 boardList */
 .blue-span{
-	color: dodgerblue;
+	color: #7986cb;
 }

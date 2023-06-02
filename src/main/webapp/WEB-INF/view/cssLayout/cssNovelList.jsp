@@ -297,6 +297,7 @@
       </section>
       <section>
       	<nav class="paging" aria-label="Page navigation example">
+      		<div></div>
   			<ul class="pagination">
     			<li class="page-item"><a class="page-link" href="#">Previous</a></li>
     			<li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -311,6 +312,7 @@
     			<li class="page-item"><a class="page-link" href="#">10</a></li>
     			<li class="page-item"><a class="page-link" href="#">Next</a></li>
   			</ul>
+  			<div></div>
 		</nav>
       </section>
       </div>

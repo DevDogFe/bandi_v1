@@ -353,7 +353,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-drop TABLE user_rental_tb;
+-- drop TABLE user_rental_tb;
 
 
 

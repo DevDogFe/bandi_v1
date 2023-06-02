@@ -455,7 +455,7 @@ li.dropdown {
     display: flex;
     align-items: center;
     justify-content: center;
-    width:1200;
+    width:1200px;
     height:430px;
 }
 
@@ -755,6 +755,13 @@ footer {
 .li-desc{
 	font-size: 13px;
 	font-weight: 300;
+}
+	
+	
+
+
+.blue-span{
+	color: #7986cb;
 }
 
 

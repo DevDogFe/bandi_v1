@@ -4,6 +4,30 @@
 
 <mapper namespace="com.bandi.novel.repository.RecommendRepository">
 
+	<select id="selectBestNovelOfBestGenre" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
+		SELECT count(*) AS favoriteCount, n.*, u.nick_name, g.genre_name
+		FROM user_favorite_tb AS uf
+		LEFT JOIN novel_tb AS n
+		ON uf.novel_id = n.id
+		INNER JOIN
+		(
+		SELECT n.genre_id, g.name, count(*) AS count
+		FROM novel_tb AS n
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		GROUP BY n.genre_id
+		ORDER BY count DESC
+		LIMIT 1
+		) AS g
+		ON n.genre_id = g.genre_id
+		LEFT JOIN
+		user_tb AS u
+		ON n.user_id = u.id
+		GROUP BY uf.novel_id
+		ORDER BY favoriteCount DESC
+		LIMIT 6
+	</select>
+
 	<select id="selectByAgeAndGender" resultType="com.bandi.novel.dto.response.MainRecommendDto">
 		SELECT n.id, n.title, n.genre_id, n.cover, count(*) AS favorite_count
 		FROM user_favorite_tb as uf
@@ -72,7 +96,8 @@
 		FROM novel_tb AS n
 		LEFT JOIN
 		(
-		SELECT novel_id, count(*) AS favorite_count
+		SELECT novel_id,
+		count(*) AS favorite_count
 		FROM user_favorite_tb
 		GROUP BY novel_id
 		) AS uf
@@ -83,6 +108,26 @@
 		ON n.genre_id = g.id
 		WHERE service_type_id = #{serviceTypeId}
 		ORDER BY favorite_count DESC
+		LIMIT #{limit}
+	</select>
+
+	<select id="selectTotalRankToFavorite" resultType="com.bandi.novel.dto.response.RankPageDto">
+		SELECT n.*, uf.favorite_count, st.name AS service_type_name, g.name AS genre_name
+		FROM novel_tb AS n
+		LEFT JOIN
+		(
+		SELECT novel_id, count(*) AS
+		favorite_count
+		FROM user_favorite_tb
+		GROUP BY novel_id
+		) AS uf
+		ON n.id = uf.novel_id
+		LEFT JOIN service_type_tb AS st
+		ON n.service_type_id = st.id
+		LEFT JOIN genre_tb AS g
+		ON n.genre_id = g.id
+		ORDER BY
+		favorite_count DESC
 		LIMIT #{limit}
 	</select>
 
@@ -106,7 +151,8 @@
 		) AS
 		s
 		ON n.id = s.novel_id
-		LEFT JOIN genre_tb AS g
+		LEFT JOIN
+		genre_tb AS g
 		ON n.genre_id = g.id
 		WHERE service_type_id = #{serviceTypeId}
 		ORDER BY score DESC
@@ -141,16 +187,17 @@
 		LIMIT 1)
 		GROUP BY n.id
 		ORDER BY count(*) DESC
-		LIMIT 5
+		LIMIT 6
 	</select>
 
 	<!-- 이 소설을 본 사람들이 즐겨찾기한 소설 (효린) -->
-	<select id="selectFavoriteNovelByUsers" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
-		select n.*, g.name, nick_name as author
+	<select id="selectRecommendedNovelByNovelId" resultType="com.bandi.novel.dto.response.RecommendFavoritesDto">
+		select n.*, g.name AS genre_name, nick_name as author
 		from novel_tb as n
 		INNER JOIN user_favorite_tb as uf
 		on n.id = uf.novel_id
-		LEFT JOIN genre_tb as g
+		LEFT JOIN
+		genre_tb as g
 		on n.genre_id = g.id
 		LEFT JOIN user_tb as u
 		on n.user_id = u.id
@@ -163,6 +210,7 @@
 		n.id
 		where n.id = #{id}
 		)
+		AND n.id != #{id}
 		GROUP BY novel_id
 		ORDER BY count(*) DESC
 		LIMIT 5;

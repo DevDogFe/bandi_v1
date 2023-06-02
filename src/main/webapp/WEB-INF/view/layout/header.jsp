@@ -38,7 +38,7 @@
 
 section {
 	width: 1200px;
-	margin: 0 auto;
+	margin: 30px auto;
 }
 
 ul {
@@ -53,7 +53,7 @@ a {
 
 .header--top {
 	padding: 5px 50px;
-	background-color: darkcyan;
+	background-color: #00CED1;
 	text-align: right;
 	width: 100%;
 }
