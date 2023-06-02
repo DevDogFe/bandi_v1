@@ -28,7 +28,8 @@ public interface RecommendRepository {
 	// 전체서비스 즐겨찾기 랭크
 	List<RankPageDto> selectTotalRankToFavorite(Integer limit);
 	
-	
+	// 인기장르의 인기소설 조회
+	List<RecommendFavoritesDto> selectBestNovelOfBestGenre();
 	
 		
 	/**

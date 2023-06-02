@@ -97,11 +97,12 @@ public class RecommendService {
 	 */
 	@Transactional
 	public List<RecommendFavoritesDto> selectNovelByFavoriteGenre(Integer userId){
-		
+		// 유저가 좋아하는 장르 인기소설
 		List<RecommendFavoritesDto> list = recommendRepository.selectByFavoriteGenre(userId);
 		
 		if(list == null || list.size() < 6) {
-			// todo 즐겨찾기 없을 때 로직 
+			// 유저 즐겨찾기 없을시 인기장르의 인기소설
+			list = recommendRepository.selectBestNovelOfBestGenre();
 		}
 		
 		return list;

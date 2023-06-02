@@ -148,7 +148,7 @@
 								<h2>유료 웹소설 베스트</h2>
 							</c:when>
 							<c:otherwise>
-								<h2>${principal.nickName}님이좋아하는 장르 베스트</h2>
+								<h2>${novelList1.get(0).genreName}장르 인기소설</h2>
 							</c:otherwise>
 						</c:choose>
 						<div class="row"></div>
