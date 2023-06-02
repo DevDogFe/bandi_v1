@@ -20,7 +20,7 @@ public class QnaDto {
 	
 	public String createdAt() {
 		
-		return TimestampFormat.format(createdAt);
+		return TimestampFormat.dateFormat(createdAt);
 	}
 	
 	public String answerCreatedAt() {
