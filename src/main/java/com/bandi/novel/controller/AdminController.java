@@ -63,7 +63,7 @@ public class AdminController {
 			Model model) {
 
 		List<Question> questionList = null;
-		questionList = adminService.readAllQuestionList();
+		questionList = adminService.selectAllQuestionList();
 		model.addAttribute("questionList", questionList);
 		return "/admin/questionList";
 	}
@@ -79,10 +79,10 @@ public class AdminController {
 
 		List<Question> questionList = null;
 		if (proceed.equals("-1") || proceed.equals("")) {
-			questionList = adminService.readAllQuestionList();
+			questionList = adminService.selectAllQuestionList();
 		} else {
 			// 데이터 타입 변경
-			questionList = adminService.readIncompleteQuestionList(Integer.parseInt(proceed));
+			questionList = adminService.selectIncompleteQuestionList(Integer.parseInt(proceed));
 		}
 		return questionList;
 	}
@@ -250,25 +250,6 @@ public class AdminController {
 		return "/admin/adminUserRole";
 	}
 
-	/**
-	 * FAQ 전체조회
-	 * @param model
-	 * @return
-	 */
-	@GetMapping({"/faqList/{categoryId}", "/faqList"})
-	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId) {
-		List<Faq> faqList = null;
-		if (categoryId == null) {
-			faqList = faqService.readAllFaqList();			
-		}else {
-			faqList = faqService.readFaqList(categoryId);			
-		}		
-		 List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
-		 model.addAttribute("faqList", faqList);
-		 model.addAttribute("faqCategoryList", faqCategoryList);
-		 
-		return "/admin/faqList";
-	}
 	
 	/**
 	 * 관리자 페이지 대시보드

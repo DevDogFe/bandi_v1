@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.BoardRepository">
 
-	<insert id="insert">
+	<insert id="insertBoard">
 		insert into board_tb(user_id , title, board_type_id,
 		category_id, content)
 		values(#{userId}, #{title}, #{boardTypeId},

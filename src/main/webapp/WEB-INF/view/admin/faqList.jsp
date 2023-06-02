@@ -62,14 +62,14 @@
             }).done((response) => {
                 $(".faq--table").remove();
                 let faqList;
+                let resData = response.data;
 
-                for (i = 0; i < response.length; i++) {
+                for (i = 0; i < resData.length; i++) {
 
-                    faqList +=
-                        `<tr class="faq--table">
+                    faqList += `<tr class="faq--table">
                     <td><input type="checkbox" id="check--id" name="check--id" value="\${response[i].id}" ></td>
-                    <td class="faq--table">\${response[i].question}</td>
-                    <td class="faq--table">\${response[i].answer}</td>                    
+                    <td class="faq--table">\${resData[i].question}</td>
+                    <td class="faq--table">\${resData[i].answer}</td>                    
                     <td class="faq--table"><a href="/admin/faq/update/\${response[i].id}"><button>수정</button></a></td>
                     <td class="faq--table"><a href="/admin/faq/delete/\${response[i].id}"><button>삭제</button></a></td>
                     </tr>`;

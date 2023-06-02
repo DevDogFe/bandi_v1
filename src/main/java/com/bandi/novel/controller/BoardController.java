@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardReplyDto;
 import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.BoardFile;
 import com.bandi.novel.model.BoardReply;
 import com.bandi.novel.model.BoardType;
@@ -197,6 +199,9 @@ public class BoardController {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// boardDetail 에서 boardTypeId 가져와서 카테고리 리스트 불러옴
+		if(boardDetail.getUserId() != principal.getId()) {
+			throw new CustomRestfulException(Define.UNAUTHED, HttpStatus.BAD_REQUEST); 
+		}
 		List<CategorySelectDto> categoryList = boardService.selectCategory(boardDetail.getBoardTypeId());
 		List<BoardFile> fileList = boardService.selectFileList(id);
 		boardDetail.setContent(boardDetail.getContent().replaceAll("<br>", "\r\n"));
@@ -209,7 +214,7 @@ public class BoardController {
 	// 게시물 수정
 	@PostMapping("/updateProc/{id}")
 	public String updateBoardProc(BoardDto boardDto) {
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		// User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		ArrayList<String> fileNames = new ArrayList<>();
 		ArrayList<String> rawFileNames = new ArrayList<>();
 		for(int i = 0; i < boardDto.getFiles().length; i++) {
@@ -248,6 +253,10 @@ public class BoardController {
 	@GetMapping("/delete/{id}")
 	public String deleteBoard(@PathVariable Integer id) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		BoardDetailDto boardDto = boardService.selectBoardDetailById(id);
+		if(principal.getId() != boardDto.getUserId()) {
+			throw new CustomRestfulException(Define.UNAUTHED, HttpStatus.UNAUTHORIZED);
+		}
 		boardService.deleteBoard(id);
 		return "redirect:/board/list";
 	}
@@ -259,6 +268,7 @@ public class BoardController {
 		boardReply.setUserId(principal.getId());
 		boardReplyService.insertBoardReply(boardReply);
 		String content = boardReply.getContent().replaceAll("\r\n", "<br>");
+		boardReply.setContent(content);
 		return "redirect:/board/detail/" + boardReply.getBoardId();
 	}
 	

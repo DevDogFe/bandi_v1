@@ -468,7 +468,7 @@ table.table td {
 			$.ajax({
 				type: "DELETE",
 				url: "/api/category/" + id,
-			}).done(function(response){
+			}).done((response) => {
 				location.href = '/admin/adminCategory/' + selectedOptionId;
 			}).fail(function(error){
 				alert("요청 실패");

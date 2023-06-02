@@ -4,7 +4,7 @@
 <mapper namespace="com.bandi.novel.repository.QuestionRepository">
 
 	<!-- Question 전체조회 (관리자) -->
-	<select id="findAllQuestion" resultType="com.bandi.novel.model.Question">
+	<select id="selectAllQuestion" resultType="com.bandi.novel.model.Question">
 		select q.*, u.username, fc.category_name
 		from question_tb as q
 		inner join user_tb as u
@@ -16,7 +16,7 @@
 	</select>
 
 	<!-- 처리/미처리 -->
-	<select id="findByProceed" resultType="com.bandi.novel.model.Question">
+	<select id="selectByProceed" resultType="com.bandi.novel.model.Question">
 		select q.*, u.username, fc.category_name
 		from question_tb as q
 		inner join user_tb as u
@@ -29,7 +29,7 @@
 	</select>
 
 	<!-- Q&A 전체조회(CS) -->
-	<select id="findAllQna" resultType="com.bandi.novel.dto.response.QnaDto">
+	<select id="selectAllQna" resultType="com.bandi.novel.dto.response.QnaDto">
 		select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name, nick_name
 		from question_tb as q
 		left join answer_tb as a
@@ -43,7 +43,7 @@
 	</select>
 
 	<!-- Q&A userId 전체조회 (마이페이지) -->
-	<select id="findQnaByUserId" resultType="com.bandi.novel.model.Question">
+	<select id="selectQnaByUserId" resultType="com.bandi.novel.model.Question">
 		select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name
 		from question_tb as q
 		left join answer_tb as a
@@ -54,12 +54,12 @@
 	</select>
 
 	<!-- 1:1 문의 -->
-	<insert id="insert">
+	<insert id="insertQuestion">
 		insert into question_tb(user_id, title, content, faq_category_id)
 		values (#{userId}, #{title}, #{content}, #{faqCategoryId})
 	</insert>
 
-	<select id="findById" resultType="com.bandi.novel.model.Question">
+	<select id="selectById" resultType="com.bandi.novel.model.Question">
 		select q.*, u.username, fc.category_name
 		from question_tb as q
 		inner join user_tb as u
@@ -87,7 +87,7 @@
 	</update>
 
 	<!-- 검색 -->
-	<select id="findByKeyword" resultType="com.bandi.novel.dto.response.QnaDto">
+	<select id="selectByKeyword" resultType="com.bandi.novel.dto.response.QnaDto">
 		<if test="faqCategoryId == 0">
 			select q.*, a.content as answer, a.created_at as answerCreatedAt, fc.category_name, nick_name
 			from question_tb as q

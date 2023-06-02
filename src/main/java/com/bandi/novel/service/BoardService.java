@@ -3,6 +3,7 @@ package com.bandi.novel.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,12 +11,15 @@ import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.BoardDto;
 import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.CategorySelectDto;
+import com.bandi.novel.dto.response.ResponseDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.BoardFile;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.repository.BoardCategoryRepository;
 import com.bandi.novel.repository.BoardFileRepository;
 import com.bandi.novel.repository.BoardRepository;
 import com.bandi.novel.repository.BoardTypeRepository;
+import com.bandi.novel.utils.Define;
 
 @Service
 public class BoardService {
@@ -33,7 +37,7 @@ public class BoardService {
 	@Transactional
 	public void createBoard(BoardDto boardDto) {
 		// board_tb에 저장
-		int resultRowCount = boardRepository.insert(boardDto);
+		int resultRowCount = boardRepository.insertBoard(boardDto);
 		// 위에서 저장할 때 자동생성된 boardId 끌어오기
 		Integer boardId = boardRepository.selectBoardIdByDTO(boardDto);
 		
@@ -130,12 +134,12 @@ public class BoardService {
 	
 	// 파일 삭제
 	@Transactional
-	public int deleteFile(Integer id) {
-		int resultRowCount = boardFileRepository.deleteFile(id);
-		if(resultRowCount != 1) {
-			System.out.println("삭제 실패");
+	public ResponseDto<Integer> deleteFile(Integer id) {
+		int result = boardFileRepository.deleteFile(id);
+		if(result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return resultRowCount;
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
 
 }

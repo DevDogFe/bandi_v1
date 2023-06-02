@@ -33,6 +33,7 @@ public class UserInfoController {
 	@Autowired
 	private PayService payService;
 	
+	// 내정보
 	@GetMapping("/myInfo")
 	private String getMyInfo(Model model) {
 		
@@ -57,6 +58,7 @@ public class UserInfoController {
 		return "/user/userInfo";
 	}
 	
+	// 소설 구매, 대여 내역
 	@GetMapping("/purchase")
 	public String getPurchaseHistory(Model model) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
@@ -69,6 +71,7 @@ public class UserInfoController {
 		
 	}
 	
+	// 내서재 구매한 회차, 대여한 회차 내역
 	@GetMapping("/library")
 	public String getUserLibrary(Model model) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);

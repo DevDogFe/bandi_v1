@@ -194,7 +194,7 @@ public class UserController {
 	
 	
 
-	private ResponseEntity<NaverOAuthToken> requestAccessToken(HttpEntity request) {
+	private ResponseEntity<NaverOAuthToken> requestAccessToken(HttpEntity<MultiValueMap<String, String>> request) {
 		RestTemplate restTemplate = new RestTemplate();
 
 		ResponseEntity<NaverOAuthToken> token = restTemplate.exchange("https://nid.naver.com/oauth2.0/token", HttpMethod.POST, request, NaverOAuthToken.class);
@@ -202,7 +202,7 @@ public class UserController {
 		return token;
 	}
 
-	private ResponseEntity<OAuthUserInfoForNaver> requestProfile(HttpEntity request) {
+	private ResponseEntity<OAuthUserInfoForNaver> requestProfile(HttpEntity<MultiValueMap<String, String>> request) {
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET, request, OAuthUserInfoForNaver.class);
 	}

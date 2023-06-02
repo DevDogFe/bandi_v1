@@ -3,6 +3,7 @@ package com.bandi.novel.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,8 @@ import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.response.BestSectionDto;
+import com.bandi.novel.dto.response.ResponseDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.Genre;
@@ -24,10 +27,11 @@ import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.QuestionRepository;
 import com.bandi.novel.repository.UserNovelRecordRepository;
 import com.bandi.novel.repository.UserRepository;
+import com.bandi.novel.utils.Define;
 
 @Service
 public class AdminService {
-	
+
 	@Autowired
 	private QuestionRepository questionRepository;
 	@Autowired
@@ -42,153 +46,157 @@ public class AdminService {
 	private UserNovelRecordRepository userNovelRecordRepository;
 	@Autowired
 	private FaqRepository faqRepository;
-	
+
 	/**
 	 * @return Question 전체조회
 	 */
-	public List<Question> readAllQuestionList() {
-
-		List<Question> list = questionRepository.findAllQuestion();
-		return list;
-	}	
-	
-	public List<Question> readIncompleteQuestionList(Integer proceed){
-		
-		List<Question> list = questionRepository.findByProceed(proceed);
+	@Transactional
+	public List<Question> selectAllQuestionList() {
+		List<Question> list = questionRepository.selectAllQuestion();
 		return list;
 	}
-	
+
+	@Transactional
+	public List<Question> selectIncompleteQuestionList(Integer proceed) {
+		List<Question> list = questionRepository.selectByProceed(proceed);
+		return list;
+	}
+
 	/**
 	 * 답변 생성
+	 * 
 	 * @param answer
 	 */
 	@Transactional
 	public void createAnswer(Answer answer, Integer principalId) {
-
+		// TODO 로그인 해서 받는걸로 바꿀것
 		answer.setUserId(1);
-		int resultRowCount = answerRepository.insert(answer);
-		if (resultRowCount != 1) {
-			System.out.println("답변 작성 실패");
+		int result = answerRepository.insertAnswer(answer);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
-	
+
 	/**
 	 * 답변 수정
+	 * 
 	 * @param answerUpdateDto
 	 */
 	@Transactional
 	public void updateAnswerByQuestionId(AnswerUpdateDto answerUpdateDto) {
-		
-		Answer answerEntity = answerRepository.findByQuestionId(answerUpdateDto.getQuestionId());
-		if(answerEntity == null) {
-			System.out.println("해당 답변 존재하지 않습니다");			
+		Answer answerEntity = answerRepository.selectByQuestionId(answerUpdateDto.getQuestionId());
+		if (answerEntity == null) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		int resultRowCount = answerRepository.updateByQuestionId(answerUpdateDto);
-		if (resultRowCount != 1) {
-			System.out.println("답변 수정 실패");
+		int result = answerRepository.updateByQuestionId(answerUpdateDto);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	/**
 	 * 답변 삭제
+	 * 
 	 * @param id
 	 */
 	@Transactional
-	public void deleteAnswer(Integer questionId) {		
-		
-		Answer answerEntity = answerRepository.findByQuestionId(questionId);
-		if(answerEntity == null) {
-			System.out.println("해당 답변 존재하지 않습니다");			
+	public void deleteAnswer(Integer questionId) {
+		Answer answerEntity = answerRepository.selectByQuestionId(questionId);
+		if (answerEntity == null) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		// session		
-		int resultRowCount = answerRepository.deleteByQuestionId(questionId);
-		if (resultRowCount != 1) {
-			System.out.println("답변 삭제 실패");			
+		int result = answerRepository.deleteByQuestionId(questionId);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	/**
 	 * 질문 처리상태 변경
+	 * 
 	 * @param questionId
 	 */
 	@Transactional
 	public void updateQuestion(Integer questionId, Integer proceed) {
-		
-		Question questionEntity = questionRepository.findById(questionId);
-		if(questionEntity == null) {
-			System.out.println("이미 삭제된 글입니다");
-		}		
-		
-		questionEntity.setProceed(proceed);
-		int resultRowCount = questionRepository.updateProceedById(questionEntity);
-		if(resultRowCount != 1) {
-			System.out.println("처리변경 실패");
+
+		Question questionEntity = questionRepository.selectById(questionId);
+		if (questionEntity == null) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
+		questionEntity.setProceed(proceed);
+		int result = questionRepository.updateProceedById(questionEntity);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
-	
+
 	// 카테고리 등록
 	@Transactional
 	public void createCategory(CategorySelectDto categorySelectDto) {
-		int resultRowCount = boardCategoryRepository.insert(categorySelectDto);
-		if(resultRowCount != 1) {
-			System.out.println("등록 실패");
+		int result = boardCategoryRepository.insert(categorySelectDto);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	// 카테고리 삭제 
+
+	// 카테고리 삭제
 	@Transactional
-	public Integer deleteCategoryById(Integer id) {
+	public ResponseDto<Integer> deleteCategoryById(Integer id) {
 		int result = boardCategoryRepository.deleteById(id);
-		return result;
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
-	
+
 	// 장르 등록
 	@Transactional
 	public void createGenre(Genre genre) {
-		int resultRowCount = genreRepository.insert(genre);
-		if(resultRowCount != 1) {
-			System.out.println("등록 실패");
+		int result = genreRepository.insert(genre);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	// 장르 삭제
 	@Transactional
-	public Integer deleteGenreById(Integer id) {
+	public ResponseDto<Integer> deleteGenreById(Integer id) {
 		int result = genreRepository.deleteById(id);
-		return result;
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
-	
+
 	// 유저롤 수정
 	@Transactional
-	public Integer updateUserRole(User user) {
-		int resultRowCount = userRepository.updateUserRole(user);
-		if(resultRowCount != 1) {
-			System.out.println("수정 실패");
+	public ResponseDto<Integer> updateUserRole(User user) {
+		int result = userRepository.updateUserRole(user);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return resultRowCount;
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
-	
+
 	// 사용자 검색
 	@Transactional
 	public List<UserRoleDto> searchUser(UserSearchDto userSearchDto) {
-		if(userSearchDto.getType() == null) {
+		if (userSearchDto.getType() == null) {
 			userSearchDto.setType("all");
 		}
 		List<UserRoleDto> list = userRepository.searchUser(userSearchDto);
 		return list;
 	}
-	
+
 	@Transactional
 	public List<UserRole> selectUserRole() {
 		List<UserRole> list = userRepository.selectUserRole();
 		return list;
 	}
-	
+
 	/**
 	 * @author 김지현
 	 * @return 오늘 가입자수
@@ -196,14 +204,15 @@ public class AdminService {
 	@Transactional
 	public Integer selectTodayJoinUserCount() {
 		Integer count = userRepository.selectTodayJoinUserCount();
-		if(count == null) {
+		if (count == null) {
 			count = 0;
 		}
 		return count;
 	}
-	
+
 	/**
 	 * 오늘 가장 많이 조회된 회차
+	 * 
 	 * @author 김지현
 	 * @return
 	 */
@@ -212,9 +221,10 @@ public class AdminService {
 		BestSectionDto dto = userNovelRecordRepository.selectTodayBestSection();
 		return dto;
 	}
-	
+
 	/**
 	 * 이달 가장 많이 조회된 회차
+	 * 
 	 * @author 김지현
 	 * @return
 	 */
@@ -223,41 +233,60 @@ public class AdminService {
 		BestSectionDto dto = userNovelRecordRepository.selectMonthBestSection();
 		return dto;
 	}
+
 	/**
 	 * FAQ 생성
+	 * 
 	 * @param faq
 	 */
+	@Transactional
 	public void createFaq(Faq faq) {
-		
-		faqRepository.insert(faq);		
+
+		int result = faqRepository.insertFaq(faq);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+
 	/**
 	 * FAQ 수정
+	 * 
 	 * @param id
 	 */
+	@Transactional
 	public void updateFaq(Integer id) {
-		faqRepository.updateFaqById(id);
+		int result = faqRepository.updateFaqById(id);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+
 	/**
 	 * FAQ 삭제
+	 * 
 	 * @param id
 	 */
-	public void deleteFaq(List<Integer> id) {
-		
-		faqRepository.deleteFaq(id);
-		
+	@Transactional
+	public ResponseDto<Integer> deleteFaq(List<Integer> id) {
+
+		int result = faqRepository.deleteFaq(id);
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
+
 	}
-	
+
 	/**
-	 * FAQ 조회 
+	 * FAQ 조회
+	 * 
 	 * @param id
 	 * @return
 	 */
+	@Transactional
 	public Faq readFaq(Integer id) {
-		return faqRepository.findById(id);
+		return faqRepository.selectById(id);
 	}
-	
 
 }

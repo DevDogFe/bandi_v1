@@ -2,7 +2,6 @@ package com.bandi.novel.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,6 @@ import com.bandi.novel.model.Faq;
 import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.service.FaqService;
 import com.bandi.novel.utils.FaqPageUtil;
-import com.bandi.novel.utils.QnaPageUtil;
 
 /**
  * FAQ Controller
@@ -37,9 +35,9 @@ public class FaqController {
 	public String list(Model model, @PathVariable(required = false) Integer categoryId, @RequestParam(defaultValue = "1") Integer currentPage) {
 		List<Faq> faqList = null;
 		if(categoryId == null) {
-			faqList = faqService.readAllFaqList();			
+			faqList = faqService.readAllFaqList().getData();			
 		}else {
-			faqList = faqService.readFaqList(categoryId);
+			faqList = faqService.readFaqList(categoryId).getData();
 		}		
 		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
 		FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 10, currentPage, 5, faqList);

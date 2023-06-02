@@ -428,9 +428,9 @@ table.table td {
 			$.ajax({
 				type: "DELETE",
 				url: "/api/genre/" + id,
-			}).done(function(response){
-				location.href = "/admin/genre"
-			}).fail(function(error){
+			}).done((response) => {
+				location.href = "/admin/genre";
+			}).fail((error) => {
 				alert("요청 실패");
 			});
 		}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.response.NovelReplyListDto;
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.NovelReply;
 import com.bandi.novel.repository.NovelReplyRepository;
@@ -44,11 +45,12 @@ public class NovelReplyService {
 	
 	// 댓글 삭제
 	@Transactional
-	public void deleteNovelReplyById(Integer id) {
+	public ResponseDto<Integer> deleteNovelReplyById(Integer id) {
 		int result = novelReplyRepository.deleteById(id);
 		if(result != 1) {
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
 	
 }

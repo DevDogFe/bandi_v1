@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.model.User;
-import com.bandi.novel.repository.BoardLikeRepository;
 import com.bandi.novel.service.BoardLikeService;
 import com.bandi.novel.utils.Define;
 
@@ -24,18 +24,18 @@ public class BoardLikeApiController {
 	
 	// 좋아요 등록
 	@PostMapping("/api/like/{boardId}")
-	public Integer likeProc(@PathVariable Integer boardId) {
+	public ResponseDto<Integer> likeProc(@PathVariable Integer boardId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		boardLikeService.insertLike(principal.getId(), boardId);
-		return boardId;
+		ResponseDto<Integer> response = boardLikeService.insertLike(principal.getId(), boardId);
+		return response;
 	}
 	
 	// 좋아요 해제
 	@DeleteMapping("/api/unlike/{boardId}")
-	public Integer unLikeProc(@PathVariable Integer boardId) {
+	public ResponseDto<Integer> unLikeProc(@PathVariable Integer boardId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		boardLikeService.deleteLike(principal.getId(), boardId);
-		return boardId;
+		ResponseDto<Integer> response = boardLikeService.deleteLike(principal.getId(), boardId);
+		return response;
 	}
 
 }

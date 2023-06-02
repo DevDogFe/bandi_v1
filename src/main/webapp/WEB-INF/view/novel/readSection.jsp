@@ -181,7 +181,7 @@ ul {
 							<td>${reply.content }</td>
 							<td>${reply.createdAt() }</td>
 							<td><c:if test="${principal.id == reply.userId }">
-									<button class="delete--btn" onclick="deleteReply(${reply.id},${section.novelId}, ${section.id})">삭제</button>
+									<button class="delete--btn" onclick="deleteReply(${reply.id},${section.novelId}, ${section.id}, ${ serviceTypeId})">삭제</button>
 								</c:if></td>
 						</tr>
 					</c:forEach>
@@ -336,13 +336,14 @@ ul {
 			$(".fullscreen").show();
 	    });
 	}
-	
-function deleteReply(replyId,novelId,sectionId) {
+
+	// 댓글 삭제
+function deleteReply(replyId, novelId, sectionId, serviceTypeId) {
 	$.ajax({
 		type: "DELETE",
 		url: "/api/reply/" + replyId
 	}).done((response) => {
-		location.href='/section/read/'+novelId+'/'+ sectionId;
+		location.href='/section/read/'+novelId+'/'+ sectionId + '?serviceTypeId=' + serviceTypeId;
 	}).fail((error) => {
 		console.log(error);
 		alert("요청을 처리할 수 없습니다.");
@@ -354,10 +355,7 @@ $(document).ready(function() {
 	
 	// 별점 등록
 	$("#starBtn").on("click", () => {
-		console.log('111111111');
 		const stars = $("input[name = reviewStar]");
-		console.log(stars);
-		let score;
 		for (let i = 0; i < stars.length; i++){
 			if(stars[i].checked){
 				score = stars[i].value;

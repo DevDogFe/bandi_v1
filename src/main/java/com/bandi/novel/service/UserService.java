@@ -42,13 +42,13 @@ public class UserService {
 	public ResponseDto<User> loginByUsernameAndPassword(LoginDto loginDto) {
 		User userEntity = userRepository.selectByUsername(loginDto.getUsername());
 		if (userEntity == null) {
-			return new ResponseDto<User>(500, "50000", "아이디가 없습니다.", "50000", null);
+			return new ResponseDto<User>(HttpStatus.INTERNAL_SERVER_ERROR, "아이디가 없습니다.", false, null);
 		}
 		if (!passwordEncoder.matches(loginDto.getPassword(), userEntity.getPassword())) {
-			return new ResponseDto<User>(500, "50000", "비밀번호가 틀렸습니다.", "50000", null);
+			return new ResponseDto<User>(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호가 틀렸습니다.", false, null);
 		}
 
-		return new ResponseDto<User>(200, "20000", "ok", "20000", userEntity);
+		return new ResponseDto<User>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, userEntity);
 	}
 
 	/**

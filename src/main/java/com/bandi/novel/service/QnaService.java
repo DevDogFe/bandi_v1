@@ -27,7 +27,7 @@ public class QnaService {
 	 */
 	public List<QnaDto> readAllQna(){
 		
-		List<QnaDto> list = questionRepository.findAllQna();
+		List<QnaDto> list = questionRepository.selectAllQna();
 		return list;
 	}
 
@@ -38,7 +38,7 @@ public class QnaService {
 	 */
 	public List<Question> readQuestionByUserId(Integer principalId) {
 
-		List<Question> list = questionRepository.findQnaByUserId(principalId);
+		List<Question> list = questionRepository.selectQnaByUserId(principalId);
 		return list;
 	}
 
@@ -50,7 +50,7 @@ public class QnaService {
 	public void createQuestion(Question question, Integer principalId) {
 
 		question.setUserId(principalId);
-		int resultRowCount = questionRepository.insert(question);
+		int resultRowCount = questionRepository.insertQuestion(question);
 		if (resultRowCount != 1) {
 			System.out.println("질문작성실패");
 		}
@@ -61,7 +61,7 @@ public class QnaService {
 	 * @return Question 조회
 	 */
 	public Question readQuestionById(Integer id) {
-		Question questionEntity = questionRepository.findById(id);
+		Question questionEntity = questionRepository.selectById(id);
 		return questionEntity;
 	}
 
@@ -73,7 +73,7 @@ public class QnaService {
 	@Transactional
 	public void updateQuestion(QuestionUpdateDto questionUpdateDto, Integer principalId) {
 
-		Question questionEntity = questionRepository.findById(questionUpdateDto.getId());
+		Question questionEntity = questionRepository.selectById(questionUpdateDto.getId());
 		if (questionEntity == null) {
 			System.out.println("해당 글이 존재하지 않습니다");
 		}
@@ -92,7 +92,7 @@ public class QnaService {
 	@Transactional
 	public void deleteQuestion(Integer id) {
 
-		Question questionEntity = questionRepository.findById(id);
+		Question questionEntity = questionRepository.selectById(id);
 		if (questionEntity == null) {
 			System.out.println("해당 글이 존재하지 않습니다");
 		}
@@ -109,7 +109,7 @@ public class QnaService {
 	 */
 	public Answer readAnswerByQuestionId(Integer questionId) {
 
-		Answer answerEntity = answerRepository.findByQuestionId(questionId);
+		Answer answerEntity = answerRepository.selectByQuestionId(questionId);
 		return answerEntity;
 	}
 	
@@ -120,7 +120,7 @@ public class QnaService {
 	 */
 	public List<QnaDto> readQnaListByKeyword(QnaSearchDto qnaSearchDto) {		
 		
-		return questionRepository.findByKeyword(qnaSearchDto);
+		return questionRepository.selectByKeyword(qnaSearchDto);
 	}
 
 }

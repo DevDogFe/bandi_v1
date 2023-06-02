@@ -88,21 +88,22 @@
 				$.ajax({
 					type: "GET",
 					url: "/api/novel/" + search,
-				}).done(function(e){
+				}).done((response) => {
 					
 					let appendHtml = "";
+					let resArr = response.data; 
 					
-					for(var i=0;i<e.length;i++){
-						appendHtml += '<tr id="tr'+e[i].id+'"><td>'+ e[i].title +'</td>';
-						appendHtml += '<td>'+ e[i].userName +'</td>';
-						appendHtml += '<td id="serviceType'+e[i].id+'">'+ e[i].serviceTypeName +'</td>';
+					for(var i=0;i<resArr.length;i++){
+						appendHtml += '<tr id="tr'+resArr[i].id+'"><td>'+ resArr[i].title +'</td>';
+						appendHtml += '<td>'+ resArr[i].userName +'</td>';
+						appendHtml += '<td id="serviceType'+resArr[i].id+'">'+ resArr[i].serviceTypeName +'</td>';
 						appendHtml += '<td style="width:300px;">';
-						appendHtml += '<select id="select'+e[i].id+'" class="form-select" aria-label="Default select example">';
+						appendHtml += '<select id="select'+resArr[i].id+'" class="form-select" aria-label="Default select example">';
 						appendHtml += '<option value="1">유료</option>';
 						appendHtml += '<option value="2">무료</option>';
 						appendHtml += '<option value="3">공모전</option></select></td>';
-						appendHtml += '<td><button id="update-btn'+e[i].id+'" class="btn btn-primary" onclick="updateNovelType('+e[i].id+')">수정</button></td>';
-						appendHtml += '<td><button id="delete-btn'+e[i].id+'" class="btn btn-danger" onclick="deleteNovel('+e[i].id+')">삭제</button></td></tr>';
+						appendHtml += '<td><button id="update-btn'+resArr[i].id+'" class="btn btn-primary" onclick="updateNovelType('+resArr[i].id+')">수정</button></td>';
+						appendHtml += '<td><button id="delete-btn'+resArr[i].id+'" class="btn btn-danger" onclick="deleteNovel('+resArr[i].id+')">삭제</button></td></tr>';
 					}
 					
 					$("#novelList").html(appendHtml);
@@ -130,14 +131,14 @@
 				type: "PUT",
 				url: "/api/novel/update",
 				contentType : "application/json; charset=UTF-8",
-			}).done(function(e){
+			}).done((response) => {
 				
-				if(e){
-					let selectNum = $("#select"+id).val() -1;
+				if(response.isSuccess){
+					let selectNum = $("#select" + id).val() -1;
 					
 					$("#serviceType"+id).text($("#select"+id).children().eq(selectNum).text());
 				}
-			}).fail(function(error){
+			}).fail((error) => {
 				alert("업데이트 실패");
 			});
 		}
@@ -148,13 +149,13 @@
 			$.ajax({
 				type: "DELETE",
 				url: "/api/novel/delete/" + id,
-			}).done(function(e){
+			}).done((response) => {
 				
-				if(e){
-					$("#tr"+id).remove();
+				if(response.isSuccess){
+					$("#tr" + id).remove();
 				}
 				
-			}).fail(function(error){
+			}).fail((error) => {
 				alert("삭제 실패");
 			});
 			

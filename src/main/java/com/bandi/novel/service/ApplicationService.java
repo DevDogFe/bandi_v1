@@ -20,7 +20,7 @@ public class ApplicationService {
 	 */
 	public List<Application> readAllApplication(){
 		
-		List<Application> list = applicationRepository.findAll();
+		List<Application> list = applicationRepository.selectAll();
 		return list;	
 	}
 	
@@ -30,7 +30,7 @@ public class ApplicationService {
 	 */
 	public List<Application> readApplicationByUserId(Integer principalId){
 		
-		List<Application> list = applicationRepository.findByUserId(principalId);
+		List<Application> list = applicationRepository.selectByUserId(principalId);
 		return list;		
 	}
 	
@@ -40,7 +40,7 @@ public class ApplicationService {
 	 */
 	public Application readApplicationById(Integer id) {
 		
-		Application applicationEntity = applicationRepository.findById(id);
+		Application applicationEntity = applicationRepository.selectById(id);
 		return applicationEntity;
 	}
 	
@@ -51,7 +51,7 @@ public class ApplicationService {
 	 */
 	public void createApplication(ApplicationFromDto applicationFromDto) {		
 		
-		int resultRowCount = applicationRepository.insert(applicationFromDto);		
+		int resultRowCount = applicationRepository.insertApplication(applicationFromDto);		
 		if (resultRowCount != 1) {
 			System.out.println("연재문의 작성 실패");
 		}

@@ -49,18 +49,13 @@
 		$("#usernameJ").on("keyup", () => {
 			$.ajax({
 				type: "GET",
-<<<<<<< HEAD
-				url: "/api/username",
-				data: {username: $("#usernameJ").val()}   
-=======
 				url: "/api/username?username=" + $("#usernameJ").val()
->>>>>>> feature/responseDto
 			}).done((response) => {
 				if(response.data){
-					$("#usernameCheck").text("이미 사용중인 아이디입니다.");
+					$("#usernameCheck").text(response.message);
 					usernameOk = false;
 				} else{
-					$("#usernameCheck").text("사용 가능한 아이디입니다.");
+					$("#usernameCheck").text(response.message);
 					usernameOk = true;
 				}
 			}).fail((error) => {
@@ -76,10 +71,10 @@
 				url: "/api/nickName?nickName=" + $("#nickName").val() 
 			}).done((response) => {
 				if(response.data){
-					$("#nickNameCheck").text("이미 사용중인 닉네임입니다.");
+					$("#nickNameCheck").text(response.message);
 					nickNameOk = false;
 				} else{
-					$("#nickNameCheck").text("사용 가능한 닉네임입니다.");
+					$("#nickNameCheck").text(response.message);
 					nickNameOk = true;
 				}
 			}).fail((error) => {
@@ -116,13 +111,12 @@
 				url: "/api/emailAuth",
 				data: {email: $("#email").val()}				
 			}).done((response) => {
-				console.log("response" + response);
-				if(response.statusCode == 200){
-					alert("인증번호 발송되었습니다.");	
+				if(response.isSuccess){
+					alert(response.message);	
 					$("#authKey").attr('disabled',false);
-					confirm(response);
+					confirm(response.data);
 				} else{
-					alert("이미 가입된 이메일입니다.");					
+					alert(response.message);					
 				}				
 			}).fail((error) => {
 				console.log(error);
@@ -152,7 +146,7 @@
 		});**/				
 		
 		// 인증번호 일치여부 확인 (효린) 
-		function confirm(response){
+		function confirm(key){
 			$("#confirm").on("click", () => {
 				if(response.data != $("#authKey").val()){
 					alert("인증실패 확인 다시입력해주세요");

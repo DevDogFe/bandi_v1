@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,7 +56,7 @@ public class UserApiController {
 		userUpdateDto.setPassword("***");
 		userUpdateDto.setPasswordCheck("***");
 
-		return new ResponseDto<Boolean>(200, "20000", "유저정보를 업데이트하였습니다.", "20000", true);
+		return new ResponseDto<Boolean>(HttpStatus.OK, "유저정보를 업데이트하였습니다.", true, true);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class UserApiController {
 			msg = "사용 가능한 아이디입니다.";
 		}
 
-		return new ResponseDto<Boolean>(200, "20000", msg, "20000", result);
+		return new ResponseDto<Boolean>(HttpStatus.OK, msg, true, result);
 	}
 
 	/**
@@ -93,21 +94,16 @@ public class UserApiController {
 			msg = "사용 가능한 닉네임입니다.";
 		}
 
-		return new ResponseDto<Boolean>(200, "20000", msg, "20000", result);
+		return new ResponseDto<Boolean>(HttpStatus.OK, msg, true, result);
 	}
 
 	@PostMapping("/api/login")
-	public ResponseDto<Boolean> loginProc(@RequestBody LoginDto loginDto) {
+	public ResponseDto<String> loginProc(@RequestBody LoginDto loginDto) {
 		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
-		Boolean result = true;
-		if (resUser.getData() == null) {
-			result = false;
-		}
 		User principal = resUser.getData();
 		session.setAttribute("principal", principal);
 
-		return new ResponseDto<Boolean>(resUser.getStatusCode(), resUser.getCode(), resUser.getMessage(),
-				resUser.getResultCode(), result);
+		return new ResponseDto<String>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, resUser.getData().getId() + "");
 	}
 
 	/**
@@ -122,7 +118,7 @@ public class UserApiController {
 		// 가입 유무 확인
 		Boolean check = userService.checkEmail(email);
 		if (check) {
-			return new ResponseDto<String>(500, "50000", "이미 가입된 사용자 이메일입니다.", "50000", null);
+			return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "이미 가입된 사용자 이메일입니다.", false, null);
 		}
 		// 인증번호 생성 
 		String key = TempNumberUtil.getAuthKey();
@@ -132,7 +128,7 @@ public class UserApiController {
 		// userService.createAuthKey(authKey);
 		// 인증번호 메일 전송
 		mailService.sendAuthKey(authKey);
-		return new ResponseDto<String>(200, "20000", "인증번호가 발송되었습니다.", "20000", key);
+		return new ResponseDto<String>(HttpStatus.OK, "인증번호가 발송되었습니다.", true, key);
 	}
 
 	/**
@@ -148,52 +144,6 @@ public class UserApiController {
 		return userService.checkAuthKey(email, inputKey);
 	}
 
-//	private HttpEntity<MultiValueMap<String, String>> generateAuthCodeRequest(String code, String state) {
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-//
-//		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//		params.add("grant_type", "authorization_code");
-//		params.add("client_id", "BbvLPxHgxKiCdntADysv");
-//		params.add("client_secret", "lJW7tHYXp6");
-//		params.add("code", code);
-//		return new HttpEntity<>(params, headers);
-//	}
-//
-//	private ResponseEntity<NaverOAuthToken> requestAccessToken(HttpEntity request) {
-//		RestTemplate restTemplate = new RestTemplate();
-//
-//		ResponseEntity<NaverOAuthToken> token = restTemplate.exchange("https://nid.naver.com/oauth2.0/token", HttpMethod.POST, request, NaverOAuthToken.class);
-//		
-//		return token;
-//	}
-//
-//	private ResponseEntity<OAuthUserInfoForNaver> requestProfile(HttpEntity request) {
-//		RestTemplate restTemplate = new RestTemplate();
-//		return restTemplate.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET, request, OAuthUserInfoForNaver.class);
-//	}
-//
-//	private HttpEntity<MultiValueMap<String, String>> generateProfileRequest(String accessToken) {
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Authorization", "Bearer " + accessToken);
-//		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-//		System.out.println(headers);
-//		return new HttpEntity<>(headers);
-//	}
-//
-//	@GetMapping("/naver/auth")
-//	public String authNaver(@RequestParam String code, @RequestParam String state) {
-//		System.out.println(state);
-//		ResponseEntity<NaverOAuthToken> token = requestAccessToken(generateAuthCodeRequest(code, state));
-//		System.out.println(token);
-//		HttpEntity<MultiValueMap<String, String>> entity = generateProfileRequest(token.getBody().getAccessToken());
-//		String username =  requestProfile(entity).getBody().getResponse().getId();
-//		User user = new User();
-//		user.setUsername(username);
-//		user.setPassword(bandiKey);
-//		User principal = userService.loginByNaver(user);
-//		session.setAttribute(Define.PRINCIPAL, principal);
-//		return username;
-//	}
+
 
 }
