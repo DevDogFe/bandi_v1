@@ -22,7 +22,8 @@
 	background: #fff;
 	padding: 15px 55px;
 	border-radius: 8px;
-	box-shadow: 0 0 15px rgba(0,0,0,0.1);
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	margin-bottom: 10px;
 }
 
 .registration-form h1{
@@ -330,4 +331,52 @@
 	margin-top: 10px;
 	padding:10px;
 	border-bottom: 1px solid #3b6bc9;
+}
+
+/* 공모전 등록 */
+
+.date-form-contents{
+	display: flex;
+	align-items: center;
+}
+
+.date-form-contents p{
+	width:100px;
+	font-size: 20px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: -5px;
+}
+
+
+.date-form{
+	width: 40%;
+}
+
+/* UserPay */
+.bottom-inner{
+	display: flex;
+	justify-content: center;
+}
+
+.bottom{
+	display: flex;
+	flex-direction:column;
+	align-items:center;
+}
+
+.bottom h1{
+	margin-top: 20px;
+	padding-bottom: 20px;
+	font-size: 20px;
+	font-weight: 400px;
+	width:75%;
+	border-bottom: 1px solid #3b6bc9;
+}
+
+.bottom-inner button{
+	width:200px;
+	height: 80px;
+	margin: 0px 10px;
 }

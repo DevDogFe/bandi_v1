@@ -8,13 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
+import com.bandi.novel.dto.response.NovelDetailDto;
+import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
+import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.User;
+import com.bandi.novel.service.ContestService;
+import com.bandi.novel.service.NovelReplyService;
+import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.RecommendService;
+import com.bandi.novel.service.UserFavoriteService;
+import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.GenerationUtil;
 
@@ -24,7 +34,20 @@ public class SampleController {
 	@Autowired
 	private HttpSession session;
 	@Autowired
+	private NovelService novelService;
+	@Autowired
+	private NovelReplyService novelReplyService;
+	@Autowired
+	private ContestService contestService;
+	@Autowired
+	private UserFavoriteService userFavoriteService;
+	@Autowired
+	private UserNovelRecordService userNovelRecordService;
+	@Autowired
+	private PayService payService;
+	@Autowired
 	private RecommendService recommendService;
+	
 
 	@GetMapping("/index")
 	public String sample(Model model) {
@@ -115,6 +138,36 @@ public class SampleController {
 
 		return "/cssLayout/cssNovelList";
 	}
+	
+	@GetMapping("/novelDetail/{novelId}")
+	public String getNovelDetail(Model model, @PathVariable Integer novelId) {
+		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		// 소설 세부 정보
+		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		// 즐겨찾기 카운트
+		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
+		// 소설 회차 리스트
+		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
+		// 소설 구매, 대여 여부 리스트
+		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
+		
+		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
+		
+
+		// 즐겨찾기 여부
+		if (principal != null) {
+			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
+			model.addAttribute("isFavorite", isFavorite);
+		}
+		model.addAttribute("sectionList", sectionList);
+		model.addAttribute("detail", novelDetailDto);
+		model.addAttribute("favorite", favorite);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("recommendList", recommendList);
+
+		return "/cssLayout/cssNovelDetail";
+	}
 
 	@GetMapping("/boardList")
 	public String getBoardList() {
@@ -152,5 +205,43 @@ public class SampleController {
 		return "/cssLayout/cssAdminPage";
 	}
 	
+	// 공모전 대문
+	@GetMapping("/cssContestNovelList")
+	public String getContestNovelList() {
+		
+		return "/cssLayout/cssContestNovelList";
+	}
+	
+	@GetMapping("/cssContestList")
+	public String getContestList() {
+		
+		return "/cssLayout/cssContestList";
+	}
+	
+	@GetMapping("/cssContestRegistration")
+	public String getContestRegistraion() {
+		
+		return "/cssLayout/cssContestRegistration";
+	}
+	
+	// 충전 페이지	
+	@GetMapping("/cssGoldCharge")
+	public String getGoldCharge() {
+		
+		return "/cssLayout/cssGoldCharge";
+	}
+	
+	@GetMapping("/cssUserPay")
+	public String getUserPay() {
+		
+		return "/cssLayout/cssUserPay";
+	}
+	
+	//	관리자 소설 타입 변경
+	@GetMapping("/cssAdminNovelChange")
+	public String getAdminNovelChange() {
+		
+		return "/cssLayout/cssAdminNovelChange";
+	}
 }
 	

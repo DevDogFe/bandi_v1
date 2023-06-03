@@ -259,27 +259,46 @@ footer {
 	margin-bottom: 30px;
 }
 
-.top-wrap-nav{
-	display: flex;
-}
-
 .top-wrap-content{
 	border-bottom: 1px solid #7986cb;
 	height: 100px;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+}
+
+.top-wrap-nav{
+	display: flex;
 }
 
 .novel-type{
-	display: inline-block;
 	margin-top:50px;
-	width: 130px;
+	display: inline-block;
+	width: 170px;
 }
 
 .novel-type h1{
 	font-size: 30px;
 	font-weight: 500;
 }
+
+.sort-type{
+	margin-left:10px;
+	display: flex;
+	align-items: center;
+}
+
+.sort-type a{
+	margin-top:50px;
+	margin-right:10px;
+	color: black;
+}
+
+.sort-type a:hover{
+	margin-right:10px;
+	color: #3b6bc9;
+}
+
 
 /*  여기서부터 novelList */
 
@@ -334,6 +353,10 @@ footer {
 	font-weight: 500;
 	padding:5px;
 	line-height: 30px;
+}
+
+.detail-title:hover{
+	color: #3b6bc9;
 }
 
 .detail-aurthor, .detail-intro{
@@ -410,14 +433,23 @@ footer {
 	color: #333;
 	padding: 10px;
 	display: flex;
+	justify-content: space-between;
+}
+
+.border-list-buttons{
+	display:flex;
+}
+
+.border-list-content{
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 }
 
 .board-list-title{
 	font-size: 20px;
 	font-weight: 500;
-	margin: 7px 0px;
+	margin-bottom: 7px;
 }
 
 .board-list-desc{
@@ -432,6 +464,57 @@ footer {
 
 
 /* 여기까지 boardList */
+
+/* 여기서 부터 contestNovelList */
+.top-banner{
+	display: flex;
+	justify-content: space-between;
+}
+
+.mini-banners{
+	padding-top:10px;
+	width:350px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.contest-mini-banner{
+	margin: 12px 0px;
+	height:120px;
+}
+
+.contest-mini-banner img{
+	width: 100%;
+	height: 100%;
+}
+
+
+.big-testimonial-content{
+	width:850px;
+	margin-bottom: -40px;
+}
+
+.big-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:850px;
+    height:430px;
+}
+
+.big-banner img {
+    width: 100%;
+    height: 100%;
+}
+
+/*  */
+
+/* 여기서부터 contestList */
+
+
+/*  */
+
 .blue-span{
 	color: #7986cb;
 }
