@@ -1,0 +1,774 @@
+/* Google Web Font */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500&display=swap');
+
+/* Fontawesome 4.7 */
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-size: 16px;
+    margin: 0;
+    color: #222;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+/* Reset CSS (초기화 css) */
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-weight: 500;
+}
+
+input,
+button,
+textarea {
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Common CSS (공통적으로 사용되는 CSS) */
+
+/* 1300px의 크기에 맞추고 싶으면 class에 inner를 사용 */
+.inner {
+    width: 1200px;
+    margin: auto;
+}
+
+/* Header */
+header {
+    /* 사진이 겹쳐져 버림(inline-block이 되기 때문에) */
+    z-index: 2;
+    position: relative;
+    background-color: white;
+    /* position: absolute; */
+    /* width 100%로 width값 줘야함 */
+    /* width: 100%; */
+    /* header 변경 시간 */
+    transition: 0.5s;
+}
+
+/* header with active class*/
+header.active {
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+header.active .gnb li a {
+    color: #000;
+}
+
+header.active .banner {
+    display: none;
+}
+
+header.active nav {
+    padding-bottom: 5px;
+}
+
+/* Intro */
+.intro {
+    height: 100vh;
+    /* background: url(/assets/images/main/bandi-intro1.jpg) no-repeat center center; */
+    background-size: cover;
+    /* 가득 채우기 */
+    display: flex;
+    align-items: center;
+}
+
+.heading {
+    color: #ddd;
+    text-align: center;
+}
+
+.heading h1 {
+    font-size: 70px;
+    margin-bottom: 80px;
+}
+
+.heading p {
+    font-size: 22px;
+    line-height: 1.5em;
+    padding: 0 150px;
+    /* 글자 패딩 */
+}
+
+.banner {
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* 맨위 배너 */
+.lnb {
+    width: 1200px;
+    margin: auto;
+    text-align: right;
+}
+
+.lnb a {
+    color: black;
+    margin: 10px;
+}
+
+/* 배너 맨 마지막 마진없애기 */
+.lnb a:last-child {
+    margin: 0;
+}
+
+.lnb a em {
+    color: #555;
+}
+
+/* nav바 */
+nav {
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {}
+
+/* ul */
+.gnb {
+    display: flex;
+}
+
+.gnb li a {
+    margin: 30px;
+    color: #000;
+}
+
+.gnb li a:hover {
+    color: #333;
+}
+
+.gnb li a:last-child {
+}
+
+
+/* 헤더 드롭다운  */
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
+
+/* About Section */
+
+/* flex 배치를 위한 about content */
+.about-content {
+    display: flex;
+    /* 상하좌우 패딩 */
+    padding: 50px 0;
+}
+
+.about-content div {
+    padding: 30px;
+}
+
+.desc {
+    text-align: center;
+    flex: 4;
+}
+
+.desc h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.desc p {
+    font-size: 16px;
+    line-height: 1.7em;
+}
+
+.desc a {
+    color: #c25a3a;
+    font-weight: bold;
+}
+
+.desc a:hover {
+    text-decoration: underline;
+}
+
+.photo {
+    flex: 1;
+}
+
+.photo img {
+    width: 400px;
+    height: 400px;
+    /* radius 중첩으로 모양 만들기 */
+    border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
+}
+
+/* Ranking Section */
+.ranking {
+    /* 있는듯 없는듯한 배경색상 #f8f8f8 */
+}
+
+/* 유료 */
+.ranking.pay {
+    background-color: white;
+}
+
+/* 무료 */
+.ranking.free {
+    background-color: #f3f3f3;
+}
+
+/* 공모전 */
+.ranking.contest {
+    background-color: #f3f3f3;
+}
+
+
+.ranking-content {
+    padding: 20px 0px;
+}
+
+.ranking-content h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.items {
+    display: flex;
+    justify-content: space-between;
+}
+
+.item {
+	margin: 0px 10px;
+    width: 260px;
+    height: 350px;
+    /* border-radius: 30px 30px 0px 0px; */
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.up-image {
+    width: 180px;
+    height: 260px;
+}
+
+.up-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.down-desc {
+    padding: 5px;
+}
+
+.down-desc h3 {
+    font-size: 16px;
+    text-align:center;
+    padding: 15px 0px;
+    /* letter-spacing: -1px;  텍스트 사이 간격 줄이기*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.down-desc p {
+    font-size: 13px;
+    /* 최소 높이 지정 */
+    height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-explore {
+    color: #c25a3a;
+    font-weight: 500;
+}
+
+.btn-explore:hover {
+    color: red;
+}
+
+.btn-explore img {
+    transition: 0.3s;
+    margin-bottom: 3px;
+}
+
+/* 화살표 이동 시키기 */
+.btn-explore:hover img {
+    transform: translateX(20px)
+}
+
+.badge {
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.badge.pay {
+    color: #fff;
+    padding: 2px 10px;
+    font-size: 16px;
+    background-color: red;
+}
+
+.badge.free {
+    color: #fff;
+    padding: 2px 10px;
+    font-size: 16px;
+    background-color: blue;
+}
+
+.badge.contest {
+    color: #fff;
+    padding: 2px 10px;
+    font-size: 16px;
+    background-color: violet;
+}
+
+
+/* Slider 영역 */
+/* Testimonial Section */
+.testimonial {
+    padding: 10px 0;
+    height: 450px;
+}
+
+.testimonial-content {
+    text-align: center;
+}
+
+.testimonial-content h2 {
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: 300;
+    /* 강제 대문자 */
+    text-transform: uppercase;
+}
+
+.testimonial-content h2 b {}
+
+/* hr은 block 요소 */
+.testimonial-content hr {
+    /* hr 디자인할때 border:none; 보통 걸고 시작 */
+    border: none;
+    height: 4px;
+    width: 120px;
+    background-color: #1c45e3;
+    /* block요소 중앙에 보낼려면 auto 박으면 됨 */
+    margin: 30px auto;
+}
+
+.mySlider div {
+	display: flex;
+	justify-content: center;
+    outline: none;
+}
+
+.client {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.client img {
+    width: 140px;
+    height: 140px;
+    border-radius: 5%;
+    margin-right: 15px;
+}
+
+.client span {
+    display: block;
+    text-align: left;
+    font-size: 18px;
+    line-height: 1.7em;
+}
+
+.client span b {
+    display: block;
+}
+
+.comment {
+    font-size: 16px;
+    line-height: 1.6em;
+    padding-right: 25px;
+}
+
+/* 상단 큰 슬라이더  */
+.big-testimonial {
+    height: 450px;
+}
+
+.big-testimonial-content {
+    text-align: center;
+}
+
+.bigSlider div {
+    outline: none;
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.big-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:1200px;
+    height:430px;
+}
+
+.big-banner img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 허접한 슬라이더 */
+/* top Slider */
+.testimonial2 {
+    
+    height: 130px;
+}
+
+.testimonial2-content {
+    text-align: center;
+}
+
+.topSlider div {
+    outline: none;
+    margin: 0px 5px;
+}
+
+.top-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-banner img {
+    width: 400px;
+    height: 100px;
+}
+
+.client span {
+    display: block;
+    text-align: left;
+    font-size: 18px;
+    line-height: 1.7em;
+}
+
+.client span b {
+    display: block;
+}
+
+
+/* CallAction Section */
+.callaction {
+    height: 450px;
+    background: url(/assets/images/main/callaction-01.jpg) no-repeat center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* before는 inline 요소라서 크기 값이 없기에
+position: absoulte로 inline-block으로 변경 */
+/* 좌상단 우하단 색상(,,,투명도) */
+.callaction::before {
+    content: '';
+    background: linear-gradient(to right bottom, rgba(67, 13, 67, 0.5), rgba(124, 124, 15, 0.8));
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.callaction-heading {
+    text-align: center;
+    /* z-index가 없으면 position: absolute가 있을때
+    position: relative로 우선순위룰 받음 */
+    position: relative;
+}
+
+.callaction-heading h2 {
+    color: #fff;
+    font-size: 48px;
+    line-height: 1.2em;
+    font-weight: 300;
+    /* 글자 간의 간격 */
+    letter-spacing: -1px;
+    margin-bottom: 50px;
+}
+
+.callaction-heading h2 b {
+    font-weight: 500;
+}
+
+/* a 태그는 인라인 요소 
+maring안먹힘 -> h2에서 margin 줌*/
+.callaction-heading a {
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+
+/* Blog Section */
+
+/* Festival Section */
+.festival {
+    height: 270px;
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.festival-heading {
+    text-align: center;
+}
+
+.festival-heading h3 {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.festival-heading h3 span {
+    font-weight: 500;
+}
+
+.btns a {
+    background-color: #fff;
+    width: 200px;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* 첫번째 버튼 */
+.btns a:nth-child(1) {
+    background-color: #fac53b;
+    color: #fff;
+}
+
+.btns a:nth-child(2) {
+    background-color: #ededed;
+    color: #333;
+}
+
+
+/* Footer */
+footer {
+    background-color: #444;
+    padding: 30px 0;
+}
+
+.footer-content {
+    display: flex;
+}
+
+/*(주) 반디*/
+.footer-top {
+    margin: 0px 0px 40px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-top ul {
+    display: flex;
+}
+
+.footer-top ul li:first-child {
+    color: #eee;
+    font-weight: 500;
+}
+
+.footer-top ul li {
+    margin: 0 20px;
+}
+
+.footer-top ul li a {
+    color: #959595;
+}
+
+.footer-top ul li a:hover {
+    text-decoration: underline;
+}
+
+/*  */
+.footer-content ul {
+    text-align: center;
+}
+
+.footer-content ul li:first-child {
+    color: #eee;
+    font-weight: 500;
+}
+
+.footer-content ul li a {
+    color: #959595;
+}
+
+.footer-content ul li a:hover {
+    text-decoration: underline;
+}
+
+.community {
+    flex: 1;
+}
+
+.network {
+    flex: 1;
+}
+
+.help {
+    flex: 2;
+}
+
+.help li {
+    color: #959595;
+}
+
+.help li:last-child {
+    margin-top: 30px;
+    color: #eee;
+}
+
+/* 세로 list 레이아웃  */
+.vertical-list{
+	height: 550px;
+}
+
+.list-header{
+	height: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items:center;
+}
+
+.list-header h2{
+	font-size: 20px;
+    font-weight: 600;
+}
+
+.list-body{
+	padding: 10px 0px;
+	height: 500px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.list-body ul{
+	list-style: none;
+	display: inline-block;
+}
+
+.list-body ul li{
+	width: 400px;
+	margin: 15px 0px;
+}
+
+.list-body ul li a{
+	display: flex;
+	color: black;
+}
+
+.li-thumbnail{
+	width: 40%;
+	height: 80px;
+	border-radius: 10px;
+}
+
+.li-thumbnail img{
+	width: 100%;
+	height: 100%;
+}
+
+.li-info-area{
+	width: 60%;
+	height: 80px;
+}
+
+.li-info-area p{
+	text-align: left;
+	margin: 0;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0px 20px;
+}
+
+.li-title{
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.li-desc{
+	font-size: 13px;
+	font-weight: 300;
+}
+	
+	
+
+
+.blue-span{
+	color: #7986cb;
+}
+
+
+/* plug in */
+/* Slick.js */
+.mySlider button {
+    /* button 안보이게 하기 */
+    /* !important 안박으면 안먹힐때 있음 */
+    /* display: none !important; */
+}

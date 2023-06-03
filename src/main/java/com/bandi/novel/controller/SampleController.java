@@ -152,5 +152,10 @@ public class SampleController {
 		return "/cssLayout/cssAdminPage";
 	}
 	
-}
+	@GetMapping("/boardDetail")
+	public String getDetail() {
+		
+		return "/cssLayout/cssBoardDetail";
+	}
 	
+}	

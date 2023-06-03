@@ -37,7 +37,7 @@
 			<header>
 				<div class="banner">
 					<div class="lnb">
-						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
+						<a href="#none"><em>for</em> admin</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
 					</div>
 				</div>
 				<nav>
