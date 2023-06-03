@@ -27,6 +27,7 @@
     <script src="/assets/js/custom-slick.js"></script>
     <!-- 작성한 css는 항상 밑에 있어야함 -->
     <link rel="stylesheet" href="/assets/css/list.css" />
+    
   </head>
   <body>
     <div class="container">
@@ -55,38 +56,73 @@
           		</ul>
         	</nav>
       </header>
-      
+      <section class="top-banner">
+			<div class="big-testimonial-content">
+					<div class="bigSlider">
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider.png">
+							</p>
+						</div>
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider2.png">
+							</p>
+						</div>
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider.png">
+							</p>
+						</div>
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider2.png">
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="mini-banners">
+					<div class="contest-mini-banner">
+						<a href="/contest/list"><img src="/assets/images/main/contest-banner.png"></a>
+					</div>
+					<div class="contest-mini-banner">
+						<img src="/assets/images/main/contest-banner2.png">
+					</div>
+					<div class="contest-mini-banner">
+						<img src="/assets/images/main/contest-banner3.png">
+					</div>
+				</div>
+		</section>
       <section class="top-wrap">
       	<div class="top-wrap-content">      	
       		<div class="top-wrap-nav">
-      			<div class="novel-type"><h1>유료 소설</h1></div>
+      			<div class="novel-type"><h1>공모전 소설</h1></div>
       			<div class="sort-type"><a href="?sort=default">최신순 </a><a href="?sort=favorite"> 즐겨찾기순 </a><a href="?sort=score"> 평점순 </a></div>
       		</div>
       		<form action="/${map }" method="get">
-			<div class="row g-3 mt-4 align-items-center justify-content-center">
-				<div class="col-auto">
-					<label for="genreId" class="col-form-label">장르 선택</label>
+				<div class="row g-3 mt-4 align-items-center">
+					<div class="col-auto">
+						<label for="genreId" class="col-form-label">장르 선택</label>
+					</div>
+					<div class="col-auto">
+						<select class="form-select form-select-sm" name="genreId" id="genreId">
+							<option value=""> 전체 </option>
+							<c:forEach items="${genreList}" var="genre">
+								<option value="${genre.id}">${genre.name}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-auto">
+						<label for="search" class="col-form-label">검색어</label>
+					</div>
+					<div class="col-auto">
+						<input type="text" id="search" name="search" class="form-control">
+					</div>
+					<div class="col-auto">
+						<button type="submit" class="btn btn-primary">검색</button>
+					</div>
 				</div>
-				<div class="col-auto">
-					<select class="form-select form-select-sm" name="genreId" id="genreId">
-						<option value="">전체</option>
-						<c:forEach items="${genreList}" var="genre">
-							<option value="${genre.id}">${genre.name}</option>
-						</c:forEach>
-					</select>
-				</div>
-				<div class="col-auto">
-					<label for="search" class="col-form-label">검색어</label>
-				</div>
-				<div class="col-auto">
-					<input type="text" id="search" name="search" class="form-control">
-				</div>
-				<input type="hidden" name="sort" value="${sort }">
-				<div class="col-auto">
-					<button type="submit" class="btn btn-primary">검색</button>
-				</div>
-			</div>
-		</form>
+			</form>
       	</div>
       </section>
       <section class="one-tab-list">
