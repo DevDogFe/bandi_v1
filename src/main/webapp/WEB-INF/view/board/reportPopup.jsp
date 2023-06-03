@@ -7,22 +7,27 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<link rel="stylesheet" href="/assets/css/registration.css" />
+<link rel="stylesheet" href="/assets/css/board/boardReport.css" />
 </head>
 <body>
-	<form action="/report/reportPopup" method="post">
+	<form class="form" action="/report/reportPopup" method="post">
 		<input type="hidden" name="boardId" value="${boardId}">
 		<label>신고사유</label>
 		<c:forEach var="reportCategory" items="${reportCategory}">
-			<div class="form-check">
-				<input class="form-check-input" type="radio" id="flexRadioDefault1"> 
-				<label class="form-check-label" for="flexRadioDefault1"><input type="hidden" name="categoryId" value="${reportCategory.id}"> ${reportCategory.categoryName}</label>
+			<div class="radio-group">
+				<label class="radio">
+					<input type="radio" value="${reportCategory.id}" name="categoryId">${reportCategory.categoryName}
+				</label>
+				<span></span>
 			</div>
 		</c:forEach>
-		<div class="mb-3">
-			<label for="exampleFormControlTextarea1" class="form-label">내용</label><br>
-			<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="content"></textarea>
+		<div class="form-group">
+			<textarea id="overview" name="overview" class="textarea" required="required" rows="5" placeholder="신고사유를 입력하세요."></textarea>
 		</div>
-		<button type="submit" class="btn btn-primary">신고하기</button>
+		<div class="btn">
+			<button type="submit" class="btn-report">신고하기</button>
+		</div>
 	</form>
 </body>
 </html>

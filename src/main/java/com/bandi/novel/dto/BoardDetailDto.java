@@ -11,6 +11,7 @@ public class BoardDetailDto {
 	private Integer id;
 	private Integer userId;
 	private Integer boardTypeId;
+	private String boardName;
 	private Integer views;
 	private String username;
 	private String title;

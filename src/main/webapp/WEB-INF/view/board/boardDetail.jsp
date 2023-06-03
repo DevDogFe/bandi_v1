@@ -25,8 +25,10 @@
 <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="/assets/js/custom-slick.js"></script>
 <!-- 작성한 css는 항상 밑에 있어야함 -->
+<link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/list.css" />
-<link rel="stylesheet" href="/assets/css/detail.css" />
+<link rel="stylesheet" href="/assets/css/readSection.css" />
+<link rel="stylesheet" href="/assets/css/board/boardDetail.css" />
 </head>
 <body>
 	<div class="container">
@@ -53,7 +55,7 @@
 			</header>
 			<section class="one-tab-list">
 				<div class="section-title-wrap">
-					<h2 class="section-title">자유게시판</h2>
+					<h2 class="section-title">${boardDetail.boardName} 게시판</h2>
 				</div>
 				<div class="board-detail">
 					<h3 class="board-title">
@@ -65,7 +67,26 @@
 										<button type="submit" class="btn-delete" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
 										<button class="btn-report" id="report-btn" onclick="popup()">신고</button>
 										<button type="button" class="btn-modify" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
-									</c:if>
+										</c:if>
+										<c:if test="${principal != null }">
+											<c:choose>
+												<c:when test="${isLike}">
+													<button type="button" id="unlike" class="heart">
+														<img src="/assets/images/like_icon/like.png"> 공감
+													</button>
+												</c:when>
+												<c:otherwise>
+													<button type="button" id="like" class="heart">
+														<img src="/assets/images/like_icon/unlike.png"> 공감
+													</button>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+										<c:if test="${principal == null }">
+											<button type="button" id="noUser" class="heart">
+												<img src="/assets/images/like_icon/unlike.png"> 공감
+											</button>
+										</c:if>
 							</span> <span class="list-wrap">
 									<button type="submit" class="btn-list" onclick="location.href='/board/list'">목록</button>
 							</span>
@@ -75,9 +96,75 @@
 								</c:forEach>${boardDetail.content}
 						</span>
 					</span>
-				</span> <span class="reaction-wrap"> </span>
+				</span>
 				</span>
 
+			</section>
+			<section>
+				<div class="reply">
+					<div>
+						<div class="comments-content">
+							<!-- 댓글 등록 -->
+							<div class="bg-light comment-form">
+								<div class="comment-header ms-1">
+									<h5 class="me-2">댓글</h5>
+								</div>
+								<c:choose>
+									<c:when test="${empty principal.id}">
+										<div class="d-flex flex-row align-items-start">
+											<textarea class="form-control ml-1 shadow-none textarea" id="content" name="content" placeholder="댓글을 등록하려면 로그인해야합니다." readonly="readonly"></textarea>
+										</div>
+										<div class="mt-2 text-right float-end">
+											<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<form action="/board/reply" method="post">
+											<div class="d-flex flex-row align-items-start">
+												<input type="hidden" id="boardId" name="boardId" value="${boardDetail.id}"> <img src="/assets/images/main/ai1.jpg" class="rounded-circle" width="40">
+												<textarea class="form-control ml-1 shadow-none textarea" id="content" name="content" placeholder="비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
+											</div>
+											<div class="mt-2 text-right float-end">
+												<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
+												<button class="btn btn-outline-danger btn-sm ml-1 shadow-none" type="button">삭제</button>
+											</div>
+										</form>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="comment-top">
+								<div></div>
+							</div>
+							<!-- 등록된 댓글 -->
+							<c:if test="${not empty replyList.content}">
+								<c:forEach var="reply" items="${replyList.content}">
+									<div class="comment-item">
+										<div class="col-md-12">
+											<div class="bg-white p-2">
+												<div class="d-flex flex-row user-info">
+													<img src="/assets/images/main/ai1.jpg" width="40" class="rounded-circle">
+													<div class="d-flex flex-column justify-content-start ml-2">
+														<span class="d-block font-weight-bold name">${reply.username}</span> <span class="date text-black-50">${reply.createdAt()}</span>
+													</div>
+												</div>
+											</div>
+											<div class="mt-2">
+												<p class="comment-text">${reply.content}</p>
+											</div>
+										</div>
+										<div class="bg-white">
+											<div class="d-flex flex-row justify-content-end fs-12">
+												<div class="like p-2 cursor">
+													<span class="ml-1"><button class="btn btn-outline-danger btn-sm ml-1 shadow-none" onclick="deleteReply(${reply.id})">삭제</button></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</c:if>
+						</div>
+					</div>
+				</div>
 			</section>
 			<section>
 				<nav class="paging " aria-label="Page navigation example">
@@ -130,5 +217,62 @@
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript">
+			
+			$("#unlike").on("click", ()=>{
+				$.ajax({
+					type: "DELETE",
+					url: "/api/unlike/" + $("#boardId").val()
+				}).done((response) => {
+					location.href='/board/detail/' + $("#boardId").val();
+				}).fail((error) => {
+					console.log(error);
+					alert("요청 실패")
+				});
+			});
+			
+			$("#noUser").on("click", ()=>{
+				alert('로그인이 필요한 기능입니다.');
+			});				
+			
+			$("#like").on("click", ()=>{
+				$.ajax({
+					type: "POST",
+					url: "/api/like/" + $("#boardId").val()
+				}).done((response) => {
+					location.href='/board/detail/' + $("#boardId").val();
+				}).fail((error) => {
+					console.log(error);
+					alert("요청 실패")
+				});
+			});
+			
+			
+		$(document).ready(() => {
+
+		});
+	</script>
+		<script type="text/javascript">
+		function deleteReply(id) {
+	        $.ajax({
+	            type: "DELETE",
+	            url: "/api/deletereply/" + id,
+	        }).done(function(response) {
+	            console.log(response);
+	            console.log(id);
+	            location.href = '/board/detail/' + $("#boardId").val();
+	        }).fail(function(error) {
+	            alert("요청 실패");
+	        });
+	    }
+	</script>
+		<script type="text/javascript">
+		function popup() {
+			var url = "/report/reportPopup/" + $("#boardId").val();
+			var name = "신고하기";
+			var option = "width = 500, height = 500, top = 100, left = 200, location = no";
+            window.open(url, name, option)
+		}
+	</script>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
