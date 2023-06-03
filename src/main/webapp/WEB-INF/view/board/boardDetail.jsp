@@ -1,188 +1,134 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<style>
-#unlike {
-	border: 0;
-	background-color: transparent;
-}
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>반디</title>
+<script src="/assets/js/jquery.min.js"></script>
+<!-- jquery-3.5.1이 위에 있어야 작동 -->
+<!-- Slick.js -->
 
-#like {
-	border: 0;
-	background-color: transparent;
-}
+<!-- Slider.js no CDN -->
+<!-- <script src="js/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="js/slick/slick.css">
+    <link rel="stylesheet" href="js/slick/slick-theme.css"> -->
 
-#noUser {
-	border: 0;
-	background-color: transparent;
-}
-</style>
+<!-- bootstrap CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- Slider.js CDN -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="/assets/js/custom-slick.js"></script>
+<!-- 작성한 css는 항상 밑에 있어야함 -->
+<link rel="stylesheet" href="/assets/css/list.css" />
+<link rel="stylesheet" href="/assets/css/detail.css" />
 </head>
 <body>
-	<div class="mb-3">
-		<label for="exampleFormControlInput1" class="form-label">제목</label> <input type="text" class="form-control" id="title" name="title" value="${boardDetail.title}" readonly="readonly">
-	</div>
-	<input type="hidden" id="boardId" value="${boardDetail.id}">
-	<label for="exampleFormControlInput1" class="form-label">작성자 ${boardDetail.username} </label>
-	<label for="exampleFormControlInput1" class="form-label">등록일 ${boardDetail.createdAt()} </label>
-	<label for="exampleFormControlInput1" class="form-label">카테고리 ${boardDetail.categoryName} </label>
-	<div class="mb-3">
-		<label for="exampleFormControlTextarea1" class="form-label">내용</label><br>
-		<c:forEach var="file" items="${fileList}">
-			 <img src="/bandi/uploads/${file.encodedFileName}" style="max-width: 300px; max-height: 300px;"> 
-		</c:forEach>
-		<textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content" readonly="readonly">${boardDetail.content}
-		</textarea>
-	</div>
-	<c:if test="${principal.id == boardDetail.userId }">
-		<button type="submit" class="btn btn-primary" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
-		<button type="submit" class="btn btn-primary" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
-		<button class="btn btn-danger" id="report-btn" onclick="popup()">신고</button>
-	</c:if>
-	<button type="button" class="btn btn-primary" onclick="location.href='/board/list'">목록</button>
-	<br>
-	<br>
-	<c:if test="${principal != null }">
-		<c:choose>
-			<c:when test="${isLike}">
-				<button type="button" id="unlike">
-					<img src="/assets/images/like_icon/like.png" height="90" width="90">
-				</button>
-			</c:when>
-			<c:otherwise>
-				<button type="button" id="like">
-					<img src="/assets/images/like_icon/unlike.png" height="90" width="90">
-				</button>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-	<c:if test="${principal == null }">
-		<button type="button" id="noUser">
-			<img src="/assets/images/like_icon/unlike.png" height="90" width="90">
-		</button>
-	</c:if>
-	<article>
-		<c:choose>
-			<c:when test="${empty principal.id}">
-				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">댓글</label> <input type="hidden" id="boardId" values="${boardDetail.id}">
-					<textarea class="form-control" id="content" name="content" rows="3" placeholder="댓글을 등록하려면 로그인해야합니다." readonly="readonly"></textarea>
-				</div>
-				<button type="button" class="btn btn-primary">등록</button>
-			</c:when>
-			<c:otherwise>
-				<form action="/board/reply" method="post">
-					<div class="mb-3">
-						<label for="exampleFormControlInput1" class="form-label">댓글</label> <input type="hidden" id="boardId" name="boardId" value="${boardDetail.id}">
-						<textarea class="form-control" id="content" name="content" rows="3" placeholder="비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
+	<div class="container">
+		<div class="inner">
+			<header>
+				<div class="banner">
+					<div class="lnb">
+						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
 					</div>
-					<button type="submit" class="btn btn-primary">등록</button>
-				</form>
-			</c:otherwise>
-		</c:choose>
-	</article>
-	<c:if test="${not empty replyList.content}">
-		<div class="ps-3">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">닉네임</th>
-						<th scope="col">내용</th>
-						<th scope="col">작성시간</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="reply" items="${replyList.content}">
-						<tr>
-							<td>${reply.username}</td>
-							<td>${reply.content}</td>
-							<td>${reply.createdAt()}</td>
-							<td><c:if test="${principal.id == reply.userId}">
-									<button class="deleteReplyBtn" onclick="deleteReply(${reply.id})">삭제</button>
-								</c:if></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-	</c:if>
-	<div class="col-sm-12 col-md-7">
-		<div>
-			<ul class="d-flex">
-				<li class="<c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/board/detail/${boardDetail.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
-				<c:forEach var="pNo" begin="${replyList.startPage}" end="${replyList.endPage}" step="1">
-					<li <c:if test="${pNo == replyList.currentPage}">class="active"</c:if>><a href="/board/detail/${boardDetail.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
-				</c:forEach>
-				<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/board/detail/${boardDetail.id}?currentPage=${replyList.currentPage + 1}"
-					class="page-link">Next</a></li>
-			</ul>
-		</div>
-	</div>
-	<script type="text/javascript">
-			
-			$("#unlike").on("click", ()=>{
-				$.ajax({
-					type: "DELETE",
-					url: "/api/unlike/" + $("#boardId").val()
-				}).done((response) => {
-					location.href='/board/detail/' + $("#boardId").val();
-				}).fail((error) => {
-					console.log(error);
-					alert("요청 실패")
-				});
-			});
-			
-			$("#noUser").on("click", ()=>{
-				alert('로그인이 필요한 기능입니다.');
-			});				
-			
-			$("#like").on("click", ()=>{
-				$.ajax({
-					type: "POST",
-					url: "/api/like/" + $("#boardId").val()
-				}).done((response) => {
-					location.href='/board/detail/' + $("#boardId").val();
-				}).fail((error) => {
-					console.log(error);
-					alert("요청 실패")
-				});
-			});
-			
-			
-		$(document).ready(() => {
+				</div>
+				<nav>
+					<div class="logo">
+						<a href="#none"><img src="/assets/images/main/bandi-logo3.png"></a>
+					</div>
+					<ul class="gnb">
+						<li><a href="#none">HOME</a></li>
+						<li><a href="#none">소설</a></li>
+						<li><a href="#none">공모전</a></li>
+						<li class="dropdown"><a href="#none" class="dropbtn">게시판</a></li>
+						<li><a href="#none">고객지원</a></li>
+						<li><a href="#none">마이페이지</a></li>
+					</ul>
+				</nav>
+			</header>
+			<section class="one-tab-list">
+				<div class="section-title-wrap">
+					<h2 class="section-title">자유게시판</h2>
+				</div>
+				<div class="board-detail">
+					<h3 class="board-title">
+						<span>${boardDetail.title}</span>
+					</h3>
+				</div>
+				<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span class="name">${boardDetail.username}</span> <span class="date">${boardDetail.createdAt()}</span> <span class="date">${boardDetail.categoryName}</span>
+						</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”> <c:if test="${principal.id == boardDetail.userId }">
+										<button type="submit" class="btn-delete" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
+										<button class="btn-report" id="report-btn" onclick="popup()">신고</button>
+										<button type="button" class="btn-modify" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
+									</c:if>
+							</span> <span class="list-wrap">
+									<button type="submit" class="btn-list" onclick="location.href='/board/list'">목록</button>
+							</span>
+						</span>
+					</span> <span class="board-contents"> <span id="_board-contents"> <c:forEach var="file" items="${fileList}">
+									<img src="/bandi/uploads/${file.encodedFileName}" style="max-width: 300px; max-height: 300px;">
+								</c:forEach>${boardDetail.content}
+						</span>
+					</span>
+				</span> <span class="reaction-wrap"> </span>
+				</span>
 
-		});
-	</script>
-	<script type="text/javascript">
-		function deleteReply(id) {
-	        $.ajax({
-	            type: "DELETE",
-	            url: "/api/deletereply/" + id,
-	        }).done(function(response) {
-	            console.log(response);
-	            console.log(id);
-	            location.href = '/board/detail/' + $("#boardId").val();
-	        }).fail(function(error) {
-	            alert("요청 실패");
-	        });
-	    }
-	</script>
-	<script type="text/javascript">
-		function popup() {
-			var url = "/report/reportPopup/" + $("#boardId").val();
-			var name = "신고하기";
-			var option = "width = 500, height = 500, top = 100, left = 200, location = no";
-            window.open(url, name, option)
-		}
-	</script>
-</body>
-</html>
+			</section>
+			<section>
+				<nav class="paging " aria-label="Page navigation example">
+					<div></div>
+					<div>
+						<ul class="pagination">
+							<li class="<c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a href="/board/detail/${boardDetail.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
+							<c:forEach var="pNo" begin="${replyList.startPage}" end="${replyList.endPage}" step="1">
+								<li <c:if test="${pNo == replyList.currentPage}">class="active"</c:if>><a href="/board/detail/${boardDetail.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+							</c:forEach>
+							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/board/detail/${boardDetail.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
+						</ul>
+					</div>
+				</nav>
+			</section>
+		</div>
+
+	</div>
+	<footer>
+		<div class="inner">
+			<div class="footer-top">
+				<ul>
+					<li>(주)반디</li>
+					<li><a href="#none">이용약관</a></li>
+					<li><a href="#none">개인정보 처리방침</a></li>
+					<li><a href="#none">청소년 보호 정책</a></li>
+					<li><a href="#none">회사 소개</a></li>
+				</ul>
+			</div>
+			<div class="footer-content">
+				<ul class="community">
+					<!-- 제목 줄은 a없이-->
+					<li>게시판</li>
+					<li><a href="#none">Subscribe</a></li>
+					<li><a href="#none">Give A Gift</a></li>
+					<li><a href="#none">Customer Service FAQ</a></li>
+					<li><a href="#none">Access Your Subscription</a></li>
+				</ul>
+				<ul class="network">
+					<li>Network</li>
+					<li><a href="#none">Privacy Policy</a></li>
+					<li><a href="#none">Terms Of Service</a></li>
+					<li><a href="#none">Advertise</a></li>
+					<li><a href="#none">Jobs</a></li>
+				</ul>
+				<ul class="help">
+					<li>Help Preserve This Project</li>
+					<li>We may earn a commission if you purchase an item featured on our site.</li>
+					<li>Copyright © 2020 CodingWorks. All rights reserved.</li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

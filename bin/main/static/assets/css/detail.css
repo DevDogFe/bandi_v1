@@ -1,0 +1,166 @@
+@charset "UTF-8";
+
+.section-title-wrap {
+	min-height: 32px;
+	margin-top: 45px;
+	margin-bottom: 14px;
+}
+
+.section-title-wrap h2.section-title {
+	position: relative;
+	display: inline-block;
+	color: #111;
+	font-size: 1.6rem;
+	letter-spacing: -0.6px;
+	line-height: 32px;
+}
+
+.board-detail {
+	margin-top: 9px;
+	border-top: 1px solid #999;
+}
+
+.board-detail h3.board-title {
+	display: flex;
+	align-items: center;
+	padding: 17px 30px 21px;
+	line-height: 1.4;
+	border-bottom: 1px solid #f2f2f2;
+	font-size: 1.3rem;
+	letter-spacing: -0.8px;
+	color: #333;
+	font-weight: 400;
+}
+
+.board-detail-wrap {
+	position: relative;
+	display: block;
+	padding: 20px 30px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.board-info-wrap {
+	position: relative;
+	display: block;
+}
+
+.profile-info-wrap {
+	min-height: 52px;
+	position: relative;
+	display: block;
+}
+
+.profile-preview-wrap {
+	position: relative;
+	display: inline-block;
+	width: 52px;
+	height: 52px;
+	border: 1px solid #ddd;
+	border-radius: 33px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	font-size: 0;
+	z-index: 9;
+	background-position: 50% 50%;
+	background-image: url(/assets/images/board/profile.png);
+	background-color: #f3f3f3;
+}
+
+.info-inner {
+	position: absolute;
+	width: 100%;
+	padding: 0 65px;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
+.name {
+	font-weight: 500;
+	font-size: 1.3rem;
+	letter-spacing: -0.4px;
+	display: inline-block;
+	width: 100%;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.3;
+}
+
+.board-contents {
+	display: block;
+	margin-top: 14px;
+	line-height: 24px;
+	font-size: 17px;
+	letter-spacing: -0.35px;
+	color: #333;
+}
+
+._board-contents {
+	white-space: pre-line;
+	word-break: break-all;
+}
+
+.reaction-wrap {
+	position: relative;
+	display: block;
+	height: 29px;
+	margin-top: 15px;
+	font-size: 0;
+}
+
+.modify-wrap {
+	position: relative !important;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.btn-modify {
+	display: inline-block;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	border: none;
+	position: absolute;
+	right: 24px;
+}
+
+.btn-delete {
+	display: inline-block;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	border: none;
+	position: absolute;
+	right: 114px;
+}
+
+.btn-report {
+	display: inline-block;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	border: none;
+	position: absolute;
+	right: 67px;
+}
+
+.list-wrap{
+	position: absolute;
+	right: -20px;
+	top: 0;
+}
+
+.btn-list {
+	display: inline-block;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	border: none;
+}
