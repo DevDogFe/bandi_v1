@@ -21,8 +21,20 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.summernote').summernote({
-				height : 300
+			$('.summernote').summernote({				
+				placeholder : "내용을 입력 해주세요",
+				tabsize : 2,
+				height : 500,
+				// 에디터 로딩후 포커스를 맞출지 여부
+				focus : true,
+				lang : 'ko-KR',
+				// 크기 조절 기능 삭제
+				disableResizeEditor : true,
+				callbacks : {
+					onInit : function(c) {
+						c.editable.html('');
+					}
+				}
 			});
 		});
 	</script>

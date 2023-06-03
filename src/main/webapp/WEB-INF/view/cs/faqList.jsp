@@ -6,11 +6,10 @@
 
 
 <style>
-/* toggle 적용 TODO 색 변경 */
 .faq--answer {
 	display: none;
 	box-sizing: content-box;
-	/* background-color: #f5f6f7; */
+	background-color: #f1f1f1;
 }
 
 .faq--category ul {
@@ -183,7 +182,7 @@
  </script>
 
 
-<!--  	<footer>
+	<footer>
 		<div class="inner">
 			<div class="footer-top">
 				<ul>
@@ -218,5 +217,5 @@
 			</div>
 		</div>
 	</footer>
-	</div> 
-	</div>  -->
+	</div>
+	</div>
