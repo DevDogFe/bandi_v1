@@ -20,6 +20,7 @@ import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.dto.response.RentalRecordDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
+import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.User;
 import com.bandi.novel.model.UserGoldCharge;
 import com.bandi.novel.service.ContestService;
@@ -229,8 +230,11 @@ public class SampleController {
 	}
 	
 	// 공모전 디테일
-	@GetMapping("/cssContestDetail")
-	public String getContestDetail() {
+	@GetMapping("/cssContestDetail/{id}")
+	public String getContestDetail(@PathVariable Integer id, Model model) {
+		
+		Contest contest = contestService.selectContestById(id);
+		model.addAttribute("contest",contest);
 		
 		return "/cssLayout/cssContestDetail";
 	}
