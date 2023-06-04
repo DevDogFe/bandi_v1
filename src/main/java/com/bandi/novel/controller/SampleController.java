@@ -249,5 +249,11 @@ public class SampleController {
 		
 		return "/cssLayout/cssAdminNovelChange";
 	}
+	
+	@GetMapping("/sidebar")
+	public String getMypageSidebar() {
+		
+		return "/cssLayout/cssMypageSidebar";
+	}
 }
 	
