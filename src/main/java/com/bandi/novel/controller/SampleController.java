@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
+import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
+import com.bandi.novel.dto.response.PurchaseRecordDto;
 import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
+import com.bandi.novel.dto.response.RentalRecordDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.User;
+import com.bandi.novel.model.UserGoldCharge;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
@@ -224,6 +228,13 @@ public class SampleController {
 		return "/cssLayout/cssContestList";
 	}
 	
+	// 공모전 디테일
+	@GetMapping("/cssContestDetail")
+	public String getContestDetail() {
+		
+		return "/cssLayout/cssContestDetail";
+	}
+	
 	@GetMapping("/cssContestRegistration")
 	public String getContestRegistraion() {
 		
@@ -254,6 +265,27 @@ public class SampleController {
 	public String getMypageSidebar() {
 		
 		return "/cssLayout/cssMypageSidebar";
+	}
+	
+	// 마이페이지 골드 충전 기록
+	@GetMapping("/cssMypageGoldRecord")
+	public String getMypageGoldRecord(Model model) {
+		
+		return "/cssLayout/cssMypageGoldRecord";
+	}
+	
+	// 마이페이지 소설 구매 기록
+	@GetMapping("/cssMypageNovelPurchase")
+	public String getMypageNovelPurchase(Model model) {
+		
+		return "/cssLayout/cssMypageNovelPurchase";
+	}
+	
+	// 마이페이지 소설 구매 기록
+	@GetMapping("/cssMypageNovelRental")
+	public String getMypageNovelRental(Model model) {
+		
+		return "/cssLayout/cssMypageNovelRental";
 	}
 }
 	

@@ -1,0 +1,81 @@
+.main {
+	top: 0;
+	left: 0;
+	height: 600px;
+	width: 940px;
+	padding: 6px 14px;
+	border: 1px solid #ddd;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+	border-radius: 12px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	margin-left: 10px;
+}
+
+.main-header{
+	margin-left: 20px;
+	margin-top: 15px;
+}
+
+.main-header h3{
+	font-weight: bold;
+}
+
+.main-header a{
+	font-weight: 400;
+	font-size:20px;
+}
+
+/*  */
+table.table {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	box-sizing: border-box;
+	width: 900px;
+	margin-left: 15px;
+	margin-top: 20px;
+}
+
+table.table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #036;
+	border-bottom: 3px solid #3b6bc9;
+}
+
+table.table tbody th {
+	width: 50px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	background: #f3f6f7;
+}
+
+table.table td {
+	width: 350px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	font-size: 17px;
+}
+
+table.table td a{
+	color: black;
+}
+
+table.table td a:hover{
+	color: #666;
+}
+
+.btncheck {
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.btncheck:hover {
+	font-weight: bold;
+}

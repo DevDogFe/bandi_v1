@@ -5,6 +5,13 @@
 
 .sectind-flex {
 	display: flex;	
+	justify-content: flex-start;
+}
+
+.left-sidebar{
+	width:240px;
+	margin-right: 10px;
+	margin-left: 0px;
 }
 
 .sidebar {
@@ -18,7 +25,6 @@
 	border-radius: 12px;
 	margin-top: 20px;
 	margin-bottom: 50px;
-	margin-left: 45px;	
 }
 
 .sidebar .logo_content {
