@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+.border-list-group{
+	height: 70px;
+	margin: 15px 0px;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #ddd;
+	border-radius: 1px;
+	color: #333;
+	padding: 10px;
+}
+
+
 .search-list-form {
 	display: flex;
 	justify-content: flex-end;

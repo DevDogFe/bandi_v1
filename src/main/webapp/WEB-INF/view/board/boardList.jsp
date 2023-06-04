@@ -103,7 +103,7 @@
 				<ul class="board-list">
 					<li><a href="#"> <c:forEach var="list"
 								items="${boardList.content}">
-								<div class="border-list-item">
+								<div class="border-list-group">
 									<div class="board-list-title"><a href="/board/detail/${list.id}">${list.title}</a></div>
 									<div class="board-list-desc">
 										<span class="blue-span list-desc-span">${list.username}</span>
