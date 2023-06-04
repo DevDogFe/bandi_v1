@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.UserGoldRepository">
+
+	<insert id="insertByUserId">
+		INSERT INTO user_gold_tb (user_id) VALUES
+		(#{userId})
+	</insert>
 	
 	<select id="selectUserGoldByUserId" resultType="com.bandi.novel.model.UserGold">
 		SELECT *

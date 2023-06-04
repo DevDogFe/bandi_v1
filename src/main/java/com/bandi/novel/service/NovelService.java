@@ -84,7 +84,7 @@ public class NovelService {
 		}
 
 		if (result != 1) {
-			// 던지기
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -178,7 +178,7 @@ public class NovelService {
 		int result = novelSectionRepository.insert(novelSection);
 
 		if (result != 1) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -3,11 +3,14 @@ package com.bandi.novel.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.bandi.novel.dto.ApplicationFromDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.repository.ApplicationRepository;
+import com.bandi.novel.utils.Define;
 
 @Service
 public class ApplicationService {
@@ -18,7 +21,7 @@ public class ApplicationService {
 	/**
 	 * @return 연재문의 글 전체조회(관리자)
 	 */
-	public List<Application> readAllApplication(){
+	public List<Application> selectAllApplication(){
 		
 		List<Application> list = applicationRepository.selectAll();
 		return list;	
@@ -28,7 +31,7 @@ public class ApplicationService {
 	 * @param principalId
 	 * @return 유저별 문의글 조회(마이페이지)
 	 */
-	public List<Application> readApplicationByUserId(Integer principalId){
+	public List<Application> selectApplicationByUserId(Integer principalId){
 		
 		List<Application> list = applicationRepository.selectByUserId(principalId);
 		return list;		
@@ -38,7 +41,7 @@ public class ApplicationService {
 	 * @param id
 	 * @return 연재글 조회
 	 */
-	public Application readApplicationById(Integer id) {
+	public Application selectApplicationById(Integer id) {
 		
 		Application applicationEntity = applicationRepository.selectById(id);
 		return applicationEntity;
@@ -49,11 +52,11 @@ public class ApplicationService {
 	 * @param application
 	 * @param principalId
 	 */
-	public void createApplication(ApplicationFromDto applicationFromDto) {		
+	public void insertApplication(ApplicationFromDto applicationFromDto) {		
 		
-		int resultRowCount = applicationRepository.insertApplication(applicationFromDto);		
-		if (resultRowCount != 1) {
-			System.out.println("연재문의 작성 실패");
+		int result = applicationRepository.insertApplication(applicationFromDto);		
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -63,9 +66,9 @@ public class ApplicationService {
 	 */
 	public void deleteApplication(Integer id) {
 		
-		int resultRowCount = applicationRepository.deleteById(id);		
-		if (resultRowCount != 1) {
-			System.out.println("연재문의 삭제 실패");
+		int result = applicationRepository.deleteById(id);		
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}

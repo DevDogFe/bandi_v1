@@ -56,7 +56,7 @@ public class UserFavoriteService {
 	public ResponseDto<Integer> deleteUserFavorite(Integer userId, Integer novelId) {
 		int result = userFavoriteRepository.delete(UserFavorite.builder().userId(userId).novelId(novelId).build());
 		if(result != 1) {
-			throw new CustomRestfulException("요청을 처리하지 못했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}

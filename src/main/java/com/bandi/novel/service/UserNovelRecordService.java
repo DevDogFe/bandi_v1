@@ -3,13 +3,16 @@ package com.bandi.novel.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.response.LastNovelRecordDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.UserNovelRecord;
 import com.bandi.novel.repository.UserNovelRecordRepository;
+import com.bandi.novel.utils.Define;
 
 @Service
 public class UserNovelRecordService {
@@ -39,7 +42,7 @@ public class UserNovelRecordService {
 		}
 
 		if (result < 1) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

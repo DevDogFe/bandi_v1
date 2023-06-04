@@ -37,7 +37,7 @@ public class BoardService {
 	@Transactional
 	public void createBoard(BoardDto boardDto) {
 		// board_tb에 저장
-		int resultRowCount = boardRepository.insertBoard(boardDto);
+		int result = boardRepository.insertBoard(boardDto);
 		// 위에서 저장할 때 자동생성된 boardId 끌어오기
 		Integer boardId = boardRepository.selectBoardIdByDTO(boardDto);
 		
@@ -47,7 +47,7 @@ public class BoardService {
 				boardFileRepository.insertFile(boardId, boardDto.getRawFileName().get(i), boardDto.getFileName().get(i));
 			}
 		}
-		if(resultRowCount != 1) {
+		if(result != 1) {
 			System.out.println("등록 실패");
 		}
 	}
@@ -90,27 +90,27 @@ public class BoardService {
 	// 게시물 수정하기
 	@Transactional
 	public int updateBoard(BoardDto boardDto) {
-		int resultRowCount = boardRepository.updateBoard(boardDto);
+		int result = boardRepository.updateBoard(boardDto);
 		
 		if(boardDto.getFiles() != null) {
 			for(int i = 0; i < boardDto.getFileName().size(); i++) {
 				boardFileRepository.insertFile(boardDto.getId(), boardDto.getRawFileName().get(i), boardDto.getFileName().get(i));
 			}
 		}
-		if(resultRowCount != 1) {
+		if(result != 1) {
 			System.out.println("수정 실패");
 		}
-		return resultRowCount;
+		return result;
 	}
 	
 	// 게시물 삭제하기
 	@Transactional
 	public int deleteBoard(Integer id) {
-		int resultRowCount = boardRepository.deleteById(id);
-		if(resultRowCount != 1) {
+		int result = boardRepository.deleteById(id);
+		if(result != 1) {
 			System.out.println("삭제 실패");
 		}
-		return resultRowCount;
+		return result;
 	}
 	
 	// 게시물 조회수 증가 

@@ -43,7 +43,7 @@ public class ApplicationController {
 		 * List<Application> applyList =
 		 * applicationService.readApplicationByUserId(principal.getId());
 		 */
-		List<Application> application = applicationService.readApplicationByUserId(1);
+		List<Application> application = applicationService.selectApplicationByUserId(1);
 		model.addAttribute("application", application);
 
 		return "/cs/applicationList";
@@ -53,7 +53,7 @@ public class ApplicationController {
 	public String getApplicationDetail(@PathVariable Integer id, Model model) {
 
 		// User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		Application application = applicationService.readApplicationById(id);
+		Application application = applicationService.selectApplicationById(id);
 		model.addAttribute("application", application);
 
 		return "/cs/applicationDetail";
@@ -108,7 +108,7 @@ public class ApplicationController {
 			}
 		}
 		applicationFromDto.setUserId(1);
-		applicationService.createApplication(applicationFromDto);
+		applicationService.insertApplication(applicationFromDto);
 		return "redirect:/application/list";
 	}
 

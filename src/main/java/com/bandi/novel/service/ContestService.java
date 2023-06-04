@@ -77,7 +77,7 @@ public class ContestService {
 		
 		List<Contest> contestList = contestRepository.selectContestList();
 		if(contestList == null) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		return contestList;
@@ -93,7 +93,7 @@ public class ContestService {
 		int result = contestRepository.updateContestByModel(contest);
 		
 		if(result != 1) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -165,7 +165,7 @@ public class ContestService {
 		int result = novelRepository.deleteNovelById(id);
 		
 		if(result != 1) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class ContestService {
 		int result = novelSectionRepository.deleteNovelSectionById(id);
 		
 		if(result != 1) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

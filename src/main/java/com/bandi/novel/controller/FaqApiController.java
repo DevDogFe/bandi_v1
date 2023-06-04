@@ -23,9 +23,9 @@ public class FaqApiController {
 
 		ResponseDto<List<Faq>> response = null;
 		if (categoryId == 0) {
-			response = faqService.readAllFaqList();
+			response = faqService.selectAllFaqList();
 		} else {
-			response = faqService.readFaqList(categoryId);
+			response = faqService.selectFaqList(categoryId);
 		}
 
 		return response;

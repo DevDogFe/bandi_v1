@@ -47,11 +47,11 @@ public class QnaController {
 		
 		List<QnaDto> qnaList = null;
 		if (qnaSearchDto.getKeyword() == null) {
-			qnaList = qnaService.readAllQna();
+			qnaList = qnaService.selectAllQna();
 		} else {
 			qnaList = qnaService.readQnaListByKeyword(qnaSearchDto);
 		}
-		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
+		List<FaqCategory> faqCategorylist = faqService.selectFaqCategory();
 		QnaPageUtil qnaPageUtil = new QnaPageUtil(qnaList.size(), 10, currentPage, 5, qnaList);
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("faqCategorylist", faqCategorylist);
@@ -70,7 +70,7 @@ public class QnaController {
 
 		// List<Question> questionList =
 		// qnaService.readQuestionByUserId(principal.getId);
-		List<Question> questionList = qnaService.readQuestionByUserId(1);
+		List<Question> questionList = qnaService.selectQuestionByUserId(1);
 		model.addAttribute("questionList", questionList);
 
 		return "/cs/qnaList";
@@ -83,7 +83,7 @@ public class QnaController {
 	@GetMapping("/write")
 	public String getWrite(Model model) {
 
-		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
+		List<FaqCategory> faqCategorylist = faqService.selectFaqCategory();
 		model.addAttribute("faqCategorylist", faqCategorylist);
 
 		return "/cs/questionForm";
@@ -95,7 +95,7 @@ public class QnaController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 유효성
 		// qnaService.createQuestion(question, principal.getId);
-		qnaService.createQuestion(question, 1);
+		qnaService.selectQuestion(question, 1);
 
 		return "redirect:/qna/list";
 	}
@@ -108,7 +108,7 @@ public class QnaController {
 	@GetMapping("/question/{id}")
 	public String getQuestion(@PathVariable Integer id, Model model) {
 
-		Question question = qnaService.readQuestionById(id);
+		Question question = qnaService.selectQuestionById(id);
 		model.addAttribute("question", question);
 		// model.addAttribute("principalId", 1);
 
@@ -123,8 +123,8 @@ public class QnaController {
 	@GetMapping("/question/update/{id}")
 	public String getupdateQuestion(@PathVariable Integer id, Model model) {
 
-		Question question = qnaService.readQuestionById(id);
-		List<FaqCategory> faqCategorylist = faqService.readFaqCategory();
+		Question question = qnaService.selectQuestionById(id);
+		List<FaqCategory> faqCategorylist = faqService.selectFaqCategory();
 		model.addAttribute("question", question);
 		model.addAttribute("faqCategorylist", faqCategorylist);
 		return "/cs/questionupdateForm";
@@ -165,7 +165,7 @@ public class QnaController {
 	@GetMapping("/answer/{questionId}")
 	public String getAnswer(@PathVariable Integer questionId, Model model) {
 
-		Answer answer = qnaService.readAnswerByQuestionId(questionId);
+		Answer answer = qnaService.selectAnswerByQuestionId(questionId);
 		model.addAttribute("answer", answer);
 
 		return "/cs/answerDetail";

@@ -35,11 +35,11 @@ public class FaqController {
 	public String list(Model model, @PathVariable(required = false) Integer categoryId, @RequestParam(defaultValue = "1") Integer currentPage) {
 		List<Faq> faqList = null;
 		if(categoryId == null) {
-			faqList = faqService.readAllFaqList().getData();			
+			faqList = faqService.selectAllFaqList().getData();			
 		}else {
-			faqList = faqService.readFaqList(categoryId).getData();
+			faqList = faqService.selectFaqList(categoryId).getData();
 		}		
-		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
 		FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 10, currentPage, 5, faqList);
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("faqCategoryList",faqCategoryList);
