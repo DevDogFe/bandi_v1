@@ -291,5 +291,33 @@ public class SampleController {
 		
 		return "/cssLayout/cssMypageNovelRental";
 	}
+	
+	// 마이페이지 내작품 
+	@GetMapping("/cssMypageNovelList")
+	public String getMypageNovelList(Model model) {
+		
+		return "/cssLayout/cssMypageNovelList";
+	}
+	
+	// 마이페이지 즐겨찾기 
+	@GetMapping("/cssMypageFavoriteNovel")
+	public String getMypageFavoriteNovel(Model model) {
+			
+		return "/cssLayout/cssMypageFavoriteNovel";
+	}
+	
+	// 마이페이지 내 정보 
+	@GetMapping("/cssMypageUserInfo")
+	public String getMypageUserInfo(Model model) {
+				
+		return "/cssLayout/cssMypageUserInfo";
+	}
+	
+	// 마이페이지 내 정보 수정 
+	@GetMapping("/cssMypageUserUpdate")
+	public String getMypageUserUpdate(Model model) {
+					
+		return "/cssLayout/cssMypageUserUpdate";
+	}
 }
 	

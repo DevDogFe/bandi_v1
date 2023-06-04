@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.main {
+	top: 0;
+	left: 0;
+	height: 600px;
+	width: 940px;
+	padding: 6px 14px;
+	border: 1px solid #ddd;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+	border-radius: 12px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	margin-left: 10px;
+}
+
+.main-header{
+	margin-left: 20px;
+	margin-top: 15px;
+}
+
+.main-header h3{
+	font-weight: bold;
+}
+
+.input-box label{
+	color: #333;
+}
+
+.form :where(.input-box input){
+	position: relative;
+	height: 50px;
+	width:100%;
+	outline: none;
+	font-size: 1rem;
+	color: #707070;
+	margin-top: 8px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	padding: 0 15px;
+}
+
+.btn-flex {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.form button{
+	color: #fff;
+	font-size: 1rem;
+	border:none;
+	cursor:pointer;
+	border-radius: 6px;
+	font-weight: 400;
+	margin-top: 10px;
+	transition: all 0.2s ease;
+	background-color: #3b6bc9;
+}
+
+.form button:hover{
+	background-color: #3b3399;
+}
