@@ -28,16 +28,55 @@
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
-<link rel="stylesheet" href="/assets/css/admin/adminReport.css" />
-
+<link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 </head>
+<style>
+.admin--faq--container {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.faq--btn--list {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.faq--btn--list button {
+	margin-left: 10px;
+	background-color: #546E7A;
+	border: none;
+	border-radius: 3px;
+	width: 60px;
+	height: 35px; 
+	color: #fff;
+	
+}
+
+.table {
+	text-align: center;
+}
+
+.faq--page {
+	justify-content: center;
+}
+
+checkbox {
+	margin: auto;
+}
+
+ #check--id,
+#check--All{
+	width: 30px;
+} 
+
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
 			<header>
 				<div class="banner">
 					<div class="lnb">
-						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
+						<a href="#none"><em>for</em> admin</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
 					</div>
 				</div>
 				<nav>
@@ -83,35 +122,57 @@
 						</a></li>
 						<li><a href="/admin/applicationList"> <i class='bx bx-message-square-dots'></i> <span class="links_name">연재 문의</span>
 						</a></li>
+					</ul>
 				</div>
 			</section>
+
+			<!-- FAQ List -->
 			<section>
-				<div class="reportList">
-					<table class="table">
+				<div class="admin--faq--container">
+					
+						<div class="faq--btn--list">
+							<select id="category" name="categoryId">
+								<option value="0">전체</option>
+								<c:forEach var="category" items="${faqCategoryList}">
+									<option value="${category.id}">${category.categoryName}</option>
+								</c:forEach>
+							</select>					
+							<button id="delete--btn">삭제</button>
+							<a href="/admin/faq"><button>글쓰기</button></a>
+						</div>
+						
+						<table class="table">					
 						<thead>
 							<tr>
-								<th scope="cols">#</th>
-								<th scope="cols">신고자</th>
-								<th scope="cols">신고사유</th>
-								<th scope="cols">날짜</th>
-								<th scope="cols">확인</th>
-								<th scope="cols"></th>
+								<th><input type="checkbox" id="check--All" ></th>
+								<th>질문</th>
+								<th>답변</th>
+								<th>수정</th>
 							</tr>
 						</thead>
-						<c:forEach var="list" items="${reportList}">
-							<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-							<tbody id="reportList-${list.id}" class="reportList">
-								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.username}</td>
-									<td>${list.categoryName}</td>
-									<td>${list.createdAt()}</td>
-									<td>${list.proceed}</td>
-									<td><button class="btncheck" onclick="detailPopup(${list.id})">확인</button></td>
+						<tbody id="faqListBody">
+
+							<c:forEach var="faq" items="${faqPageUtil.content}">
+								<tr class="faq--table">
+									<td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="${faq.id}"></td>
+									<td class="faq--table">${faq.question}</td>
+									<td class="faq--table">${faq.answer}</td>
+									<td class="faq--table"><a href="/admin/faq/update/${faq.id}"><button>수정</button></a></td>
 								</tr>
-							</tbody>
-						</c:forEach>
+							</c:forEach>
+						</tbody>
 					</table>
+					<div class="faq--page mt-2">
+						<div>
+							<ul class="faq--page d-flex">
+								<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/admin/faqList?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+								<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+									<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/admin/faqList?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+								</c:forEach>
+								<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/admin/faqList?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+							</ul>
+						</div>
+					</div>	
 				</div>
 			</section>
 		</div>
@@ -150,13 +211,66 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript">
-			function detailPopup(id) {
-				  var url = "/report/reportDetail/" + $("#id-" + id).val();
-				  var name = "신고접수확인";
-				  var option = "width=600,height=730,top=100,left=200, location=no";
-				  window.open(url, name, option);
-				}
+		<script>
+	    $(document).ready(() => {
+	        $("#category").on("change", () => {
+
+	            $.ajax({
+	                type: "GET",
+	                url: "/api/faq/" + $("#category").val(),
+	            }).done((response) => {
+	                $(".faq--table").remove();
+	                let faqList;
+
+	                for (i = 0; i < response.length; i++) {
+
+	                    faqList +=
+	                        `<tr class="faq--table">
+	                    <td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="\${response[i].id}" ></td>
+	                    <td class="faq--table">\${response[i].question}</td>
+	                    <td class="faq--table">\${response[i].answer}</td>                    
+	                    <td class="faq--table"><a href="/admin/faq/update/\${response[i].id}"><button>수정</button></a></td>
+	                    </tr>`;
+	                }
+	                $("#faqListBody").append(faqList);
+
+	            }).fail((error) => {
+	                console.log(error);
+	                alert("요청을 처리할 수 없습니다.");
+	            });
+	        });
+
+	        $("#delete--btn").on("click", () => {
+
+	            let checkedList = [];
+
+	            $("input[name=check--id]:checked").each(function () {
+	                checkedList.push($(this).val());
+	            });
+	            console.log(checkedList);
+
+	            $.ajax({
+	                type: "DELETE",
+	                url: "/api/faq/" + checkedList
+	            }).done((response) => {
+	                location.href = "/admin/faqList";
+
+	            }).fail((error) => {
+	                console.log(error);
+	                alert("삭제할 글을 선택해주세요");
+	            });
+	        });
+
+
+	        /* function checkAll(){
+	             if($("#check--All").is("checked")){
+	               $("input[name=check--id]").prop("checked", true);
+	               }else{
+	               $("input[name=check--id]").prop("checked", false);					
+	               }				
+	         } */
+	    });
+			
 		</script>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

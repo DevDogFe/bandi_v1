@@ -66,36 +66,6 @@
 		<a href="/qna/question/update/${question.id}">수정</a>
 		<a href="/qna/question/delete/${question.id}">삭제</a>
 	</c:if> --%>
-	
-	<table class="table">
-	<tr>
-		<td>${question.title}</td>
-		<td>${question.categoryName}</td>
-		<td>${question.username}</td>
-	</tr>
-	<tr>
-		<td colspan="3">${question.content}${question.content}${question.content}
-		<br>
-		${question.content}${question.content}${question.content}
-		<br>
-		${question.content}${question.content}${question.content}
-		<br>
-		${question.content}${question.content}${question.content}
-		<br>
-		${question.content}${question.content}${question.content}
-		<br>
-		${question.content}${question.content}${question.content}</td>
-		<td></td>
-		<td></td>
-	</tr>
-	</table>	
-	
-	<ul>
-		<li></li>
-		<li></li>
-		<li>${question.createdAt()}</li>
-	</ul>
-
 
 </body>
 </html>

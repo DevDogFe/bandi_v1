@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/application/delete/${application.id}">삭제</a>
 	<ul>
 		<li>${application.title}</li>
 		<li>${application.content}</li>
-		<%-- <li>${application.filename}</li> --%>
+		<li>${application.username}</li>
+		<li>${application.tel}</li>
 		<li>${application.createdAt()}</li>
 	</ul>
 

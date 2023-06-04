@@ -31,6 +31,7 @@ import com.bandi.novel.service.BoardService;
 import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.QnaService;
+import com.bandi.novel.utils.FaqPageUtil;
 
 /**
  * 관리자 페이지 (Q&A, 연재문의, FAQ)
@@ -65,7 +66,7 @@ public class AdminController {
 		List<Question> questionList = null;
 		questionList = adminService.readAllQuestionList();
 		model.addAttribute("questionList", questionList);
-		return "/admin/questionList";
+		return "/admin/adminQuestionList";
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class AdminController {
 		List<Application> applicationList = applicationService.readAllApplication();
 		model.addAttribute("applicationList", applicationList);
 
-		return "/admin/applicationList";
+		return "/admin/adminApplicationList";
 	}
 
 	/**
@@ -256,7 +257,7 @@ public class AdminController {
 	 * @return
 	 */
 	@GetMapping({"/faqList/{categoryId}", "/faqList"})
-	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId) {
+	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId, @RequestParam(defaultValue = "1") Integer currentPage) {
 		List<Faq> faqList = null;
 		if (categoryId == null) {
 			faqList = faqService.readAllFaqList();			
@@ -264,11 +265,13 @@ public class AdminController {
 			faqList = faqService.readFaqList(categoryId);			
 		}		
 		 List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		 FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 8, currentPage, 5, faqList);
 		 model.addAttribute("faqList", faqList);
 		 model.addAttribute("faqCategoryList", faqCategoryList);
-		 
-		return "/admin/faqList";
-	}
+		 model.addAttribute("faqPageUtil", faqPageUtil);
+		return "/admin/adminFaqList";
+	}	
+
 	
 	/**
 	 * 관리자 페이지 대시보드

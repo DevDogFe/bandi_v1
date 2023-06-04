@@ -49,12 +49,7 @@
 		$("#usernameJ").on("keyup", () => {
 			$.ajax({
 				type: "GET",
-<<<<<<< HEAD
-				url: "/api/username",
-				data: {username: $("#usernameJ").val()}   
-=======
 				url: "/api/username?username=" + $("#usernameJ").val()
->>>>>>> feature/responseDto
 			}).done((response) => {
 				if(response.data){
 					$("#usernameCheck").text("이미 사용중인 아이디입니다.");

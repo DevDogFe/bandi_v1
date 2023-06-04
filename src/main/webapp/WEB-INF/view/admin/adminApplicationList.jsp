@@ -28,16 +28,35 @@
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
-<link rel="stylesheet" href="/assets/css/admin/adminReport.css" />
-
+<link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 </head>
+<style>
+.admin--apply--container {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.table {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.table a {
+	color: black;
+	cursor: pointer;
+}
+
+.apply--page {
+	justify-content: center;
+}
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
 			<header>
 				<div class="banner">
 					<div class="lnb">
-						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
+						<a href="#none"><em>for</em> admin</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
 					</div>
 				</div>
 				<nav>
@@ -83,35 +102,50 @@
 						</a></li>
 						<li><a href="/admin/applicationList"> <i class='bx bx-message-square-dots'></i> <span class="links_name">연재 문의</span>
 						</a></li>
+					</ul>
 				</div>
 			</section>
+
+			<!-- application List -->
 			<section>
-				<div class="reportList">
+				<div class="admin--apply--container">
+
 					<table class="table">
 						<thead>
 							<tr>
-								<th scope="cols">#</th>
-								<th scope="cols">신고자</th>
-								<th scope="cols">신고사유</th>
-								<th scope="cols">날짜</th>
-								<th scope="cols">확인</th>
-								<th scope="cols"></th>
+								<th>NO</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>파일이름</th>
+								<th>작성일</th>
 							</tr>
 						</thead>
-						<c:forEach var="list" items="${reportList}">
-							<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-							<tbody id="reportList-${list.id}" class="reportList">
+						<tbody>
+							<c:forEach var="application" items="${applicationList}">
 								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.username}</td>
-									<td>${list.categoryName}</td>
-									<td>${list.createdAt()}</td>
-									<td>${list.proceed}</td>
-									<td><button class="btncheck" onclick="detailPopup(${list.id})">확인</button></td>
+									<td>${application.id}</td>
+									<td><a href="/admin/applicationDetail/${application.id}">${application.title}</a></td>
+									<td>${application.username}</td>
+									<td>${application.uploadFileName}</td>
+									<td>${application.createdAt()}</td>
 								</tr>
-							</tbody>
-						</c:forEach>
+							</c:forEach>
+						</tbody>
 					</table>
+					<!-- page -->
+					<div class="apply--page mt-2">
+						<div>
+							<ul class="apply--page d-flex">
+								<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+								<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+									<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/faq	/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+								</c:forEach>
+								<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- page END -->
+
 				</div>
 			</section>
 		</div>
@@ -150,13 +184,6 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript">
-			function detailPopup(id) {
-				  var url = "/report/reportDetail/" + $("#id-" + id).val();
-				  var name = "신고접수확인";
-				  var option = "width=600,height=730,top=100,left=200, location=no";
-				  window.open(url, name, option);
-				}
-		</script>
+
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

@@ -28,16 +28,52 @@
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
-<link rel="stylesheet" href="/assets/css/admin/adminReport.css" />
-
+<link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 </head>
+<style>
+.admin--qna--container {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.qna--btn--list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.qna--btn--list button {
+	width: 33%;
+	border: none;
+	background: inherit;
+	margin-bottom: 25px;
+}
+
+.qnaList--btn {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.qna--btn--list button:hover {
+	border-bottom: 3px solid #036;
+}
+
+.table {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.table a {
+	color: black;
+	cursor: pointer;
+}
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
 			<header>
 				<div class="banner">
 					<div class="lnb">
-						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
+						<a href="#none"><em>for</em> admin</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
 					</div>
 				</div>
 				<nav>
@@ -83,34 +119,47 @@
 						</a></li>
 						<li><a href="/admin/applicationList"> <i class='bx bx-message-square-dots'></i> <span class="links_name">연재 문의</span>
 						</a></li>
+					</ul>
 				</div>
 			</section>
+
+			<!-- Q&A List -->
 			<section>
-				<div class="reportList">
+				<div class="admin--qna--container">
 					<table class="table">
+						<div class="qna--btn--list">
+							<button class="qnaList--btn" value="-1">전체</button>
+							<button class="qnaList--btn" value="0">미처리</button>
+							<button class="qnaList--btn" value="1">처리완료</button>
+						</div>
 						<thead>
 							<tr>
-								<th scope="cols">#</th>
-								<th scope="cols">신고자</th>
-								<th scope="cols">신고사유</th>
-								<th scope="cols">날짜</th>
-								<th scope="cols">확인</th>
-								<th scope="cols"></th>
+								<th>카테고리</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일자</th>
+								<th>처리상태</th>
 							</tr>
 						</thead>
-						<c:forEach var="list" items="${reportList}">
-							<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-							<tbody id="reportList-${list.id}" class="reportList">
-								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.username}</td>
-									<td>${list.categoryName}</td>
-									<td>${list.createdAt()}</td>
-									<td>${list.proceed}</td>
-									<td><button class="btncheck" onclick="detailPopup(${list.id})">확인</button></td>
+						<tbody id="qnaListBody">
+							<c:forEach var="question" items="${questionList}">
+								<tr id="qna" class="qna--table">
+									<td class="qna--table">${question.categoryName}</td>
+									<td class="qna--table"><a href="/admin/question/${question.id}">${question.title}</a></td>
+									<td class="qna--table">${question.username}</td>
+									<td class="qna--table">${question.createdAt()}</td>
+
+									<c:choose>
+										<c:when test="${question.proceed == 0}">
+											<td class="qna--table">미처리</td>
+										</c:when>
+										<c:otherwise>
+											<td class="qna--table">처리</td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
-							</tbody>
-						</c:forEach>
+							</c:forEach>
+						</tbody>
 					</table>
 				</div>
 			</section>
@@ -150,13 +199,44 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript">
-			function detailPopup(id) {
-				  var url = "/report/reportDetail/" + $("#id-" + id).val();
-				  var name = "신고접수확인";
-				  var option = "width=600,height=730,top=100,left=200, location=no";
-				  window.open(url, name, option);
-				}
-		</script>
+		<script>			
+		       $(document).ready(function() {
+		    	   $(".qnaList--btn").on("click", function() {
+		   	        $.ajax({
+		                   type: "get",
+		                   url: "/admin/api/qnaList?proceed=" + $(this).val(),
+		                   contentType: "application/json; charset=utf-8"
+			        }).done((response) => {
+			        	$(".qna--table").remove();
+			        	let qnaNode;	        	
+			        	
+			        	for(i=0; i < response.length; i++){ 	        		
+			        		 let createdAt = response[i].createdAt;
+			        		 let time = createdAt.replace('T', " ").substring(0, 16);
+			        		 let proceed = response[i].proceed;
+			        		 if(proceed == 0){
+			        			 proceed = "미처리";
+			        		 }else{
+			        			 proceed = "처리";
+			        		 }				        		 
+			        		 
+			        		 qnaNode += `<tr class="qna--table">
+				        		 <td class="qna--table">\${response[i].categoryName}</td>
+				        		 <td class="qna--table"><a href="/admin/question/\${response[i].id}">\${response[i].title}</td>
+				        		 <td class="qna--table">\${response[i].userId}</td>
+				        		 <td class="qna--table">\${time}</td>					       			 
+				        		 <td class="qna--table">\${proceed}</td>		        		 
+				        		 </tr>
+				        		 `;	   
+			        	}        		 
+						 $("#qnaListBody").append(qnaNode);
+						 
+			        } ).fail((error) => {
+			        	console.log(error);
+			        });
+		   	      });
+		   	   });   
+		    	   
+			</script>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
