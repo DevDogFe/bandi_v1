@@ -208,7 +208,7 @@ public class SampleController {
 	@GetMapping("/boardDetail")
 	public String getDetail() {
 		
-		return "/cssLayout/cssBoardDetail";
+		return "/cssLayout/cssdetail";
 	}
 
 	// 공모전 대문
