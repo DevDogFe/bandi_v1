@@ -29,8 +29,47 @@
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
-
 </head>
+<style>
+.admin--faq--container {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.faq--btn--list {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.faq--btn--list button {
+	margin-left: 10px;
+	background-color: #546E7A;
+	border: none;
+	border-radius: 3px;
+	width: 60px;
+	height: 35px; 
+	color: #fff;
+	
+}
+
+.table {
+	text-align: center;
+}
+
+.faq--page {
+	justify-content: center;
+}
+
+checkbox {
+	margin: auto;
+}
+
+ #check--id,
+#check--All{
+	width: 30px;
+} 
+
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
@@ -86,49 +125,55 @@
 					</ul>
 				</div>
 			</section>
+
+			<!-- FAQ List -->
 			<section>
-				<div class="search-form">
-					<div class="category-list-table">
-						<table>
-							<tr>
-								<c:forEach items="${boardTypeList}" var="type">
-									<td class="category-list">
-										<button type="submit" onclick="location.href='/admin/adminCategory/${type.id}'">${type.boardName}</button>
-									</td>
+				<div class="admin--faq--container">
+					
+						<div class="faq--btn--list">
+							<select id="category" name="categoryId">
+								<option value="0">전체</option>
+								<c:forEach var="category" items="${faqCategoryList}">
+									<option value="${category.id}">${category.categoryName}</option>
 								</c:forEach>
-							</tr>
-						</table>
-					</div>
-					<form action="/admin/category" method="post">
-						<div class="board">
-							<select class="selectbox" name="boardTypeId" id="boardTypeId">
-								<c:forEach var="boardType" items="${boardTypeList}">
-									<option value="${boardType.id}" class="boardType-option">${boardType.boardName}</option>
-								</c:forEach>
-							</select>
-							<div class="search">
-								<input type="text" name="categoryName"> <label class="searchlabel">Name</label> <span class="search-span"></span>
-							</div>
-							<button type="submit" id="button-add">등록</button>
+							</select>					
+							<button id="delete--btn">삭제</button>
+							<a href="/admin/faq"><button>글쓰기</button></a>
 						</div>
-					</form>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">카테고리</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<c:forEach var="list" items="${categoryList}">
-						<tbody id="categoryList" class="category">
+						
+						<table class="table">					
+						<thead>
 							<tr>
-								<td>${list.categoryName}</td>
-								<td><button class="delete-category" onclick="deleteCategory(${list.id})">삭제</button></td>
+								<th><input type="checkbox" id="check--All" ></th>
+								<th>질문</th>
+								<th>답변</th>
+								<th>수정</th>
 							</tr>
+						</thead>
+						<tbody id="faqListBody">
+
+							<c:forEach var="faq" items="${faqPageUtil.content}">
+								<tr class="faq--table">
+									<td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="${faq.id}"></td>
+									<td class="faq--table">${faq.question}</td>
+									<td class="faq--table">${faq.answer}</td>
+									<td class="faq--table"><a href="/admin/faq/update/${faq.id}"><button>수정</button></a></td>
+								</tr>
+							</c:forEach>
 						</tbody>
-					</c:forEach>
-				</table>
+					</table>
+					<div class="faq--page mt-2">
+						<div>
+							<ul class="faq--page d-flex">
+								<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/admin/faqList?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+								<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+									<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/admin/faqList?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+								</c:forEach>
+								<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/admin/faqList?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+							</ul>
+						</div>
+					</div>	
+				</div>
 			</section>
 		</div>
 	</div>
@@ -166,39 +211,66 @@
 				</ul>
 			</div>
 		</div>
-	</section>
-	<script>
-		  let sidebar = document.querySelector(".sidebar");
-		  let closeBtn = document.querySelector("#btn");
-		  let searchBtn = document.querySelector(".bx-search");
-		  closeBtn.addEventListener("click", ()=>{
-		    sidebar.classList.toggle("open");
-		    menuBtnChange();
-		  });
-		  searchBtn.addEventListener("click", ()=>{ 
-		    sidebar.classList.toggle("open");
-		    menuBtnChange(); 
-		  });
-		  function menuBtnChange() {
-		   if(sidebar.classList.contains("open")){
-		     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-		   }else {
-		     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
-		   }
-		  }
-  </script>
-	<script>
-		function deleteCategory(id) {
-			var selectedOptionId = $("#boardTypeId option:selected").val();
-			$.ajax({
-				type: "DELETE",
-				url: "/api/category/" + id,
-			}).done((response) => {
-				location.href = '/admin/adminCategory/' + selectedOptionId;
-			}).fail(function(error){
-				alert("요청 실패");
-			});
-		}
-	</script>
-</body>
-</html>
+		<script>
+	    $(document).ready(() => {
+	        $("#category").on("change", () => {
+
+	            $.ajax({
+	                type: "GET",
+	                url: "/api/faq/" + $("#category").val(),
+	            }).done((response) => {
+	                $(".faq--table").remove();
+	                let faqList;
+
+	                for (i = 0; i < response.length; i++) {
+
+	                    faqList +=
+	                        `<tr class="faq--table">
+	                    <td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="\${response[i].id}" ></td>
+	                    <td class="faq--table">\${response[i].question}</td>
+	                    <td class="faq--table">\${response[i].answer}</td>                    
+	                    <td class="faq--table"><a href="/admin/faq/update/\${response[i].id}"><button>수정</button></a></td>
+	                    </tr>`;
+	                }
+	                $("#faqListBody").append(faqList);
+
+	            }).fail((error) => {
+	                console.log(error);
+	                alert("요청을 처리할 수 없습니다.");
+	            });
+	        });
+
+	        $("#delete--btn").on("click", () => {
+
+	            let checkedList = [];
+
+	            $("input[name=check--id]:checked").each(function () {
+	                checkedList.push($(this).val());
+	            });
+	            console.log(checkedList);
+
+	            $.ajax({
+	                type: "DELETE",
+	                url: "/api/faq/" + checkedList
+	            }).done((response) => {
+	                location.href = "/admin/faqList";
+
+	            }).fail((error) => {
+	                console.log(error);
+	                alert("삭제할 글을 선택해주세요");
+	            });
+	        });
+
+
+	        /* function checkAll(){
+	             if($("#check--All").is("checked")){
+	               $("input[name=check--id]").prop("checked", true);
+	               }else{
+	               $("input[name=check--id]").prop("checked", false);					
+	               }				
+	         } */
+	    });
+			
+		</script>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

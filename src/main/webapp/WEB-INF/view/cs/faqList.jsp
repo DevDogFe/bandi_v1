@@ -26,14 +26,9 @@
 	padding: 10px 0px;
 }
 
-.faq--category ul li :hover {
-	/* background-color: ; */
-	
-}
-
-.faq--category {
-	border: 1px solid #d1d4d6;
-}
+/* .faq--category ul :hover {
+	border: 1px solid #3b6bc9;	
+} */
 
 .faq--list {
 	border: 1px solid #d1d4d6;

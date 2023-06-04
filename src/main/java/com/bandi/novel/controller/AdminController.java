@@ -17,6 +17,7 @@ import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.response.BestSectionDto;
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
@@ -31,6 +32,7 @@ import com.bandi.novel.service.BoardService;
 import com.bandi.novel.service.FaqService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.QnaService;
+import com.bandi.novel.utils.FaqPageUtil;
 
 /**
  * 관리자 페이지 (Q&A, 연재문의, FAQ)
@@ -65,7 +67,7 @@ public class AdminController {
 		List<Question> questionList = null;
 		questionList = adminService.selectAllQuestionList();
 		model.addAttribute("questionList", questionList);
-		return "/admin/questionList";
+		return "/admin/adminQuestionList";
 	}
 
 	/**
@@ -175,7 +177,7 @@ public class AdminController {
 		List<Application> applicationList = applicationService.selectAllApplication();
 		model.addAttribute("applicationList", applicationList);
 
-		return "/admin/applicationList";
+		return "/admin/adminApplicationList";
 	}
 
 	/**
@@ -249,6 +251,27 @@ public class AdminController {
 		model.addAttribute("userRoleList", userRoleList);
 		return "/admin/adminUserRole";
 	}
+
+	/**
+	 * FAQ 전체조회
+	 * @param model
+	 * @return
+	 */
+	@GetMapping({"/faqList/{categoryId}", "/faqList"})
+	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId, @RequestParam(defaultValue = "1") Integer currentPage) {
+		List<Faq> faqList = null;
+		if(categoryId == null) {
+			faqList = faqService.selectAllFaqList().getData();			
+		}else {
+			faqList = faqService.selectFaqList(categoryId).getData();
+		}	
+		 List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
+		 FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 8, currentPage, 5, faqList);
+		 model.addAttribute("faqList", faqList);
+		 model.addAttribute("faqCategoryList", faqCategoryList);
+		 model.addAttribute("faqPageUtil", faqPageUtil);
+		return "/admin/adminFaqList";
+	}	
 
 	
 	/**

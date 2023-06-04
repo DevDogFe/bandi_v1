@@ -29,8 +29,27 @@
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
-
 </head>
+<style>
+.admin--apply--container {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.table {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.table a {
+	color: black;
+	cursor: pointer;
+}
+
+.apply--page {
+	justify-content: center;
+}
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
@@ -86,49 +105,48 @@
 					</ul>
 				</div>
 			</section>
+
+			<!-- application List -->
 			<section>
-				<div class="search-form">
-					<div class="category-list-table">
-						<table>
+				<div class="admin--apply--container">
+
+					<table class="table">
+						<thead>
 							<tr>
-								<c:forEach items="${boardTypeList}" var="type">
-									<td class="category-list">
-										<button type="submit" onclick="location.href='/admin/adminCategory/${type.id}'">${type.boardName}</button>
-									</td>
-								</c:forEach>
+								<th>NO</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>파일이름</th>
+								<th>작성일</th>
 							</tr>
-						</table>
-					</div>
-					<form action="/admin/category" method="post">
-						<div class="board">
-							<select class="selectbox" name="boardTypeId" id="boardTypeId">
-								<c:forEach var="boardType" items="${boardTypeList}">
-									<option value="${boardType.id}" class="boardType-option">${boardType.boardName}</option>
-								</c:forEach>
-							</select>
-							<div class="search">
-								<input type="text" name="categoryName"> <label class="searchlabel">Name</label> <span class="search-span"></span>
-							</div>
-							<button type="submit" id="button-add">등록</button>
-						</div>
-					</form>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">카테고리</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<c:forEach var="list" items="${categoryList}">
-						<tbody id="categoryList" class="category">
-							<tr>
-								<td>${list.categoryName}</td>
-								<td><button class="delete-category" onclick="deleteCategory(${list.id})">삭제</button></td>
-							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="application" items="${applicationList}">
+								<tr>
+									<td>${application.id}</td>
+									<td><a href="/admin/applicationDetail/${application.id}">${application.title}</a></td>
+									<td>${application.username}</td>
+									<td>${application.uploadFileName}</td>
+									<td>${application.createdAt()}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
-					</c:forEach>
-				</table>
+					</table>
+					<!-- page -->
+					<div class="apply--page mt-2">
+						<div>
+							<ul class="apply--page d-flex">
+								<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
+								<c:forEach var="pNo" begin="${faqPageUtil.startPage}" end="${faqPageUtil.endPage}" step="1">
+									<li <c:if test="${pNo == faqPageUtil.currentPage}">class="active"</c:if>><a href="/faq	/list?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+								</c:forEach>
+								<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- page END -->
+
+				</div>
 			</section>
 		</div>
 	</div>
@@ -166,39 +184,6 @@
 				</ul>
 			</div>
 		</div>
-	</section>
-	<script>
-		  let sidebar = document.querySelector(".sidebar");
-		  let closeBtn = document.querySelector("#btn");
-		  let searchBtn = document.querySelector(".bx-search");
-		  closeBtn.addEventListener("click", ()=>{
-		    sidebar.classList.toggle("open");
-		    menuBtnChange();
-		  });
-		  searchBtn.addEventListener("click", ()=>{ 
-		    sidebar.classList.toggle("open");
-		    menuBtnChange(); 
-		  });
-		  function menuBtnChange() {
-		   if(sidebar.classList.contains("open")){
-		     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-		   }else {
-		     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
-		   }
-		  }
-  </script>
-	<script>
-		function deleteCategory(id) {
-			var selectedOptionId = $("#boardTypeId option:selected").val();
-			$.ajax({
-				type: "DELETE",
-				url: "/api/category/" + id,
-			}).done((response) => {
-				location.href = '/admin/adminCategory/' + selectedOptionId;
-			}).fail(function(error){
-				alert("요청 실패");
-			});
-		}
-	</script>
-</body>
-</html>
+
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

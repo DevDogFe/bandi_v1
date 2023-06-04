@@ -18,6 +18,7 @@ public class FaqApiController {
 	private FaqService faqService;
 
 	// FAQ 카테고리 리스트 (효린)
+
 	@GetMapping("/api/faq/{categoryId}")
 	public ResponseDto<List<Faq>> getFaqList(@PathVariable Integer categoryId) {
 

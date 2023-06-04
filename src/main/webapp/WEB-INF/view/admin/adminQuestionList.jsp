@@ -29,8 +29,44 @@
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
-
 </head>
+<style>
+.admin--qna--container {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.qna--btn--list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.qna--btn--list button {
+	width: 33%;
+	border: none;
+	background: inherit;
+	margin-bottom: 25px;
+}
+
+.qnaList--btn {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.qna--btn--list button:hover {
+	border-bottom: 3px solid #036;
+}
+
+.table {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.table a {
+	color: black;
+	cursor: pointer;
+}
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
@@ -86,49 +122,46 @@
 					</ul>
 				</div>
 			</section>
+
+			<!-- Q&A List -->
 			<section>
-				<div class="search-form">
-					<div class="category-list-table">
-						<table>
-							<tr>
-								<c:forEach items="${boardTypeList}" var="type">
-									<td class="category-list">
-										<button type="submit" onclick="location.href='/admin/adminCategory/${type.id}'">${type.boardName}</button>
-									</td>
-								</c:forEach>
-							</tr>
-						</table>
-					</div>
-					<form action="/admin/category" method="post">
-						<div class="board">
-							<select class="selectbox" name="boardTypeId" id="boardTypeId">
-								<c:forEach var="boardType" items="${boardTypeList}">
-									<option value="${boardType.id}" class="boardType-option">${boardType.boardName}</option>
-								</c:forEach>
-							</select>
-							<div class="search">
-								<input type="text" name="categoryName"> <label class="searchlabel">Name</label> <span class="search-span"></span>
-							</div>
-							<button type="submit" id="button-add">등록</button>
+				<div class="admin--qna--container">
+					<table class="table">
+						<div class="qna--btn--list">
+							<button class="qnaList--btn" value="-1">전체</button>
+							<button class="qnaList--btn" value="0">미처리</button>
+							<button class="qnaList--btn" value="1">처리완료</button>
 						</div>
-					</form>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">카테고리</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<c:forEach var="list" items="${categoryList}">
-						<tbody id="categoryList" class="category">
+						<thead>
 							<tr>
-								<td>${list.categoryName}</td>
-								<td><button class="delete-category" onclick="deleteCategory(${list.id})">삭제</button></td>
+								<th>카테고리</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일자</th>
+								<th>처리상태</th>
 							</tr>
+						</thead>
+						<tbody id="qnaListBody">
+							<c:forEach var="question" items="${questionList}">
+								<tr id="qna" class="qna--table">
+									<td class="qna--table">${question.categoryName}</td>
+									<td class="qna--table"><a href="/admin/question/${question.id}">${question.title}</a></td>
+									<td class="qna--table">${question.username}</td>
+									<td class="qna--table">${question.createdAt()}</td>
+
+									<c:choose>
+										<c:when test="${question.proceed == 0}">
+											<td class="qna--table">미처리</td>
+										</c:when>
+										<c:otherwise>
+											<td class="qna--table">처리</td>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+							</c:forEach>
 						</tbody>
-					</c:forEach>
-				</table>
+					</table>
+				</div>
 			</section>
 		</div>
 	</div>
@@ -166,39 +199,44 @@
 				</ul>
 			</div>
 		</div>
-	</section>
-	<script>
-		  let sidebar = document.querySelector(".sidebar");
-		  let closeBtn = document.querySelector("#btn");
-		  let searchBtn = document.querySelector(".bx-search");
-		  closeBtn.addEventListener("click", ()=>{
-		    sidebar.classList.toggle("open");
-		    menuBtnChange();
-		  });
-		  searchBtn.addEventListener("click", ()=>{ 
-		    sidebar.classList.toggle("open");
-		    menuBtnChange(); 
-		  });
-		  function menuBtnChange() {
-		   if(sidebar.classList.contains("open")){
-		     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-		   }else {
-		     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
-		   }
-		  }
-  </script>
-	<script>
-		function deleteCategory(id) {
-			var selectedOptionId = $("#boardTypeId option:selected").val();
-			$.ajax({
-				type: "DELETE",
-				url: "/api/category/" + id,
-			}).done((response) => {
-				location.href = '/admin/adminCategory/' + selectedOptionId;
-			}).fail(function(error){
-				alert("요청 실패");
-			});
-		}
-	</script>
-</body>
-</html>
+		<script>			
+		       $(document).ready(function() {
+		    	   $(".qnaList--btn").on("click", function() {
+		   	        $.ajax({
+		                   type: "get",
+		                   url: "/admin/api/qnaList?proceed=" + $(this).val(),
+		                   contentType: "application/json; charset=utf-8"
+			        }).done((response) => {
+			        	$(".qna--table").remove();
+			        	let qnaNode;	        	
+			        	
+			        	for(i=0; i < response.length; i++){ 	        		
+			        		 let createdAt = response[i].createdAt;
+			        		 let time = createdAt.replace('T', " ").substring(0, 16);
+			        		 let proceed = response[i].proceed;
+			        		 if(proceed == 0){
+			        			 proceed = "미처리";
+			        		 }else{
+			        			 proceed = "처리";
+			        		 }				        		 
+			        		 
+			        		 qnaNode += `<tr class="qna--table">
+				        		 <td class="qna--table">\${response[i].categoryName}</td>
+				        		 <td class="qna--table"><a href="/admin/question/\${response[i].id}">\${response[i].title}</td>
+				        		 <td class="qna--table">\${response[i].userId}</td>
+				        		 <td class="qna--table">\${time}</td>					       			 
+				        		 <td class="qna--table">\${proceed}</td>		        		 
+				        		 </tr>
+				        		 `;	   
+			        	}        		 
+						 $("#qnaListBody").append(qnaNode);
+						 
+			        } ).fail((error) => {
+			        	console.log(error);
+			        });
+		   	      });
+		   	   });   
+		    	   
+			</script>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
