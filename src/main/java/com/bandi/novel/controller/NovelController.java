@@ -100,7 +100,9 @@ public class NovelController {
 	@GetMapping("/section/registration/{novelId}")
 	public String getSectionRegistration(Model model, @PathVariable Integer novelId) {
 
+		Integer serviceTypeId = novelService.selectServiceTypeByNovelId(novelId);
 		model.addAttribute("novelId", novelId);
+		model.addAttribute("serviceTypeId", serviceTypeId);
 
 		return "/novel/sectionRegistrationForm";
 	}
