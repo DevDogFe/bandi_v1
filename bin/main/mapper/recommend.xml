@@ -11,7 +11,7 @@
 		ON uf.novel_id = n.id
 		INNER JOIN
 		(
-		SELECT n.genre_id, g.name, count(*) AS count
+		SELECT n.genre_id, g.name AS genre_name, count(*) AS count
 		FROM novel_tb AS n
 		LEFT JOIN genre_tb AS g
 		ON n.genre_id = g.id

@@ -68,24 +68,7 @@ public class AdminController {
 		return "/admin/questionList";
 	}
 
-	/**
-	 * 비동기 통신 처리
-	 * 
-	 * @return 질문 리스트 (전체)조회
-	 */
-	@GetMapping("/api/qnaList")
-	@ResponseBody
-	public List<Question> list(String proceed) {
 
-		List<Question> questionList = null;
-		if (proceed.equals("-1") || proceed.equals("")) {
-			questionList = adminService.selectAllQuestionList();
-		} else {
-			// 데이터 타입 변경
-			questionList = adminService.selectIncompleteQuestionList(Integer.parseInt(proceed));
-		}
-		return questionList;
-	}
 
 	/**
 	 * @param id
