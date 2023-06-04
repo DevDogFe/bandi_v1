@@ -12,17 +12,17 @@ import com.bandi.novel.model.Question;
 @Mapper
 public interface QuestionRepository {
 
-	public List<QnaDto> findAllQna();	
+	public List<QnaDto> selectAllQna();	
 	
-	public List<Question> findAllQuestion();
+	public List<Question> selectAllQuestion();
 	
-	public List<Question> findQnaByUserId(Integer userId);
+	public List<Question> selectQnaByUserId(Integer userId);
 	
-	public List<Question> findByProceed(Integer proceed);
+	public List<Question> selectByProceed(Integer proceed);
 
-	public int insert(Question question);
+	public int insertQuestion(Question question);
 
-	public Question findById(Integer id);
+	public Question selectById(Integer id);
 
 	public int updateById(QuestionUpdateDto questionUpdateDto);
 
@@ -30,6 +30,6 @@ public interface QuestionRepository {
 	
 	public int updateProceedById(Question question);
 	
-	public List<QnaDto> findByKeyword(QnaSearchDto qnaSearchDto);
+	public List<QnaDto> selectByKeyword(QnaSearchDto qnaSearchDto);
 
 }

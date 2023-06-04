@@ -10,13 +10,13 @@ import com.bandi.novel.model.FaqCategory;
 @Mapper
 public interface FaqRepository {
 
-	public List<FaqCategory> findCategoryList();
+	public List<FaqCategory> selectCategoryList();
 
-	public List<Faq> findAll();
+	public List<Faq> selectAll();
 
-	public List<Faq> findByCategoryId(Integer id);
+	public List<Faq> selectByCategoryId(Integer id);
 
-	public int insert(Faq faq);
+	public int insertFaq(Faq faq);
 
 	public int updateFaqById(Integer id);
 
@@ -25,6 +25,6 @@ public interface FaqRepository {
 	
 	public int deleteFaq(List<Integer> id);
 	
-	public Faq findById(Integer id);
+	public Faq selectById(Integer id);
 
 }

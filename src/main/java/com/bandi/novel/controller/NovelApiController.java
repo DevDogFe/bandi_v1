@@ -37,37 +37,36 @@ public class NovelApiController {
 
 	// 즐겨찾기 해제
 	@DeleteMapping("/api/unfavorite/{novelId}")
-	public ResponseDto<Boolean> unfavoriteProc(@PathVariable Integer novelId) {
+	public ResponseDto<Integer> unfavoriteProc(@PathVariable Integer novelId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		userFavoriteService.deleteUserFavorite(principal.getId(), novelId);
-		return new ResponseDto<Boolean>(200, "20000", Define.REQUEST_SUCCESS, "20000", true);
+		ResponseDto<Integer> response = userFavoriteService.deleteUserFavorite(principal.getId(), novelId);
+		return response;
 
 	}
 
 	// 즐겨찾기 등록
 	@PostMapping("/api/favorite/{novelId}")
-	public ResponseDto<Boolean> favoriteProc(@PathVariable Integer novelId) {
+	public ResponseDto<Integer> favoriteProc(@PathVariable Integer novelId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		userFavoriteService.insertUserFavorite(principal.getId(), novelId);
-		return new ResponseDto<Boolean>(200, "20000", Define.REQUEST_SUCCESS, "20000", true);
+		ResponseDto<Integer> response = userFavoriteService.insertUserFavorite(principal.getId(), novelId);
+		return response;
 
 	}
 
 	// 댓글 삭제
 	@DeleteMapping("/api/reply/{replyId}")
-	public ResponseDto<Boolean> deleteNovelReplyProc(@PathVariable Integer replyId) {
-		novelReplyService.deleteNovelReplyById(replyId);
-		return new ResponseDto<Boolean>(200, "20000", Define.REQUEST_SUCCESS, "20000", true);
+	public ResponseDto<Integer> deleteNovelReplyProc(@PathVariable Integer replyId) {
+		ResponseDto<Integer> response = novelReplyService.deleteNovelReplyById(replyId);
+		return response;
 	}
 
 	// 별점 등록
 	@PostMapping("/api/score")
-	public ResponseDto<?> scoreSection(@RequestBody Score score) {
+	public ResponseDto<String> scoreSection(@RequestBody Score score) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		score.setUserId(principal.getId());
-		scoreService.scoreSection(score);
-		System.out.println(score);
-		return new ResponseDto<Score>(200, "200000", "ok", "200000", score);
+		ResponseDto<String> response = scoreService.scoreSection(score);
+		return response;
 	}
 	
 	

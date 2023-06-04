@@ -1,7 +1,5 @@
 package com.bandi.novel.repository;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
@@ -10,15 +8,11 @@ import com.bandi.novel.model.Answer;
 @Mapper
 public interface AnswerRepository {
 
-	public List<Answer> findAll();
+	public int insertAnswer(Answer answer);
 
-	public List<Answer> findByUserId(Integer userId);
+	public Answer selectByQuestionId(Integer questionId);
 
-	public int insert(Answer answer);
-
-	public Answer findByQuestionId(Integer questionId);
-
-	public Answer findById(Integer id);
+	public Answer selectById(Integer id);
 
 	public int updateByQuestionId(AnswerUpdateDto answerUpdateDto);
 

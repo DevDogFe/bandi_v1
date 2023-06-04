@@ -3,18 +3,18 @@
 
 <mapper namespace="com.bandi.novel.repository.FaqRepository">
 
-	<select id="findCategoryList" resultType="com.bandi.novel.model.FaqCategory">
+	<select id="selectCategoryList" resultType="com.bandi.novel.model.FaqCategory">
 		select * from faq_category_tb order by id
 	</select>
 
-	<select id="findAll" resultType="com.bandi.novel.model.Faq">
+	<select id="selectAll" resultType="com.bandi.novel.model.Faq">
 		select f.*, fc.category_name
 		from faq_tb AS f
 		inner join faq_category_tb AS fc
 		on f.faq_category_id = fc.id
 	</select>
 
-	<select id="findByCategoryId" resultType="com.bandi.novel.model.Faq">
+	<select id="selectByCategoryId" resultType="com.bandi.novel.model.Faq">
 		select f.*, fc.category_name
 		from faq_tb AS f
 		inner join faq_category_tb AS fc
@@ -22,7 +22,7 @@
 		where faq_category_id = #{categoryId}
 	</select>
 
-	<insert id="insert">
+	<insert id="insertFaq">
 		insert into faq_tb(faq_category_id, question, answer)
 		values(#{faqCategoryId}, #{question}, #{answer})
 	</insert>
@@ -41,7 +41,7 @@
 		where id = #{id}
 	</update>
 
-	<select id="findById" resultType="com.bandi.novel.model.Faq">
+	<select id="selectById" resultType="com.bandi.novel.model.Faq">
 		select f.*, fc.category_name
 		from faq_tb as f
 		INNER join faq_category_tb as fc

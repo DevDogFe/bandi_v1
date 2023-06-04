@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.service.BoardReplyService;
 import com.bandi.novel.service.BoardService;
 
@@ -19,16 +20,16 @@ public class BoardApiController {
 	
 	// 댓글 삭제
 	@DeleteMapping("/api/deletereply/{id}")
-	public Integer deleteReplyProc(@PathVariable Integer id) {
-		int resultRow = boardReplyService.deleteBoardReplyById(id);
-		return resultRow;
+	public ResponseDto<Integer> deleteReplyProc(@PathVariable Integer id) {
+		ResponseDto<Integer> response = boardReplyService.deleteBoardReplyById(id);
+		return response;
 	}
 	
 	// 파일 삭제
 	@DeleteMapping("/api/deletefile/{id}")
-	public Integer deleteFileProc(@PathVariable Integer id) {
-		int resultRow = boardService.deleteFile(id);
-		return resultRow;
+	public ResponseDto<Integer> deleteFileProc(@PathVariable Integer id) {
+		ResponseDto<Integer> response = boardService.deleteFile(id);
+		return response;
 	}
 	
 }

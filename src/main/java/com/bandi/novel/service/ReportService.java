@@ -33,8 +33,8 @@ public class ReportService {
 	// 신고 등록
 	@Transactional
 	public void createReport(Report report) {
-		int resultRowCount = reportRepository.insert(report);
-		if(resultRowCount != 1) {
+		int result = reportRepository.insert(report);
+		if(result != 1) {
 			throw new CustomRestfulException("요청을 처리할 수 없습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

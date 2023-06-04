@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.UserFavorite;
 import com.bandi.novel.repository.UserFavoriteRepository;
+import com.bandi.novel.utils.Define;
 
 @Service
 public class UserFavoriteService {
@@ -36,11 +38,13 @@ public class UserFavoriteService {
 	 * @param novelId
 	 */
 	@Transactional
-	public void insertUserFavorite(Integer userId, Integer novelId) {
+	public ResponseDto<Integer> insertUserFavorite(Integer userId, Integer novelId) {
 		int result = userFavoriteRepository.insert(UserFavorite.builder().userId(userId).novelId(novelId).build());
 		if(result != 1) {
-			throw new CustomRestfulException("요청을 처리하지 못했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
 	
 	/**
@@ -49,11 +53,12 @@ public class UserFavoriteService {
 	 * @param novelId
 	 */
 	@Transactional
-	public void deleteUserFavorite(Integer userId, Integer novelId) {
+	public ResponseDto<Integer> deleteUserFavorite(Integer userId, Integer novelId) {
 		int result = userFavoriteRepository.delete(UserFavorite.builder().userId(userId).novelId(novelId).build());
 		if(result != 1) {
-			throw new CustomRestfulException("요청을 처리하지 못했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
 	
 	/**

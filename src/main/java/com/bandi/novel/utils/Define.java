@@ -9,8 +9,9 @@ public class Define {
 	public final static String UPLOAD_DIRECTORY = "C:\\bandi\\upload";
 	
 	public final static String REQUEST_FAIL = "요청을 처리하지 못했습니다.";
-	
 	public final static String REQUEST_SUCCESS = "요청을 정상적으로 처리하였습니다.";
+	
+	public final static String UNAUTHED = "권한이 없습니다.";
 	
 	public final static String BUY = "소설구매";
 	public final static String RENT = "소설대여";

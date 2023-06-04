@@ -2,7 +2,6 @@ package com.bandi.novel.controller;
 
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +40,6 @@ public class ReportController {
 	// 신고페이지
 	@GetMapping("/reportPopup/{boardId}")
 	public String getReport(Model model, @PathVariable Integer boardId) {
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<ReportCategory> reportCategory = reportService.selectReportCategory();
 		model.addAttribute("reportCategory", reportCategory);
 		model.addAttribute(boardId);
@@ -62,7 +60,6 @@ public class ReportController {
 	// 신고 리스트
 	@GetMapping("/reportList")
 	public String getReportList(Model model) {
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<AdminReportDto> reportList = reportService.selectReport();
 		System.out.println(reportList.toString());
 		model.addAttribute("reportList", reportList);
@@ -72,7 +69,6 @@ public class ReportController {
 	// 신고 상세보기
 	@GetMapping("/reportDetail/{id}")
 	public String getReportDetail(@PathVariable Integer id, Model model, HttpServletRequest request, HttpServletResponse response) {
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		Report report = reportService.selectReportDetailById(id);
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(report.getBoardId());
 		List<BoardFile> fileList = boardService.selectFileList(id);

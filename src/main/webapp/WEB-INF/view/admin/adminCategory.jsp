@@ -166,18 +166,39 @@
 				</ul>
 			</div>
 		</div>
-		<script>
-			function deleteCategory(id) {
-				var selectedOptionId = $("#boardTypeId option:selected").val();
-				$.ajax({
-					type: "DELETE",
-					url: "/api/category/" + id,
-				}).done(function(response){
-					location.href = '/admin/adminCategory/' + selectedOptionId;
-				}).fail(function(error){
-					alert("요청 실패");
-				});
-			}
-		</script>
-	</footer>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	</section>
+	<script>
+		  let sidebar = document.querySelector(".sidebar");
+		  let closeBtn = document.querySelector("#btn");
+		  let searchBtn = document.querySelector(".bx-search");
+		  closeBtn.addEventListener("click", ()=>{
+		    sidebar.classList.toggle("open");
+		    menuBtnChange();
+		  });
+		  searchBtn.addEventListener("click", ()=>{ 
+		    sidebar.classList.toggle("open");
+		    menuBtnChange(); 
+		  });
+		  function menuBtnChange() {
+		   if(sidebar.classList.contains("open")){
+		     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+		   }else {
+		     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
+		   }
+		  }
+  </script>
+	<script>
+		function deleteCategory(id) {
+			var selectedOptionId = $("#boardTypeId option:selected").val();
+			$.ajax({
+				type: "DELETE",
+				url: "/api/category/" + id,
+			}).done((response) => {
+				location.href = '/admin/adminCategory/' + selectedOptionId;
+			}).fail(function(error){
+				alert("요청 실패");
+			});
+		}
+	</script>
+</body>
+</html>

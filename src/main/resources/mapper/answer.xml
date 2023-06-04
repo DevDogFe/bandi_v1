@@ -3,20 +3,20 @@
 
 <mapper namespace="com.bandi.novel.repository.AnswerRepository">
 
-	<select id="findAll" resultType="com.bandi.novel.model.Answer">
+	<select id="selectAll" resultType="com.bandi.novel.model.Answer">
 		select * from answer_tb
 	</select>
 
-	<insert id="insert">
+	<insert id="insertAnswer">
 		insert into answer_tb(user_id, content, question_id)
 		VALUES ( #{userId}, #{content}, #{questionId})
 	</insert>
 
-	<select id="findByQuestionId" resultType="com.bandi.novel.model.Answer">
+	<select id="selectByQuestionId" resultType="com.bandi.novel.model.Answer">
 		select * from answer_tb where question_id = #{questionId}
 	</select>
 
-	<select id="findById" resultType="com.bandi.novel.model.Answer">
+	<select id="selectById" resultType="com.bandi.novel.model.Answer">
 		select * from answer_tb where id = #{id}
 	</select>
 

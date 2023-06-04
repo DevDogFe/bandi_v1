@@ -12,7 +12,7 @@ import com.bandi.novel.dto.BoardSearchDto;
 public interface BoardRepository {
 	
 	// 게시물 등록
-	public int insert(BoardDto boardDto);
+	public int insertBoard(BoardDto boardDto);
 	// 게시판 종류 별 게시물 조회
 	public List<BoardDto> selectBoardListByBoardTypeId(Integer boardTypeId);
 	// 게시물 상세보기

@@ -3,6 +3,7 @@ package com.bandi.novel.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,9 @@ import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelSearchDto;
+import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.dto.response.SectionDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.Novel;
 import com.bandi.novel.model.NovelSection;
@@ -22,6 +25,7 @@ import com.bandi.novel.repository.GenreRepository;
 import com.bandi.novel.repository.NovelRepository;
 import com.bandi.novel.repository.NovelSectionRepository;
 import com.bandi.novel.repository.ServiceTypeRepository;
+import com.bandi.novel.utils.Define;
 
 /**
  * 소설 관련 서비스
@@ -80,7 +84,7 @@ public class NovelService {
 		}
 
 		if (result != 1) {
-			// 던지기
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -131,35 +135,37 @@ public class NovelService {
 
 	// 전체 소설 검색(관리자 페이지에서 사용함)
 	@Transactional
-	public List<NovelSearchDto> selectNovelListBySearch(String search) {
+	public ResponseDto<List<NovelSearchDto>> selectNovelListBySearch(String search) {
+		
+		List<NovelSearchDto> list = novelRepository.selectNovelListBySearch(search);
 
-		return novelRepository.selectNovelListBySearch(search);
+		return new ResponseDto<List<NovelSearchDto>>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, list);
 	}
 
 	// 소설 서비스 타입 변경(관리자 페이지에서 사용함)
 	@Transactional
-	public int updateNovelListBySearch(adminNovelUpdateFormDto dto) {
+	public ResponseDto<Integer> updateNovelListBySearch(adminNovelUpdateFormDto dto) {
 
 		int result = novelRepository.updateNovelServiceType(dto);
 
 		if (result != 1) {
-			System.out.println("업데이트 실패");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return result;
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
 
 	// 소설 삭제(관리자 페이지에서 사용함)
 	@Transactional
-	public int deleteNovel(Integer id) {
+	public ResponseDto<Integer> deleteNovel(Integer id) {
 		
 		int result = novelRepository.deleteNovelById(id);
 
 		if (result != 1) {
-			System.out.println("삭제 실패");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return result;
+		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
 
 	/**
@@ -172,7 +178,7 @@ public class NovelService {
 		int result = novelSectionRepository.insert(novelSection);
 
 		if (result != 1) {
-			throw new IllegalArgumentException("요청을 처리하지 못함.");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

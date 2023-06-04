@@ -208,7 +208,7 @@ public class PayService {
 		accountRepository.insertRefundHistory(Account.builder().refund(amount).memo(Define.REFUND).build());
 		
 		if(updateResult != 1 || deleteResult != 1) {
-			System.out.println("환불 처리 안됨 :" + updateResult + deleteResult);
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

@@ -170,8 +170,6 @@ public class ContestController {
 	@GetMapping("/novel/list")
 	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, 
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
-
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		
 		if("".equals(search)) {
 			search = null;

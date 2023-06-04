@@ -17,6 +17,7 @@ import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.AuthKey;
 import com.bandi.novel.model.User;
 import com.bandi.novel.repository.AuthRepository;
+import com.bandi.novel.repository.UserGoldRepository;
 import com.bandi.novel.repository.UserRepository;
 import com.bandi.novel.utils.Define;
 
@@ -31,6 +32,8 @@ public class UserService {
 	private AuthRepository authRepository;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private UserGoldRepository userGoldRepository;
 
 	/**
 	 * 일반유저 로그인
@@ -42,13 +45,13 @@ public class UserService {
 	public ResponseDto<User> loginByUsernameAndPassword(LoginDto loginDto) {
 		User userEntity = userRepository.selectByUsername(loginDto.getUsername());
 		if (userEntity == null) {
-			return new ResponseDto<User>(500, "50000", "아이디가 없습니다.", "50000", null);
+			return new ResponseDto<User>(HttpStatus.INTERNAL_SERVER_ERROR, "아이디가 없습니다.", false, null);
 		}
 		if (!passwordEncoder.matches(loginDto.getPassword(), userEntity.getPassword())) {
-			return new ResponseDto<User>(500, "50000", "비밀번호가 틀렸습니다.", "50000", null);
+			return new ResponseDto<User>(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호가 틀렸습니다.", false, null);
 		}
 
-		return new ResponseDto<User>(200, "20000", "ok", "20000", userEntity);
+		return new ResponseDto<User>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, userEntity);
 	}
 
 	/**
@@ -86,6 +89,12 @@ public class UserService {
 		if (result != 1) {
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		User userEntity = userRepository.selectByUsername(joinDto.getUsername());
+		result = userGoldRepository.insertByUserId(userEntity.getId());
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	/**
@@ -129,9 +138,10 @@ public class UserService {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 이메일 중복체크용
+	 * 
 	 * @param email
 	 * @return
 	 */
@@ -146,13 +156,14 @@ public class UserService {
 
 	/**
 	 * 닉네임 중복체크용
+	 * 
 	 * @param nickName
 	 * @return
 	 */
 	@Transactional
 	public Boolean checkNickName(String nickName) {
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		if(principal == null) {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if (principal == null) {
 			User userEntity = userRepository.selectByNickName(nickName);
 			if (userEntity != null) {
 				return true;
@@ -163,7 +174,7 @@ public class UserService {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -178,10 +189,10 @@ public class UserService {
 
 		User userEntity = userRepository.selectByUsername(findPwdDto.getUsername());
 		if (userEntity == null) {
-			System.out.println("아이디가 존재하지 않습니다");
+			throw new CustomRestfulException("아이디가 존재하지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		if (!userEntity.getEmail().equals(findPwdDto.getEmail())) {
-			System.out.println("잘못된 이메일입니다");
+			throw new CustomRestfulException("잘못된 이메일입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return userEntity;
 	}
@@ -196,10 +207,10 @@ public class UserService {
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		int resultRowCount = userRepository.updatePwd(user);
+		int result = userRepository.updatePwd(user);
 
-		if (resultRowCount != 1) {
-			System.out.println("비밀번호 임시변경실패");
+		if (result != 1) {
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -249,7 +260,7 @@ public class UserService {
 		}
 
 	}
-	
+
 	@Transactional
 	public User loginByNaver(User user) {
 

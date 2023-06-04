@@ -63,7 +63,7 @@ public class AdminController {
 			Model model) {
 
 		List<Question> questionList = null;
-		questionList = adminService.readAllQuestionList();
+		questionList = adminService.selectAllQuestionList();
 		model.addAttribute("questionList", questionList);
 		return "/admin/questionList";
 	}
@@ -79,10 +79,10 @@ public class AdminController {
 
 		List<Question> questionList = null;
 		if (proceed.equals("-1") || proceed.equals("")) {
-			questionList = adminService.readAllQuestionList();
+			questionList = adminService.selectAllQuestionList();
 		} else {
 			// 데이터 타입 변경
-			questionList = adminService.readIncompleteQuestionList(Integer.parseInt(proceed));
+			questionList = adminService.selectIncompleteQuestionList(Integer.parseInt(proceed));
 		}
 		return questionList;
 	}
@@ -95,9 +95,9 @@ public class AdminController {
 	@GetMapping("/question/{id}")
 	public String getQuestion(@PathVariable Integer id, Model model) {
 
-		Question question = qnaService.readQuestionById(id);
+		Question question = qnaService.selectQuestionById(id);
 		model.addAttribute("question", question);
-		Answer answer = qnaService.readAnswerByQuestionId(id);
+		Answer answer = qnaService.selectAnswerByQuestionId(id);
 		if (answer == null) {
 			model.addAttribute("answer", null);
 		} else {
@@ -129,8 +129,8 @@ public class AdminController {
 	@GetMapping("/answer/update/{questionId}")
 	public String getUpdateAnswer(@PathVariable Integer questionId, Model model) {
 
-		Question question = qnaService.readQuestionById(questionId);
-		Answer answer = qnaService.readAnswerByQuestionId(questionId);
+		Question question = qnaService.selectQuestionById(questionId);
+		Answer answer = qnaService.selectAnswerByQuestionId(questionId);
 		model.addAttribute("question", question);
 		model.addAttribute("answer", answer);
 
@@ -172,7 +172,7 @@ public class AdminController {
 	@GetMapping("/applicationList")
 	public String getApplicationList(Model model) {
 
-		List<Application> applicationList = applicationService.readAllApplication();
+		List<Application> applicationList = applicationService.selectAllApplication();
 		model.addAttribute("applicationList", applicationList);
 
 		return "/admin/applicationList";
@@ -186,7 +186,7 @@ public class AdminController {
 	@GetMapping("/applicationDetail/{id}")
 	public String getApplicationdetail(@PathVariable Integer id, Model model) {
 
-		Application application = applicationService.readApplicationById(id);
+		Application application = applicationService.selectApplicationById(id);
 		model.addAttribute("application", application);
 
 		return "/admin/applicationDetail";
@@ -250,25 +250,6 @@ public class AdminController {
 		return "/admin/adminUserRole";
 	}
 
-	/**
-	 * FAQ 전체조회
-	 * @param model
-	 * @return
-	 */
-	@GetMapping({"/faqList/{categoryId}", "/faqList"})
-	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId) {
-		List<Faq> faqList = null;
-		if (categoryId == null) {
-			faqList = faqService.readAllFaqList();			
-		}else {
-			faqList = faqService.readFaqList(categoryId);			
-		}		
-		 List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
-		 model.addAttribute("faqList", faqList);
-		 model.addAttribute("faqCategoryList", faqCategoryList);
-		 
-		return "/admin/faqList";
-	}
 	
 	/**
 	 * 관리자 페이지 대시보드
@@ -293,7 +274,7 @@ public class AdminController {
 	@GetMapping("/faq")
 	public String createFaq(Model model) {
 		
-		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
 		model.addAttribute("faqCategoryList", faqCategoryList);
 		
 		return "/admin/faqWrite";
@@ -313,7 +294,7 @@ public class AdminController {
 	public String updateFaq(@PathVariable Integer id, Model model) {
 		
 		Faq faq = adminService.readFaq(id);		
-		List<FaqCategory> faqCategoryList = faqService.readFaqCategory();
+		List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
 		model.addAttribute("faq", faq);
 		model.addAttribute("faqCategoryList", faqCategoryList);
 		

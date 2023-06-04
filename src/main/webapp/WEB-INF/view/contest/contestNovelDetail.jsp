@@ -148,8 +148,6 @@
 					type: "DELETE",
 					url: "/api/unfavorite/" + $("#novelId").val()
 				}).done((response) => {
-					console.log(response);
-					console.log(typeof response);
 					location.href='/contest/novel/detail/' + $("#novelId").val();
 				}).fail((error) => {
 					console.log(error);
@@ -162,8 +160,6 @@
 					type: "POST",
 					url: "/api/favorite/" + $("#novelId").val()
 				}).done((response) => {
-					console.log(response);
-					console.log(typeof response);
 					location.href='/contest/novel/detail/' + $("#novelId").val();
 				}).fail((error) => {
 					console.log(error);

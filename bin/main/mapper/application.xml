@@ -4,7 +4,7 @@
 <mapper namespace="com.bandi.novel.repository.ApplicationRepository">
 
 	<!--전체조회 (관리자) -->
-	<select id="findAll"  resultType="com.bandi.novel.model.Application">
+	<select id="selectAll"  resultType="com.bandi.novel.model.Application">
 		select a.*, u.username
 		from application_tb as a 
 		inner join user_tb as u	
@@ -12,12 +12,12 @@
 	</select>
 
 	<!-- 마이페이지 -->
-	<select id="findByUserId" resultType="com.bandi.novel.model.Application">
+	<select id="selectByUserId" resultType="com.bandi.novel.model.Application">
 		select * from application_tb
 		where user_id = #{userId}
 	</select>
 	
-	<select id="findById"  resultType="com.bandi.novel.model.Application">
+	<select id="selectById"  resultType="com.bandi.novel.model.Application">
 		select a.*, u.username
 		from application_tb as a
 		inner join user_tb as u	
@@ -25,7 +25,7 @@
 		where a.id = #{id}
 	</select>
 	
-	<insert id="insert">												
+	<insert id="insertApplication">												
 		insert into application_tb (user_id, tel, title, content, origin_filename, upload_filename)
 		values (#{userId}, #{tel}, #{title}, #{content}, #{originFilename}, #{uploadFilename})
 	</insert>

@@ -179,13 +179,12 @@ ul {
 	</section>
 	<script type="text/javascript">
 	
+	// 댓글 삭제
 	function deleteReply(replyId,novelId,sectionId) {
 		$.ajax({
 			type: "DELETE",
 			url: "/api/reply/" + replyId
 		}).done((response) => {
-			console.log(response);
-			console.log(typeof response);
 			location.href='/section/read/'+novelId+'/' + sectionId;
 		}).fail((error) => {
 			console.log(error);

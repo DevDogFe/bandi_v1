@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bandi.novel.dto.ApplicationFromDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.service.ApplicationService;
 import com.bandi.novel.utils.Define;
@@ -30,6 +32,7 @@ public class ApplicationController {
 
 	@Autowired
 	private ApplicationService applicationService;
+
 	/**
 	 * @return 연재문의 내역
 	 */
@@ -37,9 +40,10 @@ public class ApplicationController {
 	public String getList(Model model) {
 		/*
 		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		 * List<Application> applyList = applicationService.readApplicationByUserId(principal.getId());
+		 * List<Application> applyList =
+		 * applicationService.readApplicationByUserId(principal.getId());
 		 */
-		List<Application> application = applicationService.readApplicationByUserId(1);
+		List<Application> application = applicationService.selectApplicationByUserId(1);
 		model.addAttribute("application", application);
 
 		return "/cs/applicationList";
@@ -49,7 +53,7 @@ public class ApplicationController {
 	public String getApplicationDetail(@PathVariable Integer id, Model model) {
 
 		// User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		Application application = applicationService.readApplicationById(id);
+		Application application = applicationService.selectApplicationById(id);
 		model.addAttribute("application", application);
 
 		return "/cs/applicationDetail";
@@ -72,7 +76,7 @@ public class ApplicationController {
 	 */
 
 	@PostMapping("/write")
-	public String ApplicationProc(ApplicationFromDto applicationFromDto) {
+	public String applicationProc(ApplicationFromDto applicationFromDto) {
 
 		/*
 		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -82,14 +86,10 @@ public class ApplicationController {
 		// 파일 업로드
 		MultipartFile file = applicationFromDto.getFile();
 		if (file.isEmpty() == false) {
-			System.out.println("!111111111");
 			if (file.getSize() > Define.MAX_FILE_SIZE) {
-				// throw new CustomRestfullException("파일 크기는 20MB이상 클 수 없습니다",
-				// HttpStatus.BAD_REQUEST);
-				System.out.println("파일크기안됨");
+				throw new CustomRestfulException("파일 크기제한 (20MB)", HttpStatus.BAD_REQUEST);
 			}
 			try {
-				System.out.println("2222222222222");
 				String saveDirectory = Define.UPLOAD_DIRECTORY;
 				File dir = new File(saveDirectory);
 				if (dir.exists() == false) {
@@ -102,15 +102,13 @@ public class ApplicationController {
 				file.transferTo(destination);
 				applicationFromDto.setOriginFilename(file.getOriginalFilename());
 				applicationFromDto.setUploadFilename(fileName);
-				System.out.println(fileName + " / " + file.getOriginalFilename());
 
 			} catch (Exception e) {
 				e.getStackTrace();
 			}
 		}
 		applicationFromDto.setUserId(1);
-		System.out.println(applicationFromDto);
-		applicationService.createApplication(applicationFromDto);
+		applicationService.insertApplication(applicationFromDto);
 		return "redirect:/application/list";
 	}
 

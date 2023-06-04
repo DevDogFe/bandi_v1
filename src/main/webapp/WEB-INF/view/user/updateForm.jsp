@@ -8,7 +8,7 @@
 	<h1>정보 수정</h1>
 	<form action="/user" method="post">
 		<c:choose>
-			<c:when test="${principal.external }">
+			<c:when test="${principal.external != null }">
 				<input type="hidden" class="form-control" name="beforePassword" required value="111111">
 				<input type="hidden" class="form-control" name="password" required value="111111">
 				<input type="hidden" class="form-control" name="passwordCheck" required value="111111">
