@@ -8,6 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반디</title>
 <script src="/assets/js/jquery.min.js"></script>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
+<!-- include summernote css/js -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="/assets/css/style.css" rel="stylesheet">
 <!-- jquery-3.5.1이 위에 있어야 작동 -->
 <!-- Slick.js -->
 
@@ -92,27 +99,35 @@
 
 			<section>
 				<form action="/admin/faq" method="post">
-					<select name="faqCategoryId">
-						<c:forEach var="category" items="${faqCategoryList}">
-							<c:choose>
-								<c:when test="${category.id == faq.faqCategoryId}">
-									<option selected="selected" value="${category.id}">${category.categoryName}</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${category.id}">${category.categoryName}</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select> <br> <label for="question"> 질문 : <input type="text" id="question" name="question" value="${faq.question}">
-					</label> <br> <label for="answer"> 답 : <input type="text" id="answer" name="answer" value="${faq.answer}">
-					</label>
-					<button>수정</button>
+					<div>
+						<!-- 질문 -->
+						<div>
+							<!-- <label for="question"> 질문 :</label> -->
+							<div>
+								<input type="text" class="qna--title" name="question" value="${faq.question}">
+							</div>
+							<div>
+								<select name="faqCategoryId" class="qna--category">
+									<c:forEach var="category" items="${faqCategoryList}">
+										<c:choose>
+											<c:when test="${category.id == faq.faqCategoryId}">
+												<option selected="selected" value="${category.id}">${category.categoryName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${category.id}">${category.categoryName}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select>
+							</div>
+							<div>
+								<button type="submit">수정</button>
+							</div>
+						</div>
+					</div>
+					<textarea id="summernote" name="answer">${faq.answer}</textarea>
 				</form>
 			</section>
-
-
-
-
 		</div>
 	</div>
 	<footer>
@@ -149,7 +164,14 @@
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript">
+			$('#summernote').summernote({
+				height : 500,
+				disableResizeEditor : true,
+			});
+		</script>
 	</footer>
+
 
 </body>
 </html>

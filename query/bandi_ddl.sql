@@ -136,7 +136,7 @@ CREATE TABLE question_tb(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
+    content LONGTEXT NOT NULL,
     faq_category_id INT NOT NULL,
     proceed INT NOT NULL DEFAULT 0 COMMENT '답장여부 확인안하면 0 확인하면 1',
     created_at TIMESTAMP NOT NULL DEFAULT now(),
@@ -172,9 +172,7 @@ CREATE TABLE application_tb(
     user_id INT NOT NULL,
     tel VARCHAR(20) NOT NULL,
     title VARCHAR(50) NOT NULL,
-    content TEXT NOT NULL,
-    origin_filename VARCHAR(150) NOT NULL,
-    upload_filename VARCHAR(150) 	,
+    content LONGTEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
 	FOREIGN KEY(user_id) REFERENCES user_tb(id)
 );

@@ -33,9 +33,30 @@
 
 </head>
 <style>
-.qna--detail--container {
-	margin-left: 10px;
+#qna--list--container{
+	margin-left: 20px; 
 }
+
+.section-title{
+	margin-left: 5px;
+}
+
+.board-detail-wrap{
+	border-bottom: 1px solid #999;
+}
+
+.board-detail{
+	border: none;
+}
+
+#answer--wrap {
+    margin-top: 0;
+    margin-left: -20px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+
+
 </style>
 <body>
 	<div class="container">
@@ -61,8 +82,8 @@
 				</nav>
 			</header>
 		</div>
-		<div class="sectind-flex">
-			<section>
+		<div class="d-flex align-items-start">
+			<section class="d-flex">
 				<div class="sidebar">
 					<div class="logo_content">
 						<div class="logo">
@@ -93,150 +114,78 @@
 				</div>
 			</section>
 
-			<!-- Q&A detail -->	
-			
-			
-			
-			 <section class="one-tab-list">
-				 <div class="qna--detail--container">
-					<!-- 카테고리 -->
-					<div class="section-title-wrap">
-						<h2 class="section-title">${question.categoryName}</h2>
-					</div>
-
-					<!-- detail -->
-					<div class="board-detail">
-						<h3 class="board-title">
-							<span>${question.title}</span>
-						</h3>
-					</div>
-
-					<span class="board-detail-wrap"> <!-- 사용자정보 + 삭제 목록 버튼  +  글 디테일--> <span class="board-info-wrap"> <!-- 사용자정보 + 삭제 목록 버튼 --> <span class="profile-info-wrap"> <!-- 사용자정보 --> <span
-								class="profile-preview-wrap"></span> <span class="info-inner"> <span class="name">${question.username}</span> <span class="date">${question.createdAt()}</span>
-							</span> <!--  --> <span class="btn-right-wrap">
-									<button class="btn-report">삭제</button>
-									<button type="button" class="btn-modify">목록</button>
-							</span>
-						</span> <!--  -->
-						<!-- 글 디테일 -->
-						<span class="board-contents">
-						<span id="_board-contents">
-						${question.content}
-						</span>
-					</span> 
-					</span> 
-					<span class="reaction-wrap"></span>
-					</span> 
-					<!--  -->
-
-					<!-- 답변 -->
-					<div class="answer--detail--form  ">
-						<c:choose> 
- 							<c:when test="${answer == null}">
-								<form action="/admin/answer/${question.id}" method="post">
-									<button>답변등록</button>
-									<textarea rows="10" cols="100" name="content"></textarea>									
-								</form>
-							</c:when> 						
-							<c:otherwise> 
- 	<%-- 							<h4>답변</h4>
-								<ul>
-									<li>${answer.content}</li>
-									<li>${answer.createdAt}</li>
-								</ul>
-								<a href="/admin/answer/update/${question.id}">수정</a>
-								<a href="/admin/answer/delete/${question.id}">삭제</a>  --%>
-								
-													<!-- 카테고리 -->
+			<!-- Q&A detail -->
+			<section class="flex-grow-1" id="qna--list--container">
 				<div class="section-title-wrap">
-						<h2 class="section-title">답 Answer</h2>
-					</div>  
-
-				<!-- detail -->
-					<div class="board-detail">
-						<h3 class="board-title">
-							<span>답</span>
-						</h3> 
-					</div>
-
-					<span class="board-detail-wrap"> 
-					<!-- 사용자정보 + 삭제 목록 버튼  +  글 디테일--> 
-					<span class="board-info-wrap">
-					<!-- 사용자정보 + 삭제 목록 버튼 -->
-					<span class="profile-info-wrap">
-					<!-- 사용자정보 -->
-					<!-- <span class="profile-preview-wrap"></span> -->
-					<span class="info-inner"> 
-					<span class="name">${question.username}</span>
-					<span class="date">${question.createdAt()}</span>
-				    </span> 
-				    <!--  --> 
-				    <span class="btn-right-wrap">
-						<button class="btn-report">수정</button>
-						<button type="button" class="btn-modify">삭제</button>
+					<h2 class="section-title">${question.title}</h2>
+				</div>
+				<div class="board-detail">
+					<h3 class="board-title">
+						<span>${question.categoryName}</span>
+					</h3>
+				</div>
+				<span class="board-detail-wrap">
+				<span class="board-info-wrap">
+				<span class="profile-info-wrap">
+				<span class="profile-preview-wrap"></span> <span class="info-inner"> <span
+								class="name">${question.username}</span> <span class="date">${question.createdAt()}</span>
+						</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”>
+									<button type="button" class="btn-modify">삭제</button>
+							</span> <span class="list-wrap">
+									<button type="submit" class="btn-list">목록</button>
+							</span>
+						</span>
+					</span> <span class="board-contents">
+					<span id="_board-contents"> ${question.content} </span>
 					</span>
-					</span>
-					<!--  -->
-					<!-- 글 디테일 -->
-					<span class="board-contents">
-					<span id="_board-contents">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-					labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-					velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </span>
-					</span> 
-					</span>
-					<span class="reaction-wrap"></span>
-					</span>
+				</span>
+				</span>
+				
+
+		
 								
-								
-								
-								
-								
-								
-														
-							</c:otherwise>
-						</c:choose> 
-						
-						
-					</div>
-
-		 		</div>
- 
-
-
-
-
-
-				<%-- <ul>
-					<li>${question.title}</li>
-					<li>${question.categoryName}</li>
-					<li>${question.username}</li>
-					<li>${question.content}</li>
-					<li>${question.proceed}</li>
-					<li>${question.createdAt()}</li>
-				</ul>
-
+				<span class="board-detail-wrap">
 				<c:choose>
-					<c:when test="${answer == null}">
-						<form action="/admin/answer/${question.id}" method="post">
-							<textarea rows="20" cols="50" name="content"></textarea>
-							<button>답변등록</button>
-						</form>
-					</c:when>
-					<c:otherwise>
-						<h3>답변</h3>
-						<ul>
-							<li>${answer.content}</li>
-							<li>${answer.createdAt}</li>
-						</ul>
-						<a href="/admin/answer/update/${question.id}">수정</a>
-						<a href="/admin/answer/delete/${question.id}">삭제</a>
-					</c:otherwise>
-				</c:choose> --%>
+				<c:when test="${answer == null}">
+				<form action="/admin/answer/${question.id}" method="post">
+					<textarea rows="10" cols="100" name="content"></textarea>
+						<button>답변등록</button>
+				</form>				
+				
+				
 
+				</c:when>
+				
+				<c:otherwise>
+ 				<div class="section-title-wrap" id="answer--wrap">
+					<h2 class="section-title">답</h2>
+				</div>
+
+				<span class="board-info-wrap">				
+				<span class=“btn-right-wrap”>
+				<span class=“modify-wrap”>
+					<button type="button" class="btn-modify">수정</button>
+				</span>
+				<span class="list-wrap">
+					<button type="submit" class="btn-list">삭제</button>
+				</span>
+				</span>				
+				
+				<span class="board-contents">
+				<span id="_board-contents">${answer.content}</span>
+				</span>
+				</span>
+				</c:otherwise>
+			    </c:choose> 
+				
+				
+				</span>		    
 			</section>
-		</div>
+		    </div>		
+<!-- --------------------- -->
+ 		</div>
 	</div>
+	
 	<footer>
 		<div class="inner">
 			<div class="footer-top">

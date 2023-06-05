@@ -33,6 +33,9 @@
 
 </head>
 <style>
+#qna--list--container{
+	margin-left: 20px; 
+}
 </style>
 <body>
 	<div class="container">
@@ -58,8 +61,8 @@
 				</nav>
 			</header>
 		</div>
-		<div class="sectind-flex">
-			<section>
+		<div class="d-flex align-items-start">
+			<section class="d-flex">
 				<div class="sidebar">
 					<div class="logo_content">
 						<div class="logo">
@@ -91,18 +94,40 @@
 			</section>
 
 			<!-- Q&A detail -->
-			<section>
-				<a href="/application/delete/${application.id}">삭제</a>
-				<ul>
-					<li>${application.title}</li>
-					<li>${application.content}</li>
-					<li>${application.uploadFileName}</li>
-					<li>${application.createdAt()}</li>
-				</ul>
+			<section class="flex-grow-1" id="qna--list--container">
+				<div class="section-title-wrap">
+					<h2 class="section-title">${application.title}</h2>
+				</div>
+ 				<div class="board-detail">
+					<h3 class="board-title">
+						<span>${question.categoryName}</span>
+					</h3>
+				</div> 
+				<span class="board-detail-wrap">
+				<span class="board-info-wrap">
+				<span class="profile-info-wrap">
+				<span class="profile-preview-wrap"></span> <span class="info-inner">
+				<span class="name">${application.username}</span>
+				<span class="date">${application.createdAt()}</span>
+				</span>
+				<span class=“btn-right-wrap”>
+				<span class=“modify-wrap”>
+				</span>
+				<span class="list-wrap">
+					<button type="submit" class="btn-list" onclick="location.href='/application/delete/${application.id}'">삭제</button>
+				</span>
+				</span>
+				</span>
+				<span class="board-contents">
+				<span id="_board-contents"> ${application.content} </span>
+				</span>
+				</span>
+				</span>		
+			
 			</section>
-
-
 		</div>
+<!-- --------------------- -->
+ 		</div>
 	</div>
 	<footer>
 		<div class="inner">

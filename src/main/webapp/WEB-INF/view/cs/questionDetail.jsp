@@ -28,6 +28,15 @@
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="/assets/css/board/boardDetail.css" />
 </head>
+<style>
+.btn-modify{
+	right: 30px;
+}
+
+.btn-delete {
+ 	right: 80px;
+}
+</style>
   <body>
     <div class="container">
     	<div class="inner">
@@ -77,13 +86,13 @@
 						<span class=“btn-right-wrap”> 
 							<span class=“modify-wrap”> 
 							<%-- <c:if test="${principalId == question.userId }"> --%>
-									<button type="submit" class="btn-delete" onclick="location.href='/qna/question/update/${question.id}'">수정</button>
-									<button type="button" class="btn-modify" onclick="location.href='/qna/question/delete/${question.id}'">삭제</button>
+						            <button type="submit" class="btn-delete" onclick="location.href='/qna/question/update/${question.id}'">수정</button>
+						            <button type="button" class="btn-modify" onclick="location.href='/qna/question/delete/${question.id}'">삭제</button>
 							<%-- </c:if> --%>
 							</span>
-							<span class="list-wrap">
+							<span class="list-wrap">									
 									<button type="submit" class="btn-list" onclick="location.href='/qna/list'">목록</button>
-							</span>
+							</span> 
 						</span> 
 						</span>
 						<span class="board-contents"> 

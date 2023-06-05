@@ -34,9 +34,7 @@
 	font-style: none;
 }
 
-.qna--button button {
-	
-}
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -51,7 +49,6 @@
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link href="/assets/css/style.css" rel="stylesheet">
-
 </head>
 <body>
 	<div class="container">
@@ -77,55 +74,37 @@
 				</nav>
 			</header>
 			<%-- <%@include file="../layout/header.jsp"%> --%>
-			<form action="/question/update/${question.id}" method="post">
-			    <div class="qna--title-form">
-				<input type="text" class="qna--title" name="title" value="${question.title}" placeholder="  제목을 입력해주세요">
-				
-				<select name="faqCategoryId"  class="qna--category">
-				
-				
-					<option value="0">카테고리</option>
-					<c:forEach var="category" items="${faqCategorylist}">
-						<c:choose>
-							<c:when test="${category.id == question.faqCategoryId}">
-								<option selected="selected" value="${category.id}">${category.categoryName}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${category.id}">${category.categoryName}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
-				</div>
-				<div class="qna--button">
-				<button type="submit"  class="btn btn-outline-primary">수정완료</button>
-				</div>
-				</div>
-				<textarea id="summernote" class="summernote"  name="content">${question.content}</textarea>
 
+			<form action="/qna/question/update/${question.id}" method="post">
+				<div class="qna--header--form">
+
+					<div class="qna--title-form">
+						<input type="text" class="qna--title" name="title" value="${question.title}">
+						<select name="faqCategoryId" class="qna--category">
+							<option value="0">카테고리</option>
+							<c:forEach var="category" items="${faqCategorylist}">
+								<c:choose>
+									<c:when test="${category.id == question.faqCategoryId}">
+										<option selected="selected" value="${category.id}">${category.categoryName}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${category.id}">${category.categoryName}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="qna--button">
+						<button type="submit" class="btn btn-outline-primary">수정완료</button>
+					</div>
+				</div>
+				<textarea id="content" class="summernote" name="content">${question.content}</textarea>
 			</form>
 
-
-
-
-
-
-
 			<script type="text/javascript">
-				$('#summernote').summernote({
-					placeholder : "내용을 입력 해주세요",
-					tabsize : 2,
+				$('.summernote').summernote({
 					height : 500,
-					// 에디터 로딩후 포커스를 맞출지 여부
-					focus : true,
-					lang : 'ko-KR',
-					// 크기 조절 기능 삭제
 					disableResizeEditor : true,
-					callbacks : {
-						onInit : function(c) {
-							c.editable.html('');
-						}
-					}
 				});
 			</script>
 </body>
