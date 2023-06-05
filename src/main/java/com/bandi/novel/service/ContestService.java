@@ -133,9 +133,9 @@ public class ContestService {
 	 * @return 공모전 
 	 */
 	@Transactional
-	public List<ContestNovelDto> selectContestNovelList() {
+	public List<ContestNovelDto> selectContestNovelList(Integer contestId, String sort) {
 		
-		List<ContestNovelDto> contestNovelList = contestNovelRepository.selectContestNovelList();
+		List<ContestNovelDto> contestNovelList = contestNovelRepository.selectContestNovelList(contestId, sort);
 		
 		return contestNovelList;
 	}
@@ -145,13 +145,13 @@ public class ContestService {
 	 * @return 공모전 
 	 */
 	@Transactional
-	public List<ContestNovelDto> selectContestNovelListBySearch(Integer genreId, String search) {
+	public List<ContestNovelDto> selectContestNovelListBySearch(Integer genreId, String search, Integer contestId, String sort) {
 		
 		if(genreId != null || search != null) {
-			return contestNovelRepository.selectContestNovelsByGenreIdAndName(genreId, search);
+			return contestNovelRepository.selectContestNovelsByGenreIdAndName(genreId, search, contestId, sort);
 		}
 		
-		return contestNovelRepository.selectContestNovelList();
+		return contestNovelRepository.selectContestNovelList(contestId, sort);
 	}
 	
 	

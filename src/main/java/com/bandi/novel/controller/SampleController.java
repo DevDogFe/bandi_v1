@@ -324,5 +324,11 @@ public class SampleController {
 	public String getCssNovelDetail() {
 		return "/cssLayout/cssNovelDetail";
 	}
+	
+	@GetMapping("/cssReadSection")
+	public String getCssReadSection() {
+		return "/cssLayout/cssReadSection";
+	}
+	
 }
 	

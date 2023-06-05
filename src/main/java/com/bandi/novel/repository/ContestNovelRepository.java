@@ -14,13 +14,18 @@ import com.bandi.novel.model.ContestNovel;
  */
 @Mapper
 public interface ContestNovelRepository {
-	
-	int insertContestNovel(@Param("novelId")int novelId,@Param("contestId")int contestId);
-	int deleteContestNovelByNovelId(int novelId);
-	
-	ContestNovel selectContestNovelByNovelId(int novelId);
-	List<ContestNovelDto> selectContestNovelList();
-	List<ContestNovel> selectContestNovelListByContestId(int contestId);
+
+	Integer insertContestNovel(@Param("novelId") Integer novelId, @Param("contestId") Integer contestId);
+
+	Integer deleteContestNovelByNovelId(Integer novelId);
+
+	ContestNovel selectContestNovelByNovelId(Integer novelId);
+
+	List<ContestNovelDto> selectContestNovelList(@Param("contestId") Integer countestId, @Param("sort") String sort);
+
+	List<ContestNovel> selectContestNovelListByContestId(Integer contestId);
+
 	// 검색 조회
-	List<ContestNovelDto> selectContestNovelsByGenreIdAndName(@Param("genreId") Integer genreId,@Param("search") String search);
+	List<ContestNovelDto> selectContestNovelsByGenreIdAndName(@Param("genreId") Integer genreId,
+			@Param("search") String search, @Param("contestId") Integer countestId, @Param("sort") String sort);
 }

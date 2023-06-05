@@ -143,7 +143,7 @@ public class NovelController {
 	 */
 	@PostMapping("/section/registration")
 	public String selectionRegistrationProc(NovelSection novelSection) {
-		novelSection.setCurrentPrice(novelSection.getListPrice());
+		novelSection.setRentPrice(novelSection.getListPrice() / 2);
 
 		novelService.insertNovelSelection(novelSection);
 

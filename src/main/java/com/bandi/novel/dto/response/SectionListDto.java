@@ -17,7 +17,7 @@ public class SectionListDto {
 	private Integer favorite;
 	private Integer views;
 	private Integer listPrice;
-	private Integer currentPrice;
+	private Integer rentPrice;
 	private Integer score;
 	
 	public String createdAt() {

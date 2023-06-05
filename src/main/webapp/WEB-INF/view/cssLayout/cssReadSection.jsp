@@ -240,13 +240,12 @@
       				<div>
       					<div class="comments-content">
       						<!-- 댓글 등록 -->
-      						<div class="bg-light comment-form">
+      						<div class="bg-light comment-form p-2">
       							<div class="comment-header ms-1">
       								<h5 class="me-2">댓글</h5><span>11</span>
       							</div>
       							<div class="d-flex flex-row align-items-start">
-      								<img src="/assets/images/main/ai1.jpg" class="rounded-circle" width="40">
-      								<textarea class="form-control ml-1 shadow-none textarea"></textarea>
+      								<textarea class="form-control ml-1 shadow-none textarea" maxlength="255"></textarea>
       							</div>
       							<div class="mt-2 text-right float-end">
       								<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
@@ -263,7 +262,6 @@
       							<div class="col-md-12">
       								<div class="bg-white p-2">
       									<div class="d-flex flex-row user-info">
-      										<img src="/assets/images/main/ai1.jpg" width="40" class="rounded-circle">
       										<div class="d-flex flex-column justify-content-start ml-2">
       											<span class="d-block font-weight-bold name">김경은</span>
       											<span class="date text-black-50">Shared publically - Jan 2021</span>
@@ -274,29 +272,12 @@
       									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks!  Thanks! Thanks! Yeah! I Liked Thanks! Yeah! I Liked</p>
       								</div>
       							</div>
-      							<div class="bg-white">
-      								<div class="d-flex flex-row justify-content-end fs-12">
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-thumbs-o-up"></i>
-      										<span class="ml-1">Like</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-commenting-o"></i>
-      										<span class="ml-1">Comment</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-share"></i>
-      										<span class="ml-1">Share</span>
-      									</div>
-      								</div>
-      							</div>
       						</div>
       						<!--  -->
       						<div class="comment-item">
       							<div class="col-md-12">
       								<div class="bg-white p-2">
       									<div class="d-flex flex-row user-info">
-      										<img src="/assets/images/main/ai2.jpg" width="40" class="rounded-circle">
       										<div class="d-flex flex-column justify-content-start ml-2">
       											<span class="d-block font-weight-bold name">김경은</span>
       											<span class="date text-black-50">Shared publically - Jan 2021</span>
@@ -307,28 +288,11 @@
       									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks!</p>
       								</div>
       							</div>
-      							<div class="bg-white">
-      								<div class="d-flex flex-row justify-content-end fs-12">
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-thumbs-o-up"></i>
-      										<span class="ml-1">Like</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-commenting-o"></i>
-      										<span class="ml-1">Comment</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-share"></i>
-      										<span class="ml-1">Share</span>
-      									</div>
-      								</div>
-      							</div>
       						</div>
       						<div class="comment-item">
       							<div class="col-md-12">
       								<div class="bg-white p-2">
       									<div class="d-flex flex-row user-info">
-      										<img src="/assets/images/main/ai3.jpg" width="40" class="rounded-circle">
       										<div class="d-flex flex-column justify-content-start ml-2">
       											<span class="d-block font-weight-bold name">김경은</span>
       											<span class="date text-black-50">Shared publically - Jan 2021</span>
@@ -339,28 +303,11 @@
       									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks!</p>
       								</div>
       							</div>
-      							<div class="bg-white">
-      								<div class="d-flex flex-row justify-content-end fs-12">
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-thumbs-o-up"></i>
-      										<span class="ml-1">Like</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-commenting-o"></i>
-      										<span class="ml-1">Comment</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-share"></i>
-      										<span class="ml-1">Share</span>
-      									</div>
-      								</div>
-      							</div>
       						</div>
       						<div class="comment-item">
       							<div class="col-md-12">
       								<div class="bg-white p-2">
       									<div class="d-flex flex-row user-info">
-      										<img src="/assets/images/main/ai4.jpg" width="40" class="rounded-circle">
       										<div class="d-flex flex-column justify-content-start ml-2">
       											<span class="d-block font-weight-bold name">김경은</span>
       											<span class="date text-black-50">Shared publically - Jan 2021</span>
@@ -369,22 +316,6 @@
       								</div>
       								<div class="mt-2">
       									<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Thanks! Yeah! I Liked Thanks! Yeah! I Liked</p>
-      								</div>
-      							</div>
-      							<div class="bg-white">
-      								<div class="d-flex flex-row justify-content-end fs-12">
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-thumbs-o-up"></i>
-      										<span class="ml-1">Like</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-commenting-o"></i>
-      										<span class="ml-1">Comment</span>
-      									</div>
-      									<div class="like p-2 cursor">
-      										<i class="fa fa-share"></i>
-      										<span class="ml-1">Share</span>
-      									</div>
       								</div>
       							</div>
       						</div>

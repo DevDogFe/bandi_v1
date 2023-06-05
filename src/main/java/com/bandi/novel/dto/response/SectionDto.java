@@ -23,7 +23,7 @@ public class SectionDto {
 	private String prevTitle;
 	private String nextTitle;
 	private Integer listPrice;
-	private Integer currentPrice;
+	private Integer rentPrice;
 	
 	public String createdAt() {
 		return TimestampFormat.format(createdAt);

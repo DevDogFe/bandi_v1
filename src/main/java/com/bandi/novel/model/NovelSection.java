@@ -18,7 +18,7 @@ public class NovelSection {
 	private Integer favorite;
 	private Integer views;
 	private Integer listPrice;
-	private Integer currentPrice;
+	private Integer rentPrice;
 	
 	public String createdAt() {
 		

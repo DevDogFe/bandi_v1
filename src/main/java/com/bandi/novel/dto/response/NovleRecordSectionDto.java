@@ -19,7 +19,7 @@ public class NovleRecordSectionDto {
 	private Integer favorite;
 	private Integer views;
 	private Integer listPrice;
-	private Integer currentPrice;
+	private Integer rentPrice;
 	// 본적이 없는 경우 null로 날라옴
 	private Integer userId;
 	private Integer recordAt;

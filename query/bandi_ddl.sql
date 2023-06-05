@@ -218,7 +218,7 @@ CREATE TABLE novel_section_tb(
     favorite INT DEFAULT 0,
     views INT DEFAULT 0,
     list_price INT NOT NULL DEFAULT 0 COMMENT '정가',
-    current_price INT NOT NULL DEFAULT 0 COMMENT '현재가',
+    rent_price INT NOT NULL DEFAULT 0 COMMENT '현재가',
     FOREIGN KEY (novel_id) REFERENCES novel_tb(id) ON DELETE CASCADE
 );
 

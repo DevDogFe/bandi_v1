@@ -25,9 +25,9 @@
 
 	<insert id="insert">
 		INSERT INTO novel_section_tb (novel_id, title,
-		content, list_price, current_price)
+		content, list_price, rent_price)
 		VALUES (#{novelId}, #{title},
-		#{content}, #{listPrice}, #{currentPrice});
+		#{content}, #{listPrice}, #{rentPrice});
 	</insert>
 
 	<select id="selectById" resultType="com.bandi.novel.model.NovelSection">
@@ -55,7 +55,7 @@
 		FROM(
 		SELECT
 		id,novel_id,title,content,created_at,recommend,
-		favorite,views,list_price,current_price,
+		favorite,views,list_price,rent_price,
 		LAG(id, 1, 0) OVER(ORDER BY id ASC) AS
 		prev_id,
 		LAG(title, 1, '이전글이 없습니다') OVER (ORDER BY id) AS prev_title,
