@@ -92,15 +92,22 @@ public class UserInfoController {
 	}
 	
 	// 내서재 구매한 회차, 대여한 회차 내역
-	@GetMapping("/library")
-	public String getUserLibrary(Model model) {
+	@GetMapping("/myFavorite")
+	public String getUserFavorite(Model model) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		List<MyFavoriteDto> favoriteList = novelService.selectUserFavoriteNovelList(principal.getId(), null);
-		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), null);
 		model.addAttribute("favoriteList", favoriteList);
+		
+		return "/user/userFavorite";
+	}
+	
+	@GetMapping("/myNovel")
+	public String getUserNovel(Model model) {
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), null);
 		model.addAttribute("myNovelList", myNovelList);
 		
-		return "/user/library";
+		return "/user/userNovel";
 	}
 
 }

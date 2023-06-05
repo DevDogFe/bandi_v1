@@ -87,31 +87,33 @@
 			</section>
 			<section>
 				<div class="reportList">
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="cols">#</th>
-								<th scope="cols">신고자</th>
-								<th scope="cols">신고사유</th>
-								<th scope="cols">날짜</th>
-								<th scope="cols">확인</th>
-								<th scope="cols"></th>
-							</tr>
-						</thead>
-						<c:forEach var="list" items="${reportList}">
-							<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
-							<tbody id="reportList-${list.id}" class="reportList">
+					<div class="scroll">
+						<table class="table">
+							<thead>
 								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.username}</td>
-									<td>${list.categoryName}</td>
-									<td>${list.createdAt()}</td>
-									<td>${list.proceed}</td>
-									<td><button class="btncheck" onclick="detailPopup(${list.id})">확인</button></td>
+									<th scope="cols">#</th>
+									<th scope="cols">신고자</th>
+									<th scope="cols">신고사유</th>
+									<th scope="cols">날짜</th>
+									<th scope="cols">확인</th>
+									<th scope="cols"></th>
 								</tr>
-							</tbody>
-						</c:forEach>
-					</table>
+							</thead>
+							<c:forEach var="list" items="${reportList}">
+								<input type="hidden" name="id" id="id-${list.id}" value="${list.id}">
+								<tbody id="reportList-${list.id}" class="reportList">
+									<tr>
+										<th scope="row">${list.id}</th>
+										<td>${list.username}</td>
+										<td>${list.categoryName}</td>
+										<td>${list.createdAt()}</td>
+										<td>${list.proceed}</td>
+										<td><button class="btncheck" onclick="detailPopup(${list.id})">확인</button></td>
+									</tr>
+								</tbody>
+							</c:forEach>
+						</table>
+					</div>
 				</div>
 			</section>
 		</div>

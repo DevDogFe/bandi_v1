@@ -106,3 +106,8 @@ nav {
 .links_name:hover:after {
 	transform: scaleX(1);
 }
+
+.scroll {
+	overflow: auto;
+	height: 700;
+}

@@ -4,16 +4,16 @@
 <mapper namespace="com.bandi.novel.repository.BoardFileRepository">
 	
 	<insert id="insertFile">
-		insert into board_file_tb(board_id, raw_file_name, encoded_file_name)
-		values(#{boardId}, #{rawFileName}, #{encodedFileName})
+		INSERT INTO board_file_tb(board_id, raw_file_name, encoded_file_name)
+		VALUES(#{boardId}, #{rawFileName}, #{encodedFileName})
 	</insert>
 	
 	<select id="selectFileList" resultType="com.bandi.novel.model.BoardFile">
-		select * from board_file_tb where board_id = #{boardId}
+		SELECT * FROM board_file_tb WHERE board_id = #{boardId}
 	</select>
 	
 	<delete id="deleteFile">
-		delete from board_file_tb where id = #{id}
+		DELETE FROM board_file_tb WHERE id = #{id}
 	</delete>
 	
 </mapper>

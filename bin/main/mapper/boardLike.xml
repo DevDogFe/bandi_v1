@@ -4,18 +4,18 @@
 <mapper namespace="com.bandi.novel.repository.BoardLikeRepository">
 
 	<insert id="insert">
-		insert into like_tb values
+		INSERT INTO like_tb VALUES
 		(#{userId}, #{boardId})
 	</insert>
 
 	<select id="selectByUserIdAndBoardId" resultType="com.bandi.novel.model.Like">
-		select * from like_tb
-		where user_id = #{userId} and board_id = #{boardId}
+		SELECT * FROM like_tb
+		WHERE user_id = #{userId} AND board_id = #{boardId}
 	</select>
 
 	<delete id="delete">
-		delete from like_tb
-		where user_id = #{userId} and board_id = #{boardId}
+		DELETE FROM like_tb
+		WHERE user_id = #{userId} AND board_id = #{boardId}
 	</delete>
 
 </mapper>

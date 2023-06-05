@@ -9,12 +9,12 @@
 	</select>
 	
 	<insert id="insert">
-		insert into board_category_tb(board_type_id, category_name) 
-		values (#{boardTypeId}, #{categoryName})
+		INSERT INTO board_category_tb(board_type_id, category_name) 
+		VALUES (#{boardTypeId}, #{categoryName})
 	</insert>
 	
 	<delete id="deleteById">
-		delete from board_category_tb
-		where id = #{id}
+		DELETE FROM board_category_tb
+		WHERE id = #{id}
 	</delete>
 </mapper>

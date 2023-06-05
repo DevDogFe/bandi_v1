@@ -121,7 +121,7 @@
 									<c:otherwise>
 										<form action="/board/reply" method="post">
 											<div class="d-flex flex-row align-items-start">
-												<input type="hidden" id="boardId" name="boardId" value="${boardDetail.id}"> <img src="/assets/images/main/ai1.jpg" class="rounded-circle" width="40">
+												<input type="hidden" id="boardId" name="boardId" value="${boardDetail.id}"> 
 												<textarea class="form-control ml-1 shadow-none textarea" id="content" name="content" placeholder="비방이나 부적절한 표현은 삼가해주시길 바랍니다."></textarea>
 											</div>
 											<div class="mt-2 text-right float-end">
@@ -142,7 +142,6 @@
 										<div class="col-md-12">
 											<div class="bg-white p-2">
 												<div class="d-flex flex-row user-info">
-													<img src="/assets/images/main/ai1.jpg" width="40" class="rounded-circle">
 													<div class="d-flex flex-column justify-content-start ml-2">
 														<span class="d-block font-weight-bold name">${reply.username}</span> <span class="date text-black-50">${reply.createdAt()}</span>
 													</div>

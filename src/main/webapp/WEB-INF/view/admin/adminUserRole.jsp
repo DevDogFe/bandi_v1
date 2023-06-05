@@ -101,34 +101,36 @@
 						</div>
 					</form>
 				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="cols">#</th>
-							<th scope="cols">이름</th>
-							<th scope="cols">닉네임</th>
-							<th scope="cols">등급</th>
-							<th scope="cols"></th>
-						</tr>
-					</thead>
-					<c:forEach var="list" items="${userList}">
-						<tbody id="userList" class="userList">
-							<tr class="user">
-								<th scope="row">${list.id}</th>
-								<td>${list.username}</td>
-								<td>${list.nickName}</td>
-								<td><select name="userRole" class="userRole">
-										<c:forEach var="user" items="${userRoleList}">
-											<option value="${user.id}" <c:if test="${user.id == list.userRole}">selected</c:if>>${user.role}</option>
-										</c:forEach>
-								</select></td>
-								<td><c:if test="${param.type eq 'nickName'}">
-										<button class="update-userrole" onclick="updateUserRole(${list.id})">수정</button>
-									</c:if></td>
+				<div class="scroll">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="cols">#</th>
+								<th scope="cols">이름</th>
+								<th scope="cols">닉네임</th>
+								<th scope="cols">등급</th>
+								<th scope="cols"></th>
 							</tr>
-						</tbody>
-					</c:forEach>
-				</table>
+						</thead>
+						<c:forEach var="list" items="${userList}">
+							<tbody id="userList" class="userList">
+								<tr class="user">
+									<th scope="row">${list.id}</th>
+									<td>${list.username}</td>
+									<td>${list.nickName}</td>
+									<td><select name="userRole" class="userRole">
+											<c:forEach var="user" items="${userRoleList}">
+												<option value="${user.id}" <c:if test="${user.id == list.userRole}">selected</c:if>>${user.role}</option>
+											</c:forEach>
+									</select></td>
+									<td><c:if test="${param.type eq 'nickName'}">
+											<button class="update-userrole" onclick="updateUserRole(${list.id})">수정</button>
+										</c:if></td>
+								</tr>
+							</tbody>
+						</c:forEach>
+					</table>
+				</div>
 			</section>
 		</div>
 	</div>
