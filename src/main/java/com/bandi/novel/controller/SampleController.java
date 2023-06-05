@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
+import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
@@ -18,6 +20,7 @@ import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.Contest;
+import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelService;
@@ -27,6 +30,7 @@ import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
 import com.bandi.novel.utils.GenerationUtil;
+import com.bandi.novel.utils.NovelPageUtil;
 
 @Controller
 public class SampleController {
@@ -209,15 +213,29 @@ public class SampleController {
 		return "/cssLayout/cssdetail";
 	}
 
-	// 공모전 대문
 	@GetMapping("/cssContestNovelList")
-	public String getContestNovelList() {
+	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, 
+			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
+			@RequestParam(defaultValue = "1") Integer contestId,
+			@RequestParam(defaultValue = "default") String sort) {
+		
+		if("".equals(search)) {
+			search = null;
+		}
+		
+		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search,contestId,sort);
+		List<Genre> genreList = novelService.selectGenreList();
+		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
+		model.addAttribute("contestNovelList", novelPageUtil);
+		model.addAttribute("serviceType", "공모전");
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("map", "contest/novel/list");
 		
 		return "/cssLayout/cssContestNovelList";
 	}
 	
 	@GetMapping("/cssContestList")
-	public String getContestList() {
+	public String getContestList(Model model) {
 		
 		return "/cssLayout/cssContestList";
 	}
@@ -238,7 +256,7 @@ public class SampleController {
 		return "/cssLayout/cssContestRegistration";
 	}
 	
-	// 충전 페이지	
+	// 충전 페이지!
 	@GetMapping("/cssGoldCharge")
 	public String getGoldCharge() {
 		
@@ -251,7 +269,7 @@ public class SampleController {
 		return "/cssLayout/cssUserPay";
 	}
 	
-	//	관리자 소설 타입 변경
+	//	관리자 소설 타입 변경!
 	@GetMapping("/cssAdminNovelChange")
 	public String getAdminNovelChange() {
 		

@@ -1,91 +1,172 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="../layout/header.jsp"%>
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#lastNovelRecord").modal('show');
-	})
-</script>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="page-content">
-          <!-- ***** Banner Start ***** -->
-          <div class="main-banner">
-            <div class="row d-flex justify-content-center">
-              <div class="col-lg-7">
-                <div class="header-text">
-                  <h6>2023</h6>
-                  <h4>${contestList[0].title}</h4>
-                  <div class="main-button">
-                    <a href="/contest/detail/${contestList[0].id}">상세 보기</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="main-button float-end m-2">
-                    <a href="/contest/registration">공모전 작성</a>
-          </div>
-          <!-- ***** Banner End ***** -->
-		  <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-                <h4><em class="text-decoration-none">공모전</em> 리스트</h4>
-              </div>
-              <c:forEach var="contest" items="${contestList}" varStatus="vs" >
-              	<div class="item">
-                	<ul>
-                  		<li><h4>${contest.id}</h4></li>
-                  		<li><h4>${contest.title}</h4></li>
-                  		<li><h4>${contest.content}</h4></li>
-                  		<li><h4>${contest.beginCreatedAt}</h4></li>
-                  		<li><h4>${contest.endCreatedAt}</h4></li>
-                  		<li class="text-center"><button type="button" class="btn btn-primary"
-                  		data-bs-toggle="modal" data-bs-target="#Modal${vs.index+1}">보기</button></li>
-                  		<li class="text-center"><button onclick="location.href='/contest/delete/${contest.id}'"
-						type="button" class="btn btn-danger m-1">삭제</button></li>
-                	</ul>
-              	</div>
-              </c:forEach>
-          	</div>
-          </div>
-          <!-- ***** Most Popular Start ***** -->
-          <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-                <h4 onclick="location.href ='/contest/novel/list'"><em class="text-decoration-none">작품</em> 리스트</h4>
-              </div>
-              <c:forEach var="contestNovel" items="${contestNovelList}" >
-              	<div class="item" onclick="location.href ='/contest/novel/detail/${contestNovel.id}'" style="margin: 50px; background-color: bisque">
-                	<ul>
-                  		<li><h4>${contestNovel.title}</h4></li>
-                  		<li><h4>${contestNovel.username}</h4></li>
-                  		<li><h4>${contestNovel.genreName}</h4></li>
-                  		<li><h4>${contestNovel.contestName}</h4></li>
-                	</ul>
-              	</div>
-              </c:forEach>
-          	</div>
-          </div>
-          <!-- ***** Most Popular End ***** -->
-          <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-              <c:if test="${novelRecord != null}">
-                ${novelRecord.userId} ${novelRecord.sectionId} ${novelRecord.title} 
-              </c:if>
-              </div>
-          	</div>
-          </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>반디</title>
+    <script src="/assets/js/jquery.min.js"></script>
+    <!-- jquery-3.5.1이 위에 있어야 작동 -->
+    <!-- Slick.js -->
+
+    <!-- Slider.js no CDN -->
+    <!-- <script src="js/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="js/slick/slick.css">
+    <link rel="stylesheet" href="js/slick/slick-theme.css"> -->
+    
+    <!-- bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+
+    <!-- Slider.js CDN -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/assets/js/custom-slick.js"></script>
+    <!-- 작성한 css는 항상 밑에 있어야함 -->
+    <link rel="stylesheet" href="/assets/css/list.css" />
+  </head>
+  <body>
+    <div class="container">
+    	<div class="inner">
+      	<header>
+        	<div class="banner">
+          		<div class="lnb">
+            		<a href="#none"><em>for</em> member</a>
+            		<a href="#none">로그인</a>
+            		<a href="#none">회원가입</a>
+          		</div>
+        	</div>
+        	<nav>
+          		<div class="logo">
+            		<a href="#none"><img src="/assets/images/main/bandi-logo3.png"></a>
+          		</div>
+          		<ul class="gnb">
+            		<li><a href="#none">HOME</a></li>
+            		<li><a href="#none">소설</a></li>
+            		<li><a href="#none">공모전</a></li>
+            		<li class="dropdown">
+              			<a href="#none" class="dropbtn">게시판</a>
+            		</li>
+            		<li><a href="#none">고객지원</a></li>
+            		<li><a href="#none">마이페이지</a></li>
+          		</ul>
+        	</nav>
+      </header>
+      <section class="top-banner">
+			<div class="big-testimonial-content">
+					<div class="bigSlider">
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider.png">
+							</p>
+						</div>
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider2.png">
+							</p>
+						</div>
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider.png">
+							</p>
+						</div>
+						<div>
+							<p class="big-banner">
+								<img src="/assets/images/main/topSlider2.png">
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="mini-banners">
+					<div class="contest-mini-banner">
+						<a href="/contest/list"><img src="/assets/images/main/gold-charge.png"></a>
+					</div>
+					<div class="contest-mini-banner">
+						<img src="/assets/images/main/author-banner.png">
+					</div>
+					<div class="contest-mini-banner">
+						<img src="/assets/images/main/contest-banner3.png">
+					</div>
+				</div>
+		</section>
+      <section class="top-wrap">
+      	<div class="top-wrap-content">      	
+      		<div class="top-wrap-nav">
+      			<div class="d-flex novel-type">
+      				<h1>공모전</h1>
+      				<a href="/contest/registration" class="board-type-item d-flex align-items-center ms-3"><span class="blue-span">작성하기</span></a>
+      			</div>
+      		</div>
+      	</div>
+      </section>
+      <section class="one-tab-list">
+      	<ul class="board-list">
+      		<c:forEach var="contest" items="${contestList}" varStatus="vs" >
+      		<li>
+   				<div class="border-list-item">
+   					<a href="/contest/novel/list?contestId=${contest.id}">
+   					<div class="border-list-content">
+    					<div class="board-list-title">${contest.title}</div>
+    					<div class="board-list-desc">
+    						<span class="blue-span list-desc-span">${contest.nickName}</span> 
+    						<span class="list-desc-span">${contest.beginCreatedAt()} ~ ${contest.endCreatedAt()}</span>
+    					</div>
+   					</div>
+   					</a>
+   					<div class="border-list-buttons">
+    					<div><button type="button" class="btn btn-primary m-1"
+               		data-bs-toggle="modal" data-bs-target="#Modal${vs.index+1}">보기</button></div>
+    					<div><button onclick="location.href='/contest/delete/${contest.id}'"
+				type="button" class="btn btn-danger m-1">삭제</button></div>
+   					</div>
+   				</div>
+      		</li>
+      		</c:forEach>
+      	</ul>
+      </section>
       </div>
+      
     </div>
-  </div>
-  </div>
-  
-  <!-- Modal -->
+    <footer>
+        <div class="inner">
+          <div class="footer-top">
+            <ul>
+              <li>(주)반디</li>
+              <li><a href="#none">이용약관</a></li>
+              <li><a href="#none">개인정보 처리방침</a></li>
+              <li><a href="#none">청소년 보호 정책</a></li>
+              <li><a href="#none">회사 소개</a></li>
+            </ul>
+          </div>
+          <div class="footer-content">
+            <ul class="community">
+              <!-- 제목 줄은 a없이-->
+              <li>게시판</li>
+              <li><a href="#none">Subscribe</a></li>
+              <li><a href="#none">Give A Gift</a></li>
+              <li><a href="#none">Customer Service FAQ</a></li>
+              <li><a href="#none">Access Your Subscription</a></li>
+            </ul>
+            <ul class="network">
+              <li>Network</li>
+              <li><a href="#none">Privacy Policy</a></li>
+              <li><a href="#none">Terms Of Service</a></li>
+              <li><a href="#none">Advertise</a></li>
+              <li><a href="#none">Jobs</a></li>
+            </ul>
+            <ul class="help">
+              <li>Help Preserve This Project</li>
+              <li>We may earn a commission if you purchase an item 
+                featured on our site.</li>
+              <li>Copyright ©  2020 CodingWorks. All rights reserved.</li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+      <!-- Modal -->
 			<c:forEach var="contest" items="${contestList}" varStatus="vs">
 				<div class="modal fade" id="Modal${vs.index+1}" tabindex="-1"
 					aria-labelledby="ModalLabel" aria-hidden="true">
@@ -99,22 +180,22 @@
 										<li>
 											<label for="title" class="form-label">시작일</label> 
 											<input type="text" id="title" name="beginCreatedAt" class="form-control"
-											required="required" value="">
+											required="required" value="${contest.beginCreatedAt}">
 										</li>
 										<li>
 											<label for="title" class="form-label">종료일</label> 
 											<input type="text" id="title" name="endCreatedAt" class="form-control"
-											required="required" value="">
+											required="required" value="${contest.endCreatedAt}">
 										</li>
 										<li>
 											<label for="title" class="form-label">제목</label> 
 											<input type="text" id="title" name="title" class="form-control"
-											required="required" value="">
+											required="required" value="${contest.title}">
 										</li>
 										<li>
-											<label for="overview" class="form-label">내용</label>
+											<label for="overview" class="form-label">모집 요강</label>
 											<textarea id="overview" name="content" class="form-control" required="required" 
-											rows="10"> </textarea>
+											rows="10">${contest.content}</textarea>
 										</li>
 									</ul>
 								</div>
@@ -132,6 +213,4 @@
 					</div>
 				</div>
 			</c:forEach>
-  
-<%@include file="../modal.jsp"%>
-<%@include file="../layout/footer.jsp"%>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

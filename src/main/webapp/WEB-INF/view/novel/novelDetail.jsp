@@ -293,7 +293,7 @@
 							</div>
 							<div class="gold-info">
 								<div>보유골드</div>
-								<span class="blue-span">1000</span>
+								<span class="blue-span">${userGold}</span>
 							</div>
 							<div class="right-box">
 								<div class="right-box-cover">

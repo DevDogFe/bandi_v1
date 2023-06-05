@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bandi.novel.dto.response.ContestDto;
 import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Contest;
@@ -73,9 +74,9 @@ public class ContestService {
 	}
 	
 	@Transactional
-	public List<Contest> selectContestListByLimit(){
+	public List<ContestDto> selectContestListByLimit(){
 		
-		List<Contest> contestList = contestRepository.selectContestList();
+		List<ContestDto> contestList = contestRepository.selectContestList();
 		if(contestList == null) {
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -104,14 +105,12 @@ public class ContestService {
 	@Transactional
 	public void deleteContestById(int contestId) {
 		
-		int novelResult = novelRepository.deleteNovelByContestId(contestId);
-		if (novelResult != 1) {
-			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		//int novelResult = novelRepository.deleteNovelByContestId(contestId);
 		
 		// contest에서 삭제
 		int contestResult = contestRepository.deleteContestById(contestId);
 		if(contestResult != 1) {
+			System.out.println("아래");
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

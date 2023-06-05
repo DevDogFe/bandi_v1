@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.bandi.novel.dto.response.ContestDto;
 import com.bandi.novel.model.Contest;
 
 /**
@@ -21,5 +22,6 @@ public interface ContestRepository {
 	Contest selectContestByUserIdAndTitle(Contest contest);
 	
 	List<Contest> selectContestListByDate();
-	List<Contest> selectContestList();
+	// 공모전 리스트에 사용
+	List<ContestDto> selectContestList();
 }

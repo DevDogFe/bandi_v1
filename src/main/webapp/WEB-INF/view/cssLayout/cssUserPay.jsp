@@ -72,16 +72,16 @@
 							<input type="hidden" name="novelId" value="${paySection.novelId}">
 							<input type="hidden" name="quantity" value="1">
 							<input type="hidden" name="itemName" value="${paySection.title}">
-							<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-							<button type="submit" class="pay-btn gold-purchase" >구매 ${paySection.currentPrice} G</button>
+							<input type="hidden" name="totalAmount" value="${paySection.listPrice}">
+							<button type="submit" class="pay-btn gold-purchase" >구매 ${paySection.listPrice} G</button>
 						</form>
 						<form class="form" action="/payment/gold/rental/${serviceTypeId}" method="post">
 							<input type="hidden" name="sectionId" value="${paySection.id}">
 							<input type="hidden" name="novelId" value="${paySection.novelId}">
 							<input type="hidden" name="quantity" value="1">
 							<input type="hidden" name="itemName" value="${paySection.title}">
-							<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-							<button type="submit" class="pay-btn gold-rental">대여 ${paySection.currentPrice} G</button>
+							<input type="hidden" name="totalAmount" value="${paySection.rentPrice}">
+							<button type="submit" class="pay-btn gold-rental">대여 ${paySection.rentPrice} G</button>
 						</form>
 						</div>
 						<h1>결제 방법을 선택해주세요</h1>
@@ -91,17 +91,17 @@
 							<input type="hidden" name="novelId" value="${paySection.novelId}">
 							<input type="hidden" name="quantity" value="1">
 							<input type="hidden" name="itemName" value="${paySection.title}">
-							<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-							<button type="submit" class="pay-btn purchase">구매 ${paySection.currentPrice} G</button>
+							<input type="hidden" name="totalAmount" value="${paySection.listPrice}">
+							<button type="submit" class="pay-btn purchase">구매 ${paySection.listPrice} G</button>
 						</form>
 						<form class="form" action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
 							<input type="hidden" name="sectionId" value="${paySection.id}">
 							<input type="hidden" name="novelId" value="${paySection.novelId}">
 							<input type="hidden" name="quantity" value="1">
 							<input type="hidden" name="itemName" value="${paySection.title}">
-							<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
+							<input type="hidden" name="totalAmount" value="${paySection.rentPrice}">
 							<input type="hidden" name="isRental" value="true">
-							<button type="submit" class="pay-btn rental">3일 대여 ${paySection.currentPrice} G</button>
+							<button type="submit" class="pay-btn rental">3일 대여 ${paySection.rentPrice} G</button>
 							<button type="button" class="pay-btn charge"
 								onclick="location.href='/payment/charge'">골드 충전하기</button>
 						</form>

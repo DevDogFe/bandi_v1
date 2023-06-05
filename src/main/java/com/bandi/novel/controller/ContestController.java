@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bandi.novel.dto.response.ContestDto;
 import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.LastNovelRecordDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
+import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.dto.response.SectionDto;
+import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.NovelReply;
@@ -29,6 +32,8 @@ import com.bandi.novel.model.User;
 import com.bandi.novel.service.ContestService;
 import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
+import com.bandi.novel.service.PayService;
+import com.bandi.novel.service.RecommendService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
@@ -56,7 +61,11 @@ public class ContestController {
 	private UserNovelRecordService userNovelRecordService;
 	@Autowired
 	private UserFavoriteService userFavoriteService;
-
+	@Autowired
+	private PayService payService;
+	@Autowired
+	private RecommendService recommendService;
+	
 	/**
 	 * @param model
 	 * @return 공모전 상세 페이지
@@ -84,10 +93,8 @@ public class ContestController {
 		}
 
 		// 공모전
-		List<Contest> contestList = contestService.selectContestListByLimit();
-		System.out.println(contestList.toString());
-		// 공모전 소설
-		// List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
+		List<ContestDto> contestList = contestService.selectContestListByLimit();
+
 		// 마지막으로 본 소설 조회
 		LastNovelRecordDto novelRecord = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		if (novelRecord != null) {
@@ -99,7 +106,6 @@ public class ContestController {
 		//
 
 		model.addAttribute("contestList", contestList);
-		// model.addAttribute("contestNovelList", contestNovelList);
 
 		return "/contest/contestList";
 	}
@@ -169,13 +175,15 @@ public class ContestController {
 	 */
 	@GetMapping("/novel/list")
 	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, 
-			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search) {
+			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
+			@RequestParam(defaultValue = "1") Integer contestId,
+			@RequestParam(defaultValue = "default") String sort) {
 		
 		if("".equals(search)) {
 			search = null;
 		}
 		
-		// List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search);
+		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search,contestId,sort);
 		List<Genre> genreList = novelService.selectGenreList();
 		// NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
 		// model.addAttribute("contestNovelList", novelPageUtil);
@@ -196,23 +204,28 @@ public class ContestController {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		if(principal == null) {
-			return "redirect:/index";
-		}
-		
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		// 즐겨찾기 카운트
+		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		// 소설 회차 리스트
-		List<NovleRecordSectionDto> novelSectionList = userNovelRecordService.selectNovelRecord(principal.getId(),
-				novelId);
+		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
+		// 소설 구매, 대여 여부 리스트
+		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
+		
+		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
+		
+
 		// 즐겨찾기 여부
 		if (principal != null) {
 			boolean isFavorite = userFavoriteService.selectUserFavoriteByUserIdAndNovelId(principal.getId(), novelId);
 			model.addAttribute("isFavorite", isFavorite);
 		}
-
+		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("detail", novelDetailDto);
-		model.addAttribute("novelSectionList", novelSectionList);
+		model.addAttribute("favorite", favorite);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("recommendList", recommendList);
 
 		return "/contest/contestNovelDetail";
 	}

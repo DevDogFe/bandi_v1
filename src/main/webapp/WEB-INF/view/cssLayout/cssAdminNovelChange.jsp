@@ -19,7 +19,6 @@
 <!-- bootstrap CDN -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-
 <!-- Slider.js CDN -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
@@ -106,9 +105,9 @@
 				<div class="search-user-form">
 					<div class="search-user">
 						<div class="search">
-							<input id="search-input" type="text" name="keyword"> <label class="searchlabel">제목</label> <span class="search-span"></span>
+							<input id="search-input" type="text" name="keyword"><span class="search-span"></span>
 						</div>
-						<button type="submit" id="search-btn" class="search-btn">검색</button>
+						<button type="button" id="search-btn" class="search-btn">검색</button>
 					</div>
 				</div>
 				<table class="table">
@@ -178,30 +177,65 @@
 				$.ajax({
 					type: "GET",
 					url: "/api/novel/" + search,
-				}).done(function(e){
+				}).done(function(response){
 					
 					let appendHtml = "";
+					let resArr = response.data; 
 					
-					for(var i=0;i<e.length;i++){
-						appendHtml += '<tr id="tr'+e[i].id+'"><td>'+ e[i].title +'</td>';
-						appendHtml += '<td>'+ e[i].userName +'</td>';
-						appendHtml += '<td id="serviceType'+e[i].id+'">'+ e[i].serviceTypeName +'</td>';
+					for(var i=0;i<resArr.length;i++){
+						appendHtml += '<tr id="tr'+resArr[i].id+'"><td>'+ resArr[i].title +'</td>';
+						appendHtml += '<td>'+ resArr[i].userName +'</td>';
+						appendHtml += '<td id="serviceType'+resArr[i].id+'">'+ resArr[i].serviceTypeName +'</td>';
 						appendHtml += '<td style="width:300px;">';
-						appendHtml += '<select id="select'+e[i].id+'" class="form-select" aria-label="Default select example">';
+						appendHtml += '<select id="select'+resArr[i].id+'" class="form-select" aria-label="Default select example">';
 						appendHtml += '<option value="1">유료</option>';
 						appendHtml += '<option value="2">무료</option>';
-						appendHtml += '<option value="3">공모전</option></select></td>';
-						appendHtml += '<td><button id="update-btn'+e[i].id+'" class="btn btn-primary" onclick="updateNovelType('+e[i].id+')">수정</button></td>';
-						appendHtml += '<td><button id="delete-btn'+e[i].id+'" class="btn btn-danger" onclick="deleteNovel('+e[i].id+')">삭제</button></td></tr>';
+						appendHtml += '<td><button id="update-btn'+resArr[i].id+'" class="btn btn-primary" onclick="updateNovelType('+resArr[i].id+')">수정</button></td>';
+						appendHtml += '<td><button id="delete-btn'+resArr[i].id+'" class="btn btn-danger" onclick="deleteNovel('+resArr[i].id+')">삭제</button></td></tr>';
 					}
 					
 					$("#novelList").html(appendHtml);
+					console.log($("#novelList").val());
 					
 				}).fail(function(error){
 					alert("검색어를 넣어주세요");
 				});
 				
 			});
+			
+			$("#search-input").keypress(function(e) {
+				  if (e.keyCode === 13) {
+					  let search = $("#search-input").val();
+						
+						$.ajax({
+							type: "GET",
+							url: "/api/novel/" + search,
+						}).done((response) => {
+							
+							let appendHtml = "";
+							let resArr = response.data; 
+							
+							for(var i=0;i<resArr.length;i++){
+								appendHtml += '<tr id="tr'+resArr[i].id+'"><td>'+ resArr[i].title +'</td>';
+								appendHtml += '<td>'+ resArr[i].userName +'</td>';
+								appendHtml += '<td id="serviceType'+resArr[i].id+'">'+ resArr[i].serviceTypeName +'</td>';
+								appendHtml += '<td style="width:300px;">';
+								appendHtml += '<select id="select'+resArr[i].id+'" class="form-select" aria-label="Default select example">';
+								appendHtml += '<option value="1">유료</option>';
+								appendHtml += '<option value="2">무료</option>';
+								appendHtml += '<td><button id="update-btn'+resArr[i].id+'" class="btn btn-primary" onclick="updateNovelType('+resArr[i].id+')">수정</button></td>';
+								appendHtml += '<td><button id="delete-btn'+resArr[i].id+'" class="btn btn-danger" onclick="deleteNovel('+resArr[i].id+')">삭제</button></td></tr>';
+							}
+							
+							$("#novelList").html(appendHtml);
+							console.log($("#novelList"));
+							
+						}).fail(function(error){
+							alert("검색어를 넣어주세요");
+						});
+				  }
+			});
+			
 		}
 		
 		// 소설 서비스 타입 변경

@@ -137,11 +137,11 @@ public class PayController {
 			}
 		} else {
 			// 골드 결제 처리
+			System.out.println(dto.toString());
 			payService.purchaseNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"
-				+ serviceTypeId;
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"+serviceTypeId;
 	}
 
 	/**
@@ -170,8 +170,7 @@ public class PayController {
 			payService.rentalNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"
-				+ serviceTypeId;
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"+ serviceTypeId;
 	}
 
 	/**
@@ -266,9 +265,9 @@ public class PayController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/kakao/purchase/success/{novelId}/{sectionId}")
+	@GetMapping("/kakao/purchase/success/{novelId}/{sectionId}/{serviceTypeId}")
 	public String KaKaoPaySuccessController(@PathVariable Integer novelId, @PathVariable Integer sectionId,
-			@RequestParam Integer serviceTypeId, String pg_token) {
+			@PathVariable Integer serviceTypeId, String pg_token) {
 
 		KakaoPaySuccessResponse kakaoSinglePayment = getKakaoSuccess(pg_token);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -286,9 +285,9 @@ public class PayController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/kakao/rental/success/{novelId}/{sectionId}")
+	@GetMapping("/kakao/rental/success/{novelId}/{sectionId}/{serviceTypeId}")
 	public String KaKaoPayRentalSuccessController(@PathVariable Integer novelId, @PathVariable Integer sectionId,
-			@RequestParam Integer serviceTypeId, String pg_token) {
+			@PathVariable Integer serviceTypeId, String pg_token) {
 
 		KakaoPaySuccessResponse kakaoSinglePayment = getKakaoSuccess(pg_token);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -314,7 +313,7 @@ public class PayController {
 		payService.chargeGold(principal.getId(), kakaoSinglePayment.getAmount().getTotal(),
 				kakaoSinglePayment.getTid());
 
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 
 	// 클래스화

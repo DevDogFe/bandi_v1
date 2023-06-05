@@ -87,7 +87,23 @@ INSERT INTO novel_tb (user_id, genre_id, service_type_id, title, overview, seria
         (1, 2, 2, '내 집에 영약 광산이 열렸다169', '어느 날 탑 100층과 내 집의 거실이 연결되었다.', '일');
         
 INSERT INTO contest_novel_tb (novel_id,contest_id)
-VALUES (3,1);
+VALUES 
+(3,1),
+(6,1),
+(9,1),
+(12,1),
+(15,1),
+(18,1),
+(21,1),
+(24,1),
+(27,1),
+(30,1),
+(33,1),
+(36,1),
+(39,1),
+(42,1),
+(45,1),
+(48,1);
         
 INSERT INTO novel_section_tb (novel_id, title, content, list_price, current_price)
 VALUES 

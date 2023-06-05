@@ -1,5 +1,6 @@
 package com.bandi.novel.model;
 
+
 import lombok.Data;
 
 @Data
@@ -11,4 +12,5 @@ public class Contest {
 	private String endCreatedAt;
 	private String title;
 	private String content;
+	
 }
