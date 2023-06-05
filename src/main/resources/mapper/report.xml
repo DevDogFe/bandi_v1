@@ -4,37 +4,37 @@
 <mapper namespace="com.bandi.novel.repository.ReportRepository">
 	
 	<insert id="insert">
-		insert into report_tb (user_id, board_id, content, category_id, proceed)
-		values (#{userId}, #{boardId}, #{content}, #{categoryId}, #{proceed})
+		INSERT INTO report_tb (user_id, board_id, content, category_id, proceed)
+		VALUES (#{userId}, #{boardId}, #{content}, #{categoryId}, #{proceed})
 	</insert>
 	
 	<select id="selectAll" resultType="com.bandi.novel.dto.AdminReportDto">
-		select r.id, u.username, rc.category_name, r.proceed, r.created_at
-		from report_tb as r
-		left join user_tb as u
-		on r.user_id = u.id
-		left join board_tb as b
-		on r.board_id = b.id
-		left join report_category_tb as rc
-		on r.category_id = rc.id
+		SELECT r.id, u.username, rc.category_name, r.proceed, r.created_at
+		FROM report_tb AS r
+		LEFT JOIN user_tb AS u
+		ON r.user_id = u.id
+		LEFT JOIN board_tb AS b
+		ON r.board_id = b.id
+		LEFT JOIN report_category_tb AS rc
+		ON r.category_id = rc.id
 	</select>
 	
 	<select id="selectReportDetailById" resultType="com.bandi.novel.model.Report">
-		select *
-		from report_tb as r
-		left join user_tb as u
-		on r.user_id = u.id
-		left join board_tb as b
-		on r.board_id = b.id
-		left join report_category_tb as rc
-		on r.category_id = rc.id
-		where r.id = #{id}
+		SELECT *
+		FROM report_tb AS r
+		LEFT JOIN user_tb AS u
+		ON r.user_id = u.id
+		LEFT JOIN board_tb AS b
+		ON r.board_id = b.id
+		LEFT JOIN report_category_tb AS rc
+		ON r.category_id = rc.id
+		WHERE r.id = #{id}
 	</select>
 	
 	<update id="updateProceedById">
-		update report_tb
-		set proceed = 1
-		where id = #{id}
+		UPDATE report_tb
+		SET proceed = 1
+		WHERE id = #{id}
 	</update>
 
 </mapper>

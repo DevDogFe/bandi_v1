@@ -37,6 +37,8 @@ import com.bandi.novel.utils.BoardPageUtil;
 import com.bandi.novel.utils.BoardReplyPageUtil;
 import com.bandi.novel.utils.Define;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -78,6 +80,9 @@ public class BoardController {
 		List<CategorySelectDto> categoryList = boardService.selectCategory(boardTypeId);
 		List<BoardType> boardTypeList = boardService.selectBoardType();
 		BoardPageUtil boardPageUtil = new BoardPageUtil(boardList.size(), 10, currentPage, 5, boardList);
+		if(boardSearchDto.getCategoryId() != null) {
+			model.addAttribute("categoryId", boardSearchDto.getCategoryId());
+		}
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("boardList", boardPageUtil);
 		model.addAttribute("boardTypeList", boardTypeList);

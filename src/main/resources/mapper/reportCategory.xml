@@ -4,7 +4,7 @@
 <mapper namespace="com.bandi.novel.repository.ReportCategoryRepository">
 
 	<select id="selectAll" resultType="com.bandi.novel.model.ReportCategory">
-		select * from report_category_tb
+		SELECT * FROM report_category_tb
 	</select>
 
 </mapper>

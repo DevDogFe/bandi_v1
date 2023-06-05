@@ -69,8 +69,6 @@
       						<label>제목</label>
       						<input type="text" id="title" name="title" value="${boardDetail.title}" required/>
       					</div>
-      					<%-- <label>${boardDetail.username} </label> 
-      					<label>${boardDetail.createdAt()} </label> --%>
       					<div class="input-box">
       						<label>카테고리</label>
       						<div class="select-box">
@@ -81,6 +79,7 @@
 								</select>
       						</div>
       					</div>
+      					<br>
 						<textarea id="content" name="content" class="summernote">${boardDetail.content}</textarea>
 						<div class="btn-flex">
 							<button type="submit" class="add-board">수정</button>
@@ -93,7 +92,8 @@
       <script type="text/javascript">
 		$(document).ready(function() {
 			$('.summernote').summernote({
-				height : 300
+				height : 300,
+				disableResizeEditor : true
 			});
 		});
 	</script>

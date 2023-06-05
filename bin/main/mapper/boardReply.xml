@@ -4,20 +4,20 @@
 <mapper namespace="com.bandi.novel.repository.BoardReplyRepository">
 	
 	<insert id="insert">
-		insert into board_reply_tb (user_id, board_id, content) 
-		values (#{userId}, #{boardId}, #{content})
+		INSERT INTO board_reply_tb (user_id, board_id, content) 
+		VALUES (#{userId}, #{boardId}, #{content})
 	</insert>
 	
 	<select id="selectByBoardId" resultType="com.bandi.novel.dto.BoardReplyDto">
-		select br.id, br.content, br.user_id, br.board_id, br.created_at, u.username
-		from board_reply_tb as br
-		left join user_tb as u
-		on br.user_id = u.id
-		where board_id = #{boardId}
+		SELECT br.id, br.content, br.user_id, br.board_id, br.created_at, u.username
+		FROM board_reply_tb AS br
+		LEFT JOIN user_tb AS u
+		ON br.user_id = u.id
+		WHERE board_id = #{boardId}
 	</select>
 	
 	<delete id="deleteById">
-		delete from board_reply_tb
-		where id = #{id}
+		DELETE FROM board_reply_tb
+		WHERE id = #{id}
 	</delete>
 </mapper>

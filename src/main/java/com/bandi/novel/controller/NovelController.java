@@ -368,7 +368,7 @@ public class NovelController {
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
 
-		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId() + "?serviceTypeId="
+		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId() + "/"
 				+ serviceTypeId;
 	}
 

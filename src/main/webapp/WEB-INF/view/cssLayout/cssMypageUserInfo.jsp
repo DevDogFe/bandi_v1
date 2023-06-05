@@ -37,6 +37,160 @@
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/mypage/sidebar.css" />
 <link rel="stylesheet" href="/assets/css/mypage/record.css" />
+<style type="text/css">
+	.section-title-wrap:first-child.form-title {
+		margin-top: 40px;
+	}
+	.section-title-wrap.form-title {
+		margin-bottom: 16px;
+	}
+	.section-title-wrap {
+		min-height: 32px;
+	}
+	.right-wrap {
+		bottom: 50%;
+		position: absolute;
+		right: 0;
+		-webkit-transform: translateY(50%);
+	}
+	.icon-required {
+		position: relative;
+		display: inline-block;
+		color: #666;
+		padding-left: 11px;
+		font-size: 1.4rem;
+		letter-spacing: -0.35px;
+	}
+	.section-title-wrap:after {
+		content: "";
+		display: block;
+		width: 100%;
+		height: 0px;
+		clear: both;
+	}
+	.form-wrap {
+		padding: 20px 26px;
+		border-top: 1px solid #999;
+		border-bottom: 1px solid #ededed;
+	}
+	.form-group:not(last-child), .form-group.row:not(last-child) {
+		margin-bottom: 21px;
+	}
+	.form-group.row {
+		margin: 0;
+	}
+	.row {
+		display: flex;
+	}
+	.form-group .form-label-wrap {
+		position: relative;
+		width: 125px;
+		line-height: 30px;
+	}
+	.form-group .form-label-wrap .form-label {
+		color: #111;
+		font-weight: 400;
+		font-size: 1.4rem;
+		letter-spacing: -0.7px;
+	}
+	label {
+		margin-bottom: 0;
+	}
+	.form-group .form-label-wrap + .form-value {
+		width: calc(100% - 135px);
+	}
+	.form-group .form-value {
+		min-height: 25px;
+	}
+	.profile-img-upload-wrap.has-email {
+		padding-left: 0;
+	}
+	.profile-img-upload-wrap {
+		position: relative;
+		display: inline-block;
+		text-align: center;
+	}
+	.profile-img-upload-wrap .profile-preview-wrap {
+		width: 86px;
+		height: 86px;
+		border-radius: 43px;
+		background-position: 50% 50%;
+	}
+	.profile-preview-wrap {
+		position: relative;
+		display: inline-block;
+		overflow: hidden;
+		background-image: url(/assets/images/board/profile.png);
+		border: 1px solid #ddd;
+		border-radius: 33px;
+		background-repeat: no-repeat;
+		font-size: 0;
+		background-position: 50% 50%;
+	}
+	.my-profile-form .form-group.my-profile-img .form-value.profile-img .btn-wrap {
+   		font-size: 0;
+	}
+	.profile-img-upload-wrap .btn-wrap {
+	    text-align: left;
+	    margin-top: 13px;
+	    margin-left: 19px;
+	}
+	.my-profile-form .form-group.my-profile-img .form-value.profile-img .btn-wrap .upload-btn-wrap {
+	    overflow: hidden;
+	    margin: 0 0 0 5px;
+	    position: relative;
+	    top: auto;
+	    right: auto;
+	    vertical-align: top;
+	}	
+	.profile-img-upload-wrap.has-email .email {
+	    margin-top: 12px;
+	    font-size: 1.4rem;
+	    letter-spacing: -0.35px;
+	}
+	.profile-img-upload-wrap:after {
+	    content: '';
+	    display: block;
+	    width: 100%;
+	    height: 0px;
+	    clear: both;
+	}
+	.form-group .form-label-wrap {
+	    position: relative;
+	    width: 125px;
+	    line-height: 30px;
+	}
+	.form-group .form-label-wrap .form-label {
+	    color: #111;
+	    font-weight: 400;
+	    font-size: 1.4rem;
+	    letter-spacing: -0.7px;
+	}
+	.my-profile-form .form-group .form-value.has-btn input[type=text] {
+		width: 318px;
+	}
+	.form-group .form-value.has-btn input[type=text] {
+		float: left;
+		height: 32px;
+		line-height: 30px;
+	}
+	input[type=text] {
+		background: #fff;
+		padding: 0 10px;
+		border: 1px solid #d5d5d5;
+		border-radius: 4px;
+		font-size: 1.4rem;
+		font-weight: 300;
+		-webkit-appearance: none;
+	}
+	my-profile-form .form-group .form-value.has-btn:after {
+	    content: '';
+	    display: block;
+	    width: 100%;
+	    height: 0px;
+	    clear: both;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -94,37 +248,67 @@
 				</section>
 				<section class="main">
 					<div class="reportList">
-						<div class="main-header">
-							<h3 class="mb-2">
-								내 정보 <span class="more"><a href="/update">내 정보 수정</a></span>
-							</h3>
+						<div class="section-title-wrap form-title">
+							<h2 class="section-title">내정보</h2>
+							<div class="right-wrap">
+								<span class="icon-required"></span>
+							</div>
 						</div>
-						<table class="table">
-							<tr>
-								<th scope="cols">아이디</th>
-								<td>${principal.username}</td>
-							</tr>
-							<tr>
-								<th scope="cols">닉네임</th>
-								<td>${principal.nickName}</td>
-							</tr>
-							<tr>
-								<th scope="cols">이메일</th>
-								<td>${principal.email}</td>
-							</tr>
-							<tr>
-								<th scope="cols">성별</th>
-								<td>${principal.gender}</td>
-							</tr>
-							<tr>
-								<th scope="cols">생년월일</th>
-								<td>${principal.birthDate}(${principal.getAge()}세)</td>
-							</tr>
-							<tr>
-								<th scope="cols">골드</th>
-								<td>${gold}</td>
-							</tr>
-						</table>
+						<div class="form-wrap my-profile-form">
+							<div class="form-group row my-profile-img my-info-memo">
+								<div class="form-label-wrap">
+									<label class="form-label">프로필</label>
+								</div>
+								<span class="form-value profile-img">
+									<span class="profile-img-upload-wrap has-email">
+										<span class="profile-preview-wrap has-profile" style="background-image: url(/assets/images/board/profile.png);"></span>
+										<span class="btn-wrap">
+											<span class="email">${principal.email}</span>
+										</span>
+									</span>
+								</span>
+							</div>
+							<div class="form-group row">
+								<div class="form-label-wrap">
+									<label for="inputId" class="form-label">아이디</label>
+								</div>
+								<div class="form-value has-btn">
+									<input type="text" maxlength="10" value="${principal.username}" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="form-label-wrap">
+									<label for="inputNick" class="form-label">닉네임</label>
+								</div>
+								<div class="form-value has-btn">
+									<input type="text" maxlength="10" value="${principal.nickName}" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="form-label-wrap">
+									<label for="inputBirth" class="form-label">생년월일</label>
+								</div>
+								<div class="form-value">
+									<input type="text" maxlength="8" value="${principal.gender}" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="form-label-wrap">
+									<label for="rdoGenderMan" class="form-label">성별</label>
+								</div>
+								<div class="form-value">
+									<input type="text" maxlength="8" value="성별" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="form-label-wrap">
+									<label for="gold" class="form-label">골드</label>
+								</div>
+								<div class="form-value">
+									${gold}
+								</div>
+							</div>
+						</div>
 					</div>
 				</section>
 			</div>

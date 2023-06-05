@@ -37,7 +37,6 @@
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/mypage/sidebar.css" />
 <link rel="stylesheet" href="/assets/css/mypage/record.css" />
-<link rel="stylesheet" href="/assets/css/mypage/userInfo.css" />
 </head>
 <body>
 	<div class="container">
@@ -94,68 +93,48 @@
 					</div>
 				</section>
 				<section class="main">
-					<div class="reportList">
-						<div class="section-title-wrap form-title">
-							<h2 class="section-title">내정보</h2>
-							<div class="right-wrap">
-								<span class="icon-required"></span>
-							</div>
+					<div class="report-list">
+						<div class="main-header">
+							<h3 class="mb-2">내 작품</h3>
 						</div>
-						<div class="form-wrap my-profile-form">
-							<div class="form-group row my-profile-img my-info-memo">
-								<div class="form-label-wrap">
-									<label class="form-label">프로필</label>
-								</div>
-								<span class="form-value profile-img">
-									<span class="profile-img-upload-wrap has-email">
-										<span class="profile-preview-wrap has-profile" style="background-image: url(/assets/images/board/profile.png);"></span>
-										<span class="btn-wrap">
-											<span class="email">${principal.email}</span>
-										</span>
-									</span>
-								</span>
+						<c:choose>
+							<c:when test="${empty myNovelList }">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="cols">장르</th>
+											<th scope="cols">제목</th>
+										</tr>
+									</thead>
+									<tbody class="reportList">
+										<tr>
+											<td>회원님이 등록한 작품이 없습니다.</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</c:when>
+							<c:otherwise>
+							<div class="scroll">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="cols">장르</th>
+											<th scope="cols">제목</th>
+										</tr>
+									</thead>
+									<c:forEach items="${myNovelList }" var="novel">
+										<tbody class="reportList">
+											<tr>
+												<td>${novel.genreName }</td>
+												<td><a href="/novel/detail/${novel.id }">${novel.title }</a></td>
+											</tr>
+										</tbody>
+									</c:forEach>
+								</table>
 							</div>
-							<div class="form-group row">
-								<div class="form-label-wrap">
-									<label for="inputId" class="form-label">아이디</label>
-								</div>
-								<div class="form-value has-btn">
-									<input type="text" maxlength="10" value="${principal.username}" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="form-label-wrap">
-									<label for="inputNick" class="form-label">닉네임</label>
-								</div>
-								<div class="form-value has-btn">
-									<input type="text" maxlength="10" value="${principal.nickName}" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="form-label-wrap">
-									<label for="inputBirth" class="form-label">생년월일</label>
-								</div>
-								<div class="form-value">
-									<input type="text" maxlength="8" value="${principal.birthDate}(${principal.getAge()}세)" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="form-label-wrap">
-									<label for="rdoGenderMan" class="form-label">성별</label>
-								</div>
-								<div class="form-value">
-									<input type="text" maxlength="8" value="${principal.gender}" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="form-label-wrap">
-									<label for="gold" class="form-label">골드</label>
-								</div>
-								<div class="form-value">
-									<input type="text" maxlength="8" value="${gold}" readonly="readonly">
-								</div>
-							</div>
-						</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</section>
 			</div>
