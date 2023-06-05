@@ -47,8 +47,7 @@
 	<update id="updateUser">
 		UPDATE user_tb SET
 		password = #{password},
-		nick_name = #{nickName},
-		email = #{email}
+		nick_name = #{nickName}
 		WHERE id = #{id};
 	</update>
 
