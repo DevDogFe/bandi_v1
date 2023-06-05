@@ -44,10 +44,10 @@
 						<a href="#none"><img src="/assets/images/main/bandi-logo3.png"></a>
 					</div>
 					<ul class="gnb">
-						<li><a href="#none">HOME</a></li>
-						<li><a href="#none">소설</a></li>
-						<li><a href="#none">공모전</a></li>
-						<li class="dropdown"><a href="#none" class="dropbtn">게시판</a></li>
+						<li><a href="/main">HOME</a></li>
+						<li><a href="/pay">소설</a></li>
+						<li><a href="/contest">공모전</a></li>
+						<li class="dropdown"><a href="#" class="dropbtn">게시판</a></li>
 						<li><a href="#none">고객지원</a></li>
 						<li><a href="#none">마이페이지</a></li>
 					</ul>

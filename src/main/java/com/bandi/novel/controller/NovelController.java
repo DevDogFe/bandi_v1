@@ -243,14 +243,13 @@ public class NovelController {
 	 * @param sectionId
 	 * @return
 	 */
-	@GetMapping("/section/read/{novelId}/{sectionId}/")
+	@GetMapping("/section/read/{novelId}/{sectionId}/{serviceTypeId}")
 	public String getReadSection(HttpServletRequest request, HttpServletResponse response, Model model,
-			@PathVariable Integer novelId, @PathVariable Integer sectionId,
+			@PathVariable Integer novelId, @PathVariable Integer sectionId, @PathVariable Integer serviceTypeId,
 			@RequestParam(defaultValue = "1") Integer currentPage) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// TODO pathvariable로 변경 예정
-		int serviceTypeId = Integer.parseInt(request.getParameter("serviceTypeId"));
 
 		// 결제 여부 확인 !!!!!!! 나중에 변경
 		if(serviceTypeId == 1) {

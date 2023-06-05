@@ -91,8 +91,8 @@
 						<a href="#none"><img src="/assets/images/main/bandi-logo3.png"></a>
 					</div>
 					<ul class="gnb">
-						<li><a href="#none">HOME</a></li>
-						<li><a href="#none">소설</a></li>
+						<li><a href="/main">HOME</a></li>
+						<li><a href="/pay">소설</a></li>
 						<li><a href="#none">공모전</a></li>
 						<li class="dropdown"><a href="#none" class="dropbtn">게시판</a></li>
 						<li><a href="#none">고객지원</a></li>
@@ -148,7 +148,7 @@
 								<h2>유료 웹소설 베스트</h2>
 							</c:when>
 							<c:otherwise>
-								<h2>${novelList1.get(0).genreName}장르 인기소설</h2>
+								<h2>${novelList1.get(0).genreName}장르인기소설</h2>
 							</c:otherwise>
 						</c:choose>
 						<div class="row"></div>
@@ -175,33 +175,35 @@
 				</div>
 			</section>
 			<c:if test="${!empty principal }">
-				<section class="ranking pay">
-					<div class="inner">
-						<div class="ranking-content">
-							<h2>${principal.nickName}님맞춤 추천리스트</h2>
-							<div class="row"></div>
-							<div class="items">
-								<c:forEach items="${novelList2 }" var="novel">
-									<div class="item" onclick="location.href='/novel/detail/${novel.id }'" style="cursor: pointer;">
-										<div class="up-image">
-											<c:choose>
-												<c:when test="${novel.cover != null }">
-													<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
-												</c:when>
-												<c:otherwise>
-													<img alt="이미지 없음" src="/assets/images/noimg.jpg">
-												</c:otherwise>
-											</c:choose>
+				<c:if test="${!empty novelList2 }">
+					<section class="ranking pay">
+						<div class="inner">
+							<div class="ranking-content">
+								<h2>${principal.nickName}님맞춤추천리스트</h2>
+								<div class="row"></div>
+								<div class="items">
+									<c:forEach items="${novelList2 }" var="novel">
+										<div class="item" onclick="location.href='/novel/detail/${novel.id }'" style="cursor: pointer;">
+											<div class="up-image">
+												<c:choose>
+													<c:when test="${novel.cover != null }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+													</c:when>
+													<c:otherwise>
+														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="down-desc">
+												<h3>${novel.title }</h3>
+											</div>
 										</div>
-										<div class="down-desc">
-											<h3>${novel.title }</h3>
-										</div>
-									</div>
-								</c:forEach>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
-					</div>
-				</section>
+					</section>
+				</c:if>
 			</c:if>
 			<section class="vertical-list">
 				<div class="list-header">

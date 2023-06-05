@@ -249,5 +249,10 @@ public class SampleController {
 		
 		return "/cssLayout/cssAdminNovelChange";
 	}
+	
+	@GetMapping("/cssNovelDetail")
+	public String getCssNovelDetail() {
+		return "/cssLayout/cssNovelDetail";
+	}
 }
 	
