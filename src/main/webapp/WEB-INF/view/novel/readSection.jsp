@@ -233,13 +233,16 @@
 										<h5 class="me-2">댓글</h5>
 										<span>11</span>
 									</div>
-									<div class="d-flex flex-row align-items-start">
-										<textarea class="form-control ml-1 shadow-none textarea" maxlength="255"></textarea>
-									</div>
-									<div class="mt-2 text-right float-end">
-										<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
-										<button class="btn btn-outline-danger btn-sm ml-1 shadow-none" type="button">삭제</button>
-									</div>
+									<form action="/novel/reply?serviceTypeId=${serviceTypeId }" method="post">
+										<div class="d-flex flex-row align-items-start">
+											<textarea class="form-control ml-1 shadow-none textarea" name="content" maxlength="255" required="required"></textarea>
+											<input type="hidden" name="novelId" value="${detail.id }">
+											<input type="hidden" name="sectionId" value="${section.id }">
+										</div>
+										<div class="mt-2 text-right float-end">
+											<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
+										</div>
+									</form>
 								</div>
 								<div class="comment-top">
 									<div></div>
@@ -531,7 +534,7 @@ function deleteReply(replyId,novelId,sectionId) {
 		type: "DELETE",
 		url: "/api/reply/" + replyId
 	}).done((response) => {
-		location.href='/section/read/'+novelId+'/'+ sectionId;
+		location.href='/section/read/' + ${detail.id}+ '/' + $("#sectionId").val()+'/'+${serviceTypeId};
 	}).fail((error) => {
 		console.log(error);
 		alert("요청을 처리할 수 없습니다.");
@@ -543,9 +546,7 @@ $(document).ready(function() {
 	
 	// 별점 등록
 	$("#starBtn").on("click", () => {
-		console.log('111111111');
 		const stars = $("input[name = reviewStar]");
-		console.log(stars);
 		let score;
 		for (let i = 0; i < stars.length; i++){
 			if(stars[i].checked){
@@ -562,7 +563,6 @@ $(document).ready(function() {
 					data: JSON.stringify(data),
 					dataType:"json"
 				}).done((response) => {
-					location.href='/section/read/' + ${detail.id}+ '/' + $("#sectionId").val()+'/'+${serviceTypeId};
 				}).fail((error) => {
 					console.log(error);
 					alert("요청을 처리할 수 없습니다.");
