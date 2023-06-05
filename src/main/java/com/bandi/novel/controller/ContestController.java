@@ -87,7 +87,7 @@ public class ContestController {
 		List<Contest> contestList = contestService.selectContestListByLimit();
 		System.out.println(contestList.toString());
 		// 공모전 소설
-		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
+		// List<ContestNovelDto> contestNovelList = contestService.selectContestNovelList();
 		// 마지막으로 본 소설 조회
 		LastNovelRecordDto novelRecord = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		if (novelRecord != null) {
@@ -99,7 +99,7 @@ public class ContestController {
 		//
 
 		model.addAttribute("contestList", contestList);
-		model.addAttribute("contestNovelList", contestNovelList);
+		// model.addAttribute("contestNovelList", contestNovelList);
 
 		return "/contest/contestList";
 	}
@@ -175,10 +175,10 @@ public class ContestController {
 			search = null;
 		}
 		
-		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search);
+		// List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search);
 		List<Genre> genreList = novelService.selectGenreList();
-		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
-		model.addAttribute("contestNovelList", novelPageUtil);
+		// NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
+		// model.addAttribute("contestNovelList", novelPageUtil);
 		model.addAttribute("serviceType", "공모전");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "contest/novel/list");

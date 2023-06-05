@@ -15,6 +15,7 @@ public class NovelDto {
 	private String cover;
 	private String overview;
 	private Double score;
+	private String serialCycle;
 	
 	public Double score() {
 		

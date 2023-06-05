@@ -188,7 +188,7 @@ public class NovelController {
 		if ("".equals(search)) {
 			search = null;
 		}
-		
+
 		List<NovelDto> freeNovelList = novelService.selectFreeNovelList(genreId, search, sort);
 		List<Genre> genreList = novelService.selectGenreList();
 		NovelPageUtil novelPageUtil = new NovelPageUtil(freeNovelList.size(), 20, currentPage, 5, freeNovelList);
@@ -219,9 +219,10 @@ public class NovelController {
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		// 소설 구매, 대여 여부 리스트
 		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
-		
+		// novelId 기반 추천 리스트
 		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
-		
+		// 장르기반 추천리스트
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
 
 		// 즐겨찾기 여부
 		if (principal != null) {
@@ -233,12 +234,14 @@ public class NovelController {
 		model.addAttribute("favorite", favorite);
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("recommendList", recommendList);
+		model.addAttribute("genreList", genreList);
 
 		return "/novel/novelDetail";
 	}
 
 	/**
 	 * 회차 조회
+	 * 
 	 * @param model
 	 * @param sectionId
 	 * @return
@@ -248,11 +251,17 @@ public class NovelController {
 			@PathVariable Integer novelId, @PathVariable Integer sectionId, @PathVariable Integer serviceTypeId,
 			@RequestParam(defaultValue = "1") Integer currentPage) {
 
+		List<NovelDto> leftList = null;
+		if (serviceTypeId == 1) {
+			leftList = novelService.selectPayNovelList(null, null, "default");
+		} else if (serviceTypeId == 2) {
+			leftList = novelService.selectFreeNovelList(null, null, "default");
+		}
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		// TODO pathvariable로 변경 예정
+		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 
 		// 결제 여부 확인 !!!!!!! 나중에 변경
-		if(serviceTypeId == 1) {
+		if (serviceTypeId == 1) {
 			UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId,
 					sectionId);
 
@@ -292,7 +301,7 @@ public class NovelController {
 					isSectionCookie = true;
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
-						//System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
+						// System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						cookie.setMaxAge(60 * 60 * 24);
 						response.addCookie(cookie);
 						novelService.sectionViewsPlus(sectionId);
@@ -326,17 +335,23 @@ public class NovelController {
 		for (int startIndex = 0; startIndex < section.length(); startIndex += fixLength) {
 			subStringList.add(section.substring(startIndex, Math.min(startIndex + fixLength, section.length())));
 		}
-		
+
+		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("favorite", favorite);
+		model.addAttribute("detail", novelDetailDto);
 		//
-		model.addAttribute("serviceTypeId",serviceTypeId);
-		model.addAttribute("numberOfPages",strArraySize);
-		model.addAttribute("subStringList",subStringList);
-		
+		model.addAttribute("serviceTypeId", serviceTypeId);
+		model.addAttribute("numberOfPages", strArraySize);
+		model.addAttribute("subStringList", subStringList);
+
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
 		// 효린
 		List<RecommendFavoritesDto> favoriteList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
-		model.addAttribute("favoriteList", favoriteList);		
+		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("leftList", leftList);
 
 		return "/novel/readSection";
 	}
@@ -348,12 +363,13 @@ public class NovelController {
 	 * @return
 	 */
 	@PostMapping("/novel/reply")
-	public String replyProc(NovelReply novelReply,@RequestParam Integer serviceTypeId) {
+	public String replyProc(NovelReply novelReply, @RequestParam Integer serviceTypeId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
 
-		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId()+"?serviceTypeId="+serviceTypeId;
+		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId() + "?serviceTypeId="
+				+ serviceTypeId;
 	}
 
 	/**

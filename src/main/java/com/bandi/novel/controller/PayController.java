@@ -140,7 +140,7 @@ public class PayController {
 			payService.purchaseNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "?serviceTypeId="
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"
 				+ serviceTypeId;
 	}
 
@@ -170,7 +170,7 @@ public class PayController {
 			payService.rentalNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "?serviceTypeId="
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"
 				+ serviceTypeId;
 	}
 
@@ -212,10 +212,10 @@ public class PayController {
 		if (dto.getIsRental() != null) {
 			// 성공 시 redirect url
 			params.add("approval_url", "http://localhost/payment/kakao/rental/success/" + dto.getNovelId() + "/"
-					+ dto.getSectionId() + "?serviceTypeId=" + serviceTypeId);
+					+ dto.getSectionId() + "/" + serviceTypeId);
 		} else {
 			params.add("approval_url", "http://localhost/payment/kakao/purchase/success/" + dto.getNovelId() + "/"
-					+ dto.getSectionId() + "?serviceTypeId=" + serviceTypeId);
+					+ dto.getSectionId() + "/" + serviceTypeId);
 		}
 
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
@@ -278,7 +278,7 @@ public class PayController {
 		// 유저 결제 회차 삽입 !!!!!!
 		payService.insertUserLibrary(principal.getId(), sectionId);
 
-		return "redirect:/section/read/" + novelId + "/" + sectionId + "?serviceTypeId=" + serviceTypeId;
+		return "redirect:/section/read/" + novelId + "/" + sectionId + "/" + serviceTypeId;
 	}
 
 	/**
@@ -296,7 +296,7 @@ public class PayController {
 		// 유저 골드 사용 대여 처리
 		payService.rentalNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(), sectionId);
 
-		return "redirect:/section/read/" + novelId + "/" + sectionId + "?serviceTypeId=" + serviceTypeId;
+		return "redirect:/section/read/" + novelId + "/" + sectionId + "/" + serviceTypeId;
 	}
 
 	/**

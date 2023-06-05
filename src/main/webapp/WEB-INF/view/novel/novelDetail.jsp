@@ -96,15 +96,9 @@
 										<div>
 											<h2 class="d-flex novel--title">${detail.title}</h2>
 										</div>
-										<div class="d-flex detail--information detail">
-											<div>장르</div>
-											<div>${detail.genreName}</div>
-											<div>작가</div>
-											<div>${detail.nickName}</div>
-											<div>작품 등록일</div>
-											<div>${detail.createdAt()}</div>
-											<div>즐겨찾기</div>
-											<div>${favorite}</div>
+										<div class="detail--information detail">
+											<div>장르 ${detail.genreName} | 작가 ${detail.nickName} | 즐겨찾기 ${favorite}</div>
+											<div>작품 등록일 ${detail.createdAt()} | 연재 ${detail.serialCycle}요일</div>
 										</div>
 									</div>
 									<div class="detail--overview">
@@ -233,7 +227,7 @@
 														<tr class="table-default">
 															<td>
 																<div class="list--title">
-																	<a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
+																	<a href="/section/read/${detail.id}/${section.id}/${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
 																</div>
 																<div class="list--detail">
 																	${section.createdAt()}&nbsp;&nbsp;<i class='bx bx-show'></i>&nbsp;${section.views}&nbsp;&nbsp;<i class='bx bxs-star'></i>
@@ -320,57 +314,26 @@
 						</div>
 						<div class="recommend-list">
 							<h3 class="recommend-header">
-								<a>추천작</a>
+								<a>${genreList.get(0).genreName } 추천작</a>
 							</h3>
 							<ul>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai1.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai2.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai3.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai4.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai2.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai1.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
+								<c:forEach items="${genreList }" var="novel">
+									<li><a class="recommend-item">
+											<div class="recommend-img">
+												<c:choose>
+													<c:when test="${novel.cover != null }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+													</c:when>
+													<c:otherwise>
+														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="recommend-desc">
+												<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
+											</div>
+									</a></li>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>

@@ -12,19 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
-import com.bandi.novel.dto.response.MyFavoriteDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
-import com.bandi.novel.dto.response.PurchaseRecordDto;
 import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
-import com.bandi.novel.dto.response.RentalRecordDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.User;
-import com.bandi.novel.model.UserGoldCharge;
 import com.bandi.novel.service.ContestService;
-import com.bandi.novel.service.NovelReplyService;
 import com.bandi.novel.service.NovelService;
 import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.RecommendService;
@@ -40,8 +35,6 @@ public class SampleController {
 	private HttpSession session;
 	@Autowired
 	private NovelService novelService;
-	@Autowired
-	private NovelReplyService novelReplyService;
 	@Autowired
 	private ContestService contestService;
 	@Autowired

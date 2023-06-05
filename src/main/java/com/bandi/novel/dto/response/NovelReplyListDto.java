@@ -15,6 +15,7 @@ public class NovelReplyListDto {
 	private String content;
 	private Timestamp createdAt;
 	private String username;
+	private String nickName;
 	
 	public String createdAt() {
 		return TimestampFormat.format(createdAt);

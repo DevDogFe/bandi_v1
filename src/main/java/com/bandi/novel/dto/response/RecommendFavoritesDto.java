@@ -9,6 +9,7 @@ public class RecommendFavoritesDto {
 	private String title;
 	private String cover;	
 	private String genreName;
+	private String nickName;
 	
 	private String author;
 
