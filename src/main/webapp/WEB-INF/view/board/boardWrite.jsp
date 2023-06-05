@@ -78,6 +78,7 @@
 								</select>
       						</div>
       					</div>
+      					<br>
 						<textarea id="content" name="content" class="summernote"></textarea>
 						<div class="btn-flex">
 							<button type="submit" class="add-board">등록</button>
@@ -89,7 +90,8 @@
       <script type="text/javascript">
 		$(document).ready(function() {
 			$('.summernote').summernote({
-				height : 300
+				height : 300,
+				disableResizeEditor : true
 			});
 		});
 	</script>

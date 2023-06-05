@@ -113,3 +113,7 @@ input:focus ~ search-span, input:valid ~ search-span {
 	font-size: 18px;
 	text-align: center;
 }
+
+.me-1 {
+	background-color: #3b6bc9;
+}

@@ -57,7 +57,7 @@ CREATE TABLE board_tb(
     board_type_id INT NOT NULL,
     category_id INT NOT NULL,
     title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
+    content LONGTEXT NOT NULL,
     likes INT NOT NULL DEFAULT 0,
     views INT NOT NULL DEFAULT 0,
     ecoded_file_name VARCHAR(100),

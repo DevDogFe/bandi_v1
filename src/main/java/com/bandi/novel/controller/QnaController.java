@@ -166,8 +166,6 @@ public class QnaController {
 
 		Question question = qnaService.selectQuestionById(questionId);
 		Answer answer = qnaService.selectAnswerByQuestionId(questionId);
-		System.out.println(question);
-		System.out.println(answer);
 		model.addAttribute("question", question);
 		model.addAttribute("answer", answer);
 
