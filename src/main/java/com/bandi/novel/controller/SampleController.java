@@ -319,5 +319,10 @@ public class SampleController {
 					
 		return "/cssLayout/cssMypageUserUpdate";
 	}
+	
+	@GetMapping("/cssNovelDetail")
+	public String getCssNovelDetail() {
+		return "/cssLayout/cssNovelDetail";
+	}
 }
 	

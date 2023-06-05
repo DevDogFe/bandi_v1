@@ -22,6 +22,8 @@ import com.bandi.novel.model.Novel;
 @Mapper
 public interface NovelRepository {
 	
+	Integer selectServiceTypeById(Integer id);
+	
 	List<GenreCountDto> selectGenreCount();
 
 	int insertNovel(Novel novel);

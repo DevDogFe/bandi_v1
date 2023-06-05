@@ -214,52 +214,8 @@ public class UserService {
 		}
 	}
 
-	/**
-	 * 효린 DB 이메일 인증번호 저장
-	 * 
-	 * @param authKey
-	 */
-	@Transactional
-	public void createAuthKey(AuthKey authKey) {
 
-		AuthKey authKeyEntity = authRepository.FindByEmail(authKey.getEmail());
-		if (authKeyEntity != null) {
-			authRepository.updateByEmail(authKey);
-		} else {
-			authRepository.insert(authKey);
-		}
-	}
 
-	/**
-	 * 효린 DB 인증번호 변경
-	 * 
-	 * @param email
-	 */
-	@Transactional
-	public void updateAuthKey(AuthKey authKey) {
-
-	}
-
-	/**
-	 * 효린 인증번호 일치여부 확인
-	 * 
-	 * @param email
-	 * @param inputKey
-	 * @return T/F
-	 */
-	@Transactional
-	public Boolean checkAuthKey(String email, String inputKey) {
-
-		AuthKey authKeyEntity = authRepository.FindByEmail(email);
-		String key = authKeyEntity.getAuthKey();
-
-		if (inputKey.equals(key)) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
 
 	@Transactional
 	public User loginByNaver(User user) {

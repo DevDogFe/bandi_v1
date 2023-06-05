@@ -13,6 +13,7 @@ public class NovelDto {
 	private Integer genreId;
 	private Integer favoriteCount;
 	private String cover;
+	private String overview;
 	private Double score;
 	
 	public Double score() {

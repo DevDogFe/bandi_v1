@@ -80,9 +80,9 @@ public class UserController {
 	 */
 	@PostMapping("/user")
 	public String joinProc(JoinDto joinDto) {
-		
+		System.out.println(joinDto);
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
-		if(!joinDto.getPassword().equals(joinDto.getPasswordCheck())) {
+		if((!joinDto.getPassword().equals(joinDto.getPasswordCheck())) && joinDto.getExternal() == null) {
 			throw new CustomRestfulException("비밀번호란과 비밀번호 확인란의 값이 다릅니다.", HttpStatus.BAD_REQUEST);
 		}
 		userService.insertUser(joinDto);

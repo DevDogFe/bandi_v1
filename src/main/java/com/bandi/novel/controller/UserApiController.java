@@ -131,18 +131,6 @@ public class UserApiController {
 		return new ResponseDto<String>(HttpStatus.OK, "인증번호가 발송되었습니다.", true, key);
 	}
 
-	/**
-	 * 효린 이메일 인증번호
-	 * 
-	 * @param inputKey
-	 * @param email
-	 * @return T/F
-	 */
-	@PostMapping("/api/authKey")
-	public Boolean authKeycheck(String inputKey, String email) {
-
-		return userService.checkAuthKey(email, inputKey);
-	}
 
 
 

@@ -62,18 +62,12 @@
       		<section class="main-form">
       			<div class="registration-form">
       				<h1>회원 가입</h1>
-      				<form action="#" class="form">
+      				<form action="/user" method="post" class="form">
+      				<input type="hidden" name="username" value="${user.username}"> <input type="hidden" name="password" value="${user.password}"> <input type="hidden" name="external" value="kakao">
       					<div class="input-box">
-      						<label>아이디</label>
-      						<input type="text" id="usernameJ" name="username" placeholder="Enter full name" required/>
-      					</div>
-      					<div class="input-box">
-      						<label>비밀번호</label>
-      						<input type="password" id="passwordJ" name="password" placeholder="Enter password" required/>
-      					</div>
-      					<div class="input-box">
-      						<label>비밀번호 확인</label>
-      						<input type="password" placeholder="Enter password" required/>
+      						<label>닉네임</label>
+      						<input type="text" id="nickName" name="nickName" placeholder="Enter full name" required/>
+      						<div id="nickNameCheck"></div>
       					</div>
       					<div class="input-box">
       						<label>이메일</label>
@@ -248,7 +242,7 @@
       </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(() => {
 	$("#addContestForm").css('display','none');
 	$("#serviceTypeId").on("change", function () {
 		if($(this).val() == 3){
@@ -261,11 +255,122 @@ $(document).ready(function(){
 		}
     });
 	
-	$("#contestFormId").on("change",function(){
+	$("#contestFormId").on("change",() => {
 		
 		let contestOptionId = $("#contestFormId").val();
 		// input값 변경으로 공모전 id post 하기
 		$("#contestId").val($("#contestOptionId"+contestOptionId).val());
 	});
+	// 아이디 중복확인
+	let usernameOk = false;
+	let nickNameOk = false;
+	
+	// 닉네임 중복확인
+	$("#nickName").on("keyup", () => {
+		$.ajax({
+			type: "GET",
+			url: "/api/nickName?nickName=" + $("#nickName").val() 
+		}).done((response) => {
+			if(response.data){
+				$("#nickNameCheck").text(response.message);
+				nickNameOk = false;
+			} else{
+				$("#nickNameCheck").text(response.message);
+				nickNameOk = true;
+			}
+		}).fail((error) => {
+			console.log(error);
+			alert("요청을 처리할 수 없습니다.");
+		});
+	});
+	
+	
+	
+	// 이메일 인증번호 발송 (효린)
+/**		$("#emailAuth").on("click", () =>{
+		$.ajax({
+			type: "POST",
+			url: "/api/emailAuth",
+			data: {email: $("#email").val()}				
+		}).done((response) => {
+			console.log(response)
+			if(response){
+				alert("인증번호 발송되었습니다.");					
+			} else{
+				alert("이미 가입된 이메일입니다.");					
+			}				
+		}).fail((error) => {
+			console.log(error);
+			alert("인증번호 발송 실패");
+		});	
+	});**/
+	
+	//// 이메일 인증번호 발송 (효린)
+	$("#emailAuth").on("click", () =>{
+		$.ajax({
+			type: "POST",
+			url: "/api/emailAuth",
+			data: {email: $("#email").val()}				
+		}).done((response) => {
+			if(response.isSuccess){
+				alert(response.message);	
+				$("#authKey").attr('disabled',false);
+				confirm(response.data);
+			} else{
+				alert(response.message);					
+			}				
+		}).fail((error) => {
+			console.log(error);
+			alert("인증번호 발송 실패");
+		});	
+	});
+	
+	// 인증번호 일치여부 확인 (효린) 
+/**		$("#confirm").on("click", () => {
+		$.ajax({
+			type: "POST",
+			url: "/api/authKey",
+			data: {email: $("#email").val(),
+				  inputKey: $("#authKey").val()}
+		}).done((response) => {				
+			console.log(response)
+			if(response){
+				alert("인증 완료되었습니다");
+				$("#joinBtn").prop("type","submit");
+			}else{
+				alert("인증실패 확인 다시입력해주세요");
+			}
+		}).fail((error) => {
+			console.log(error);
+			alert("요청을 처리할 수 없습니다")
+		});			
+	});**/				
+	
+	// 인증번호 일치여부 확인 (효린) 
+	function confirm(key){
+		$("#confirm").on("click", () => {
+			if(response.data != $("#authKey").val()){
+				alert("인증실패 확인 다시입력해주세요");
+			}else{
+				alert("인증 완료되었습니다");
+				$("#email").attr('readonly',true);
+				if(usernameOk && nickNameOk){
+					$("#joinBtn").prop("type","submit");
+				}
+			}				
+		});			
+	}	
+	
+	$("#joinBtn").on("click", () => {
+		if($("#joinBtn").attr("type") == "button"){
+			if(!usernameOk){
+				alert("이미 사용중인 아이디입니다.");
+			} else if(!nickNameOk){
+				alert("이미 사용중인 닉네임입니다.");
+			} else{
+				alert("이메일 인증을 진행해주세요.");
+			}
+		}
+	})
 })
 </script>      

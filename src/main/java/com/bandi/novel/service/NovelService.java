@@ -46,8 +46,13 @@ public class NovelService {
 	@Autowired
 	private ContestNovelRepository contestNovelRepository;
 
-	@Autowired
 
+	@Transactional
+	public Integer selectServiceTypeByNovelId(Integer novelId) {
+		
+		return novelRepository.selectServiceTypeById(novelId);
+	}
+	
 	@Transactional
 	public List<Genre> selectGenreList() {
 

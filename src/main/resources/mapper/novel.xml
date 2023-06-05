@@ -3,6 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bandi.novel.repository.NovelRepository">
 
+	<select id="selectServiceTypeById" resultType="integer">
+		SELECT service_type_id FROM novel_tb
+		WHERE id = #{id}
+	</select>
+
 	<select id="selectGenreCount" resultType="com.bandi.novel.dto.response.GenreCountDto">
 		SELECT g.name, count(*) AS count
 		FROM novel_tb AS n
@@ -59,7 +64,7 @@
 	<select id="selectPayNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test='sort.equals("default")'>
 			<if test='genreId != null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON n.user_id = u.id
@@ -96,7 +101,7 @@
 				ORDER BY n.id DESC
 			</if>
 			<if test='genreId != null and search == null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON n.user_id = u.id
@@ -133,7 +138,7 @@
 				AND g.id = #{genreId}
 			</if>
 			<if test='genreId == null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -169,7 +174,7 @@
 		</if>
 		<if test='sort.equals("favorite")'>
 			<if test='genreId != null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON n.user_id = u.id
@@ -206,7 +211,7 @@
 				ORDER BY favoriteCount DESC
 			</if>
 			<if test='genreId != null and search == null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON n.user_id = u.id
@@ -244,7 +249,7 @@
 				ORDER BY favoriteCount DESC
 			</if>
 			<if test='genreId == null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -281,7 +286,7 @@
 		</if>
 		<if test='sort.equals("score")'>
 			<if test='genreId != null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON n.user_id = u.id
@@ -318,7 +323,7 @@
 				ORDER BY score DESC
 			</if>
 			<if test='genreId != null and search == null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON n.user_id = u.id
@@ -356,7 +361,7 @@
 				ORDER BY score DESC
 			</if>
 			<if test='genreId == null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -396,7 +401,7 @@
 	<select id="selectFreeNovelsByGenreIdAndName" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test='sort.equals("default")'>
 			<if test='genreId != null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -432,7 +437,7 @@
 				ORDER BY n.id DESC
 			</if>
 			<if test='genreId != null and search == null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -466,7 +471,7 @@
 				AND g.id = #{genreId}
 			</if>
 			<if test='genreId == null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -502,7 +507,7 @@
 		</if>
 		<if test='sort.equals("favorite")'>
 			<if test='genreId != null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -538,7 +543,7 @@
 				ORDER BY favoriteCount DESC
 			</if>
 			<if test='genreId != null and search == null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -573,7 +578,7 @@
 				ORDER BY favoriteCount DESC
 			</if>
 			<if test='genreId == null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -610,7 +615,7 @@
 		</if>
 		<if test='sort.equals("score")'>
 			<if test='genreId != null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -646,7 +651,7 @@
 				ORDER BY score DESC
 			</if>
 			<if test='genreId != null and search == null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -681,7 +686,7 @@
 				ORDER BY score DESC
 			</if>
 			<if test='genreId == null and search != null'>
-				SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+				SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 				FROM novel_tb AS n
 				LEFT JOIN user_tb AS u
 				ON
@@ -726,7 +731,7 @@
 
 	<select id="selectPayNovels" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test='sort.equals("default")'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON
@@ -761,7 +766,7 @@
 			ORDER BY n.id DESC
 		</if>
 		<if test='sort.equals("favorite")'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON
@@ -796,7 +801,7 @@
 			ORDER BY favoriteCount DESC
 		</if>
 		<if test='sort.equals("score")'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON
@@ -834,7 +839,7 @@
 
 	<select id="selectFreeNovels" resultType="com.bandi.novel.dto.response.NovelDto">
 		<if test='sort.equals("default")'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON
@@ -869,7 +874,7 @@
 			ORDER BY n.id DESC
 		</if>
 		<if test='sort.equals("favorite")'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON
@@ -904,7 +909,7 @@
 			ORDER BY favoriteCount DESC
 		</if>
 		<if test='sort.equals("score")'>
-			SELECT n.id, n.title, n.user_id, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
 			FROM novel_tb AS n
 			LEFT JOIN user_tb AS u
 			ON
