@@ -944,6 +944,114 @@
 			ORDER BY score DESC
 		</if>
 	</select>
+	
+	<select id="selectContestNovels" resultType="com.bandi.novel.dto.response.NovelDto">
+		<if test='sort.equals("default")'>
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON
+			n.user_id = u.id
+			LEFT JOIN genre_tb AS
+			g
+			ON n.genre_id = g.id
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			)
+			AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 3
+			ORDER BY n.id DESC
+		</if>
+		<if test='sort.equals("favorite")'>
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON
+			n.user_id = u.id
+			LEFT JOIN genre_tb AS
+			g
+			ON n.genre_id = g.id
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			)
+			AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 3
+			ORDER BY favoriteCount DESC
+		</if>
+		<if test='sort.equals("score")'>
+			SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+			FROM novel_tb AS n
+			LEFT JOIN user_tb AS u
+			ON
+			n.user_id = u.id
+			LEFT JOIN genre_tb AS
+			g
+			ON n.genre_id = g.id
+			LEFT JOIN
+			(
+			SELECT count(user_id) AS favoriteCount, novel_id
+			FROM user_favorite_tb
+			GROUP BY novel_id
+			) AS uf
+			ON n.id = uf.novel_id
+			LEFT JOIN
+			(
+			SELECT novel_id, avg(score) AS score FROM
+			novel_section_tb AS ns
+			LEFT JOIN
+			(
+			SELECT avg(score) AS score, section_id
+			FROM score_tb
+			GROUP BY section_id
+			) AS sc
+			ON ns.id = sc.section_id
+			GROUP BY ns.novel_id
+			)
+			AS ns
+			ON n.id = ns.novel_id
+			WHERE
+			n.service_type_id = 3
+			ORDER BY score DESC
+		</if>
+	</select>
 
 	<select id="selectNovelDetailByNovelId" resultType="com.bandi.novel.dto.response.NovelDetailDto">
 		SELECT n.id, n.title, n.service_type_id, n.created_At, n.cover, n.overview, n.serial_cycle, n.user_id, u.nick_name, g.name AS genre_name,

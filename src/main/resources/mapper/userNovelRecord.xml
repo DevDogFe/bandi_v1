@@ -39,18 +39,20 @@
 	</select>
 
 	<select id="selectLastNovelRecord" resultType="com.bandi.novel.dto.response.LastNovelRecordDto">
-		SELECT unr.user_id,unr.novel_id,unr.section_id,ns.title,ns.content
+		SELECT unr.user_id,unr.novel_id,unr.section_id,n.cover,n.service_type_id,ns.title,ns.content
 		FROM user_novel_record_tb as unr
 		LEFT JOIN novel_section_tb as ns
 		ON
 		unr.section_id = ns.id
+		LEFT JOIN novel_tb as n
+		ON ns.novel_id = n.id
 		WHERE unr.user_id = #{userId}
 		order by unr.created_at DESC LIMIT 1;
 	</select>
 
 	<update id="updateNovelRecord">
 		update user_novel_record_tb
-		set section_id = #{sectionId}
+		set section_id = #{sectionId} , created_at = now()
 		where user_id = #{userId} AND novel_id = #{novelId}
 		AND section_id = #{sectionId}
 	</update>

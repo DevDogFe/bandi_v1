@@ -102,7 +102,7 @@
 				</div>
 			</section>
 			<section>
-				<div class="search-user-form">
+				<div class="search-user-form scroll">
 					<div class="search-user">
 						<div class="search">
 							<input id="search-input" type="text" name="keyword"><span class="search-span"></span>

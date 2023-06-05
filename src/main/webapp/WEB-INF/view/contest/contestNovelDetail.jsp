@@ -182,7 +182,7 @@
 														<tr class="table-dodgerblue">
 															<td>
 																<div class="list--title">
-																	<a href="/section/read/${detail.id}/${section.id}/${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
+																	<a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link title--col">${section.title}</a>
 																</div>
 																<div class="list--detail">
 																	${section.createdAt()}&nbsp;&nbsp;<i class='bx bx-show'></i>&nbsp;${section.views}&nbsp;&nbsp;<i class='bx bxs-star'></i>
@@ -203,27 +203,27 @@
 																			<c:choose>
 																				<c:when test="${paymentList[vs.index].purchaseSectionId != null}">
 																					<td class="status--td">
-																						<div class="list--status status--buy">구매 완료</div>
+																						<div class="list--status status--buy"></div>
 																					</td>
 																				</c:when>
 																				<c:otherwise>
 																					<td class="status--td">
-																						<div class="list--status status--rent">대여 중</div>
-																						<div class="list--detail">(만료: ${paymentList[vs.index].endFormat()})</div>
+																						<div class="list--status status--rent"></div>
+																						<div class="list--detail"></div>
 																					</td>
 																				</c:otherwise>
 																			</c:choose>
 																		</c:when>
 																		<c:otherwise>
 																			<td class="status--td">
-																				<div class="list--status status--buy">🟡${section.listPrice}G</div>
+																				<div class="list--status status--buy"></div>
 																			</td>
 																		</c:otherwise>
 																	</c:choose>
 																</c:when>
 																<c:otherwise>
 																	<td class="status--td">
-																		<div class="list--status status--buy">🟡${section.listPrice}G</div>
+																		<div class="list--status status--buy"></div>
 																	</td>
 																</c:otherwise>
 															</c:choose>
@@ -233,7 +233,7 @@
 														<tr class="table-default">
 															<td>
 																<div class="list--title">
-																	<a href="/section/read/${detail.id}/${section.id}/${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
+																	<a href="/contest/novel/read/${detail.id}/${section.id}" class="list--link title--col">${section.title}</a>
 																</div>
 																<div class="list--detail">
 																	${section.createdAt()}&nbsp;&nbsp;<i class='bx bx-show'></i>&nbsp;${section.views}&nbsp;&nbsp;<i class='bx bxs-star'></i>
@@ -248,7 +248,7 @@
 																</div>
 															</td>
 															<td class="status--td">
-																<div class="list--status status--buy">🟡${section.listPrice}G</div>
+																<div class="list--status status--buy"></div>
 															</td>
 														</tr>
 													</c:otherwise>

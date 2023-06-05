@@ -9,6 +9,8 @@ public class LastNovelRecordDto {
 	private Integer userId;
 	private Integer sectionId;
 	private Integer novelId;
+	private Integer serviceTypeId;
 	private String title;
 	private String content;
+	private String cover;
 }

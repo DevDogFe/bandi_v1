@@ -30,6 +30,56 @@
 <script src="/assets/js/turn.min.js"></script>
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/readSection.css" />
+<style type="text/css">
+#starScore fieldset {
+	display: inline-block;
+	direction: rtl;
+	border: 0;
+}
+
+#starScore fieldset legend {
+	text-align: right;
+}
+
+#starScore input[type=radio] {
+	display: none;
+}
+
+#starScore label {
+	font-size: 2em;
+	color: transparent;
+	text-shadow: 0 0 0 #f0f0f0;
+}
+
+#starScore label:hover {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#starScore label:hover ~ label {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#starScore input[type=radio]:checked ~ label {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#reviewContents {
+	width: 100%;
+	height: 150px;
+	padding: 10px;
+	box-sizing: border-box;
+	border: solid 1.5px #D3D3D3;
+	border-radius: 5px;
+	font-size: 16px;
+	resize: none;
+}
+
+#book-body {
+	background-color: #D7CCC8;
+	padding: 10px;
+	border-radius: 5px;
+}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -77,26 +127,18 @@
 						</div>
 						<div class="contents-list">
 							<ul>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
-								<li class="list-item bold"><span class="list-icon">독</span> <a class="item-author">해수목</a> <a class="item-title">겜머니로 세계정복 겜머니로 세계정복</a></li>
+								<c:set var="count" value="1"></c:set>
+								<c:forEach items="${leftList }" end="20" var="novel">
+									<c:choose>
+										<c:when test="${count%2 == 0}">
+											<li class="list-item"><span class="list-icon">${novel.serialCycle}</span> <a class="item-author">${novel.nickName}</a> <a class="item-title" href="/novel/detail/ ${novel.id}">${novel.title}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="list-item bold"><span class="list-icon">${novel.serialCycle}</span> <a class="item-author">${novel.nickName}</a> <a class="item-title" href="/novel/detail/ ${novel.id}">${novel.title}</a></li>
+										</c:otherwise>
+									</c:choose>
+
+								</c:forEach>
 							</ul>
 						</div>
 					</div>
@@ -159,22 +201,24 @@
 								</div>
 							</div>
 						</div>
+						<div class="mt-3">
+							<c:if test="${section.prevTitle != '이전글이 없습니다'}">
+								<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.prevId}/${serviceTypeId}'" class="btn btn-primary btn-sm shadow-none">이전글:
+									${section.prevTitle}</button>
+							</c:if>
+							<c:if test="${section.nextTitle != '다음글이 없습니다'}">
+								<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.nextId}/${serviceTypeId}'" class="btn btn-primary btn-sm shadow-none">다음글:
+									${section.nextTitle}</button>
+							</c:if>
+						</div>
 					</div>
-					<div>
-						<c:if test="${section.prevTitle != '이전글이 없습니다'}">
-							<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.prevId}?currentPage=${replyList.currentPage}&serviceTypeId=${serviceTypeId}'" class="btn btn-info">${section.prevTitle}</button>
-						</c:if>
-						<c:if test="${section.nextTitle != '다음글이 없습니다'}">
-							<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.nextId}?currentPage=${replyList.currentPage}&serviceTypeId=${serviceTypeId}'" class="btn btn-success">${section.nextTitle}</button>
-						</c:if>
-					</div>
-
 
 					<div class="reply">
 						<div>
 							<form class="mb-3" name="starScore" id="starScore" method="post">
 								<fieldset>
-									<button type="button" class="btn btn-primary" id="starBtn">별점 등록</button>
+									<input type="hidden" value="${section.id }" id="sectionId">
+									<button type="button" class="btn btn-primary btn-sm shadow-none" id="starBtn">별점 등록</button>
 									<span class="text-bold">별점을 선택해주세요</span> <input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label> <input type="radio" name="reviewStar" value="4"
 										id="rate2"><label for="rate2">★</label> <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label> <input type="radio" name="reviewStar"
 										value="2" id="rate4"><label for="rate4">★</label> <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
@@ -205,16 +249,9 @@
 									<c:when test="${empty replyList.content }">
 										<div class="comment-item">
 											<div class="col-md-12">
-												<div class="bg-white p-2">
-													<div class="d-flex flex-row user-info">
-														<div class="d-flex flex-column justify-content-start ml-2">
-															<span class="d-block font-weight-bold name">김경은</span> <span class="date text-black-50">Shared publically - Jan 2021</span>
-														</div>
-													</div>
-												</div>
+												<div class="bg-white p-2"></div>
 												<div class="mt-2">
-													<p class="comment-text">Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Yeah! I Liked that video. Thanks! Thanks! Thanks! Yeah! I
-														Liked Thanks! Yeah! I Liked</p>
+													<p class="comment-text">댓글이 아직 없습니다. 댓글을 남겨주세요.</p>
 												</div>
 											</div>
 										</div>
@@ -235,7 +272,7 @@
 													</div>
 													<div class="mt-2">
 														<c:if test="${principal.id == reply.userId }">
-															<button class="delete--btn" onclick="deleteReply(${reply.id},${section.novelId}, ${section.id}, ${ serviceTypeId})">삭제</button>
+															<button class="btn btn-outline-danger btn-sm ml-1 shadow-none" onclick="deleteReply(${reply.id},${section.novelId}, ${section.id}, ${ serviceTypeId})">삭제</button>
 														</c:if>
 													</div>
 												</div>
@@ -246,16 +283,16 @@
 												<ul class="d-flex">
 													<!-- Previous 시작 -->
 													<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a
-														href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage - 1}&serviceTypeId=${serviceTypeId}" class="page-link">Previous</a></li>
+														href="/contest/novel/read/${section.novelId}/${section.id}/${serviceTypeId}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
 													<!-- Previous 끝 -->
 													<!-- Page번호 시작 -->
 													<c:forEach var="pNo" begin="${replyList.startPage }" end="${replyList.endPage }" step="1">
-														<li class="  <c:if test=''>active</c:if>"><a href="/section/read/${section.novelId}/${section.id}?currentPage=${pNo}&serviceTypeId=${serviceTypeId}" class="page-link">${pNo}</a></li>
+														<li class="  <c:if test=''>active</c:if>"><a href="/contest/novel/read/${section.novelId}/${section.id}/${serviceTypeId}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 													</c:forEach>
 													<!-- Page번호 끝 -->
 													<!-- Next 시작 -->
 													<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a
-														href="/section/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage + 1}&serviceTypeId=${serviceTypeId}" class="page-link">Next</a></li>
+														href="/contest/novel/read/${section.novelId}/${section.id}/${serviceTypeId}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
 													<!-- Next 끝 -->
 												</ul>
 											</div>
@@ -298,57 +335,26 @@
 						</div>
 						<div class="recommend-list">
 							<h3 class="recommend-header">
-								<a>추천작</a>
+								<a>${genreList.get(0).genreName } 추천작</a>
 							</h3>
 							<ul>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai1.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai2.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai3.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai4.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai2.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai1.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
+								<c:forEach items="${genreList }" var="novel">
+									<li><a class="recommend-item">
+											<div class="recommend-img">
+												<c:choose>
+													<c:when test="${novel.cover != null }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+													</c:when>
+													<c:otherwise>
+														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="recommend-desc">
+												<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
+											</div>
+									</a></li>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>
@@ -525,7 +531,7 @@ function deleteReply(replyId,novelId,sectionId) {
 		type: "DELETE",
 		url: "/api/reply/" + replyId
 	}).done((response) => {
-		location.href='/section/read/'+novelId+'/'+ sectionId;
+		location.href='/contest/novel/read/'+novelId+'/'+ sectionId;
 	}).fail((error) => {
 		console.log(error);
 		alert("요청을 처리할 수 없습니다.");
@@ -556,7 +562,7 @@ $(document).ready(function() {
 					data: JSON.stringify(data),
 					dataType:"json"
 				}).done((response) => {
-					location.href='/section/read/' + $("#novelId").val()+ '/' + $("#sectionId").val()+'?serviceTypeId='+'${serviceTypeId}';
+					location.href='/contest/novel/read/' + $("#novelId").val()+ '/' + $("#sectionId").val()+'/'+${serviceTypeId};
 				}).fail((error) => {
 					console.log(error);
 					alert("요청을 처리할 수 없습니다.");

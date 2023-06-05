@@ -1,5 +1,6 @@
 package com.bandi.novel.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -20,6 +21,7 @@ import com.bandi.novel.dto.response.ContestDto;
 import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.LastNovelRecordDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
+import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
@@ -185,8 +187,8 @@ public class ContestController {
 		
 		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search,contestId,sort);
 		List<Genre> genreList = novelService.selectGenreList();
-		// NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
-		// model.addAttribute("contestNovelList", novelPageUtil);
+		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
+		model.addAttribute("contestNovelList", novelPageUtil);
 		model.addAttribute("serviceType", "공모전");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "contest/novel/list");
@@ -239,8 +241,14 @@ public class ContestController {
 	public String getContestNovelReadSection(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer novelId, @PathVariable Integer sectionId,
 			@RequestParam(defaultValue = "1") Integer currentPage, Model model) {
+		
+		List<NovelDto> leftList = null;
+		leftList = novelService.selectContestNovelList("default");
+		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-
+		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//
@@ -251,7 +259,7 @@ public class ContestController {
 
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
-
+		novelSection.setContent(novelSection.getContent().replace("\r\n", "<br>"));
 		// 조회수 올리기(쿠키에 userId와 sectionId 담아서 중복방지)
 		Integer userId = -1;
 		if (principal != null) {
@@ -285,9 +293,42 @@ public class ContestController {
 			novelSection.setViews(novelSection.getViews() + 1);
 		}
 		// 조회수 up 여기까지
+		
+		String section = novelSection.getContent();
+
+		int fixLength = 180;
+
+		// 배열의 크기를 구합니다.
+		int strArraySize = (int) Math.ceil((double) section.length() / fixLength);
+
+		// 배열을 선언합니다.
+		List<String> subStringList = new ArrayList<>();
+		// 문자열을 순회하여 특정 길이만큼 분할된 문자열을 배열에 할당합니다.
+		for (int startIndex = 0; startIndex < section.length(); startIndex += fixLength) {
+			subStringList.add(section.substring(startIndex, Math.min(startIndex + fixLength, section.length())));
+		}
+
+		// 유저 골드 정보
+		Integer gold = payService.selectUserGold(principal.getId());
+		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		
+		
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("favorite", favorite);
+		model.addAttribute("detail", novelDetailDto);
+		//
+		model.addAttribute("numberOfPages", strArraySize);
+		model.addAttribute("subStringList", subStringList);
 
 		model.addAttribute("section", novelSection);
 		model.addAttribute("replyList", pageUtil);
+		// 효린
+		List<RecommendFavoritesDto> favoriteList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
+		model.addAttribute("favoriteList", favoriteList);
+		model.addAttribute("leftList", leftList);
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
 
 		return "/contest/contestNovelReadSection";
 	}

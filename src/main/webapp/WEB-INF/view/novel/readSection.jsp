@@ -148,7 +148,14 @@
 						<div class="detail-box">
 							<div class="work-box">
 								<div class="cover">
-									<a><img src="/assets/images/main/ai1.jpg"></a>
+									<c:choose>
+										<c:when test="${detail.cover != null }">
+											<img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }">
+										</c:when>
+										<c:otherwise>
+											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="detail">
 									<div class="desc">
@@ -471,7 +478,7 @@
 	
   	//전체화면 설정
     function openFullScreenMode() {
-  		pervMode = mode;
+  		prevMode = mode;
   		mode = "big";
   		
 		if (doc.requestFullscreen){
