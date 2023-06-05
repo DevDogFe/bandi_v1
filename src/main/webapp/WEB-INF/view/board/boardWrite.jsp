@@ -72,9 +72,20 @@
       						<label>카테고리</label>
       						<div class="select-box">
       							<select id="categoryId" name="categoryId" class="form-select">
-									<c:forEach items="${categoryList }" var="category">
-										<option value="${category.id }">${category.categoryName }</option>
-									</c:forEach>
+		      						<c:choose>
+									  <c:when test="${principal.userRole == 1}">
+									    <c:forEach items="${categoryList}" var="category">
+									      <option value="${category.id}">${category.categoryName}</option>
+									    </c:forEach>
+									  </c:when>
+									  <c:otherwise>
+									    <c:forEach items="${categoryList}" var="category">
+									      <c:if test="${category.categoryName != '공지'}">
+									        <option value="${category.id}">${category.categoryName}</option>
+									      </c:if>
+									    </c:forEach>
+									  </c:otherwise>
+									</c:choose>
 								</select>
       						</div>
       					</div>
@@ -82,6 +93,7 @@
 						<textarea id="content" name="content" class="summernote"></textarea>
 						<div class="btn-flex">
 							<button type="submit" class="add-board">등록</button>
+							<button type="submit" class="add-board" onclick="location.href='/board/list/${boardTypeId}'">취소</button>
       					</div>
       				</form>
       			</div>

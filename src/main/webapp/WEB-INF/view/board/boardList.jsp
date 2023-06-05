@@ -136,7 +136,12 @@
 						</c:choose>
 					</div>
 					<div>
-						<button class="btn btn-primary me-1" onclick="location.href='/board/write/${boardTypeId}'">글 작성</button>
+						<c:if test="${principal != null}">
+							<button class="btn btn-primary me-1" onclick="location.href='/board/write/${boardTypeId}'">글 작성</button>
+						</c:if>
+						<c:if test="${principal == null}">
+							<button class="btn btn-primary me-1" type="button" id="no-User">글 작성</button>
+						</c:if>
 					</div>
 				</nav>
 			</section>
@@ -177,5 +182,10 @@
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript">
+			$("#no-User").on("click", ()=>{
+				alert('로그인이 필요한 기능입니다.');
+			});
+		</script>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
