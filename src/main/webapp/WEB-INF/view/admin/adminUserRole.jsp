@@ -166,52 +166,8 @@
 				</ul>
 			</div>
 		</div>
-		<script>
-			  function updateUserRole(userId) {
-			    var selectedUserRole = $(".userList").find("select.userRole").val();
-			    var checkList = $('.user');
-			    var td = checkList.children();
-			    var userId = td.eq(0).text();
-			    $.ajax({
-			      type: "POST",
-			      url: "/api/userRole",
-			      contentType: "application/json",
-			      dataType: "json",
-			      data: JSON.stringify({
-			        id: userId,
-			        userRole: selectedUserRole
-			      })
-			    }).done(function(response) {
-			    	alert("수정 성공");
-			    }).fail(function(error) {
-			      alert("요청 실패");
-			    });
-			  }
-		</script>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	<script>
-		// 유저롤 수정
-	  function updateUserRole(userId) {
-	    var selectedUserRole = $(".userList").find("select.userRole").val();
-	    var checkList = $('.user');
-	    var td = checkList.children();
-	    var userId = td.eq(0).text();
-	    $.ajax({
-	      type: "POST",
-	      url: "/api/userRole",
-	      contentType: "application/json",
-	      dataType: "json",
-	      data: JSON.stringify({
-	        id: userId,
-	        userRole: selectedUserRole
-	      })
-	    }).done((response) => {
-	    	alert(response.message);
-	    }).fail((error) => {
-	      alert("요청 실패");
-	    });
-	  }
-	</script>
+	<script type="text/javascript" src="/assets/js/admin/adminUserRole.js"></script>
 </body>
 </html>

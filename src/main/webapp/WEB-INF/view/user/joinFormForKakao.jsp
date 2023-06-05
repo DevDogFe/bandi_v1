@@ -59,7 +59,7 @@
         	</nav>
       </header>
       	<div class="main-layout">
-      		<section class="main-form">
+      		<section class="main-form" style="width: 100%;">
       			<div class="registration-form">
       				<h1>회원 가입</h1>
       				<form action="/user" method="post" class="form">
@@ -104,103 +104,7 @@
       				</form>
       			</div>
       		</section>
-      		<aside class="right-sidebar">
-      			<div class="right-sidebar-contents">
-      				<div class="my-info">
-      					<div class="username">asd1234 님</div>
-      					<div class="info-category">
-      						<span><img src="/assets/images/main/user-line.png">내정보</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">알림</span>
-      						<span><img src="/assets/images/main/star-line.png">구매목록</span>
-      					</div>
-      					<div class="gold-info">
-      						<div>보유골드</div>
-      						<span class="blue-span">1000</span>
-      					</div>
-      					<div class="right-box">
-      						<div class="right-box-cover">
-      							<a><img src="/assets/images/main/ai1.jpg"></a>
-      						</div>
-      						<div class="right-box-detail">
-      							<div class="right-detail-desc">
-      								<div class="desc-title">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div>
-      							</div>
-      						</div>
-      					</div>
-      				</div>
-      				<div class="right-banner">
-      					<img src="/assets/images/main/gold-charge.png">
-      				</div>
-      				<div class="right-banner">
-      					<img src="/assets/images/main/author-banner.png">
-      				</div>
-      				<div class="recommend-list">
-      					<h3 class="recommend-header"><a>추천작</a></h3>
-      					<ul>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai1.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai2.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai3.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai4.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai2.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai1.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      					</ul>
-      				</div>
-      			</div>
-      		</aside>
+      		
       	</div>
       </div>
     </div>

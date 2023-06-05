@@ -150,13 +150,6 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript">
-			function detailPopup(id) {
-				  var url = "/report/reportDetail/" + $("#id-" + id).val();
-				  var name = "신고접수확인";
-				  var option = "width=600,height=730,top=100,left=200, location=no";
-				  window.open(url, name, option);
-				}
-		</script>
 	</footer>
+	<script type="text/javascript" src="/assets/js/admin/adminReport.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
