@@ -1,122 +1,249 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-body {
-	display: flex;
-	justify-content: center;
-	height: 100vh;
-	align-items: center;
-	background-color: #f3f3f3;
-}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>반디</title>
+    <script src="/assets/js/jquery.min.js"></script>
+    <!-- jquery-3.5.1이 위에 있어야 작동 -->
+    <!-- Slick.js -->
 
-.container {
-	height: 60%;
-	width: 50%;
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	background-color: white;
-	padding: 10px;
-	border-radius: 10px;
-	align-items: center;
-	justify-content: center;
-}
+    <!-- Slider.js no CDN -->
+    <!-- <script src="js/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="js/slick/slick.css">
+    <link rel="stylesheet" href="js/slick/slick-theme.css"> -->
+    
+    <!-- bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
 
-.bottom-inner {
-	display: flex;
-	justify-content: center;
-}
+    <!-- Slider.js CDN -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/assets/js/custom-slick.js"></script>
+    <!-- 작성한 css는 항상 밑에 있어야함 -->
+    <link href="/assets/css/book.css" rel="stylesheet">
+	<script src="/assets/js/turn.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/registration.css" />
+  </head>
+  <body>
+      <div class="container">
+    	<div class="inner">
+      	<header>
+        	<div class="banner">
+          		<div class="lnb">
+            		<a href="#none"><em>for</em> member</a>
+            		<a href="#none">로그인</a>
+            		<a href="#none">회원가입</a>
+          		</div>
+        	</div>
+        	<nav>
+          		<div class="logo">
+            		<a href="#none"><img src="/assets/images/main/bandi-logo3.png"></a>
+          		</div>
+          		<ul class="gnb">
+            		<li><a href="#none">HOME</a></li>
+            		<li><a href="#none">소설</a></li>
+            		<li><a href="#none">공모전</a></li>
+            		<li class="dropdown">
+              			<a href="#none" class="dropbtn">게시판</a>
+            		</li>
+            		<li><a href="#none">고객지원</a></li>
+            		<li><a href="#none">마이페이지</a></li>
+          		</ul>
+        	</nav>
+      </header>
+      	<div class="main-layout">
+      		<section class="main-form">
+      			<div class="registration-form">
+      				<div class="top">
+						<h1>구매가 필요한 유료 작품입니다.</h1>
+					</div>
+					<div class="bottom mt-5">
+						<h1>골드 사용하기</h1>
+						<div class="bottom-inner m-3" >
+							<form class="form" action="/payment/gold/purchase/${serviceTypeId}" method="post">
+							<input type="hidden" name="sectionId" value="${paySection.id}">
+							<input type="hidden" name="novelId" value="${paySection.novelId}">
+							<input type="hidden" name="quantity" value="1">
+							<input type="hidden" name="itemName" value="${paySection.title}">
+							<input type="hidden" name="totalAmount" value="${paySection.listPrice}">
+							<button type="submit" class="pay-btn gold-purchase" >구매 ${paySection.listPrice} G</button>
+						</form>
+						<form class="form" action="/payment/gold/rental/${serviceTypeId}" method="post">
+							<input type="hidden" name="sectionId" value="${paySection.id}">
+							<input type="hidden" name="novelId" value="${paySection.novelId}">
+							<input type="hidden" name="quantity" value="1">
+							<input type="hidden" name="itemName" value="${paySection.title}">
+							<input type="hidden" name="totalAmount" value="${paySection.rentPrice}">
+							<button type="submit" class="pay-btn gold-rental">대여 ${paySection.rentPrice} G</button>
+						</form>
+						</div>
+						<h1>결제 방법을 선택해주세요</h1>
+						<div class="bottom-inner m-3">
+						<form class="form" action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
+							<input type="hidden" name="sectionId" value="${paySection.id}">
+							<input type="hidden" name="novelId" value="${paySection.novelId}">
+							<input type="hidden" name="quantity" value="1">
+							<input type="hidden" name="itemName" value="${paySection.title}">
+							<input type="hidden" name="totalAmount" value="${paySection.listPrice}">
+							<button type="submit" class="pay-btn purchase">구매 ${paySection.listPrice} G</button>
+						</form>
+						<form class="form" action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
+							<input type="hidden" name="sectionId" value="${paySection.id}">
+							<input type="hidden" name="novelId" value="${paySection.novelId}">
+							<input type="hidden" name="quantity" value="1">
+							<input type="hidden" name="itemName" value="${paySection.title}">
+							<input type="hidden" name="totalAmount" value="${paySection.rentPrice}">
+							<input type="hidden" name="isRental" value="true">
+							<button type="submit" class="pay-btn rental">3일 대여 ${paySection.rentPrice} G</button>
+							<button type="button" class="pay-btn charge"
+								onclick="location.href='/payment/charge'">골드 충전하기</button>
+						</form>
+						</div>
+					</div>
+      			</div>
+      		</section>
+      		<aside class="right-sidebar">
+      			<div class="right-sidebar-contents">
+      				<div class="my-info">
+      					<div class="username">asd1234 님</div>
+      					<div class="info-category">
+      						<span><img src="/assets/images/main/user-line.png">내정보</span>
+      						<span><img src="/assets/images/main/thumb-up-line.png">알림</span>
+      						<span><img src="/assets/images/main/star-line.png">구매목록</span>
+      					</div>
+      					<div class="gold-info">
+      						<div>보유골드</div>
+      						<span class="blue-span">${userGold}</span>
+      					</div>
+      					<div class="right-box">
+      						<div class="right-box-cover">
+      							<a><img src="/assets/images/main/ai1.jpg"></a>
+      						</div>
+      						<div class="right-box-detail">
+      							<div class="right-detail-desc">
+      								<div class="desc-title">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div>
+      							</div>
+      						</div>
+      					</div>
+      				</div>
+      				<div class="right-banner">
+      					<img src="/assets/images/main/gold-charge.png">
+      				</div>
+      				<div class="right-banner">
+      					<img src="/assets/images/main/author-banner.png">
+      				</div>
+      				<div class="recommend-list">
+      					<h3 class="recommend-header"><a>추천작</a></h3>
+      					<ul>
+      						<li>
+      							<a class="recommend-item">
+      								<div class="recommend-img"><img src="/assets/images/main/ai1.jpg"></div>
+      								<div class="recommend-desc">
+      									<span>현대판타지</span>
+      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
+      									<span>김경은</span>
+      								</div>
+      							</a>
+      						</li>
+      						<li>
+      							<a class="recommend-item">
+      								<div class="recommend-img"><img src="/assets/images/main/ai2.jpg"></div>
+      								<div class="recommend-desc">
+      									<span>현대판타지</span>
+      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
+      									<span>김경은</span>
+      								</div>
+      							</a>
+      						</li>
+      						<li>
+      							<a class="recommend-item">
+      								<div class="recommend-img"><img src="/assets/images/main/ai3.jpg"></div>
+      								<div class="recommend-desc">
+      									<span>현대판타지</span>
+      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
+      									<span>김경은</span>
+      								</div>
+      							</a>
+      						</li>
+      						<li>
+      							<a class="recommend-item">
+      								<div class="recommend-img"><img src="/assets/images/main/ai4.jpg"></div>
+      								<div class="recommend-desc">
+      									<span>현대판타지</span>
+      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
+      									<span>김경은</span>
+      								</div>
+      							</a>
+      						</li>
+      						<li>
+      							<a class="recommend-item">
+      								<div class="recommend-img"><img src="/assets/images/main/ai2.jpg"></div>
+      								<div class="recommend-desc">
+      									<span>현대판타지</span>
+      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
+      									<span>김경은</span>
+      								</div>
+      							</a>
+      						</li>
+      						<li>
+      							<a class="recommend-item">
+      								<div class="recommend-img"><img src="/assets/images/main/ai1.jpg"></div>
+      								<div class="recommend-desc">
+      									<span>현대판타지</span>
+      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
+      									<span>김경은</span>
+      								</div>
+      							</a>
+      						</li>
+      					</ul>
+      				</div>
+      			</div>
+      		</aside>
+      	</div>
+      </div>
+    </div>
+    <footer>
+        <div class="inner">
+          <div class="footer-top">
+            <ul>
+              <li>(주)반디</li>
+              <li><a href="#none">이용약관</a></li>
+              <li><a href="#none">개인정보 처리방침</a></li>
+              <li><a href="#none">청소년 보호 정책</a></li>
+              <li><a href="#none">회사 소개</a></li>
+            </ul>
+          </div>
+          <div class="footer-content">
+            <ul class="community">
+              <!-- 제목 줄은 a없이-->
+              <li>게시판</li>
+              <li><a href="#none">Subscribe</a></li>
+              <li><a href="#none">Give A Gift</a></li>
+              <li><a href="#none">Customer Service FAQ</a></li>
+              <li><a href="#none">Access Your Subscription</a></li>
+            </ul>
+            <ul class="network">
+              <li>Network</li>
+              <li><a href="#none">Privacy Policy</a></li>
+              <li><a href="#none">Terms Of Service</a></li>
+              <li><a href="#none">Advertise</a></li>
+              <li><a href="#none">Jobs</a></li>
+            </ul>
+            <ul class="help">
+              <li>Help Preserve This Project</li>
+              <li>We may earn a commission if you purchase an item 
+                featured on our site.</li>
+              <li>Copyright ©  2020 CodingWorks. All rights reserved.</li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-.bottom-inner button{
-	margin: 10px 20px;
-}
-
-
-.pay-btn {
-	margin: 10px 0px;
-	color: white;
-	border-radius: 5px;
-	height: 50px;
-}
-
-.gold-purchase {
-	background-color: gold;
-}
-
-.gold-rental {
-	background-color: goldenrod;
-}
-
-.rental {
-	background-color: chocolate;
-}
-
-.purchase {
-	background-color: blue;
-}
-
-.charge {
-	background-color: gray;
-}
-</style>
-</head>
-<body>
-	<div class="container">
-		<div class="top">
-			<h1>구매가 필요한 유료 작품입니다.</h1>
-			<p>내 보유 골드 : <span>${userGold} 골드</span></p>
-			<hr>
-		</div>
-		<div class="bottom">
-			<p><b>골드 사용하기</b></p>
-			<div class="bottom-inner">
-				<form action="/payment/gold/purchase/${serviceTypeId}" method="post">
-				<input type="hidden" name="sectionId" value="${paySection.id}">
-				<input type="hidden" name="novelId" value="${paySection.novelId}">
-				<input type="hidden" name="quantity" value="1">
-				<input type="hidden" name="itemName" value="${paySection.title}">
-				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-				<button type="submit" class="pay-btn gold-purchase">구매 ${paySection.currentPrice} G</button>
-			</form>
-			<form action="/payment/gold/rental/${serviceTypeId}" method="post">
-				<input type="hidden" name="sectionId" value="${paySection.id}">
-				<input type="hidden" name="novelId" value="${paySection.novelId}">
-				<input type="hidden" name="quantity" value="1">
-				<input type="hidden" name="itemName" value="${paySection.title}">
-				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-				<button type="submit" class="pay-btn gold-rental">대여 ${paySection.currentPrice} G</button>
-			</form>
-			</div>
-			
-			
-			<p><b>결제 방법을 선택해주세요</b></p>
-			<div class="bottom-inner">
-			<form action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
-				<input type="hidden" name="sectionId" value="${paySection.id}">
-				<input type="hidden" name="novelId" value="${paySection.novelId}">
-				<input type="hidden" name="quantity" value="1">
-				<input type="hidden" name="itemName" value="${paySection.title}">
-				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-				<button type="submit" class="pay-btn purchase">구매 ${paySection.currentPrice} G</button>
-			</form>
-			<form action="/payment/kakaoPay/ready/${serviceTypeId}" method="post">
-				<input type="hidden" name="sectionId" value="${paySection.id}">
-				<input type="hidden" name="novelId" value="${paySection.novelId}">
-				<input type="hidden" name="quantity" value="1">
-				<input type="hidden" name="itemName" value="${paySection.title}">
-				<input type="hidden" name="totalAmount" value="${paySection.currentPrice}">
-				<input type="hidden" name="isRental" value="true">
-				<button type="submit" class="pay-btn rental">3일 대여 ${paySection.currentPrice} G</button>
-			</form>
-				<button type="button" class="pay-btn charge"
-					onclick="location.href='/payment/charge'">골드 충전하기</button>
-			</div>
-		</div>
-	</div>
-</body>
-</html>

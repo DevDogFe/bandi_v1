@@ -22,5 +22,10 @@ public class TimestampFormat {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		return sdf.format(timestamp);
 	}
+	
+	public static String simpleFormat(Timestamp timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(timestamp);
+	}
 
 }

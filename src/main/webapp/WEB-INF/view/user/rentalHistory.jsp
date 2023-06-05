@@ -96,11 +96,11 @@
 					<div class="reportList">
 						<div class="main-header">
 							<h3 class="mb-2">
-								회차 구매 기록
+								회차 대여 기록
 							</h3>
 						</div>
 						<c:choose>
-							<c:when test="${empty purchaseList }">
+							<c:when test="${empty rentalList }">
 								<table class="table">
 									<thead>
 										<tr>
@@ -112,7 +112,7 @@
 									</thead>
 									<tbody class="reportList">
 										<tr>
-											<td>구매 기록이 없습니다.</td>
+											<td>회원님의 대여 기록이 없습니다.</td>
 											<td></td>
 											<td></td>
 											<td></td>
@@ -130,15 +130,15 @@
 											<th scope="cols">금액</th>
 										</tr>
 									</thead>
-									<c:forEach items="${purchaseList }" var="purchase" begin="0" end="2">
-											<tbody class="reportList">
-												<tr>
-													<td><a href="">${purchase.createdAt()}</a></td>
-													<td><a href="">${purchase.novelTitle}</a></td>
-													<td><a href="">${purchase.sectionTitle}</a></td>
-													<td><a href="">${purchase.price}</a></td>
-												</tr>
-											</tbody>
+									<c:forEach items="${rentalList }" var="rental" begin="0" end="2">
+										<tbody class="reportList">
+											<tr>
+												<td><a href="">${rental.beginRental()}</a></td>
+												<td><a href="">${rental.novelTitle}</a></td>
+												<td><a href="">${rental.sectionTitle}</a></td>
+												<td><a href="">${rental.price}</a></td>
+											</tr>
+										</tbody>
 									</c:forEach>
 								</table>
 							</c:otherwise>

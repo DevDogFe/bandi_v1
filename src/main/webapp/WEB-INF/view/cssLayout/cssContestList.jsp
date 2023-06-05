@@ -95,22 +95,24 @@
       <section class="top-wrap">
       	<div class="top-wrap-content">      	
       		<div class="top-wrap-nav">
-      			<div class="novel-type">
+      			<div class="d-flex novel-type">
       				<h1>공모전</h1>
+      				<a href="/contest/registration" class="board-type-item d-flex align-items-center ms-3"><span class="blue-span">작성하기</span></a>
       			</div>
       		</div>
       	</div>
       </section>
       <section class="one-tab-list">
       	<ul class="board-list">
+      		<c:forEach var="contest" items="${contestList}" varStatus="vs" >
       		<li>
-      			<a href="#">
+      			<a href="/contest/novel/list?contestId=${contest.id}">
       				<div class="border-list-item">
       					<div class="border-list-content">
-	      					<div class="board-list-title">2023 지상최대 웹소설 공모전</div>
+	      					<div class="board-list-title">${contest.title}</div>
 	      					<div class="board-list-desc">
-	      						<span class="blue-span list-desc-span">따노르</span> 
-	      						<span class="list-desc-span">2023.05.31 ~ 2023-05-25</span>
+	      						<span class="blue-span list-desc-span">관리자</span> 
+	      						<span class="list-desc-span">${contest.beginCreatedAt} ~ ${contest.endCreatedAt}</span>
 	      					</div>
       					</div>
       					<div class="border-list-buttons">
@@ -122,31 +124,8 @@
       				</div>
       			</a>
       		</li>
+      		</c:forEach>
       	</ul>
-      </section>
-      <section>
-      	<nav class="paging " aria-label="Page navigation example">
-      		<div></div>
-      		<div>
-      			<ul class="pagination">
-    				<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    				<li class="page-item"><a class="page-link" href="#">1</a></li>
-    				<li class="page-item"><a class="page-link" href="#">2</a></li>
-    				<li class="page-item"><a class="page-link" href="#">3</a></li>
-    				<li class="page-item"><a class="page-link" href="#">4</a></li>
-    				<li class="page-item"><a class="page-link" href="#">5</a></li>
-    				<li class="page-item"><a class="page-link" href="#">6</a></li>
-    				<li class="page-item"><a class="page-link" href="#">7</a></li>
-    				<li class="page-item"><a class="page-link" href="#">8</a></li>
-    				<li class="page-item"><a class="page-link" href="#">9</a></li>
-    				<li class="page-item"><a class="page-link" href="#">10</a></li>
-    				<li class="page-item"><a class="page-link" href="#">Next</a></li>
-  				</ul>
-      		</div>
-  			<div>
-				<button class="btn btn-primary me-1">등록</button>
-  			</div>
-		</nav>
       </section>
       </div>
       
@@ -201,22 +180,22 @@
 										<li>
 											<label for="title" class="form-label">시작일</label> 
 											<input type="text" id="title" name="beginCreatedAt" class="form-control"
-											required="required" value="">
+											required="required" value="${contest.beginCreatedAt}">
 										</li>
 										<li>
 											<label for="title" class="form-label">종료일</label> 
 											<input type="text" id="title" name="endCreatedAt" class="form-control"
-											required="required" value="">
+											required="required" value="${contest.endCreatedAt}">
 										</li>
 										<li>
 											<label for="title" class="form-label">제목</label> 
 											<input type="text" id="title" name="title" class="form-control"
-											required="required" value="">
+											required="required" value="${contest.title}">
 										</li>
 										<li>
 											<label for="overview" class="form-label">내용</label>
 											<textarea id="overview" name="content" class="form-control" required="required" 
-											rows="10"> </textarea>
+											rows="10">${contest.content}</textarea>
 										</li>
 									</ul>
 								</div>

@@ -41,7 +41,6 @@ public class UserInfoController {
 		List<MyFavoriteDto> favoriteList = novelService.selectUserFavoriteNovelList(principal.getId(), 3);
 		List<MyFavoriteDto> myNovelList = novelService.selectMyNovels(principal.getId(), 3);
 		
-		// todo 마이페이지 안에 있는 결제 조회 페이지에 나누어서 넣을 예정
 		Integer gold = payService.selectUserGold(principal.getId());
 		
 		List<UserGoldCharge> goldChargeList = payService.selectGoldCharge(principal.getId());
@@ -58,17 +57,38 @@ public class UserInfoController {
 		return "/user/userInfo";
 	}
 	
-	// 소설 구매, 대여 내역
+	// 소설 구매 내역
 	@GetMapping("/purchase")
 	public String getPurchaseHistory(Model model) {
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		List<PurchaseRecordDto> purchaseList = payService.selectPurchaseRecord(principal.getId());
-		List<RentalRecordDto> rentalList = payService.selectRentalRecord(principal.getId());
 		model.addAttribute("purchaseList", purchaseList);
-		model.addAttribute("rentalList", rentalList);
 		
 		return "/user/purchaseHistory";
+	}
+	
+	// 소설 대여 내역
+	@GetMapping("/rental")
+	public String getrentalHistory(Model model) {
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		List<RentalRecordDto> rentalList = payService.selectRentalRecord(principal.getId());
+		model.addAttribute("rentalList", rentalList);
 		
+		return "/user/rentalHistory";
+	}
+	
+	// 골드 충전 내역
+	@GetMapping("/goldCharge")
+	public String getGoldChargeHistory(Model model) {
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		Integer gold = payService.selectUserGold(principal.getId());
+		
+		List<UserGoldCharge> goldChargeList = payService.selectGoldCharge(principal.getId());
+		
+		model.addAttribute("gold", gold);
+		model.addAttribute("goldChargeList", goldChargeList);
+		
+		return "/user/goldChargeHistory";
 	}
 	
 	// 내서재 구매한 회차, 대여한 회차 내역

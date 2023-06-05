@@ -430,7 +430,6 @@ footer {
 	border-style: solid;
 	border-color: #ddd;
 	border-radius: 1px;
-	color: #333;
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
@@ -443,7 +442,12 @@ footer {
 .border-list-content{
 	flex-direction: column;
 	justify-content: center;
+	color: #333;
 	align-items: center;
+}
+
+.border-list-content:hover{
+	color: #666;
 }
 
 .board-list-title{

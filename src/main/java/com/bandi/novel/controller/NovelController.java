@@ -251,7 +251,7 @@ public class NovelController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// TODO pathvariable로 변경 예정
 
-		// 결제 여부 확인 !!!!!!! 나중에 변경
+		// 결제 여부 확인
 		if(serviceTypeId == 1) {
 			UserPurchaseRentalRecord userPayment = payService.selectUserPaymentRecordByIds(principal.getId(), novelId,
 					sectionId);

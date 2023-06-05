@@ -20,8 +20,10 @@
 		WHERE id = #{id}
 	</select>
 	
-	<select id="selectContestList" resultType="com.bandi.novel.model.Contest">
-		SELECT * FROM contest_tb
+	<select id="selectContestList" resultType="com.bandi.novel.dto.response.ContestDto">
+		SELECT * FROM contest_tb as c
+		left join user_tb as u
+		on c.user_id = u.id
 		ORDER BY begin_created_at DESC limit 10
 	</select>
 	

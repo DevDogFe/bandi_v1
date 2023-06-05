@@ -127,258 +127,63 @@
       </section>
       <section class="one-tab-list">
       	<ul class="work-list">
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai1.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai4.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">황금빛 찬란은 기꺼이 달을 울린다</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai2.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai3.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai1.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai1.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai1.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai4.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">황금빛 찬란은 기꺼이 달을 울린다</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai2.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai3.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai1.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="work-box">
-      				<div class="cover">
-      					<a ><img src="/assets/images/main/ai1.jpg"></a>
-      				</div>
-      				<div class="detail">
-      					<div class="desc">
-      						<a><div class="detail-title"><img class="icon" src="/assets/images/main/medal-line.png">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div></a>
-      						<a><div class="detail-aurthor"><img class="icon" src="/assets/images/main/pencil-line.png">작가 | 리프</div></a>
-      						<a><div class="detail-intro">“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”“네 스무 살 생일날, 그러니까 정확히 십이 년 후에 널 잡아먹을 거야.”</div></a>
-      					</div>
-      					<div class="scale">
-      						<span><img src="/assets/images/main/user-line.png">7043</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">143</span>
-      						<span><img src="/assets/images/main/star-line.png">109</span>
-      					</div>
-      				</div>
-      			</div>
-      		</li>
+      		<c:forEach items="${contestNovelList.contestContent }" var="novel">
+	      		<li>
+	      			<div class="work-box">
+						<div class="cover">
+							<c:choose>
+								<c:when test="${detail.cover != null }">
+									<a href="/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></a>
+								</c:when>
+								<c:otherwise>
+									<a href="/novel/detail/${novel.id}"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a>
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div class="detail">
+							<div class="desc">
+								<a href="/novel/detail/${novel.id}"><div class="detail-title">
+										<img class="icon" src="/assets/images/main/medal-line.png">${novel.title}</div></a> <a href="/contest/novel/detail/${novel.id}"><div class="detail-aurthor">
+										<img class="icon" src="/assets/images/main/pencil-line.png">작가 | ${novel.username}
+									</div></a> <a href="/contest/novel/detail/${novel.id}"><div class="detail-intro">“${novel.overview}”</div></a>
+							</div>
+							<div class="scale">
+								<span><img src="/assets/images/main/user-line.png">${novel.favoriteCount }</span> <span><img src="/assets/images/main/thumb-up-line.png">143</span>
+								<c:choose>
+									<c:when test="${empty novel.score }">
+										<span><img src="/assets/images/main/star-line.png"> - </span>
+									</c:when>
+									<c:otherwise>
+										<span><img src="/assets/images/main/star-line.png"> ${novel.score() } </span>
+									</c:otherwise>
+								</c:choose> 
+							</div>
+						</div>
+					</div>
+	      		</li>
+      		</c:forEach>
       	</ul>
       </section>
       <section>
       	<nav class="paging" aria-label="Page navigation example">
       		<div></div>
-  			<ul class="pagination">
-    			<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    			<li class="page-item"><a class="page-link" href="#">1</a></li>
-    			<li class="page-item"><a class="page-link" href="#">2</a></li>
-    			<li class="page-item"><a class="page-link" href="#">3</a></li>
-    			<li class="page-item"><a class="page-link" href="#">4</a></li>
-    			<li class="page-item"><a class="page-link" href="#">5</a></li>
-    			<li class="page-item"><a class="page-link" href="#">6</a></li>
-    			<li class="page-item"><a class="page-link" href="#">7</a></li>
-    			<li class="page-item"><a class="page-link" href="#">8</a></li>
-    			<li class="page-item"><a class="page-link" href="#">9</a></li>
-    			<li class="page-item"><a class="page-link" href="#">10</a></li>
-    			<li class="page-item"><a class="page-link" href="#">Next</a></li>
-  			</ul>
+  			<ul class="d-flex">
+				<!-- Previous 시작 -->
+				<li class=" <c:if test='${contestNovelList.currentPage == 1}'>d-none</c:if>" id=""><a href="/${map}?currentPage=${contestNovelList.currentPage -1}" class="page-link">Previous</a></li>
+				<!-- Previous 끝 -->
+				<!-- Page번호 시작 -->
+				<c:forEach var="pNo" begin="${contestNovelList.startPage }" end="${contestNovelList.endPage }" step="1">
+					<li class="  <c:if test=''>active</c:if>"><a href="/${map }?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+				</c:forEach>
+				<!-- Page번호 끝 -->
+				<!-- Next 시작 -->
+				<li class="<c:if test='${contestNovelList.endPage == contestNovelList.currentPage }'>d-none</c:if>" id=""><a href="/${map}/${section.id}?currentPage=${contestNovelList.currentPage + 1}" class="page-link">Next</a></li>
+				<!-- Next 끝 -->
+			</ul>
   			<div></div>
 		</nav>
       </section>
       </div>
-      
     </div>
     <footer>
         <div class="inner">

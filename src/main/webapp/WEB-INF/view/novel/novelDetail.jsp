@@ -233,7 +233,7 @@
 														<tr class="table-default">
 															<td>
 																<div class="list--title">
-																	<a href="/section/read/${detail.id}/${section.id}?serviceTypeId=${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
+																	<a href="/section/read/${detail.id}/${section.id}/${detail.serviceTypeId}" class="list--link title--col">${section.title}</a>
 																</div>
 																<div class="list--detail">
 																	${section.createdAt()}&nbsp;&nbsp;<i class='bx bx-show'></i>&nbsp;${section.views}&nbsp;&nbsp;<i class='bx bxs-star'></i>
@@ -299,7 +299,7 @@
 							</div>
 							<div class="gold-info">
 								<div>보유골드</div>
-								<span class="blue-span">1000</span>
+								<span class="blue-span">${userGold}</span>
 							</div>
 							<div class="right-box">
 								<div class="right-box-cover">
