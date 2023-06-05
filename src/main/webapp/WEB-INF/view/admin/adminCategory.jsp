@@ -167,38 +167,6 @@
 			</div>
 		</div>
 	</section>
-	<script>
-		  let sidebar = document.querySelector(".sidebar");
-		  let closeBtn = document.querySelector("#btn");
-		  let searchBtn = document.querySelector(".bx-search");
-		  closeBtn.addEventListener("click", ()=>{
-		    sidebar.classList.toggle("open");
-		    menuBtnChange();
-		  });
-		  searchBtn.addEventListener("click", ()=>{ 
-		    sidebar.classList.toggle("open");
-		    menuBtnChange(); 
-		  });
-		  function menuBtnChange() {
-		   if(sidebar.classList.contains("open")){
-		     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-		   }else {
-		     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
-		   }
-		  }
-  </script>
-	<script>
-		function deleteCategory(id) {
-			var selectedOptionId = $("#boardTypeId option:selected").val();
-			$.ajax({
-				type: "DELETE",
-				url: "/api/category/" + id,
-			}).done((response) => {
-				location.href = '/admin/adminCategory/' + selectedOptionId;
-			}).fail(function(error){
-				alert("요청 실패");
-			});
-		}
-	</script>
+	<script type="text/javascript" src="/assets/js/admin/adminCategory.js"></script>
 </body>
 </html>
