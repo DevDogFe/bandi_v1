@@ -449,7 +449,7 @@
     var flipbookEL = document.getElementById('flipbook');
     var doc = document.getElementById("book-body");
 
-    window.addEventListener('resize', function (e) {
+    window.addEventListener('resize', (e) => {
     	flipbookEL.style.width = '';
       	flipbookEL.style.height = '';
       	
@@ -473,7 +473,7 @@
     });
     
     // 책넘길때 폰트 초기화
-    $("#flipbook").bind("turning", function(event, page, view) {
+    $("#flipbook").bind("turning", (event, page, view) => {
   	  	
   	  	if(mode=="middle"){
   	  		$("p").css('font-size','20px');
@@ -491,13 +491,13 @@
     });
     
     
-    $('#page-number').keydown(function (e) {
+    $('#page-number').keydown( (e) => {
         if (e.keyCode == 13){
         	$('#flipbook').turn('page', $('#page-number').val());
         } 
       });
 
-    $(window).bind('keydown', function (e) {
+    $(window).bind('keydown',  (e) => {
       if (e.target && e.target.tagName.toLowerCase() != 'input') {
     	  if (e.keyCode == 37) {
     		  $('#flipbook').turn('previous');
@@ -526,7 +526,7 @@
 			doc.msRequestFullscreen();
 		}
 		
-		window.addEventListener('resize', function (e) {
+		window.addEventListener('resize', (e) => {
 	    	flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', (flipbookEL.clientWidth*0.9), (flipbookEL.clientHeight*0.8));
@@ -554,7 +554,7 @@
 			document.msExitFullscreen();
 		}
 		
-		window.addEventListener('resize', function (e) {
+		window.addEventListener('resize', (e) => {
 	    	flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);

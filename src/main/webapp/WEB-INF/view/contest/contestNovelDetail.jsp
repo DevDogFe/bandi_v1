@@ -414,34 +414,5 @@
 		</div>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	<script type="text/javascript">
-	$(document).ready(() => {
-			$("#unfavorite").on("click", () =>{
-				$.ajax({
-					type: "DELETE",
-					url: "/api/unfavorite/" + $("#novelId").val()
-				}).done((response) => {
-					console.log(response);
-					console.log(typeof response);
-					location.href='/novel/detail/' + $("#novelId").val();
-				}).fail((error) => {
-					console.log(error);
-					alert("요청을 처리할 수 없습니다.");
-				});
-			});
-			
-			$("#favorite").on("click", () =>{
-				$.ajax({
-					type: "POST",
-					url: "/api/favorite/" + $("#novelId").val()
-				}).done((response) => {
-					console.log(response);
-					console.log(typeof response);
-					location.href='/novel/detail/' + $("#novelId").val();
-				}).fail((error) => {
-					console.log(error);
-					alert("요청을 처리할 수 없습니다.");
-				});
-			});
-		});
-	</script>
+	<script type="text/javascript" src="/assets/js/novel/novelDetail.js"></script>
+	

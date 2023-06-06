@@ -215,40 +215,4 @@
 		</div>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$("#addContestForm").css('display', 'none');
-							$("#serviceTypeId").on(
-									"change",
-									function() {
-										if ($(this).val() == 3) {
-											$("#addContestForm").show();
-											// 서비스 타입 공모전 선택 시 contestId에 기본값 설정
-											$("#contestId").val(
-													$("#contestOptionId1")
-															.val());
-										} else {
-											$("#addContestForm").hide();
-											$("#contestId").val(0);
-										}
-									});
-
-							$("#contestFormId")
-									.on(
-											"change",
-											function() {
-
-												let contestOptionId = $(
-														"#contestFormId").val();
-												// input값 변경으로 공모전 id post 하기
-												$("#contestId")
-														.val(
-																$(
-																		"#contestOptionId"
-																				+ contestOptionId)
-																		.val());
-											});
-						})
-	</script>
+	

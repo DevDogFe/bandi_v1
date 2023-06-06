@@ -32,15 +32,7 @@
     <link rel="stylesheet" href="/assets/css/registration.css" />
   </head>
   <body>
-  <script>
-	$(document).ready(function() {
-		$("#goldSelectForm").on("change", function() {
-
-			$("#totalAmount").val($("#goldSelectForm").val());
-			console.log($("#totalAmount").val());
-		});
-	})
-</script>
+  <script src="/assets/js/gold/chargeGold.js"></script>
     <div class="container">
     	<div class="inner">
       	<header>

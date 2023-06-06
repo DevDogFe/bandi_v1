@@ -166,10 +166,5 @@ h1, h3 {
 	<br>
 </section>
 
-<script type="text/javascript">
-		$(document).ready(() => {
-			
-		});
-	</script>
 
 <%@include file="../layout/footer.jsp"%>
