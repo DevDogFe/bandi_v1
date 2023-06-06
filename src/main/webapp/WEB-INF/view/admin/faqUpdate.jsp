@@ -8,6 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반디</title>
 <script src="/assets/js/jquery.min.js"></script>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
+<!-- include summernote css/js -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="/assets/css/style.css" rel="stylesheet">
 <!-- jquery-3.5.1이 위에 있어야 작동 -->
 <!-- Slick.js -->
 
@@ -33,6 +40,60 @@
 
 </head>
 <style>
+.faq--form--container{
+ 	margin-top: 20px;
+	margin-left: 10px; 
+}
+
+.qna--header--form {
+	display: flex;
+	margin-top: 30px;
+}
+
+.qna--title {
+	height: 40px;
+	width: 400px;
+	margin-top: 1px;
+	border-radius: 5px;
+}
+
+.qna--category {
+	height: 40px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+.qna--button {
+	flex: 3;
+	display: flex;
+	justify-content: flex-end;
+	height: 40px;	
+}
+
+input {
+	border: 1px solid black;
+	font-size: 15px;
+	padding-top: 5px;
+	
+}
+
+.qna--button button{
+	width: 60px;
+	margin-right: 10px;
+	margin-top: 5px;
+	background-color: #546E7A;
+	border: none;
+	border-radius: 3px;
+	height: 35px; 
+	color: #fff;
+	font-size: 20px;	
+}
+
+.qna--title-form{
+	display: flex;
+}
+
 </style>
 <body>
 	<div class="container">
@@ -58,8 +119,8 @@
 				</nav>
 			</header>
 		</div>
-		<div class="sectind-flex">
-			<section>
+		<div class="d-flex align-items-start">
+			<section class="d-flex">
 				<div class="sidebar">
 					<div class="logo_content">
 						<div class="logo">
@@ -90,30 +151,38 @@
 				</div>
 			</section>
 
-			<section>
-				<form action="/admin/faq" method="post">
-					<select name="faqCategoryId">
-						<c:forEach var="category" items="${faqCategoryList}">
-							<c:choose>
-								<c:when test="${category.id == faq.faqCategoryId}">
-									<option selected="selected" value="${category.id}">${category.categoryName}</option>
+			<!-- faq detail -->
+			<section class="flex-grow-1">
+				<form action="/admin/faq" method="post" class="faq--form--container">
+					<div class="qna--header--form">
+						<div class="qna--title-form">
+							<input type="text" class="qna--title" name="question" value=" ${faq.question}">
+							<div class="asd">
+							<select name="faqCategoryId" class="qna--category">							
+							<c:forEach var="category" items="${faqCategoryList}">
+							 <c:choose>
+							 	<c:when test="${category.id == faq.faqCategoryId}">
+								<option selected="selected" value="${category.id}">${category.categoryName}</option>
 								</c:when>
 								<c:otherwise>
 									<option value="${category.id}">${category.categoryName}</option>
 								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select> <br> <label for="question"> 질문 : <input type="text" id="question" name="question" value="${faq.question}">
-					</label> <br> <label for="answer"> 답 : <input type="text" id="answer" name="answer" value="${faq.answer}">
-					</label>
-					<button>수정</button>
-				</form>
-			</section>
+								</c:choose>
+								</c:forEach>
+							</select>
+							</div>
+						</div>
+						
+						<div class="qna--button">
+							<button type="submit"  >수정</button>
+						</div>
+					</div>
+			<textarea id="summernote" name="answer">${faq.answer}</textarea>
+		</form>
+		</section>
 
 
-
-
-		</div>
+	</div>
 	</div>
 	<footer>
 		<div class="inner">
@@ -149,7 +218,14 @@
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript">
+			$('#summernote').summernote({
+				height : 500,
+				disableResizeEditor : true,
+			});
+		</script>
 	</footer>
+
 
 </body>
 </html>

@@ -88,7 +88,7 @@ public class AdminController {
 		} else {
 			model.addAttribute("answer", answer);
 		}
-		return "/admin/questionDetail";
+		return "/admin/adminQuestionDetail";
 	}
 
 	/**

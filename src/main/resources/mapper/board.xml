@@ -38,9 +38,10 @@
 		bt.id
 		LEFT JOIN board_category_tb AS bc
 		ON b.category_id = bc.id
-		WHERE
-		b.board_type_id = #{boardTypeId}
-		ORDER BY b.created_at DESC
+		WHERE b.board_type_id = #{boardTypeId}
+		ORDER BY CASE WHEN bc.category_name = '공지' THEN 0 ELSE 1 END,
+		CASE WHEN bc.category_name = '공지' THEN b.created_at END DESC,
+		b.created_at DESC
 	</select>
 
 	<select id="selectBoardListByCategoryId" resultType="com.bandi.novel.dto.BoardDto">

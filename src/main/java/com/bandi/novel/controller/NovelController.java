@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bandi.novel.dto.response.LastNovelRecordDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
@@ -223,6 +224,10 @@ public class NovelController {
 		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
 		// 장르기반 추천리스트
 		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
 
 		// 즐겨찾기 여부
 		if (principal != null) {
@@ -235,6 +240,8 @@ public class NovelController {
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("recommendList", recommendList);
 		model.addAttribute("genreList", genreList);
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
 
 		return "/novel/novelDetail";
 	}
@@ -269,8 +276,10 @@ public class NovelController {
 				// userPay 페이지에 띄울 정보
 				NovelSection paySection = novelService.selectNovelSectionById(sectionId);
 				int userGold = payService.selectUserGold(principal.getId());
+				LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 				model.addAttribute("paySection", paySection);
-				model.addAttribute("userGold", userGold);
+				model.addAttribute("gold", userGold);
+				model.addAttribute("lastNovel", lastNovel);
 				model.addAttribute("serviceTypeId", serviceTypeId);
 				return "/pay/userPay";
 			}
@@ -283,6 +292,11 @@ public class NovelController {
 		// 본 소설 저장 혹은 업데이트
 		userNovelRecordService.NovelRecord(principal.getId(), novelId, sectionId);
 		//
+		
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
 
 		List<NovelReplyListDto> replyList = novelReplyService.selectNovelReplyListBySectionId(sectionId);
 		NovelReplyPageUtil pageUtil = new NovelReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
@@ -352,6 +366,9 @@ public class NovelController {
 		List<RecommendFavoritesDto> favoriteList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("leftList", leftList);
+		
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
 
 		return "/novel/readSection";
 	}
@@ -367,9 +384,13 @@ public class NovelController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
-
-		return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId() + "/"
-				+ serviceTypeId;
+		
+		if (serviceTypeId == Define.TYPE_CONTEST) {
+			return "redirect:/contest/novel/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId();
+		} else {
+			return "redirect:/section/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId() + "/"
+					+ serviceTypeId;
+		}
 	}
 
 	/**
@@ -403,7 +424,7 @@ public class NovelController {
 			}
 		}
 
-		if (serviceTypeId == 3) {
+		if (serviceTypeId == Define.TYPE_CONTEST) {
 			return "redirect:/contest/novel/detail/" + novelId;
 		} else {
 			return "redirect:/novel/detail/" + novelId;

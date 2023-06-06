@@ -53,6 +53,9 @@
 		text-align: center;
 		font-size: 30px;
 		line-height: 300px;
+		overflow: hidden;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
 		margin: 0px;
 	}
 	
@@ -63,6 +66,7 @@
 		flex-direction: column;
 		align-items: center;
 		background: #eee;
+		padding: 10px;
 	}
 
 	#controls {
@@ -111,8 +115,6 @@
 	display: flex;
 	justify-content: center;
 }
-
-
 
 .flipbook .odd {
 	background-image: -webkit-linear-gradient(left, #FFF 95%, #ddd 100%);

@@ -109,20 +109,10 @@
 					<div class="left-sidebar-contents">
 						<div class="contents-top">
 							<div class="contents-title">
-								<h2>유료 웹소설</h2>
+								<h2>공모전 웹소설</h2>
 							</div>
 							<div class="contents-category">
-								<a>연재작</a> <a>최신작</a>
-							</div>
-							<div class="contents-search">
-								<nav class="navbar navbar-light bg-light mt-0">
-									<div class="container-fluid">
-										<form class="d-flex">
-											<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-											<button class="btn btn-outline-primary btn-sm" type="submit">search</button>
-										</form>
-									</div>
-								</nav>
+								<a>최신작</a>
 							</div>
 						</div>
 						<div class="contents-list">
@@ -131,10 +121,10 @@
 								<c:forEach items="${leftList }" end="20" var="novel">
 									<c:choose>
 										<c:when test="${count%2 == 0}">
-											<li class="list-item"><span class="list-icon">${novel.serialCycle}</span> <a class="item-author">${novel.nickName}</a> <a class="item-title" href="/novel/detail/ ${novel.id}">${novel.title}</a></li>
+											<li class="list-item"><span class="list-icon">${novel.serialCycle}</span> <a class="item-author">${novel.nickName}</a> <a class="item-title" href="/contest/novel/detail/${novel.id}">${novel.title}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="list-item bold"><span class="list-icon">${novel.serialCycle}</span> <a class="item-author">${novel.nickName}</a> <a class="item-title" href="/novel/detail/ ${novel.id}">${novel.title}</a></li>
+											<li class="list-item bold"><span class="list-icon">${novel.serialCycle}</span> <a class="item-author">${novel.nickName}</a> <a class="item-title" href="/contest/novel/detail/${novel.id}">${novel.title}</a></li>
 										</c:otherwise>
 									</c:choose>
 
@@ -191,15 +181,15 @@
 									<div class="aspect">
 										<div class="aspect-inner">
 											<div id="flipbook" class="flipbook">
-												<div class="page">
-													<h1>${section.title}</h1>
+												<div class="page page-cover">
+													<h1 class="book-cover">${section.title}</h1>
 												</div>
 												<div class="page">
-													<h1>(주)반디</h1>
+													<h1 class="book-cover">(주)반디</h1>
 												</div>
 												<c:forEach items="${subStringList}" var="subString" varStatus="vs">
 													<div class="page">
-														<p>${subString}</p>
+														<p class="book-font">${subString}</p>
 													</div>
 												</c:forEach>
 											</div>
@@ -210,14 +200,14 @@
 						</div>
 						<div class="mt-3 d-flex justify-content-between">
 							<c:if test="${section.prevTitle != '이전글이 없습니다'}">
-								<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.prevId}/${serviceTypeId}'" class="btn btn-secondary btn-sm shadow-none">이전글:
+								<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.prevId}'" class="btn btn-secondary btn-sm shadow-none">이전글:
 									${section.prevTitle}</button>
 							</c:if>
 							<c:if test="${section.prevTitle == '이전글이 없습니다'}">
 								<div></div>
 							</c:if>
 							<c:if test="${section.nextTitle != '다음글이 없습니다'}">
-								<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.nextId}/${serviceTypeId}'" class="btn btn-secondary btn-sm shadow-none">다음글:
+								<button type="button" onclick="location.href='/contest/novel/read/${section.novelId}/${section.nextId}'" class="btn btn-secondary btn-sm shadow-none">다음글:
 									${section.nextTitle}</button>
 							</c:if>
 						</div>
@@ -243,13 +233,16 @@
 										<h5 class="me-2">댓글</h5>
 										<span>11</span>
 									</div>
-									<div class="d-flex flex-row align-items-start">
-										<textarea class="form-control ml-1 shadow-none textarea" maxlength="255"></textarea>
-									</div>
-									<div class="mt-2 text-right float-end">
-										<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
-										<button class="btn btn-outline-danger btn-sm ml-1 shadow-none" type="button">삭제</button>
-									</div>
+									<form action="/novel/reply?serviceTypeId=${serviceTypeId}" method="post">
+										<div class="d-flex flex-row align-items-start">
+											<textarea class="form-control ml-1 shadow-none textarea" name="content" maxlength="255" required="required"></textarea>
+											<input type="hidden" name="novelId" value="${detail.id }">
+											<input type="hidden" name="sectionId" value="${section.id }">
+										</div>
+										<div class="mt-2 text-right float-end">
+											<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
+										</div>
+									</form>
 								</div>
 								<div class="comment-top">
 									<div></div>
@@ -293,16 +286,16 @@
 												<ul class="d-flex">
 													<!-- Previous 시작 -->
 													<li class=" <c:if test='${replyList.currentPage == 1}'>d-none</c:if>" id=""><a
-														href="/contest/novel/read/${section.novelId}/${section.id}/${serviceTypeId}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
+														href="/contest/novel/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage - 1}" class="page-link">Previous</a></li>
 													<!-- Previous 끝 -->
 													<!-- Page번호 시작 -->
 													<c:forEach var="pNo" begin="${replyList.startPage }" end="${replyList.endPage }" step="1">
-														<li class="  <c:if test=''>active</c:if>"><a href="/contest/novel/read/${section.novelId}/${section.id}/${serviceTypeId}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
+														<li class="  <c:if test=''>active</c:if>"><a href="/contest/novel/read/${section.novelId}/${section.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 													</c:forEach>
 													<!-- Page번호 끝 -->
 													<!-- Next 시작 -->
 													<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a
-														href="/contest/novel/read/${section.novelId}/${section.id}/${serviceTypeId}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
+														href="/contest/novel/read/${section.novelId}/${section.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
 													<!-- Next 끝 -->
 												</ul>
 											</div>
@@ -316,61 +309,33 @@
 				</section>
 				<aside class="right-sidebar">
 					<div class="right-sidebar-contents">
-						<c:choose>
-							<c:when test="${principal == null}">
-								<div class="my-info">
-									<div class="username">${principal.nickName}</div>
-									<div class="info-category">
-										<a href="/purchase"><span><img src="/assets/images/main/user-line.png">내정보</span></a> <a href="/purchase"><span><img src="/assets/images/main/thumb-up-line.png">알림</span></a> <a href="/purchase"><span><img
-											src="/assets/images/main/star-line.png">구매목록</span></a>
-									</div>
-									<div class="gold-info">
-										<div>보유골드</div>
-										<span class="blue-span">${gold}</span>
-									</div>
-									<div class="right-box">
-										<div class="right-box-cover">
-											<a><img src="/bandi/uploads/${lastNovel.cover}"></a>
-										</div>
-										<div class="right-box-detail">
-											<div class="right-detail-desc">
-												<div class="desc-title">${lastNovel.title}</div>
-												<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
-											</div>
-										</div>
+						<div class="my-info">
+							<div class="username">${principal.nickName} 님</div>
+							<div class="info-category">
+								<a href="/purchase"><span><img src="/assets/images/main/user-line.png">내정보</span></a> <a href="/purchase"><span><img src="/assets/images/main/thumb-up-line.png">알림</span></a> <a href="/purchase"><span><img
+									src="/assets/images/main/star-line.png">구매목록</span></a>
+							</div>
+							<div class="gold-info">
+								<div>보유골드</div>
+								<span class="blue-span">${gold}</span>
+							</div>
+							<div class="right-box">
+								<div class="right-box-cover">
+									<a><img src="/bandi/uploads/${lastNovel.cover}"></a>
+								</div>
+								<div class="right-box-detail">
+									<div class="right-detail-desc">
+										<div class="desc-title">${lastNovel.title}</div>
+										<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
 									</div>
 								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="my-info">
-									<div class="username">${principal.nickName}</div>
-									<div class="info-category">
-										<a href="/purchase"><span><img src="/assets/images/main/user-line.png">내정보</span></a> <a href="/purchase"><span><img src="/assets/images/main/thumb-up-line.png">알림</span></a> <a href="/purchase"><span><img
-											src="/assets/images/main/star-line.png">구매목록</span></a>
-									</div>
-									<div class="gold-info">
-										<div>보유골드</div>
-										<span class="blue-span">${gold}</span>
-									</div>
-									<div class="right-box">
-										<div class="right-box-cover">
-											<a><img src="/bandi/uploads/${lastNovel.cover}"></a>
-										</div>
-										<div class="right-box-detail">
-											<div class="right-detail-desc">
-												<div class="desc-title">${lastNovel.title}</div>
-												<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
-						<div class="right-banner">
-							<img src="/assets/images/main/gold-charge.png">
+							</div>
 						</div>
 						<div class="right-banner">
-							<img src="/assets/images/main/author-banner.png">
+							<a href="/payment/charge"><img src="/assets/images/main/gold-charge.png"></a>
+						</div>
+						<div class="right-banner">
+							<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
 						</div>
 						<div class="recommend-list">
 							<h3 class="recommend-header">
@@ -456,16 +421,12 @@
       	// 책 크기에 따른 폰트 크기 수정
       	if($(window).width()<1080){
       		mode = "small";
-      		//$("p").css('font-size','5px');
-      		console.log(mode);
-      	}else if($(window).width()>=1080&&$(flipbookEL).width()<1600){
+      	}else if($(window).width()>=1080 && $("#book-body").width()<1000){
       		mode = "middle";
-      		//$("p").css('font-size','20px');
-      		console.log(mode);
+      		console.log($("#book-body").width());
       	}else{
       		mode = "big";
-      		$("p").css('font-size','30px');
-      		console.log(mode);
+      		$(".book-font").css('font-size','40px');
       	}
       	
       	//화면 크기에따른 책 사이즈 변경
@@ -476,11 +437,17 @@
     $("#flipbook").bind("turning", (event, page, view) => {
   	  	
   	  	if(mode=="middle"){
-  	  		$("p").css('font-size','20px');
+  	  		$(".book-font").css('font-size','20px');
+  	  		$(".book-font").css('line-height','normal');
+  	  		$(".book-cover").css('font-size','30px');
   	  	}else if(mode=='small'){
-  	  		$("p").css('font-size','5px');
+  	  		$(".book-font").css('font-size','5px');
+  	  		$(".book-font").css('line-height','normal');
+  	  		$(".book-cover").css('font-size','15px');
   	  	}else{
-  	  		$("p").css('font-size','30px');
+  	  		$(".book-font").css('font-size','40px');
+  	  		$(".book-font").css('line-height','60px');
+  	  		$(".book-cover").css('font-size','50px');
   	  	}
   	});
 
@@ -531,7 +498,9 @@
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', (flipbookEL.clientWidth*0.9), (flipbookEL.clientHeight*0.8));
 	      	$(flipbookEL).css('margin-top','3%');
-	      	$("p").css('font-size','30px');
+	      	$(".book-font").css('font-size','40px');
+	      	$(".book-cover").css('font-size','50px');
+	      	$(".book-font").css('line-height','60px');
 			$(".fullscreen").hide();
 			$(".close-fullscreen").show();
 	    });
@@ -558,7 +527,9 @@
 	    	flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
-	      	$("p").css('font-size','20px');
+	      	$(".book-font").css('font-size','20px');
+	      	$(".book-font").css('line-height','normal');
+	      	$(".book-cover").css('font-size','30px');
 	      	$(flipbookEL).css('margin-top','0%');
 	      	$(".close-fullscreen").hide();
 			$(".fullscreen").show();
@@ -570,7 +541,7 @@ function deleteReply(replyId,novelId,sectionId) {
 		type: "DELETE",
 		url: "/api/reply/" + replyId
 	}).done((response) => {
-		location.href='/section/read/'+novelId+'/'+ sectionId;
+		location.href='/contest/novel/read/'+novelId+'/'+ sectionId;
 	}).fail((error) => {
 		console.log(error);
 		alert("요청을 처리할 수 없습니다.");
@@ -601,7 +572,7 @@ $(document).ready(function() {
 					data: JSON.stringify(data),
 					dataType:"json"
 				}).done((response) => {
-					location.href='/section/read/' + ${detail.id}+ '/' + $("#sectionId").val();
+					location.href='/contest/novel/read/' + ${detail.id}+ '/' + $("#sectionId").val();
 				}).fail((error) => {
 					console.log(error);
 					alert("요청을 처리할 수 없습니다.");

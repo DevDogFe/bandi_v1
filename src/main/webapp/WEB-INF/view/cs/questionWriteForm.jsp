@@ -34,9 +34,7 @@
 	font-style: none;
 }
 
-.qna--button button {
-	
-}
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -82,7 +80,8 @@
 				<div class="qna--header--form">
 
 					<div class="qna--title-form">
-						<input type="text" class="qna--title" name="title" placeholder="  제목을 입력해주세요"> <select name="faqCategoryId" class="qna--category">
+						<input type="text" class="qna--title" name="title" placeholder="  제목을 입력해주세요">
+						<select name="faqCategoryId" class="qna--category">
 							<option value="0">카테고리</option>
 							<c:forEach var="category" items="${faqCategorylist}">
 								<option value="${category.id}">${category.categoryName}</option>

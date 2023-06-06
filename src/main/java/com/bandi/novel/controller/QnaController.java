@@ -121,7 +121,6 @@ public class QnaController {
 	 */
 	@GetMapping("/question/update/{id}")
 	public String getupdateQuestion(@PathVariable Integer id, Model model) {
-
 		Question question = qnaService.selectQuestionById(id);
 		List<FaqCategory> faqCategorylist = faqService.selectFaqCategory();
 		model.addAttribute("question", question);
@@ -137,6 +136,7 @@ public class QnaController {
 	 */
 	@PostMapping("/question/update/{id}")
 	public String updateQuestionProc(@PathVariable Integer id, QuestionUpdateDto questionUpdateDto) {
+		System.out.println(questionUpdateDto.getContent().length());
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// qnaService.updateQuestion(questionUpdateFormDto, principal.getId);

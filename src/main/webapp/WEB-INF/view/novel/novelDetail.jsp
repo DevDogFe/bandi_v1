@@ -286,14 +286,14 @@
 				<aside class="right-sidebar">
 					<div class="right-sidebar-contents">
 						<div class="my-info">
-							<div class="username">asd1234 님</div>
+							<div class="username">${principal.nickName} 님</div>
 							<div class="info-category">
 								<span><img src="/assets/images/main/user-line.png">내정보</span> <span><img src="/assets/images/main/thumb-up-line.png">알림</span> <span><img
 									src="/assets/images/main/star-line.png">구매목록</span>
 							</div>
 							<div class="gold-info">
 								<div>보유골드</div>
-								<span class="blue-span">${userGold}</span>
+								<span class="blue-span">${gold}</span>
 							</div>
 							<div class="right-box">
 								<div class="right-box-cover">
@@ -301,16 +301,17 @@
 								</div>
 								<div class="right-box-detail">
 									<div class="right-detail-desc">
-										<div class="desc-title">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div>
+										<div class="desc-title">${lastNovel.title}</div>
+										<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="right-banner">
-							<img src="/assets/images/main/gold-charge.png">
+							<a href="/payment/charge"><img src="/assets/images/main/gold-charge.png"></a>
 						</div>
 						<div class="right-banner">
-							<img src="/assets/images/main/author-banner.png">
+							<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
 						</div>
 						<div class="recommend-list">
 							<h3 class="recommend-header">

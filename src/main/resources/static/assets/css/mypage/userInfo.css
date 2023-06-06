@@ -9,6 +9,19 @@
 	.section-title-wrap {
 		min-height: 32px;
 	}
+	.btn.btn-line.btn-light-gray, .btn.btn-line.btn-round.btn-light-gray {
+		background-color: #3b6bc9;
+	}
+	.form-group .form-value .btn-xsm {
+    	border-radius: 4px;
+	}
+	.profile-img-upload-wrap .btn-wrap .btn {
+	    width: 65px;
+	    min-width: 65px;
+	    height: 30px;
+	    line-height: 28px;
+	    text-align: center;
+	}
 	.right-wrap {
 		bottom: 50%;
 		position: absolute;
@@ -44,6 +57,9 @@
 	}
 	.row {
 		display: flex;
+	}
+	profile-img-upload-wrap .profile-preview-wrap {
+   		float: left;
 	}
 	.form-group .form-label-wrap {
 		position: relative;

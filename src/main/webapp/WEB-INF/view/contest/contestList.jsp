@@ -82,7 +82,7 @@
 				</div>
 				<div class="mini-banners">
 					<div class="contest-mini-banner">
-						<a href="/contest/list"><img src="/assets/images/main/gold-charge.png"></a>
+						<a href="/payment/charge"><img src="/assets/images/main/gold-charge.png"></a>
 					</div>
 					<div class="contest-mini-banner">
 						<img src="/assets/images/main/author-banner.png">
@@ -97,7 +97,9 @@
       		<div class="top-wrap-nav">
       			<div class="d-flex novel-type">
       				<h1>공모전</h1>
-      				<a href="/contest/registration" class="board-type-item d-flex align-items-center ms-3"><span class="blue-span">작성하기</span></a>
+      				<c:if test="${principal.userRole == 1}">
+      					<a href="/contest/registration" class="board-type-item d-flex align-items-center ms-3"><span class="blue-span">작성하기</span></a>
+      				</c:if>
       			</div>
       		</div>
       	</div>
@@ -117,10 +119,16 @@
    					</div>
    					</a>
    					<div class="border-list-buttons">
-    					<div><button type="button" class="btn btn-primary m-1"
-               		data-bs-toggle="modal" data-bs-target="#Modal${vs.index+1}">보기</button></div>
-    					<div><button onclick="location.href='/contest/delete/${contest.id}'"
-				type="button" class="btn btn-danger m-1">삭제</button></div>
+    					<div>
+    						<button type="button" class="btn btn-primary m-1"
+               				data-bs-toggle="modal" data-bs-target="#Modal${vs.index+1}">보기</button>
+               			</div>
+               			<c:if test="${principal.userRole == 1}">
+    						<div>
+    							<button onclick="location.href='/contest/delete/${contest.id}'"
+								type="button" class="btn btn-danger m-1">삭제</button>
+							</div>
+						</c:if>
    					</div>
    				</div>
       		</li>
@@ -175,36 +183,68 @@
 							<form action="/contest/update" method="post">
 							<div class="modal-body text-break">
 								<div class="row">
-								<div class=" align-self-center">
-									<ul>
-										<li>
-											<label for="title" class="form-label">시작일</label> 
-											<input type="text" id="title" name="beginCreatedAt" class="form-control"
-											required="required" value="${contest.beginCreatedAt}">
-										</li>
-										<li>
-											<label for="title" class="form-label">종료일</label> 
-											<input type="text" id="title" name="endCreatedAt" class="form-control"
-											required="required" value="${contest.endCreatedAt}">
-										</li>
-										<li>
-											<label for="title" class="form-label">제목</label> 
-											<input type="text" id="title" name="title" class="form-control"
-											required="required" value="${contest.title}">
-										</li>
-										<li>
-											<label for="overview" class="form-label">모집 요강</label>
-											<textarea id="overview" name="content" class="form-control" required="required" 
-											rows="10">${contest.content}</textarea>
-										</li>
-									</ul>
-								</div>
+								<c:choose>
+									<c:when test="${principal.userRole == 1}">
+										<div class=" align-self-center">
+											<ul>
+												<li>
+													<label for="title" class="form-label">시작일</label> 
+													<input type="text" id="title" name="beginCreatedAt" class="form-control"
+													required="required" value="${contest.beginCreatedAt}" >
+												</li>
+												<li>
+													<label for="title" class="form-label">종료일</label> 
+													<input type="text" id="title" name="endCreatedAt" class="form-control"
+													required="required" value="${contest.endCreatedAt}">
+												</li>
+												<li>
+													<label for="title" class="form-label">제목</label> 
+													<input type="text" id="title" name="title" class="form-control"
+													required="required" value="${contest.title}">
+												</li>
+												<li>
+													<label for="overview" class="form-label">모집 요강</label>
+													<textarea id="overview" name="content" class="form-control" required="required" 
+													rows="10" >${contest.content}</textarea>
+												</li>
+											</ul>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class=" align-self-center">
+											<ul>
+												<li>
+													<label for="title" class="form-label">시작일</label> 
+													<input type="text" id="title" name="beginCreatedAt" class="form-control "
+													required="required" value="${contest.beginCreatedAt}" readonly>
+												</li>
+												<li>
+													<label for="title" class="form-label">종료일</label> 
+													<input type="text" id="title" name="endCreatedAt" class="form-control"
+													required="required" value="${contest.endCreatedAt}" readonly>
+												</li>
+												<li>
+													<label for="title" class="form-label">제목</label> 
+													<input type="text" id="title" name="title" class="form-control"
+													required="required" value="${contest.title}" readonly>
+												</li>
+												<li>
+													<label for="overview" class="form-label">모집 요강</label>
+													<textarea id="overview" name="content" class="form-control" required="required" 
+													rows="10" readonly>${contest.content}</textarea>
+												</li>
+											</ul>
+										</div>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							</div>
 							<div class="modal-footer">
-								<input type="hidden" name="userId" value="${contest.userId}">
-								<input type="hidden" name="id" value="${contest.id}">
-								<button type="submit" class="btn btn-primary m-1">수정</button>
+								<c:if test="${principal.userRole == 1}">
+									<input type="hidden" name="userId" value="${contest.userId}">
+									<input type="hidden" name="id" value="${contest.id}">
+									<button type="submit" class="btn btn-primary m-1">수정</button>
+								</c:if>
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal">닫기</button>
 							</div>

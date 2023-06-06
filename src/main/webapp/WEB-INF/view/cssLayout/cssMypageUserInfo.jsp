@@ -249,7 +249,7 @@
 				<section class="main">
 					<div class="reportList">
 						<div class="section-title-wrap form-title">
-							<h2 class="section-title">내정보</h2>
+							<h2 class="section-title">내정보</h2><span class="more"><a href="/update">내 정보 수정</a></span>
 							<div class="right-wrap">
 								<span class="icon-required"></span>
 							</div>
