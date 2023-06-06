@@ -83,6 +83,7 @@ public class BoardController {
 		if(boardSearchDto.getCategoryId() != null) {
 			model.addAttribute("categoryId", boardSearchDto.getCategoryId());
 		}
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("boardList", boardPageUtil);
 		model.addAttribute("boardTypeList", boardTypeList);

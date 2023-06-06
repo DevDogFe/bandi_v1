@@ -117,3 +117,8 @@ input:focus ~ search-span, input:valid ~ search-span {
 .me-1 {
 	background-color: #3b6bc9;
 }
+
+.material-symbols-outlined {
+	font-size: 22px;
+	color: 	#FF6347;
+}

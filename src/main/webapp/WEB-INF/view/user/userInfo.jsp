@@ -96,7 +96,11 @@
 				<section class="main">
 					<div class="reportList">
 						<div class="section-title-wrap form-title">
-							<h2 class="section-title">내정보</h2>
+							<div class="main-header">
+							<h2 class="mb-2">
+								내 정보 <span class="more"><a href="/update">내 정보 수정</a></span>
+							</h2>
+						</div>
 							<div class="right-wrap">
 								<span class="icon-required"></span>
 							</div>

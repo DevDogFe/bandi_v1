@@ -40,7 +40,7 @@
 		ON b.category_id = bc.id
 		WHERE
 		b.board_type_id = #{boardTypeId}
-		ORDER BY b.created_at DESC
+		ORDER BY CASE WHEN bc.category_name = '공지' THEN 0 ELSE 1 END, b.created_at DESC
 	</select>
 
 	<select id="selectBoardListByCategoryId" resultType="com.bandi.novel.dto.BoardDto">
