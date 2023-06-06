@@ -32,6 +32,22 @@
 <link rel="stylesheet" href="/assets/css/mypage/record.css" />
 <link rel="stylesheet" href="/assets/css/mypage/userInfo.css" />
 </head>
+<style>
+.qna--answer {
+	background-color: #f1f1f1;
+}
+
+.main-header{
+	display: flex;
+	
+}
+
+.qna--button button{
+	display: flex;
+	justify-content: flex-end; 
+	
+}
+</style>
 <body>
 	<div class="container">
 		<div class="inner">
@@ -86,6 +102,10 @@
 					<div class="report-list">
 						<div class="main-header">
 							<h3 class="mb-2">1:1 문의 조회</h3>
+
+							 <div class="qna--button"> 
+								<button><a href="/qna/write">문의하기</a></button>
+							 </div> 
 						</div>
 						<c:choose>
 							<c:when test=" ${empty questionList } ">
@@ -125,20 +145,19 @@
 													<td><a href="/qna/question/${question.id}">${question.title}</a></td>
 													<td>${question.createdAt()}</td>
 													<c:choose>
-													<c:when test="${question.proceed == 0}">
-													<td>처리중</td>
-													</c:when>
-													<c:otherwise>													
-													<td>처리완료</td>
-													</c:otherwise>
+														<c:when test="${question.proceed == 0}">
+															<td>처리중</td>
+														</c:when>
+														<c:otherwise>
+															<td>처리완료</td>
+														</c:otherwise>
 													</c:choose>
 												</tr>
 												<c:if test="${question.answer != null}">
-													<tr>
-														<td><a href="/qna/answer/${question.id}">${question.answer}</td>
-														<td>${question.answerCreatedAt()}</td>
-														<td></td>	
-														<td></td>	
+													<tr class="qna--answer">
+														<td></td>
+														<td colspan="2"><a href="/qna/answer/${qna.id}">[RE]: ${question.title}</a></td>
+														<td>${qna.answerCreatedAt()}</td>
 													</tr>
 												</c:if>
 											</tbody>
@@ -147,6 +166,7 @@
 								</div>
 							</c:otherwise>
 						</c:choose>
+
 					</div>
 				</section>
 			</div>
