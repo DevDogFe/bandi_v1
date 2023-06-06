@@ -19,6 +19,9 @@
 <!-- bootstrap CDN -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+	
+<!-- 머터리얼 아이콘 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <!-- Slider.js CDN -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
@@ -90,18 +93,38 @@
 			</section>
 			<section class="one-tab-list">
 				<ul class="board-list">
-					<li><a href="#"> <c:forEach var="list" items="${boardList.content}">
-								<div class="border-list-group">
-									<div class="board-list-title">
-										<a href="/board/detail/${list.id}">${list.title}</a>
-									</div>
-									<div class="board-list-desc">
-										<span class="blue-span list-desc-span">${list.username}</span> <span class="list-desc-span">${list.createdAt()}</span> <span class="list-desc-span">${list.views}</span> <span
-											class="list-desc-span">${list.categoryName}</span>
-									</div>
-								</div>
-							</c:forEach>
-					</a></li>
+				    <li>
+				        <c:forEach var="list" items="${boardList.content}">
+				            <c:choose>
+				                <c:when test="${list.categoryName eq '공지'}">
+				                    <a href="/board/detail/${list.id}">
+				                        <div class="border-list-group" style="border: 1px solid #7986cb;">
+				                            <div class="board-list-title"><span class="material-symbols-outlined">campaign</span> ${list.title}</div>
+				                            <div class="board-list-desc">
+				                                <span class="blue-span list-desc-span">${list.username}</span> 
+				                                <span class="list-desc-span">${list.createdAt()}</span> 
+				                                <span class="list-desc-span">${list.views}</span> 
+				                                <span class="list-desc-span">${list.categoryName}</span>
+				                            </div>
+				                        </div>
+				                    </a>
+				                </c:when>
+				                <c:otherwise>
+				                    <a href="/board/detail/${list.id}">
+				                        <div class="border-list-group">
+				                            <div class="board-list-title">${list.title}</div>
+				                            <div class="board-list-desc">
+				                                <span class="blue-span list-desc-span">${list.username}</span> 
+				                                <span class="list-desc-span">${list.createdAt()}</span> 
+				                                <span class="list-desc-span">${list.views}</span> 
+				                                <span class="list-desc-span">${list.categoryName}</span>
+				                            </div>
+				                        </div>
+				                    </a>
+				                </c:otherwise>
+				            </c:choose>
+				        </c:forEach>
+				    </li>
 				</ul>
 			</section>
 			<section>
