@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="js/slick/slick-theme.css"> -->
 
 <!-- bootstrap CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
 
 <!-- Slider.js CDN -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
@@ -55,38 +56,37 @@
 			</header>
 			<section class="one-tab-list">
 				<div class="section-title-wrap">
-					<h2 class="section-title">${boardDetail.boardName} 게시판</h2>
+					<h2 class="section-title">${boardDetail.boardName}게시판</h2>
 				</div>
 				<div class="board-detail">
 					<h3 class="board-title">
 						<span>${boardDetail.title}</span>
 					</h3>
 				</div>
-				<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span class="name">${boardDetail.username}</span> <span class="date">${boardDetail.createdAt()}</span> <span class="date">${boardDetail.categoryName}</span>
+				<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span
+								class="name">${boardDetail.username}</span> <span class="date">${boardDetail.createdAt()}</span> <span class="date">${boardDetail.categoryName}</span>
 						</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”> <c:if test="${principal.id == boardDetail.userId }">
 										<button type="submit" class="btn-delete" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
 										<button class="btn-report" id="report-btn" onclick="popup()">신고</button>
 										<button type="button" class="btn-modify" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
-										</c:if>
-										<c:if test="${principal != null }">
-											<c:choose>
-												<c:when test="${isLike}">
-													<button type="button" id="unlike" class="heart">
-														<img src="/assets/images/like_icon/like.png"> 공감
-													</button>
-												</c:when>
-												<c:otherwise>
-													<button type="button" id="like" class="heart">
-														<img src="/assets/images/like_icon/unlike.png"> 공감
-													</button>
-												</c:otherwise>
-											</c:choose>
-										</c:if>
-										<c:if test="${principal == null }">
-											<button type="button" id="noUser" class="heart">
-												<img src="/assets/images/like_icon/unlike.png"> 공감
-											</button>
-										</c:if>
+									</c:if> <c:if test="${principal != null }">
+										<c:choose>
+											<c:when test="${isLike}">
+												<button type="button" id="unlike" class="heart">
+													<img src="/assets/images/like_icon/like.png"> 공감
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" id="like" class="heart">
+													<img src="/assets/images/like_icon/unlike.png"> 공감
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</c:if> <c:if test="${principal == null }">
+										<button type="button" id="noUser" class="heart">
+											<img src="/assets/images/like_icon/unlike.png"> 공감
+										</button>
+									</c:if>
 							</span> <span class="list-wrap">
 									<button type="submit" class="btn-list" onclick="location.href='/board/list'">목록</button>
 							</span>
@@ -174,7 +174,8 @@
 							<c:forEach var="pNo" begin="${replyList.startPage}" end="${replyList.endPage}" step="1">
 								<li <c:if test="${pNo == replyList.currentPage}">class="active"</c:if>><a href="/board/detail/${boardDetail.id}?currentPage=${pNo}" class="page-link">${pNo}</a></li>
 							</c:forEach>
-							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/board/detail/${boardDetail.id}?currentPage=${replyList.currentPage + 1}" class="page-link">Next</a></li>
+							<li class="<c:if test='${replyList.endPage == replyList.currentPage }'>d-none</c:if>" id=""><a href="/board/detail/${boardDetail.id}?currentPage=${replyList.currentPage + 1}"
+								class="page-link">Next</a></li>
 						</ul>
 					</div>
 				</nav>
@@ -216,62 +217,6 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript">
-			
-			$("#unlike").on("click", ()=>{
-				$.ajax({
-					type: "DELETE",
-					url: "/api/unlike/" + $("#boardId").val()
-				}).done((response) => {
-					location.href='/board/detail/' + $("#boardId").val();
-				}).fail((error) => {
-					console.log(error);
-					alert("요청 실패")
-				});
-			});
-			
-			$("#noUser").on("click", ()=>{
-				alert('로그인이 필요한 기능입니다.');
-			});				
-			
-			$("#like").on("click", ()=>{
-				$.ajax({
-					type: "POST",
-					url: "/api/like/" + $("#boardId").val()
-				}).done((response) => {
-					location.href='/board/detail/' + $("#boardId").val();
-				}).fail((error) => {
-					console.log(error);
-					alert("요청 실패")
-				});
-			});
-			
-			
-		$(document).ready(() => {
-
-		});
-	</script>
-		<script type="text/javascript">
-		function deleteReply(id) {
-	        $.ajax({
-	            type: "DELETE",
-	            url: "/api/deletereply/" + id,
-	        }).done(function(response) {
-	            console.log(response);
-	            console.log(id);
-	            location.href = '/board/detail/' + $("#boardId").val();
-	        }).fail(function(error) {
-	            alert("요청 실패");
-	        });
-	    }
-	</script>
-		<script type="text/javascript">
-		function popup() {
-			var url = "/report/reportPopup/" + $("#boardId").val();
-			var name = "신고하기";
-			var option = "width = 500, height = 500, top = 100, left = 200, location = no";
-            window.open(url, name, option)
-		}
-	</script>
 	</footer>
+	<script type="text/javascript" src="/assets/js/board/boardDetail.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

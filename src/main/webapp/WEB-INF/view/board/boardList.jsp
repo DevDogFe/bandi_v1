@@ -117,7 +117,6 @@
 									</c:forEach>
 									<li class="<c:if test='${boardList.endPage == boardList.currentPage }'>d-none</c:if>" id=""><a href="/board/list/${boardTypeId}?currentPage=${boardList.currentPage + 1}"
 										class="page-link">Next</a></li>
-
 								</ul>
 							</c:when>
 							<c:otherwise>

@@ -69,8 +69,7 @@
 										<label>회차 가격설정</label>
 										<div class="select-box mb-5">
 											<select id="listPrice" name="listPrice">
-												<option selected>가격 선택하기</option>
-												<option value="0">무료</option>
+												<option value="0" selected="selected">무료</option>
 												<option value="200">200</option>
 											</select>
 										</div>
