@@ -17,6 +17,9 @@
 <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="/assets/js/custom-slick.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css" />
+<link rel="stylesheet" href="/assets/css/admin/admin.css" />
+<link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
+<link rel="stylesheet" href="/assets/css/detail.css" />
 </head>
 <body>
 	<div class="container">
@@ -44,18 +47,40 @@
 			<%@include file="layout/csCategory.jsp"%>
 
 
-			<!-- 질문 -->
-			<ul>
-				<li>질문</li>
-				<li>${question.createdAt()}</li>
-				<li>내용</li>
-			</ul>
+			<!-- Q&A detail -->
+			<section class="flex-grow-1" id="qna--list--container">
+				<div class="section-title-wrap">
+					<h2 class="section-title">${question.title}</h2>
+				</div>
+				<div class="board-detail">
+					<h3 class="board-title">
+						<span>${question.categoryName}</span>
+					</h3>
+				</div>
+				<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span
+								class="name">${question.username}</span> <span class="date">${question.createdAt()}</span>
+						</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”>
+									<button type="button" class="btn-modify">삭제</button>
+							</span> <span class="list-wrap">
+									<button type="submit" class="btn-list">목록</button>
+							</span>
+						</span>
+					</span> <span class="board-contents"> <span id="_board-contents"> ${question.content} </span>
+					</span>
+				</span>
+				</span>
 
-			<!-- 답 -->
-			<ul>
-				<li>
-				</li>
-				<li>${answer.createdAt()}</li>
-			</ul>
+				<!-- 답 -->
+				<!-- 답다비답다바답닫답답ㄷ -->
+				<div class="reply">
+					<div>
+						<div class="comments-content">
+							<div class="comment-item">
+								<div class="mt-2">
+									<p class="comment-text">${answer.content}</p>
+								</div>
+							</div>
+						</div>
+			</section>
 </body>
 </html>

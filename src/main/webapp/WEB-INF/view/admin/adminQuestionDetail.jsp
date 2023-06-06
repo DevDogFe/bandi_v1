@@ -33,30 +33,27 @@
 
 </head>
 <style>
-#qna--list--container{
-	margin-left: 20px; 
+#qna--list--container {
+	margin-left: 20px;
 }
 
-.section-title{
+.section-title {
 	margin-left: 5px;
 }
 
-.board-detail-wrap{
+.board-detail-wrap {
 	border-bottom: 1px solid #999;
 }
 
-.board-detail{
+.board-detail {
 	border: none;
 }
 
 #answer--wrap {
-    margin-top: 0;
-    margin-left: -20px;
-    border-bottom: 1px solid #f2f2f2;
+	margin-top: 0;
+	margin-left: -20px;
+	border-bottom: 1px solid #f2f2f2;
 }
-
-
-
 </style>
 <body>
 	<div class="container">
@@ -124,10 +121,7 @@
 						<span>${question.categoryName}</span>
 					</h3>
 				</div>
-				<span class="board-detail-wrap">
-				<span class="board-info-wrap">
-				<span class="profile-info-wrap">
-				<span class="profile-preview-wrap"></span> <span class="info-inner"> <span
+				<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span
 								class="name">${question.username}</span> <span class="date">${question.createdAt()}</span>
 						</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”>
 									<button type="button" class="btn-modify">삭제</button>
@@ -135,57 +129,69 @@
 									<button type="submit" class="btn-list">목록</button>
 							</span>
 						</span>
-					</span> <span class="board-contents">
-					<span id="_board-contents"> ${question.content} </span>
+					</span> <span class="board-contents"> <span id="_board-contents"> ${question.content} </span>
 					</span>
 				</span>
 				</span>
-				
-
-		
-								
-				<span class="board-detail-wrap">
+				<!-- 답다비답다바답닫답답ㄷ -->
+<!-- 						<div class="comments-content"></div>
+							<div class="reply"></div> -->
 				<c:choose>
-				<c:when test="${answer == null}">
-				<form action="/admin/answer/${question.id}" method="post">
-					<textarea rows="10" cols="100" name="content"></textarea>
-						<button>답변등록</button>
-				</form>				
-				
-				
+					<c:when test="${answer == null}">
+									<div class="bg-light comment-form">
+										<div class="comment-header ms-1">
+											<h5 class="me-2">답</h5>
+										</div>
+										<div class="d-flex flex-row align-items-start">
+											<textarea class="form-control ml-1 shadow-none textarea"></textarea>
+										</div>
+										<div class="mt-2 text-right float-end">
+											<button class="btn btn-primary btn-sm shadow-none" type="submit">등록</button>
+											<button class="btn btn-outline-danger btn-sm ml-1 shadow-none" type="button">삭제</button>
+										</div>
+									</div>
+									<div class="comment-top">
+										<div></div>
+									</div>
+					</c:when>
 
-				</c:when>
+					<c:otherwise>
 				
-				<c:otherwise>
- 				<div class="section-title-wrap" id="answer--wrap">
-					<h2 class="section-title">답</h2>
+				<div class="board-detail">
+					<h3 class="board-title">
+						<span>답</span>
+					</h3>
 				</div>
-
-				<span class="board-info-wrap">				
-				<span class=“btn-right-wrap”>
-				<span class=“modify-wrap”>
-					<button type="button" class="btn-modify">수정</button>
-				</span>
-				<span class="list-wrap">
+				<span class="board-detail-wrap">
+				
+				<span class="board-info-wrap">					
+				 
+				 <span class=“modify-wrap”>
+				 	<button type="button" class="btn-modify">수정</button>
+				 </span> 
+				 <span class="list-wrap">
 					<button type="submit" class="btn-list">삭제</button>
-				</span>
 				</span>				
 				
 				<span class="board-contents">
 				<span id="_board-contents">${answer.content}</span>
 				</span>
+				
 				</span>
-				</c:otherwise>
-			    </c:choose> 
 				
-				
-				</span>		    
+				</span>
+
+					</c:otherwise>
+				</c:choose>
 			</section>
-		    </div>		
-<!-- --------------------- -->
- 		</div>
+
+
+
+
+			<!-- --------------------- -->
+		</div>
 	</div>
-	
+
 	<footer>
 		<div class="inner">
 			<div class="footer-top">

@@ -43,15 +43,18 @@
 	justify-content: flex-end;
 }
 
-.faq--btn--list button {
-	margin-left: 10px;
+.faq--btn--list button,
+.faq--table button {	
 	background-color: #546E7A;
 	border: none;
 	border-radius: 3px;
 	width: 60px;
 	height: 35px; 
-	color: #fff;
-	
+	color: #fff;	
+}
+
+.faq--btn--list button{
+	margin-left: 10px;
 }
 
 .table {
@@ -78,10 +81,14 @@ checkbox {
 	overflow:hidden;
 	white-space:nowrap;
 	text-overflow:ellipsis;
-	max-width: 368px;
-	
-	
+	max-width: 368px;	
 }
+
+.page-link{
+	color: #546E7A;
+}
+
+
 
 </style>
 <body>

@@ -36,6 +36,14 @@
 #qna--list--container{
 	margin-left: 20px; 
 }
+
+.board-detail h3.board-title{
+	border-bottom: none;
+}
+
+.board-detail-wrap {
+    margin-top: -37px;
+}
 </style>
 <body>
 	<div class="container">
@@ -100,14 +108,14 @@
 				</div>
  				<div class="board-detail">
 					<h3 class="board-title">
-						<span>${question.categoryName}</span>
+						<span></span>
 					</h3>
 				</div> 
 				<span class="board-detail-wrap">
 				<span class="board-info-wrap">
 				<span class="profile-info-wrap">
 				<span class="profile-preview-wrap"></span> <span class="info-inner">
-				<span class="name">${application.username}</span>
+				<span class="name">${application.username} (${application.username})</span>
 				<span class="date">${application.createdAt()}</span>
 				</span>
 				<span class=“btn-right-wrap”>
