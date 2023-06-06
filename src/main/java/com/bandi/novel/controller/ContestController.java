@@ -217,6 +217,10 @@ public class ContestController {
 		
 		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
 		
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
 
 		// 즐겨찾기 여부
 		if (principal != null) {
@@ -228,6 +232,9 @@ public class ContestController {
 		model.addAttribute("favorite", favorite);
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("recommendList", recommendList);
+		
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
 
 		return "/contest/contestNovelDetail";
 	}
@@ -247,6 +254,7 @@ public class ContestController {
 		
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
+		// 우측 바에 마지막 으로 본 소설
 		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		
 		// 이전글 다음글 기능
@@ -308,8 +316,9 @@ public class ContestController {
 			subStringList.add(section.substring(startIndex, Math.min(startIndex + fixLength, section.length())));
 		}
 
-		// 유저 골드 정보
+		// 우측바 유저 골드 정보,
 		Integer gold = payService.selectUserGold(principal.getId());
+		
 		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
 		
@@ -329,6 +338,7 @@ public class ContestController {
 		model.addAttribute("leftList", leftList);
 		model.addAttribute("gold", gold);
 		model.addAttribute("lastNovel", lastNovel);
+		model.addAttribute("serviceTypeId", Define.TYPE_CONTEST);
 
 		return "/contest/contestNovelReadSection";
 	}

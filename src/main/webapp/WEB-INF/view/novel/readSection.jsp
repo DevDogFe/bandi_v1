@@ -112,17 +112,7 @@
 								<h2>유료 웹소설</h2>
 							</div>
 							<div class="contents-category">
-								<a>연재작</a> <a>최신작</a>
-							</div>
-							<div class="contents-search">
-								<nav class="navbar navbar-light bg-light mt-0">
-									<div class="container-fluid">
-										<form class="d-flex">
-											<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-											<button class="btn btn-outline-primary btn-sm" type="submit">search</button>
-										</form>
-									</div>
-								</nav>
+								<a>최신작</a>
 							</div>
 						</div>
 						<div class="contents-list">
@@ -166,7 +156,7 @@
 											</div></a> <a><div class="detail-intro">${detail.overview}</div></a>
 									</div>
 									<div class="scale">
-										<span><img src="/assets/images/main/user-line.png">${favorite}</span> <span><img src="/assets/images/main/thumb-up-line.png">143</span> <span><img
+										<span><img src="/assets/images/main/user-line.png">${favorite}</span><span><img
 											src="/assets/images/main/star-line.png">109</span>
 									</div>
 								</div>
@@ -191,15 +181,15 @@
 									<div class="aspect">
 										<div class="aspect-inner">
 											<div id="flipbook" class="flipbook">
-												<div class="page">
-													<h1>${section.title}</h1>
+												<div class="page page-cover">
+													<h1 class="book-cover">${section.title}</h1>
 												</div>
 												<div class="page">
-													<h1>(주)반디</h1>
+													<h1 class="book-cover">(주)반디</h1>
 												</div>
 												<c:forEach items="${subStringList}" var="subString" varStatus="vs">
 													<div class="page">
-														<p>${subString}</p>
+														<p class="book-font">${subString}</p>
 													</div>
 												</c:forEach>
 											</div>
@@ -317,31 +307,32 @@
 				<aside class="right-sidebar">
 					<div class="right-sidebar-contents">
 						<div class="my-info">
-							<div class="username">asd1234 님</div>
+							<div class="username">${principal.nickName} 님</div>
 							<div class="info-category">
 								<span><img src="/assets/images/main/user-line.png">내정보</span> <span><img src="/assets/images/main/thumb-up-line.png">알림</span> <span><img
 									src="/assets/images/main/star-line.png">구매목록</span>
 							</div>
 							<div class="gold-info">
 								<div>보유골드</div>
-								<span class="blue-span">1000</span>
+								<span class="blue-span">${gold}</span>
 							</div>
 							<div class="right-box">
 								<div class="right-box-cover">
-									<a><img src="/assets/images/main/ai1.jpg"></a>
+									<a><img src="/bandi/uploads/${lastNovel.cover}"></a>
 								</div>
 								<div class="right-box-detail">
 									<div class="right-detail-desc">
-										<div class="desc-title">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div>
+										<div class="desc-title">${lastNovel.title}</div>
+										<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="right-banner">
-							<img src="/assets/images/main/gold-charge.png">
+							<a href="/payment/charge"><img src="/assets/images/main/gold-charge.png"></a>
 						</div>
 						<div class="right-banner">
-							<img src="/assets/images/main/author-banner.png">
+							<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
 						</div>
 						<div class="recommend-list">
 							<h3 class="recommend-header">
@@ -427,16 +418,11 @@
       	// 책 크기에 따른 폰트 크기 수정
       	if($(window).width()<1080){
       		mode = "small";
-      		//$("p").css('font-size','5px');
-      		console.log(mode);
-      	}else if($(window).width()>=1080&&$(flipbookEL).width()<1600){
+      	}else if($(window).width()>=1080&& $("#book-body").width()<1000){
       		mode = "middle";
-      		//$("p").css('font-size','20px');
-      		console.log(mode);
       	}else{
       		mode = "big";
-      		$("p").css('font-size','30px');
-      		console.log(mode);
+      		$(".book-font").css('font-size','40px');
       	}
       	
       	//화면 크기에따른 책 사이즈 변경
@@ -446,12 +432,18 @@
     // 책넘길때 폰트 초기화
     $("#flipbook").bind("turning", function(event, page, view) {
   	  	
-  	  	if(mode=="middle"){
-  	  		$("p").css('font-size','20px');
+    	if(mode=="middle"){
+  	  		$(".book-font").css('font-size','20px');
+  	  		$(".book-font").css('line-height','normal');
+  	  		$(".book-cover").css('font-size','30px');
   	  	}else if(mode=='small'){
-  	  		$("p").css('font-size','5px');
+  	  		$(".book-font").css('font-size','5px');
+  	  		$(".book-font").css('line-height','normal');
+  	  		$(".book-cover").css('font-size','15px');
   	  	}else{
-  	  		$("p").css('font-size','30px');
+  	  		$(".book-font").css('font-size','40px');
+  	  		$(".book-font").css('line-height','60px');
+  	  		$(".book-cover").css('font-size','50px');
   	  	}
   	});
 
@@ -498,11 +490,13 @@
 		}
 		
 		window.addEventListener('resize', function (e) {
-	    	flipbookEL.style.width = '';
+			flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', (flipbookEL.clientWidth*0.9), (flipbookEL.clientHeight*0.8));
 	      	$(flipbookEL).css('margin-top','3%');
-	      	$("p").css('font-size','30px');
+	      	$(".book-font").css('font-size','40px');
+	      	$(".book-cover").css('font-size','50px');
+	      	$(".book-font").css('line-height','60px');
 			$(".fullscreen").hide();
 			$(".close-fullscreen").show();
 	    });
@@ -526,10 +520,12 @@
 		}
 		
 		window.addEventListener('resize', function (e) {
-	    	flipbookEL.style.width = '';
+			flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
-	      	$("p").css('font-size','20px');
+	      	$(".book-font").css('font-size','20px');
+	      	$(".book-font").css('line-height','normal');
+	      	$(".book-cover").css('font-size','30px');
 	      	$(flipbookEL).css('margin-top','0%');
 	      	$(".close-fullscreen").hide();
 			$(".fullscreen").show();

@@ -29,8 +29,10 @@ import com.bandi.novel.dto.KakaoRefundRequestDto;
 import com.bandi.novel.dto.response.KakaoPayPrepareToken;
 import com.bandi.novel.dto.response.KakaoPaySuccessResponse;
 import com.bandi.novel.dto.response.KakaoRefundResponse;
+import com.bandi.novel.dto.response.LastNovelRecordDto;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.PayService;
+import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
 
 @Controller
@@ -41,6 +43,8 @@ public class PayController {
 	private HttpSession session;
 	@Autowired
 	private PayService payService;
+	@Autowired
+	private UserNovelRecordService userNovelRecordService;
 
 	private final String KAKAO_TEST_CID = "TC0ONETIME";
 	private final String KAKAO_ADMIN_KEY = "22a92c03555fdcfae421a40a4e0afe06";
@@ -53,8 +57,8 @@ public class PayController {
 	 * @return
 	 */
 	@GetMapping("/userPay")
-	public String getUserPay() {
-
+	public String getUserPay(Model model) {
+		
 		return "/pay/userPay";
 	}
 
@@ -68,8 +72,13 @@ public class PayController {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
-		int userGold = payService.selectUserGold(principal.getId());
-		model.addAttribute("userGold", userGold);
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
+		
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
 
 		return "/pay/chargeGold";
 	}
@@ -141,7 +150,7 @@ public class PayController {
 			payService.purchaseNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"+serviceTypeId;
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/" + serviceTypeId;
 	}
 
 	/**
@@ -170,7 +179,7 @@ public class PayController {
 			payService.rentalNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 
-		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/"+ serviceTypeId;
+		return "redirect:/section/read/" + dto.getNovelId() + "/" + dto.getSectionId() + "/" + serviceTypeId;
 	}
 
 	/**
@@ -358,7 +367,6 @@ public class PayController {
 	 * @return
 	 */
 	public KakaoPaySuccessResponse getKakaoSuccess(String pg_token) {
-
 
 		URI uri = UriComponentsBuilder.fromUriString("https://kapi.kakao.com").path("/v1/payment/approve").encode()
 				.build().toUri();
