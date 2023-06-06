@@ -144,7 +144,7 @@
 						<tbody id="qnaListBody">
 							<c:forEach var="question" items="${questionList}">
 								<tr id="qna" class="qna--table">
-									<td class="qna--table">${question.categoryName}</td>
+									<td class="qna--table" style="width: 220px;">${question.categoryName}</td>
 									<td class="qna--table"><a href="/admin/question/${question.id}">${question.title}</a></td>
 									<td class="qna--table">${question.username}</td>
 									<td class="qna--table">${question.createdAt()}</td>

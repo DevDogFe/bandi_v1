@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반디</title>
 <script src="/assets/js/jquery.min.js"></script>
+
+
 <!-- jquery-3.5.1이 위에 있어야 작동 -->
 <!-- Slick.js -->
 
@@ -41,19 +43,25 @@
 	justify-content: flex-end;
 }
 
-.faq--btn--list button {
-	margin-left: 10px;
+.faq--btn--list button,
+.faq--table button {	
 	background-color: #546E7A;
 	border: none;
 	border-radius: 3px;
 	width: 60px;
 	height: 35px; 
-	color: #fff;
-	
+	color: #fff;	
+}
+
+.faq--btn--list button{
+	margin-left: 10px;
 }
 
 .table {
 	text-align: center;
+	width: 920px;
+	max-width: 920px;
+	min-width: 920px;
 }
 
 .faq--page {
@@ -68,6 +76,19 @@ checkbox {
 #check--All{
 	width: 30px;
 } 
+
+.table td{
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	max-width: 368px;	
+}
+
+.page-link{
+	color: #546E7A;
+}
+
+
 
 </style>
 <body>
@@ -141,7 +162,13 @@ checkbox {
 							<a href="/admin/faq"><button>글쓰기</button></a>
 						</div>
 						
-						<table class="table">					
+						<table class="table">
+						<colgroup>
+							<col style="width: 10%;">
+							<col style="width: 40%;">
+							<col style="width: 40%;">
+							<col style="width: 10%;">
+						</colgroup>					
 						<thead>
 							<tr>
 								<th><input type="checkbox" id="check--All" ></th>
@@ -154,7 +181,7 @@ checkbox {
 
 							<c:forEach var="faq" items="${faqPageUtil.content}">
 								<tr class="faq--table">
-									<td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="${faq.id}"></td>
+									<td class="faq--table"><input type="checkbox" id="check--id" name="check--id" value="${faq.id}"></td>
 									<td class="faq--table">${faq.question}</td>
 									<td class="faq--table">${faq.answer}</td>
 									<td class="faq--table"><a href="/admin/faq/update/${faq.id}"><button>수정</button></a></td>

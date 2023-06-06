@@ -19,7 +19,7 @@ $(document).ready(function() {
 			        		 }				        		 
 			        		 
 			        		 qnaNode += `<tr class="qna--table">
-				        		 <td class="qna--table">\${response[i].categoryName}</td>
+				        		 <td class="qna--table" style="width: 220px;">\${response[i].categoryName}</td>
 				        		 <td class="qna--table"><a href="/admin/question/\${response[i].id}">\${response[i].title}</td>
 				        		 <td class="qna--table">\${response[i].userId}</td>
 				        		 <td class="qna--table">\${time}</td>					       			 

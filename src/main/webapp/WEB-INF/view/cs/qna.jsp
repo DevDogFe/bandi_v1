@@ -130,6 +130,11 @@ input:focus ~ search-span, input:valid ~ search-span {
 	height: 40px;
 	color: #3b6bc9;
 }
+
+.page-link{
+	color: #546E7A;
+}
+
 </style>
 <head>
 <meta charset="UTF-8" />
@@ -229,10 +234,9 @@ input:focus ~ search-span, input:valid ~ search-span {
 								<!-- 답 TODO-->
 								<c:if test="${qna.answer != null}">
 									<tr class="qna--answer">
-										<td>RE:</td>
-										<td colspan="1"><a href="/qna/answer/${qna.id}">${qna.answer}</a></td>
-										<td></td>
-										<td></td>
+										<td colspan="2"><a href="/qna/answer/${qna.id}">[RE]: ${qna.title}</a></td>
+										<td></td> 
+										<td>관리자</td>
 										<td>${qna.answerCreatedAt()}</td>
 									</tr>
 								</c:if>
@@ -267,8 +271,8 @@ input:focus ~ search-span, input:valid ~ search-span {
 		</div>
 		</section>
 	</div>
-
-	<!-- 		       <footer>
+	</div>
+		       <footer>
         <div class="inner">
           <div class="footer-top">
             <ul>
@@ -303,4 +307,4 @@ input:focus ~ search-span, input:valid ~ search-span {
             </ul>
           </div>
         </div>
-      </footer>  -->
+      </footer>  

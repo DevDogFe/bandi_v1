@@ -49,6 +49,10 @@
 .apply--page {
 	justify-content: center;
 }
+
+.page-link{
+	color: #546E7A;
+}
 </style>
 <body>
 	<div class="container">
@@ -116,7 +120,6 @@
 								<th>NO</th>
 								<th>제목</th>
 								<th>작성자</th>
-								<th>파일이름</th>
 								<th>작성일</th>
 							</tr>
 						</thead>
@@ -126,7 +129,6 @@
 									<td>${application.id}</td>
 									<td><a href="/admin/applicationDetail/${application.id}">${application.title}</a></td>
 									<td>${application.username}</td>
-									<td>${application.uploadFileName}</td>
 									<td>${application.createdAt()}</td>
 								</tr>
 							</c:forEach>
