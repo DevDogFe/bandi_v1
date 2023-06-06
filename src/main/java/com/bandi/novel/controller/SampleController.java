@@ -73,7 +73,7 @@ public class SampleController {
 	}
 
 	// 템플릿 예시
-	@GetMapping("/main")
+	@GetMapping({"/main", "/"})
 	public String main(Model model) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);

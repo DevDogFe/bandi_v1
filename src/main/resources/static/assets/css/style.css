@@ -772,3 +772,8 @@ footer {
     /* !important 안박으면 안먹힐때 있음 */
     /* display: none !important; */
 }
+
+.external--login--btn img{
+	height: 50px;
+		
+}
