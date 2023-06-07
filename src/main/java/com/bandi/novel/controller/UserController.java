@@ -170,6 +170,12 @@ public class UserController {
 		return "/user/findPwdForm";
 	}
 	
+	/**
+	 * 아이디 찾기
+	 * @param email
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/findId")
 	public String getfindId(@RequestParam String email, Model model) {
 		String username = userService.selectUsernameByEmail(email);

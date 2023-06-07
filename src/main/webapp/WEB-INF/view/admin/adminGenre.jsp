@@ -37,7 +37,7 @@
 				<form action="/admin/genre" method="post">
 					<div class="genre-add">
 						<div class="search">
-							<input type="text" name="name"> <label class="searchlabel">Name</label> <span class="search-span"></span>
+							<input type="text" name="name" required="required"> <label class="searchlabel">Name</label> <span class="search-span"></span>
 						</div>
 						<button type="submit" id="button-add">등록</button>
 					</div>

@@ -63,10 +63,10 @@ form button{
 			<%-- <%@include file="../layout/header.jsp"%> --%>
 			<form action="/application/write" method="post" >
 				<div class="apply--form">
-				<input type="text" name="title" placeholder="제목을 입력해주세요">
+				<input type="text" name="title" placeholder="제목을 입력해주세요" required="required">
 				<button type="submit">연재신청</button>
 				</div>
-				<textarea id="summernote" name="content" style="height: 60vh" placeholder="내용을 입력해주세요"></textarea>
+				<textarea id="summernote" name="content" style="height: 60vh" placeholder="내용을 입력해주세요" required="required"></textarea>
 				<label> 연락처</label> <input type="text" name="tel">
 			</form>
 

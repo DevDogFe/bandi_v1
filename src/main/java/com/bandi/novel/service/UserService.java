@@ -237,7 +237,7 @@ public class UserService {
 	public String selectUsernameByEmail(String email) {
 		User userEntity = userRepository.selectByEmail(email);
 		if(userEntity == null) {
-			throw new CustomRestfulException("비밀번호가 틀렸습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomRestfulException("아이디가 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return userEntity.getUsername();
 	}

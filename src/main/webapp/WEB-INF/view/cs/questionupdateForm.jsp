@@ -79,7 +79,7 @@
 				<div class="qna--header--form">
 
 					<div class="qna--title-form">
-						<input type="text" class="qna--title" name="title" value="${question.title}">
+						<input type="text" class="qna--title" name="title" value="${question.title}" required="required">
 						<select name="faqCategoryId" class="qna--category">
 							<option value="0">카테고리</option>
 							<c:forEach var="category" items="${faqCategorylist}">
@@ -98,7 +98,7 @@
 						<button type="submit" class="btn btn-outline-primary">수정완료</button>
 					</div>
 				</div>
-				<textarea id="content" class="summernote" name="content">${question.content}</textarea>
+				<textarea id="content" class="summernote" name="content" required="required">${question.content}</textarea>
 			</form>
 
 			<script type="text/javascript">

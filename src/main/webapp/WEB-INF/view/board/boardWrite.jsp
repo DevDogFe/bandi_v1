@@ -90,7 +90,7 @@
       						</div>
       					</div>
       					<br>
-						<textarea id="content" name="content" class="summernote"></textarea>
+						<textarea id="content" name="content" class="summernote" required="required"></textarea>
 						<div class="btn-flex">
 							<button type="submit" class="add-board">등록</button>
 							<button type="submit" class="add-board" onclick="location.href='/board/list/${boardTypeId}'">취소</button>

@@ -78,11 +78,14 @@ $(document).ready(() => {
 			alert("인증번호 발송 실패");
 		});
 	});
-
+	
 
 	// 인증번호 일치여부 확인 (효린) 
 	function confirm(key) {
 		$("#confirm").on("click", () => {
+			if($("#authKey").val() == ""){
+				alert("인증번호를 입력해주세요.");
+			}
 			if (key != $("#authKey").val()) {
 				alert("인증실패 확인 다시입력해주세요");
 			} else {
