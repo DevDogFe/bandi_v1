@@ -403,3 +403,22 @@
 .bold-font{
 	font-weight: bold;
 }
+
+.desc {
+	text-align: left;
+}
+
+.desc h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.desc p {
+    font-size: 16px;
+    line-height: 1.7em;
+}
+
+.desc a {
+	color: #333;
+    font-weight: bold;
+}

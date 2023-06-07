@@ -291,6 +291,8 @@ public class NovelController {
 				return "/pay/userPay";
 			}
 		}
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
@@ -300,8 +302,6 @@ public class NovelController {
 		userNovelRecordService.NovelRecord(principal.getId(), novelId, sectionId);
 		//
 		
-		// 우측 바에 마지막 으로 본 소설
-		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		// 우측바 유저 골드 정보,
 		Integer gold = payService.selectUserGold(principal.getId());
 
