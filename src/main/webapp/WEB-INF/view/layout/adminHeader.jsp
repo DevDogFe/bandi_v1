@@ -48,16 +48,16 @@
 						<li><a href="/main">HOME</a></li>
 						<li class="dropdown"><a href="#" role="button" id="menuNovel" data-bs-toggle="dropdown" aria-expanded="false">소설</a>
 							<ul class="dropdown-menu" aria-labelledby="menuNovel">
-								<li><a class="dropdown-item" href="/pay">유료 소설</a></li>
-								<li><a class="dropdown-item" href="/free">무료 소설</a></li>
+								<li><a class="dropdown-item ms-0" href="/pay">유료 소설</a></li>
+								<li><a class="dropdown-item ms-0" href="/free">무료 소설</a></li>
 							</ul></li>
 						<li><a href="/contest/list">공모전</a></li>
 						<li class="dropdown"><a href="#" role="button" id="menuBoard" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
 							<ul class="dropdown-menu" aria-labelledby="menuBoard">
-								<li><a class="dropdown-item" href="/board/list/1">자유</a></li>
-								<li><a class="dropdown-item" href="/board/list/2">추천</a></li>
-								<li><a class="dropdown-item" href="/board/list/3">팬아트</a></li>
-								<li><a class="dropdown-item" href="/board/list/4">홍보</a></li>
+								<li><a class="dropdown-item ms-0 text-center" href="/board/list/1">자유</a></li>
+								<li><a class="dropdown-item ms-0 text-center" href="/board/list/2">추천</a></li>
+								<li><a class="dropdown-item ms-0" href="/board/list/3">팬아트</a></li>
+								<li><a class="dropdown-item ms-0" href="/board/list/4">홍보</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="/faq/list" role="button">고객지원</a></li>
 						<li class="dropdown"><a href="/myInfo" role="button">마이페이지</a></li>

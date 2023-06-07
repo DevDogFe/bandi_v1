@@ -39,11 +39,11 @@
 						</a></li>
 						<li><a href="/admin/user"> <i class='bx bx-user'></i> <span class="links_name">사용자 변경</span>
 						</a></li>
-						<li><a href="#"> <i class='bx bx-conversation'></i> <span class="links_name">자주 묻는 질문</span>
+						<li><a href="/admin/faqList"> <i class='bx bx-conversation'></i> <span class="links_name">자주 묻는 질문</span>
 						</a></li>
-						<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">FAQ</span>
+						<li><a href="/admin/qnaList"> <i class='bx bx-message-square-dots'></i> <span class="links_name">Q&A</span>
 						</a></li>
-						<li><a href="#"> <i class='bx bx-message-square-dots'></i> <span class="links_name">연재 문의</span>
+						<li><a href="/admin/applicationList"> <i class='bx bx-message-square-dots'></i> <span class="links_name">연재 문의</span>
 						</a></li>
 					</ul>
 				</div>

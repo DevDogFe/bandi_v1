@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/view/layout/header.jsp"%>
+<%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 <link rel="stylesheet" href="/assets/css/admin/adminQuestionList.css" />
+</div>
 <div class="sectind-flex">
 	<section>
 		<div class="sidebar">
