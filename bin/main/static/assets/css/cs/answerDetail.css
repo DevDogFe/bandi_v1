@@ -7,3 +7,25 @@
 .board-detail-wrap{
 	border-bottom: none;
 }
+
+.app--btn{
+	color: #fff;
+	font-size: 1rem;
+	width: 100px;
+	height: 40px;
+	border:none;
+	cursor:pointer;
+	border-radius: 6px;
+	font-weight: 400;
+	transition: all 0.2s ease;
+	background-color: #3b6bc9;
+	margin-right: 5px;	
+	margin-left: 25px;	
+}
+
+.text--box{
+	border: 1px solid gray;
+	border-radius: 5px;
+	padding-left: 10px;
+	
+}

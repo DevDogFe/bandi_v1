@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link href="/assets/css/style.css" rel="stylesheet">
+
+
 <link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
 <link rel="stylesheet" href="/assets/css/cs/csCategory.css" />
 
