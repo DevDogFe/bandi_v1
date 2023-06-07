@@ -29,7 +29,7 @@
 	</select>
 
 	<select id="selectByAgeAndGender" resultType="com.bandi.novel.dto.response.MainRecommendDto">
-		SELECT n.id, n.title, n.genre_id, n.cover, count(*) AS favorite_count
+		SELECT n.id, n.title, n.genre_id, n.cover, count(*) AS favorite_count, u.nick_name
 		FROM user_favorite_tb as uf
 		LEFT JOIN user_tb as u
 		ON uf.user_id = u.id

@@ -34,8 +34,8 @@
 		</section>
 	<section class="main">
 		<div class="report-list">
-			<div class="main-header">
-				<h3 class="mb-2">내 작품</h3>
+			<div class="main-header d-flex align-items-end justify-content-between">
+				<h3 class="mb-2">내 작품</h3> <a style="padding-bottom: 10px; padding-right: 20px;" href="/novel/registration">작품 등록</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty myNovelList }">

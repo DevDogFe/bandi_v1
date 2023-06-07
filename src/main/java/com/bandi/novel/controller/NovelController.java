@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bandi.novel.dto.AgeGenderRecommendDto;
 import com.bandi.novel.dto.response.LastNovelRecordDto;
+import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
 import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovelReplyListDto;
@@ -44,6 +46,7 @@ import com.bandi.novel.service.RecommendService;
 import com.bandi.novel.service.UserFavoriteService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
+import com.bandi.novel.utils.GenerationUtil;
 import com.bandi.novel.utils.NovelPageUtil;
 import com.bandi.novel.utils.NovelReplyPageUtil;
 
@@ -80,16 +83,20 @@ public class NovelController {
 	@GetMapping("/novel/registration")
 	public String getRegistration(Model model) {
 
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		List<Genre> genreList = novelService.selectGenreList();
 		List<ServiceType> serviceTypeList = novelService.selectServiceTypeList();
 		/**
 		 * @auth 김경은
 		 */
 		List<Contest> contestList = contestService.selectContestByDate();
+		AgeGenderRecommendDto ageGenderRecommendDto = new AgeGenderRecommendDto(principal.getId(), principal.getGender(), new GenerationUtil(principal.getGeneration()));
+		List<MainRecommendDto> recommendList = recommendService.selectNovelsByAgeAndGender(ageGenderRecommendDto);
 
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("serviceTypeList", serviceTypeList);
 		model.addAttribute("contestList", contestList);
+		model.addAttribute("recommendList", recommendList);
 
 		return "/novel/registrationForm";
 	}
