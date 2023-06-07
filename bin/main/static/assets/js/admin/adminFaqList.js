@@ -47,12 +47,4 @@ $(document).ready(() => {
 		});
 	});
 
-
-	/* function checkAll(){
-		 if($("#check--All").is("checked")){
-		   $("input[name=check--id]").prop("checked", true);
-		   }else{
-		   $("input[name=check--id]").prop("checked", false);					
-		   }				
-	 } */
 });
