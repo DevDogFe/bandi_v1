@@ -82,7 +82,6 @@ public class ApplicationController {
 		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		 * application.setUserId(principal.getId());
 		 */
-		System.out.println(applicationFromDto);
 		// 파일 업로드
 		MultipartFile file = applicationFromDto.getFile();
 		if (file.isEmpty() == false) {

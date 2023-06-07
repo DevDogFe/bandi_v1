@@ -136,7 +136,6 @@ public class QnaController {
 	 */
 	@PostMapping("/question/update/{id}")
 	public String updateQuestionProc(@PathVariable Integer id, QuestionUpdateDto questionUpdateDto) {
-		System.out.println(questionUpdateDto.getContent().length());
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// qnaService.updateQuestion(questionUpdateFormDto, principal.getId);

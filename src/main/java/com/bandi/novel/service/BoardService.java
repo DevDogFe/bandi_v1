@@ -48,7 +48,7 @@ public class BoardService {
 			}
 		}
 		if(result != 1) {
-			System.out.println("등록 실패");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -98,7 +98,7 @@ public class BoardService {
 			}
 		}
 		if(result != 1) {
-			System.out.println("수정 실패");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return result;
 	}
@@ -108,7 +108,7 @@ public class BoardService {
 	public int deleteBoard(Integer id) {
 		int result = boardRepository.deleteById(id);
 		if(result != 1) {
-			System.out.println("삭제 실패");
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return result;
 	}
