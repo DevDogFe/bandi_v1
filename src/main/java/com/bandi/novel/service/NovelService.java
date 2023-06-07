@@ -75,7 +75,7 @@ public class NovelService {
 
 		Novel novelEntity = novelRepository.selectNovelByUserIdAndTitle(novel);
 		if (novelEntity != null) {
-			throw new IllegalArgumentException("작가님의 작품 중 같은 제목의 작품이 이미 있습니다.");
+			throw new CustomRestfulException("작가님의 작품 중 같은 제목의 작품이 이미 있습니다.", HttpStatus.BAD_REQUEST);
 		}
 
 		int result = novelRepository.insertNovel(novel);

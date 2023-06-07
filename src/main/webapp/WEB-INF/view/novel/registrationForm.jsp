@@ -1,38 +1,12 @@
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="../layout/header.jsp"%>
-<script src="/vendor/jquery/jquery.min.js"></script>
+<%@include file="/WEB-INF/view/layout/header.jsp"%>
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/registration.css" />
-<script>
-	$(document).ready(function() {
-		$("#addContestForm").css('display', 'none');
-		$("#serviceTypeId").on("change", function() {
-			if ($(this).val() == 3) {
-				$("#addContestForm").show();
-				// 서비스 타입 공모전 선택 시 contestId에 기본값 설정
-				$("#contestId").val($("#contestOptionId1").val());
-			} else {
-				$("#addContestForm").hide();
-				$("#contestId").val(0);
-			}
-		});
-
-		$("#contestFormId").on("change", function() {
-
-			let contestOptionId = $("#contestFormId").val();
-			// input값 변경으로 공모전 id post 하기
-			$("#contestId").val($("#contestOptionId" + contestOptionId).val());
-		});
-	})
-</script>
 <div class="main-layout">
-	<section class="main-form">
+	<section class="main-form mb-5" style="width: 100%">
 		<div class="registration-form">
 			<h1>소설 등록</h1>
-			<form action="#" class="form">
+			<form action="/novel/registration" method="post" class="form">
 				<div class="input-box">
 					<label>제목</label> <input type="text" id="title" name="title" placeholder="Enter full name" required />
 				</div>
@@ -48,7 +22,7 @@
 				</div>
 				<div class="input-box">
 					<label>서비스 타입</label>
-					<div id="serviceTypeId" name="serviceTypeId" class="select-box">
+					<div id="serviceTypeId" name="serviceTypeId" class="select-box mb-3">
 						<select id="serviceTypeId" name="serviceTypeId">
 							<c:forEach items="${serviceTypeList}" var="serviceType">
 								<c:choose>
@@ -65,9 +39,17 @@
 				</div>
 				<div id="addContestForm">
 					<label for="contestFormId" class="form-label">공모전</label> <select id="contestFormId" name="contestFomrId" class="form-select">
-						<c:forEach items="${contestList}" var="contest" varStatus="vs">
-							<option id="contestOptionId${vs.index+1}" value="${contest.id}">${contest.title}</option>
-						</c:forEach>
+						<c:choose>
+							<c:when test="${empty contestList }">
+								<option id="contestOptionId" value="">진행중인 공모전이 없습니다.</option>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${contestList}" var="contest" varStatus="vs">
+									<option id="contestOptionId${vs.index+1}" value="${contest.id}">${contest.title}</option>
+								</c:forEach>
+
+							</c:otherwise>
+						</c:choose>
 					</select> <input id="contestId" name="contestId" type="hidden" value="0">
 				</div>
 				<div class="input-box">
@@ -85,8 +67,8 @@
 					</div>
 				</div>
 				<div class="input-box">
-					<label>작품소개</label>
-					<textarea id="content" name="content" class="form-control" required="required" rows="10"> 단종의 강함을 따라잡기 위해 세조가 수련을 시작하다.</textarea>
+					<label class="mb-2">작품소개</label>
+					<textarea id="overview" name="overview" class="form-control" required="required" rows="10"> 단종의 강함을 따라잡기 위해 세조가 수련을 시작하다.</textarea>
 				</div>
 				<div class="d-flex flex-row-reverse">
 					<button class="submit-button" type="submit">등록</button>
@@ -95,61 +77,6 @@
 		</div>
 	</section>
 
-	<aside class="right-sidebar">
-		<div class="right-sidebar-contents">
-			<div class="my-info">
-				<div class="username">asd1234 님</div>
-				<div class="info-category">
-					<span><img src="/assets/images/main/user-line.png">내정보</span> <span><img src="/assets/images/main/thumb-up-line.png">알림</span> <span><img
-						src="/assets/images/main/star-line.png">구매목록</span>
-				</div>
-				<div class="gold-info">
-					<div>보유골드</div>
-					<span class="blue-span">1000</span>
-				</div>
-				<div class="right-box">
-					<div class="right-box-cover">
-						<a><img src="/assets/images/main/ai1.jpg"></a>
-					</div>
-					<div class="right-box-detail">
-						<div class="right-detail-desc">
-							<div class="desc-title">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="right-banner">
-				<img src="/assets/images/main/gold-charge.png">
-			</div>
-			<div class="right-banner">
-				<img src="/assets/images/main/author-banner.png">
-			</div>
-			<div class="recommend-list">
-				<h3 class="recommend-header">
-					<a>${principal.getGeneration() } ${principal.gender } 추천작</a>
-				</h3>
-				<ul>
-					<c:forEach items="${recommendList }" var="novel">
-						<li><a class="recommend-item">
-								<div class="recommend-img">
-									<c:choose>
-										<c:when test="${novel.cover != null }">
-											<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
-										</c:when>
-										<c:otherwise>
-											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
-										</c:otherwise>
-									</c:choose>
-								</div>
-								<div class="recommend-desc">
-									<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
-								</div>
-						</a></li>
-					</c:forEach>
-
-				</ul>
-			</div>
-		</div>
-	</aside>
 </div>
+<script src="/assets/js/novel/registrationForm.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>
