@@ -1,66 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
+<link rel="stylesheet" href="/assets/css/admin/adminFaqList.css" />
 </head>
-<style>
-.admin--faq--container {
-	margin-top: 20px;
-	margin-left: 10px;
-}
-
-.faq--btn--list {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.faq--btn--list button,
-.faq--table button {	
-	background-color: #546E7A;
-	border: none;
-	border-radius: 3px;
-	width: 60px;
-	height: 35px; 
-	color: #fff;	
-}
-
-.faq--btn--list button{
-	margin-left: 10px;
-}
-
-.table {
-	text-align: center;
-	width: 920px;
-	max-width: 920px;
-	min-width: 920px;
-}
-
-.faq--page {
-	justify-content: center;
-}
-
-checkbox {
-	margin: auto;
-}
-
- #check--id,
-#check--All{
-	width: 30px;
-} 
-
-.table td{
-	overflow:hidden;
-	white-space:nowrap;
-	text-overflow:ellipsis;
-	max-width: 368px;	
-}
-
-.page-link{
-	color: #546E7A;
-}
-
-
-
-</style>
 		</div>
 		<div class="sectind-flex">
 			<section>

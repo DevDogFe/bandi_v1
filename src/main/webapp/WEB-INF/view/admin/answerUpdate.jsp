@@ -30,50 +30,10 @@
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 <link rel="stylesheet" href="/assets/css/detail.css" />
+<link rel="stylesheet" href="/assets/css/admin/answerUpdate.css" />
 
 </head>
-<style>
-#qna--list--container {
-	margin-left: 20px;
-}
 
-.section-title {
-	margin-left: 5px;
-}
-
-.board-detail-wrap {
-	border-bottom: 1px solid #999;
-}
-
-.board-detail {
-	border: none;
-}
-
-#answer--wrap {
-	margin-top: 0;
-	margin-left: -20px;
-	border-bottom: 1px solid #f2f2f2;
-}
-
-button{
-	background-color: #3b6bc9;
-	border-radius: 3px;
-	color: #fff;
-	border: none;
-	width: 80px;
-	height: 35px;
-}
-
-.answer--submit button{
-	background-color: #3b6bc9;
-	border-radius: 3px;
-	color: #fff;
-	border: none;
-	width: 80px;
-	height: 35px;	
-}
-
-</style>
 <body>
 	<div class="container">
 		<div class="inner">

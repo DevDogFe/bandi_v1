@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.qna--header--form {
+	display: flex;
+}
+
+.qna--title {
+	height: 40px;
+	width: 400px;
+	margin-top: 20px;
+	border-radius: 5px;
+}
+
+.qna--category {
+	height: 40px;
+	border-radius: 5px;
+}
+
+.qna--button {
+	flex: 3;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+	height: 50px;
+}
+
+.qna--button a {
+	font-style: none;
+}

@@ -27,16 +27,8 @@
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="/assets/css/board/boardDetail.css" />
+<link rel="stylesheet" href="/assets/css/cs/questionDetail.css" />
 </head>
-<style>
-.btn-modify{
-	right: 30px;
-}
-
-.btn-delete {
- 	right: 80px;
-}
-</style>
   <body>
     <div class="container">
     	<div class="inner">
@@ -101,21 +93,6 @@
 					</span>
 				</span>
 			</section>
-
-
-<%-- 	
-	<ul>
-		<li>${question.title}</li>
-		<li>${question.categoryName}</li>
-		<li>${question.username}</li>
-		<li>${question.content}</li>
-		<li>${question.createdAt()}</li>
-	</ul> --%>
-	
-<%-- 	<c:if test="${principalId == question.userId }">
-		<a href="/qna/question/update/${question.id}">수정</a>
-		<a href="/qna/question/delete/${question.id}">삭제</a>
-	</c:if> --%>
 
 </body>
 </html>

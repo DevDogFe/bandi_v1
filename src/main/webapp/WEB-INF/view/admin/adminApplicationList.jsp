@@ -1,31 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
+<link rel="stylesheet" href="/assets/css/admin/adminApplicationList.css" />
 </head>
-<style>
-.admin--apply--container {
-	margin-top: 30px;
-	margin-left: 10px;
-}
-
-.table {
-	margin-top: 20px;
-	text-align: center;
-}
-
-.table a {
-	color: black;
-	cursor: pointer;
-}
-
-.apply--page {
-	justify-content: center;
-}
-
-.page-link{
-	color: #546E7A;
-}
-</style>
 		</div>
 		<div class="sectind-flex">
 			<section>

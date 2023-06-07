@@ -3,39 +3,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <!DOCTYPE html>
-
 <html>
-<style>
-.qna--header--form {
-	display: flex;
-}
 
-.qna--title {
-	height: 40px;
-	width: 400px;
-	margin-top: 20px;
-	border-radius: 5px;
-}
-
-.qna--category {
-	height: 40px;
-	border-radius: 5px;
-}
-
-.qna--button {
-	flex: 3;
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 10px;
-	height: 50px;
-}
-
-.qna--button a {
-	font-style: none;
-}
-
-
-</style>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -49,6 +18,7 @@
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link href="/assets/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/cs/questionUpdateForm.css" />
 </head>
 <body>
 	<div class="container">

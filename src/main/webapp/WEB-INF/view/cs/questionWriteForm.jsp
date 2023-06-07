@@ -3,61 +3,20 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <!DOCTYPE html>
-
 <html>
-<style>
-.qna--header--form {
-	display: flex;
-}
-
-.qna--title {
-	height: 40px;
-	width: 400px;
-	margin-top: 20px;
-	border-radius: 5px;
-}
-
-.qna--category {
-	height: 40px;
-	border-radius: 5px;
-}
-
-.qna--button {
-	flex: 3;
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 10px;
-	height: 50px;
-	
-}
-
-.qna--button button{
-	background-color: #3b6bc9;
-	border-radius: 3px;
-	color: #fff;
-	border: none;
-	width: 80px;
-	height: 35px;
-	margin-right: 10px;
-	margin-top: 10px;
-}
-
-
-
-</style>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반디</title>
 <script src="/assets/js/jquery.min.js"></script>
-
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link href="/assets/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/cs/questionWriteForm.css" />
 
 </head>
 <body>

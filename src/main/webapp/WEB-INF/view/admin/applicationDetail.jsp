@@ -2,19 +2,8 @@
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 <link rel="stylesheet" href="/assets/css/detail.css" />
-<style>
-#qna--list--container{
-	margin-left: 20px; 
-}
-
-.board-detail h3.board-title{
-	border-bottom: none;
-}
-
-.board-detail-wrap {
-    margin-top: -37px;
-}
-</style>
+<link rel="stylesheet" href="/assets/css/admin/applicationDetail.css" />
+</head>
 		</div>
 		<div class="d-flex align-items-start">
 			<section class="d-flex">

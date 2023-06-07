@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.admin--apply--container {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.table {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.table a {
+	color: black;
+	cursor: pointer;
+}
+
+.apply--page {
+	justify-content: center;
+}
+
+.page-link{
+	color: #546E7A;
+}

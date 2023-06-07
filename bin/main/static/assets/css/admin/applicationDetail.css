@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+#qna--list--container{
+	margin-left: 20px; 
+}
+
+.board-detail h3.board-title{
+	border-bottom: none;
+}
+
+.board-detail-wrap {
+    margin-top: -37px;
+}

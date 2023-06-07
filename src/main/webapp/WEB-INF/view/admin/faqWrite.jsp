@@ -2,63 +2,15 @@
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 <link rel="stylesheet" href="/assets/css/detail.css" />
-
+<link rel="stylesheet" href="/assets/css/admin/faqWrite.css" />
+<script src="/assets/js/jquery.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
+<!-- include summernote css/js -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="/assets/css/style.css" rel="stylesheet">
 </head>
-<style>
-.faq--form--container{
- 	margin-top: 20px;
-	margin-left: 10px; 
-}
-
-.qna--header--form {
-	display: flex;
-	margin-top: 30px;
-}
-
-.qna--title {
-	height: 40px;
-	width: 400px;
-	margin-top: 1px;
-	border-radius: 5px;
-}
-
-.qna--category {
-	height: 40px;
-	border-radius: 5px;
-	margin-bottom: 10px;
-	margin-left: 10px;
-}
-
-.qna--button {
-	flex: 3;
-	display: flex;
-	justify-content: flex-end;
-}
-
-input {
-	border: 1px solid black;
-	font-size: 15px;
-	padding-top: 5px;
-	
-}
-
-.qna--button button{
-	width: 60px;
-	margin-right: 10px;
-	margin-top: 5px;
-	background-color: #546E7A;
-	border: none;
-	border-radius: 3px;
-	height: 35px; 
-	color: #fff;
-	font-size: 20px;
-	
-}
-.qna--title-form{
-	display: flex;
-}
-
-</style>
 		</div>
 		<div class="d-flex align-items-start">
 			<section class="d-flex">

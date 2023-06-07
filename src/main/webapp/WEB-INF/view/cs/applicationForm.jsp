@@ -2,26 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<style>
-form button{
-	background-color: #3b6bc9;
-	border-radius: 3px;
-	color: #fff;
-	border: none;
-	width: 80px;
-	height: 35px;
-}
-
-.apply--form{
-	display: flex;
-	justify-content: space-between;
-}
-.apply--title{
-	height: 40px;
-	width: 400px;
-}
-
-</style>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -35,6 +15,7 @@ form button{
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link href="/assets/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/cs/answerDetail.css" />
 
 </head>
 <body>

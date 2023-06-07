@@ -4,131 +4,6 @@
 <%-- <%@include file="../layout/header.jsp"%>--%>
 <!DOCTYPE html>
 <html lang="en">
-<style>
-.qna--button {
-	display: flex;
-	justify-content: flex-end;	
-}
-
-.qna--button button,
-.qna--submit{
-	background-color: #3b6bc9;
-	border-radius: 3px;
-	color: #fff !important;
-	border: none;
-	width: 80px;
-	height: 35px;
-	margin-right: 10px;
-	margin-top: 10px;
-}
-
-.qna--page {
-	display: flex;
-	justify-content: center;
-}
-
-table {
-	text-align: center;
-	border-radius: 10px;
-}
-
-.qna--answer {
-	 background-color: #f1f1f1;
-}
-
-.qna--all--category {
-	display: flex;
-	justify-content: space-between;
-}
-
-/*검색*/
-.search--qna--form {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.search-qna {
-	display: flex;
-	align-items: flex-start;
-}
-
-.search {
-	position: relative;
-	width: 300px;
-}
-
-input {
-	font-size: 15px;
-	color: #222222;
-	width: 300px;
-	border: none;
-	border-bottom: solid #aaaaaa 1px;
-	padding-bottom: 10px;
-	margin-top: 20px;
-	position: relative;
-	background: none;
-	z-index: 5;
-	position: relative;
-}
-
-input::placeholder {
-	color: #aaaaaa;
-}
-
-input:focus {
-	outline: none;
-}
-
-.search-span {
-	display: block;
-	position: absolute;
-	bottom: 0;
-	left: 0%;
-	background-color: #666;
-	width: 0;
-	height: 2px;
-	border-radius: 2px;
-	transition: 0.5s;
-}
-
-.search label {
-	position: absolute;
-	color: #aaa;
-	left: 10px;
-	font-size: 20px;
-	bottom: 8px;
-	transition: all .2s;
-}
-
-input:focus ~ .searchlabel, input:valid ~ searchlabel {
-	font-size: 16px;
-	bottom: 40px;
-	color: #666;
-	font-weight: bold;
-}
-
-input:focus ~ search-span, input:valid ~ search-span {
-	width: 100%;
-}
-
-.selectbox {
-	border-radius: 5px;
-	margin-top: 15px;
-	margin-right: 10px;
-	height: 40px;
-}
-
-.qna--submit {
-	margin-top: 15px;
-	height: 40px;
-	color: #3b6bc9;
-}
-
-.page-link{
-	color: #546E7A;
-}
-
-</style>
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -150,6 +25,7 @@ input:focus ~ search-span, input:valid ~ search-span {
 <script src="/assets/js/custom-slick.js"></script>
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/style.css" />
+<link rel="stylesheet" href="/assets/css/cs/qnaList.css" />
 </head>
 <body>
 	<div class="container">
@@ -278,7 +154,6 @@ input:focus ~ search-span, input:valid ~ search-span {
           </div>
           <div class="footer-content">
             <ul class="community">
-              제목 줄은 a없이
               <li>게시판</li>
               <li><a href="#none">Subscribe</a></li>
               <li><a href="#none">Give A Gift</a></li>

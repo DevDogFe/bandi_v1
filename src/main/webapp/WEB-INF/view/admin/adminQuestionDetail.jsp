@@ -2,41 +2,8 @@
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 <link rel="stylesheet" href="/assets/css/detail.css" />
+<link rel="stylesheet" href="/assets/css/admin/adminQuestionDetail.css" />
 
-</head>
-<style>
-#qna--list--container {
-	margin-left: 20px;
-}
-
-.section-title {
-	margin-left: 5px;
-}
-
-.board-detail-wrap {
-	border-bottom: 1px solid #999;
-}
-
-.board-detail {
-	border: none;
-}
-
-#answer--wrap {
-	margin-top: 0;
-	margin-left: -20px;
-	border-bottom: 1px solid #f2f2f2;
-}
-
-form button{
-	background-color: #3b6bc9;
-	border-radius: 3px;
-	color: #fff;
-	border: none;
-	width: 80px;
-	height: 35px;	
-}
-
-</style>
 		</div>
 		<div class="d-flex align-items-start">
 			<section class="d-flex">
@@ -70,7 +37,6 @@ form button{
 				</div>
 			</section>
 
-			<!-- Q&A detail -->
 			<section class="flex-grow-1" id="qna--list--container">
 				<div class="section-title-wrap">
 					<h2 class="section-title">${question.title}</h2>
@@ -91,7 +57,6 @@ form button{
 					</span>
 				</span>
 				</span>
-				<!-- 답 -->
 				<c:choose>
 					<c:when test="${answer == null}">
 						<div class="bg-light comment-form">
