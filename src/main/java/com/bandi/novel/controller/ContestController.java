@@ -90,10 +90,6 @@ public class ContestController {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
-		if (principal == null) {
-			return "/index";
-		}
-
 		// 공모전
 		List<ContestDto> contestList = contestService.selectContestListByLimit();
 
