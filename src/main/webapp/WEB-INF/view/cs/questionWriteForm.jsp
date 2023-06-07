@@ -48,7 +48,7 @@
 				<div class="qna--header--form">
 
 					<div class="qna--title-form">
-						<input type="text" class="qna--title" name="title" placeholder="  제목을 입력해주세요">
+						<input type="text" class="qna--title" name="title" placeholder="  제목을 입력해주세요" required="required">
 						<select name="faqCategoryId" class="qna--category">
 							<option value="0">카테고리</option>
 							<c:forEach var="category" items="${faqCategorylist}">
@@ -66,7 +66,7 @@
 
 				</div>
 
-				<textarea id="summernote" class="summernote" name="content"></textarea>
+				<textarea id="summernote" class="summernote" name="content" required="required"></textarea>
 			</form>
 
 			<script type="text/javascript">

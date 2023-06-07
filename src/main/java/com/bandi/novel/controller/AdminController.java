@@ -239,14 +239,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/user")
-	public String getUserRole(Model model, @Valid UserSearchDto userSearchDto, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			StringBuilder sb = new StringBuilder();
-			bindingResult.getAllErrors().forEach(error -> {
-				sb.append(error.getDefaultMessage()).append("\\n");
-			});
-			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
-		}
+	public String getUserRole(Model model, UserSearchDto userSearchDto) {
 		List<UserRoleDto> userList = adminService.searchUser(userSearchDto);
 		List<UserRole> userRoleList = adminService.selectUserRole();
 		if ("".equals(userSearchDto.getKeyword())) {

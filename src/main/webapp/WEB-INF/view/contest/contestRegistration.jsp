@@ -182,7 +182,7 @@ $(document).ready(function(){
 		
 		let contestOptionId = $("#contestFormId").val();
 		// input값 변경으로 공모전 id post 하기
-		$("#contestId").val($("#contestOptionId"+contestOptionId).val());
+		$("#contestId").val($("#contestOptionId" + contestOptionId).val());
 	});
 })
 </script>     

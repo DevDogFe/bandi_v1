@@ -133,8 +133,12 @@ public class NovelController {
 			});
 			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
 		}
+		
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		if(novel.getServiceTypeId() == Define.TYPE_PAY && principal.getUserRole() == 3) {
+			throw new CustomRestfulException("작가등급이 되어야 유료소설을 등록할 수 있습니다. 연재신청을 통해 승급신청해주세요.", HttpStatus.UNAUTHORIZED);
+		}
 		novel.setUserId(principal.getId());
 		/**
 		 * @auth 김경은 novelService의 insertNovel 수정함

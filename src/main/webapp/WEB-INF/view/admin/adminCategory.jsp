@@ -54,7 +54,7 @@
 								</c:forEach>
 							</select>
 							<div class="search">
-								<input type="text" name="categoryName"> <label class="searchlabel">Name</label> <span class="search-span"></span>
+								<input type="text" name="categoryName" required="required"> <label class="searchlabel">Name</label> <span class="search-span"></span>
 							</div>
 							<button type="submit" id="button-add">등록</button>
 						</div>
