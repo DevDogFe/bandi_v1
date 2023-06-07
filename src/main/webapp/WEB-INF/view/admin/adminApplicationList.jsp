@@ -120,6 +120,7 @@
 								<th>NO</th>
 								<th>제목</th>
 								<th>작성자</th>
+								<th>연락처</th>
 								<th>작성일</th>
 							</tr>
 						</thead>
@@ -129,13 +130,14 @@
 									<td>${application.id}</td>
 									<td><a href="/admin/applicationDetail/${application.id}">${application.title}</a></td>
 									<td>${application.username}</td>
+									<td>${application.tel}</td>
 									<td>${application.createdAt()}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<!-- page -->
-					<div class="apply--page mt-2">
+<%-- 					<div class="apply--page mt-2">
 						<div>
 							<ul class="apply--page d-flex">
 								<li class="<c:if test='${faqPageUtil.currentPage == 1}'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage - 1}" class="page-link">Previous</a></li>
@@ -145,7 +147,7 @@
 								<li class="<c:if test='${faqPageUtil.endPage == faqPageUtil.currentPage }'>d-none</c:if>"><a href="/faq/list?currentPage=${faqPageUtil.currentPage + 1}" class="page-link">Next</a></li>
 							</ul>
 						</div>
-					</div>
+					</div> --%>
 					<!-- page END -->
 
 				</div>

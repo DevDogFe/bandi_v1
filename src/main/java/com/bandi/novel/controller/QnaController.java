@@ -56,7 +56,7 @@ public class QnaController {
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("faqCategorylist", faqCategorylist);
 		model.addAttribute("qnaPageUtil", qnaPageUtil);
-		return "/cs/qna";
+		return "/cs/qnaList";
 	}
 
 	/**
@@ -65,15 +65,15 @@ public class QnaController {
 	 * @param model
 	 * @return 1:1 문의 조회
 	 */
-	@GetMapping("/myList")
+	@GetMapping("/userList")
 	public String list(Model model) {
 
 		// List<Question> questionList =
 		// qnaService.readQuestionByUserId(principal.getId);
-		List<Question> questionList = qnaService.selectQuestionByUserId(1);
+		List<Question> questionList = qnaService.selectQuestionByUserId(1);		
 		model.addAttribute("questionList", questionList);
 
-		return "/cs/qnaList";
+		return "/user/userQnaList";
 	}
 
 	/**

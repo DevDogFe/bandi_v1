@@ -27,7 +27,7 @@
 				</a></li>
 				<li><a href="/goldCharge"> <i class='bx bx-coin-stack'></i> <span class="links_name">골드 충전 기록</span>
 				</a></li>
-				<li><a href="#"> <i class='bx bx-conversation'></i> <span class="links_name">1:1 문의</span>
+				<li><a href="/qna/userList"> <i class='bx bx-conversation'></i> <span class="links_name">1:1 문의</span>
 				</a></li>
 			</ul>
 		</div>

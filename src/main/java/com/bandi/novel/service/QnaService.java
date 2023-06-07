@@ -42,6 +42,7 @@ public class QnaService {
 	public List<Question> selectQuestionByUserId(Integer principalId) {
 
 		List<Question> list = questionRepository.selectQnaByUserId(principalId);
+		
 		return list;
 	}
 

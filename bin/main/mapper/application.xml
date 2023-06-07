@@ -26,8 +26,8 @@
 	</select>
 	
 	<insert id="insertApplication">												
-		insert into application_tb (user_id, tel, title, content, origin_filename, upload_filename)
-		values (#{userId}, #{tel}, #{title}, #{content}, #{originFilename}, #{uploadFilename})
+		insert into application_tb (user_id, tel, title, content)
+		values (#{userId}, #{tel}, #{title}, #{content})
 	</insert>
 	
 	<update id="updateById">

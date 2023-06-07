@@ -171,7 +171,7 @@ checkbox {
 						</colgroup>					
 						<thead>
 							<tr>
-								<th><input type="checkbox" id="check--All" ></th>
+								<th id="check--All"></th>
 								<th>질문</th>
 								<th>답변</th>
 								<th>수정</th>
