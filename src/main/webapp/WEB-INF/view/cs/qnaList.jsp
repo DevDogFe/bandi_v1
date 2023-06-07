@@ -14,7 +14,7 @@
 .qna--submit{
 	background-color: #3b6bc9;
 	border-radius: 3px;
-	color: #fff;
+	color: #fff !important;
 	border: none;
 	width: 80px;
 	height: 35px;

@@ -17,15 +17,15 @@ import com.bandi.novel.utils.Define;
  * @author 김지현
  */
 @Component
-public class AdminAuthIntercepter implements HandlerInterceptor {
+public class AuthorAuthIntercepter implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-		if (principal.getUserRole() != 1) {
-			throw new UnAuthorizedException("접근 권한이 없습니다.", HttpStatus.UNAUTHORIZED, "/main");
+		if (principal.getUserRole() != 2) {
+			throw new UnAuthorizedException("권한이 없습니다.", HttpStatus.UNAUTHORIZED, "/main");
 			// return false;
 		}
 		return true;

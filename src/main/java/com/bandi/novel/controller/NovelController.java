@@ -9,11 +9,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,14 +85,15 @@ public class NovelController {
 	@GetMapping("/novel/registration")
 	public String getRegistration(Model model) {
 
-		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<Genre> genreList = novelService.selectGenreList();
 		List<ServiceType> serviceTypeList = novelService.selectServiceTypeList();
 		/**
 		 * @auth 김경은
 		 */
 		List<Contest> contestList = contestService.selectContestByDate();
-		AgeGenderRecommendDto ageGenderRecommendDto = new AgeGenderRecommendDto(principal.getId(), principal.getGender(), new GenerationUtil(principal.getGeneration()));
+		AgeGenderRecommendDto ageGenderRecommendDto = new AgeGenderRecommendDto(principal.getId(),
+				principal.getGender(), new GenerationUtil(principal.getGeneration()));
 		List<MainRecommendDto> recommendList = recommendService.selectNovelsByAgeAndGender(ageGenderRecommendDto);
 
 		model.addAttribute("genreList", genreList);
@@ -122,7 +125,14 @@ public class NovelController {
 	 * @return
 	 */
 	@PostMapping("/novel/registration")
-	public String registrationProc(Integer contestId, Novel novel) {
+	public String registrationProc(Integer contestId, @Valid Novel novel, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novel.setUserId(principal.getId());
@@ -150,7 +160,14 @@ public class NovelController {
 	 * @return
 	 */
 	@PostMapping("/section/registration")
-	public String selectionRegistrationProc(NovelSection novelSection) {
+	public String selectionRegistrationProc(@Valid NovelSection novelSection, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		novelSection.setRentPrice(novelSection.getListPrice() / 2);
 
 		novelService.insertNovelSelection(novelSection);
@@ -301,7 +318,7 @@ public class NovelController {
 		// 본 소설 저장 혹은 업데이트
 		userNovelRecordService.NovelRecord(principal.getId(), novelId, sectionId);
 		//
-		
+
 		// 우측바 유저 골드 정보,
 		Integer gold = payService.selectUserGold(principal.getId());
 
@@ -372,7 +389,7 @@ public class NovelController {
 		List<RecommendFavoritesDto> favoriteList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
 		model.addAttribute("favoriteList", favoriteList);
 		model.addAttribute("leftList", leftList);
-		
+
 		model.addAttribute("gold", gold);
 		model.addAttribute("lastNovel", lastNovel);
 
@@ -386,11 +403,18 @@ public class NovelController {
 	 * @return
 	 */
 	@PostMapping("/novel/reply")
-	public String replyProc(NovelReply novelReply, @RequestParam Integer serviceTypeId) {
+	public String replyProc(@Valid NovelReply novelReply, BindingResult bindingResult, @RequestParam Integer serviceTypeId) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);
-		
+
 		if (serviceTypeId == Define.TYPE_CONTEST) {
 			return "redirect:/contest/novel/read/" + novelReply.getNovelId() + "/" + novelReply.getSectionId();
 		} else {

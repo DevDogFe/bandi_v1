@@ -2,9 +2,13 @@ package com.bandi.novel.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +22,7 @@ import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.response.BestSectionDto;
 import com.bandi.novel.dto.response.ResponseDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;
 import com.bandi.novel.model.BoardType;
@@ -69,8 +74,6 @@ public class AdminController {
 		model.addAttribute("questionList", questionList);
 		return "/admin/adminQuestionList";
 	}
-
-
 
 	/**
 	 * @param id
@@ -201,7 +204,14 @@ public class AdminController {
 
 	// 카테고리 등록
 	@PostMapping("/category")
-	public String createCategoryProc(CategorySelectDto categorySelectDto) {
+	public String createCategoryProc(@Valid CategorySelectDto categorySelectDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		adminService.createCategory(categorySelectDto);
 		return "redirect:/admin/adminCategory";
 	}
@@ -216,13 +226,27 @@ public class AdminController {
 
 	// 장르 등록
 	@PostMapping("/genre")
-	public String createGenreProc(Genre genre) {
+	public String createGenreProc(@Valid Genre genre, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		adminService.createGenre(genre);
 		return "redirect:/admin/genre";
 	}
 
 	@GetMapping("/user")
-	public String getUserRole(Model model, UserSearchDto userSearchDto) {
+	public String getUserRole(Model model, @Valid UserSearchDto userSearchDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		List<UserRoleDto> userList = adminService.searchUser(userSearchDto);
 		List<UserRole> userRoleList = adminService.selectUserRole();
 		if ("".equals(userSearchDto.getKeyword())) {
@@ -237,84 +261,88 @@ public class AdminController {
 
 	/**
 	 * FAQ 전체조회
+	 * 
 	 * @param model
 	 * @return
 	 */
-	@GetMapping({"/faqList/{categoryId}", "/faqList"})
-	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId, @RequestParam(defaultValue = "1") Integer currentPage) {
+	@GetMapping({ "/faqList/{categoryId}", "/faqList" })
+	public String getFaqlist(Model model, @PathVariable(required = false) Integer categoryId,
+			@RequestParam(defaultValue = "1") Integer currentPage) {
 		List<Faq> faqList = null;
-		if(categoryId == null) {
-			faqList = faqService.selectAllFaqList().getData();			
-		}else {
+		if (categoryId == null) {
+			faqList = faqService.selectAllFaqList().getData();
+		} else {
 			faqList = faqService.selectFaqList(categoryId).getData();
-		}	
-		 List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
-		 FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 8, currentPage, 5, faqList);
-		 model.addAttribute("faqList", faqList);
-		 model.addAttribute("faqCategoryList", faqCategoryList);
-		 model.addAttribute("faqPageUtil", faqPageUtil);
+		}
+		List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
+		FaqPageUtil faqPageUtil = new FaqPageUtil(faqList.size(), 8, currentPage, 5, faqList);
+		model.addAttribute("faqList", faqList);
+		model.addAttribute("faqCategoryList", faqCategoryList);
+		model.addAttribute("faqPageUtil", faqPageUtil);
 		return "/admin/adminFaqList";
-	}	
+	}
 
-	
 	/**
 	 * 관리자 페이지 대시보드
+	 * 
 	 * @author 김지현
 	 * @return
 	 */
 	@GetMapping("/dashboard")
 	public String getDashboard(Model model) {
-		
+
 		Integer userCount = adminService.selectTodayJoinUserCount();
 		BestSectionDto todayBest = adminService.selectTodayBest();
 		BestSectionDto monthBest = adminService.selectMonthBest();
 		model.addAttribute("userCount", userCount);
 		model.addAttribute("todayBest", todayBest);
 		model.addAttribute("monthBest", monthBest);
-		
-		
-		
+
 		return "/admin/adminDashBoard";
 	}
-	
+
 	@GetMapping("/faq")
 	public String createFaq(Model model) {
-		
+
 		List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
 		model.addAttribute("faqCategoryList", faqCategoryList);
-		
+
 		return "/admin/faqWrite";
-		
+
 	}
-	
+
 	@PostMapping("/faq")
-	public String createFaqProc(Faq faq) {
-		
+	public String createFaqProc(@Valid Faq faq, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		adminService.createFaq(faq);
-	
-		return "redirect:/admin/faqList";		
+
+		return "redirect:/admin/faqList";
 	}
-	
-	
+
 	@GetMapping("/faq/update/{id}")
 	public String updateFaq(@PathVariable Integer id, Model model) {
-		
-		Faq faq = adminService.readFaq(id);		
+
+		Faq faq = adminService.readFaq(id);
 		List<FaqCategory> faqCategoryList = faqService.selectFaqCategory();
 		model.addAttribute("faq", faq);
 		model.addAttribute("faqCategoryList", faqCategoryList);
-		
+
 		return "/admin/faqUpdate";
-		
-	}
-	
-	@PostMapping("/faq/update/{id}")
-	public String updateFaqProc(@PathVariable Integer id) {
-		
-		adminService.updateFaq(id);
-		
-		return "redirect:/admin/faqList";		
+
 	}
 
+	@PostMapping("/faq/update/{id}")
+	public String updateFaqProc(@PathVariable Integer id) {
+
+		adminService.updateFaq(id);
+
+		return "redirect:/admin/faqList";
+	}
 
 }

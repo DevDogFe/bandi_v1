@@ -1,6 +1,7 @@
 package com.bandi.novel.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,7 +81,14 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/user")
-	public String joinProc(JoinDto joinDto) {
+	public String joinProc(@Valid JoinDto joinDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
 		if((!joinDto.getPassword().equals(joinDto.getPasswordCheck())) && joinDto.getExternal() == null) {
 			throw new CustomRestfulException("비밀번호란과 비밀번호 확인란의 값이 다릅니다.", HttpStatus.BAD_REQUEST);
@@ -175,8 +184,15 @@ public class UserController {
 	 * @return index페이지
 	 */
 	@PostMapping("/findPwd")
-	public String findPwd(FindPwdDto findPwdDto, Model model) {
+	public String findPwd(@Valid FindPwdDto findPwdDto, BindingResult bindingResult, Model model) {
 
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
 		user.setPassword(TempNumberUtil.getTempPassword());		

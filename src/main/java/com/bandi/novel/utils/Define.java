@@ -29,9 +29,9 @@ public class Define {
 	 * 
 	 * @author 김지현
 	 */
-	public final static String[] AUTH_PATHS = { "/novel/**", "/section/**","/contest/**"};
+	public final static String[] AUTH_PATHS = { "/novel/**", "/section/**", "/contest/**", "/board/**"};
 	// 관리자 인증
-	public final static String[] ADMIN_PATHS = {};
+	public final static String[] ADMIN_PATHS = {"/admin/**"};
 	// 작가 인증
 	public final static String[] AUTHOR_PATHS = {};
 
