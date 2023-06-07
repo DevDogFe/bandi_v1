@@ -2,8 +2,6 @@
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminCategory.css" />
 <link rel="stylesheet" href="/assets/css/detail.css" />
-
-</head>
 <style>
 #qna--list--container{
 	margin-left: 20px; 
