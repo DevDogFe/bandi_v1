@@ -117,8 +117,20 @@ public class ContestController {
 	 * @return 공모전 등록 페이지
 	 */
 	@GetMapping("/registration")
-	public String getContestRegistration() {
+	public String getContestRegistration(Model model) {
+		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		// 장르기반 추천리스트
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
 
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
+		
 		return "/contest/contestRegistration";
 	}
 
@@ -230,7 +242,9 @@ public class ContestController {
 		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
 
 		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
-
+		// 장르기반 추천리스트
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		
 		// 우측 바에 마지막 으로 본 소설
 		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		// 우측바 유저 골드 정보,
@@ -246,7 +260,7 @@ public class ContestController {
 		model.addAttribute("favorite", favorite);
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("recommendList", recommendList);
-
+		model.addAttribute("genreList", genreList);
 		model.addAttribute("gold", gold);
 		model.addAttribute("lastNovel", lastNovel);
 

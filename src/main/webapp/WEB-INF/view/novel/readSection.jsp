@@ -306,7 +306,7 @@
 							</h3>
 							<ul>
 								<c:forEach items="${genreList }" var="novel">
-									<li><a class="recommend-item">
+									<li><a href="#" class="recommend-item">
 											<div class="recommend-img">
 												<c:choose>
 													<c:when test="${novel.cover != null }">

@@ -111,10 +111,21 @@ public class NovelController {
 	@GetMapping("/section/registration/{novelId}")
 	public String getSectionRegistration(Model model, @PathVariable Integer novelId) {
 
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		Integer serviceTypeId = novelService.selectServiceTypeByNovelId(novelId);
+		// 장르기반 추천리스트
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
+		
 		model.addAttribute("novelId", novelId);
 		model.addAttribute("serviceTypeId", serviceTypeId);
-
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
+				
 		return "/novel/sectionRegistrationForm";
 	}
 
@@ -305,9 +316,11 @@ public class NovelController {
 				NovelSection paySection = novelService.selectNovelSectionById(sectionId);
 				int userGold = payService.selectUserGold(principal.getId());
 				LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+				List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
 				model.addAttribute("paySection", paySection);
 				model.addAttribute("gold", userGold);
 				model.addAttribute("lastNovel", lastNovel);
+				model.addAttribute("genreList", genreList);
 				model.addAttribute("serviceTypeId", serviceTypeId);
 				return "/pay/userPay";
 			}

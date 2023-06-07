@@ -3,6 +3,7 @@ package com.bandi.novel.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,9 +32,11 @@ import com.bandi.novel.dto.response.KakaoPayPrepareToken;
 import com.bandi.novel.dto.response.KakaoPaySuccessResponse;
 import com.bandi.novel.dto.response.KakaoRefundResponse;
 import com.bandi.novel.dto.response.LastNovelRecordDto;
+import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.PayService;
+import com.bandi.novel.service.RecommendService;
 import com.bandi.novel.service.UserNovelRecordService;
 import com.bandi.novel.utils.Define;
 
@@ -47,6 +50,8 @@ public class PayController {
 	private PayService payService;
 	@Autowired
 	private UserNovelRecordService userNovelRecordService;
+	@Autowired
+	private RecommendService recommendService;
 
 	private final String KAKAO_TEST_CID = "TC0ONETIME";
 	private final String KAKAO_ADMIN_KEY = "22a92c03555fdcfae421a40a4e0afe06";
@@ -61,6 +66,20 @@ public class PayController {
 	@GetMapping("/userPay")
 	public String getUserPay(Model model) {
 		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
+		// 장르기반 추천리스트
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+		// 우측 바에 마지막 으로 본 소설
+		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
+		// 우측바 유저 골드 정보,
+		Integer gold = payService.selectUserGold(principal.getId());
+		
+		model.addAttribute("genreList", genreList);
+		model.addAttribute("gold", gold);
+		model.addAttribute("lastNovel", lastNovel);
+
+		
 		return "/pay/userPay";
 	}
 
@@ -74,11 +93,14 @@ public class PayController {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
+		// 장르기반 추천리스트
+		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
 		// 우측 바에 마지막 으로 본 소설
 		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		// 우측바 유저 골드 정보,
 		Integer gold = payService.selectUserGold(principal.getId());
 		
+		model.addAttribute("genreList", genreList);
 		model.addAttribute("gold", gold);
 		model.addAttribute("lastNovel", lastNovel);
 
