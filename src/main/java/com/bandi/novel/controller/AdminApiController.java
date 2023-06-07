@@ -51,6 +51,7 @@ public class AdminApiController {
 	// 소설 서비스 타입 변경
 	@PutMapping("/api/novel/update")
 	public ResponseDto<Integer> updateNovelServiceType(@RequestBody adminNovelUpdateFormDto dto) {
+		
 		ResponseDto<Integer> response = novelService.updateNovelListBySearch(dto);
 		return response;
 	}

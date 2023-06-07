@@ -3,10 +3,13 @@ package com.bandi.novel.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bandi.novel.dto.QnaSearchDto;
 import com.bandi.novel.dto.QuestionUpdateDto;
 import com.bandi.novel.dto.response.QnaDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.FaqCategory;
 import com.bandi.novel.model.Question;
@@ -92,9 +96,7 @@ public class QnaController {
 	@PostMapping("/write")
 	public String writeProc(Question question) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		// 유효성
-		// qnaService.createQuestion(question, principal.getId);
-		qnaService.selectQuestion(question, 1);
+		qnaService.selectQuestion(question, principal.getId());
 
 		return "redirect:/qna/list";
 	}
@@ -135,11 +137,17 @@ public class QnaController {
 	 * @return Q&A 리스트
 	 */
 	@PostMapping("/question/update/{id}")
-	public String updateQuestionProc(@PathVariable Integer id, QuestionUpdateDto questionUpdateDto) {
+	public String updateQuestionProc(@PathVariable Integer id, @Valid QuestionUpdateDto questionUpdateDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		// qnaService.updateQuestion(questionUpdateFormDto, principal.getId);
-		qnaService.updateQuestion(questionUpdateDto, 1);
+		qnaService.updateQuestion(questionUpdateDto, principal.getId());
 		return "redirect:/qna/question/" + id;
 	}
 

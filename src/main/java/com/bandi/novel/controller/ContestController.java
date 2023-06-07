@@ -7,10 +7,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,7 @@ import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
 import com.bandi.novel.dto.response.SectionDto;
 import com.bandi.novel.dto.response.UserPurchaseRentalRecord;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Contest;
 import com.bandi.novel.model.Genre;
 import com.bandi.novel.model.NovelReply;
@@ -67,16 +71,16 @@ public class ContestController {
 	private PayService payService;
 	@Autowired
 	private RecommendService recommendService;
-	
+
 	/**
 	 * @param model
 	 * @return 공모전 상세 페이지
 	 */
 	@GetMapping("/detail/{id}")
 	public String getContestEntry(@PathVariable Integer id, Model model) {
-		
+
 		Contest contest = contestService.selectContestById(id);
-		model.addAttribute("contest",contest);
+		model.addAttribute("contest", contest);
 
 		return "/contest/contestDetail";
 	}
@@ -125,8 +129,15 @@ public class ContestController {
 	 * @return
 	 */
 	@PostMapping("/registration")
-	public String registrationProc(Contest contest) {
+	public String registrationProc(@Valid Contest contest, BindingResult bindingResult) {
 
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		contest.setUserId(principal.getId());
 
@@ -157,7 +168,14 @@ public class ContestController {
 	 * @return
 	 */
 	@PostMapping("/update")
-	public String updateContestProc(Contest contest) {
+	public String updateContestProc(@Valid Contest contest, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 
 		// User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		// contest.setUserId(principal.getId());
@@ -172,23 +190,23 @@ public class ContestController {
 	 * @return model
 	 */
 	@GetMapping("/novel/list")
-	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, 
+	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
-			@RequestParam(defaultValue = "1") Integer contestId,
-			@RequestParam(defaultValue = "default") String sort) {
-		
-		if("".equals(search)) {
+			@RequestParam(defaultValue = "1") Integer contestId, @RequestParam(defaultValue = "default") String sort) {
+
+		if ("".equals(search)) {
 			search = null;
 		}
-		
-		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search,contestId,sort);
+
+		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId, search,
+				contestId, sort);
 		List<Genre> genreList = novelService.selectGenreList();
-		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
+		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList, contestNovelList.size(), 20, currentPage, 5);
 		model.addAttribute("contestNovelList", novelPageUtil);
 		model.addAttribute("serviceType", "공모전");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "contest/novel/list");
-		
+
 		return "/contest/contestNovelList";
 	}
 
@@ -201,7 +219,7 @@ public class ContestController {
 	public String getContestNovelDetail(@PathVariable Integer novelId, Model model) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		
+
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		// 즐겨찾기 카운트
@@ -210,9 +228,9 @@ public class ContestController {
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		// 소설 구매, 대여 여부 리스트
 		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
-		
+
 		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
-		
+
 		// 우측 바에 마지막 으로 본 소설
 		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
 		// 우측바 유저 골드 정보,
@@ -228,7 +246,7 @@ public class ContestController {
 		model.addAttribute("favorite", favorite);
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("recommendList", recommendList);
-		
+
 		model.addAttribute("gold", gold);
 		model.addAttribute("lastNovel", lastNovel);
 
@@ -244,15 +262,15 @@ public class ContestController {
 	public String getContestNovelReadSection(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer novelId, @PathVariable Integer sectionId,
 			@RequestParam(defaultValue = "1") Integer currentPage, Model model) {
-		
+
 		List<NovelDto> leftList = null;
 		leftList = novelService.selectContestNovelList("default");
-		
+
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
 		// 우측 바에 마지막 으로 본 소설
 		LastNovelRecordDto lastNovel = userNovelRecordService.selectLastNovelRecord(principal.getId());
-		
+
 		// 이전글 다음글 기능
 		SectionDto novelSection = novelService.selectNovelReadSection(novelId, sectionId);
 		//
@@ -268,7 +286,7 @@ public class ContestController {
 		Integer userId = -1;
 		if (principal != null) {
 			userId = principal.getId();
-		} 
+		}
 
 		Cookie[] cookies = request.getCookies();
 		boolean isSectionCookie = false;
@@ -296,7 +314,7 @@ public class ContestController {
 			novelSection.setViews(novelSection.getViews() + 1);
 		}
 		// 조회수 up 여기까지
-		
+
 		String section = novelSection.getContent();
 
 		int fixLength = 180;
@@ -313,11 +331,10 @@ public class ContestController {
 
 		// 우측바 유저 골드 정보,
 		Integer gold = payService.selectUserGold(principal.getId());
-		
+
 		Integer favorite = userFavoriteService.selectFavoriteSumByNovelId(novelId);
 		List<RecommendFavoritesDto> genreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
-		
-		
+
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("favorite", favorite);
 		model.addAttribute("detail", novelDetailDto);
@@ -376,7 +393,15 @@ public class ContestController {
 	 * @return
 	 */
 	@PostMapping("/novel/reply/{novelId}")
-	public String contestReplyProc(@PathVariable Integer novelId, NovelReply novelReply) {
+	public String contestReplyProc(@PathVariable Integer novelId, @Valid NovelReply novelReply,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		novelReply.setUserId(principal.getId());
 		novelReplyService.insertNovelReply(novelReply);

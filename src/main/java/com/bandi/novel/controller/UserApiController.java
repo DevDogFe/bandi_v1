@@ -1,10 +1,12 @@
 package com.bandi.novel.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.UserUpdateDto;
 import com.bandi.novel.dto.response.ResponseDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.AuthKey;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.MailService;
@@ -40,7 +43,14 @@ public class UserApiController {
 	 * @return
 	 */
 	@PutMapping("/update")
-	public ResponseDto<Boolean> updateProc(@RequestBody UserUpdateDto userUpdateDto) {
+	public ResponseDto<Boolean> updateProc(@Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal.getExternal() != null) {
@@ -103,7 +113,15 @@ public class UserApiController {
 	 * @return
 	 */
 	@PostMapping("/api/login")
-	public ResponseDto<String> loginProc(@RequestBody LoginDto loginDto) {
+	public ResponseDto<String> loginProc(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			bindingResult.getAllErrors().forEach(error -> {
+				sb.append(error.getDefaultMessage()).append("\\n");
+			});
+			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
+		}
+		
 		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
 		User principal = resUser.getData();
 		session.setAttribute("principal", principal);

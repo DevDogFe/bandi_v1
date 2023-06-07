@@ -18,13 +18,11 @@
 
 <!-- Slider.js CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="/assets/js/custom-slick.js"></script>
+
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
@@ -75,7 +73,9 @@
 			<header>
 				<div class="banner">
 					<div class="lnb">
-						<a href="#none"><em>for</em> member</a>
+						<c:if test="${principal.userRole == 1}">
+							<a href="/admin/dashboard">관리자페이지</a>
+						</c:if>
 						<c:choose>
 							<c:when test="${empty principal}">
 								<a href="#loginModal" data-bs-toggle="modal" role="button">로그인</a>
@@ -91,7 +91,6 @@
 								</c:choose>
 							</c:otherwise>
 						</c:choose>
-						<a href="#none">회원가입</a>
 					</div>
 				</div>
 				<nav>
@@ -104,6 +103,7 @@
 							<ul class="dropdown-menu" aria-labelledby="menuNovel">
 								<li><a class="dropdown-item" href="/pay">유료 소설</a></li>
 								<li><a class="dropdown-item" href="/free">무료 소설</a></li>
+								<li><a class="dropdown-item" href="/best">베스트</a></li>
 							</ul></li>
 						<li><a href="/contest/list">공모전</a></li>
 						<li class="dropdown"><a href="#" role="button" id="menuBoard" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
@@ -113,8 +113,8 @@
 								<li><a class="dropdown-item" href="/board/list/3">팬아트</a></li>
 								<li><a class="dropdown-item" href="/board/list/4">홍보</a></li>
 							</ul></li>
-						<li class="dropdown"><a href="/faq/list" role="button">고객지원</a></li>
-						<li class="dropdown"><a href="/myInfo" role="button">마이페이지</a></li>
+						<li class="dropdown"><a href="/faq/list">고객지원</a></li>
+						<li class="dropdown"><a href="/myInfo">마이페이지</a></li>
 					</ul>
 				</nav>
 			</header>

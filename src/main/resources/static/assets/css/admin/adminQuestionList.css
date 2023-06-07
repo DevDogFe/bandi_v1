@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+.admin--qna--container {
+	margin-top: 30px;
+	margin-left: 10px;
+}
+
+.qna--btn--list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.qna--btn--list button {
+	width: 33%;
+	border: none;
+	background: inherit;
+	margin-bottom: 25px;
+}
+
+.qnaList--btn {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.qna--btn--list button:hover {
+	border-bottom: 3px solid #036;
+}
+
+.table {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.table a {
+	color: black;
+	cursor: pointer;
+}
