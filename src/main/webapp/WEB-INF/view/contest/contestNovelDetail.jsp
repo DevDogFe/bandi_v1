@@ -284,62 +284,31 @@
 						</div>
 						<div class="recommend-list">
 							<h3 class="recommend-header">
-								<a>추천작</a>
+								<a>${genreList.get(0).genreName } 추천작</a>
 							</h3>
 							<ul>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai1.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai2.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai3.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai4.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai2.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
-								<li><a class="recommend-item">
-										<div class="recommend-img">
-											<img src="/assets/images/main/ai1.jpg">
-										</div>
-										<div class="recommend-desc">
-											<span>현대판타지</span> <span class="bold-font">천재들과 함께하는 연예계 생활</span> <span>김경은</span>
-										</div>
-								</a></li>
+								<c:forEach items="${genreList }" var="novel">
+									<li><a class="recommend-item">
+											<div class="recommend-img">
+												<c:choose>
+													<c:when test="${novel.cover != null }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+													</c:when>
+													<c:otherwise>
+														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="recommend-desc">
+												<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
+											</div>
+									</a></li>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>
 				</aside>
 			</div>
-	<script type="text/javascript" src="/assets/js/novel/novelDetail.js"></script>
+	<script type="text/javascript" src="/assets/js/novel/contestNovelDetail.js"></script>
 	<%@include file="/WEB-INF/view/layout/footer.jsp"%>
 	

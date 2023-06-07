@@ -32,138 +32,75 @@
       		</section>
       		<aside class="right-sidebar">
       			<div class="right-sidebar-contents">
-      				<div class="my-info">
-      					<div class="username">asd1234 님</div>
-      					<div class="info-category">
-      						<span><img src="/assets/images/main/user-line.png">내정보</span>
-      						<span><img src="/assets/images/main/thumb-up-line.png">알림</span>
-      						<span><img src="/assets/images/main/star-line.png">구매목록</span>
-      					</div>
-      					<div class="gold-info">
-      						<div>보유골드</div>
-      						<span class="blue-span">1000</span>
-      					</div>
-      					<div class="right-box">
-      						<div class="right-box-cover">
-      							<a><img src="/assets/images/main/ai1.jpg"></a>
-      						</div>
-      						<div class="right-box-detail">
-      							<div class="right-detail-desc">
-      								<div class="desc-title">버려진 숲의 마왕성 숲의 마왕성 마왕성 마왕성</div>
-      							</div>
-      						</div>
-      					</div>
-      				</div>
-      				<div class="right-banner">
-      					<img src="/assets/images/main/gold-charge.png">
-      				</div>
-      				<div class="right-banner">
-      					<img src="/assets/images/main/author-banner.png">
-      				</div>
-      				<div class="recommend-list">
-      					<h3 class="recommend-header"><a>추천작</a></h3>
-      					<ul>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai1.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai2.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai3.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai4.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai2.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      						<li>
-      							<a class="recommend-item">
-      								<div class="recommend-img"><img src="/assets/images/main/ai1.jpg"></div>
-      								<div class="recommend-desc">
-      									<span>현대판타지</span>
-      									<span class="bold-font">천재들과 함께하는 연예계 생활</span>
-      									<span>김경은</span>
-      								</div>
-      							</a>
-      						</li>
-      					</ul>
-      				</div>
-      			</div>
+						<div class="my-info">
+							<div class="username">${principal.nickName} 님</div>
+							<div class="info-category">
+								<span><img src="/assets/images/main/user-line.png">내정보</span> <span><img src="/assets/images/main/thumb-up-line.png">알림</span> <span><img
+									src="/assets/images/main/star-line.png">구매목록</span>
+							</div>
+							<div class="gold-info">
+								<div>보유골드</div>
+								<span class="blue-span">${gold}</span>
+							</div>
+							<div class="right-box">
+								<div class="right-box-cover">
+									<c:choose>
+										<c:when test="${lastNovel.cover != null }">
+											<a><img alt="이미지 기간만료" src="/bandi/uploads/${lastNovel.cover}"></a>
+										</c:when>
+										<c:otherwise>
+											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="right-box-detail">
+									<div class="right-detail-desc">
+										<div class="desc-title">${lastNovel.title}</div>
+										<c:choose>
+											<c:when test="${lastNovel.serviceTypeId != 3}">
+												<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+											</c:when>
+											<c:otherwise>
+												<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="right-banner">
+							<a href="/payment/charge"><img src="/assets/images/main/gold-charge.png"></a>
+						</div>
+						<div class="right-banner">
+							<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
+						</div>
+						<div class="recommend-list">
+							<h3 class="recommend-header">
+								<a>${genreList.get(0).genreName } 추천작</a>
+							</h3>
+							<ul>
+								<c:forEach items="${genreList }" var="novel">
+									<li><a class="recommend-item">
+											<div class="recommend-img">
+												<c:choose>
+													<c:when test="${novel.cover != null }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+													</c:when>
+													<c:otherwise>
+														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="recommend-desc">
+												<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
+											</div>
+									</a></li>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
       		</aside>
       	</div>
-      </div>
-    </div>
-    <footer>
-        <div class="inner">
-          <div class="footer-top">
-            <ul>
-              <li>(주)반디</li>
-              <li><a href="#none">이용약관</a></li>
-              <li><a href="#none">개인정보 처리방침</a></li>
-              <li><a href="#none">청소년 보호 정책</a></li>
-              <li><a href="#none">회사 소개</a></li>
-            </ul>
-          </div>
-          <div class="footer-content">
-            <ul class="community">
-              <!-- 제목 줄은 a없이-->
-              <li>게시판</li>
-              <li><a href="#none">Subscribe</a></li>
-              <li><a href="#none">Give A Gift</a></li>
-              <li><a href="#none">Customer Service FAQ</a></li>
-              <li><a href="#none">Access Your Subscription</a></li>
-            </ul>
-            <ul class="network">
-              <li>Network</li>
-              <li><a href="#none">Privacy Policy</a></li>
-              <li><a href="#none">Terms Of Service</a></li>
-              <li><a href="#none">Advertise</a></li>
-              <li><a href="#none">Jobs</a></li>
-            </ul>
-            <ul class="help">
-              <li>Help Preserve This Project</li>
-              <li>We may earn a commission if you purchase an item 
-                featured on our site.</li>
-              <li>Copyright ©  2020 CodingWorks. All rights reserved.</li>
-            </ul>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#addContestForm").css('display','none');
