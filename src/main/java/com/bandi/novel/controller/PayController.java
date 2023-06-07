@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ import com.bandi.novel.dto.response.KakaoPayPrepareToken;
 import com.bandi.novel.dto.response.KakaoPaySuccessResponse;
 import com.bandi.novel.dto.response.KakaoRefundResponse;
 import com.bandi.novel.dto.response.LastNovelRecordDto;
+import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.User;
 import com.bandi.novel.service.PayService;
 import com.bandi.novel.service.UserNovelRecordService;
@@ -114,10 +116,10 @@ public class PayController {
 				payService.RefundGold(principal.getId(), responseToken.getBody().getAmount().getTotal(), dto.getId());
 
 			} else {
-				System.out.println("환불 처리 실패");
+				throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return "redirect:/myInfo";
@@ -146,7 +148,6 @@ public class PayController {
 			}
 		} else {
 			// 골드 결제 처리
-			System.out.println(dto.toString());
 			payService.purchaseNovel(principal.getId(), dto.getTotalAmount(), dto.getSectionId());
 		}
 

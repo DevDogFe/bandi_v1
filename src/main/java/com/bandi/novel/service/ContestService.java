@@ -110,7 +110,6 @@ public class ContestService {
 		// contest에서 삭제
 		int contestResult = contestRepository.deleteContestById(contestId);
 		if(contestResult != 1) {
-			System.out.println("아래");
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

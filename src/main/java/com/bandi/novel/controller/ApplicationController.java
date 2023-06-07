@@ -82,7 +82,7 @@ public class ApplicationController {
 		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		 * application.setUserId(principal.getId());
 		 */
-		System.out.println(applicationFromDto);
+
 		applicationFromDto.setUserId(1);
 		applicationService.insertApplication(applicationFromDto);
 		return "redirect:/index";

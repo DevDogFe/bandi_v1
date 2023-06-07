@@ -80,7 +80,6 @@ public class UserController {
 	 */
 	@PostMapping("/user")
 	public String joinProc(JoinDto joinDto) {
-		System.out.println(joinDto);
 		//todo 비밀번호랑 비밀번호 확인 다를때 처리
 		if((!joinDto.getPassword().equals(joinDto.getPasswordCheck())) && joinDto.getExternal() == null) {
 			throw new CustomRestfulException("비밀번호란과 비밀번호 확인란의 값이 다릅니다.", HttpStatus.BAD_REQUEST);
@@ -145,7 +144,7 @@ public class UserController {
 	 * @return updateForm.jsp
 	 */
 	@GetMapping("/update")
-	private String getUpdateForm(Model model) {
+	public String getUpdateForm(Model model) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		model.addAttribute("principal", principal);
 
@@ -156,18 +155,27 @@ public class UserController {
 	 * 비밀번호 찾기 폼
 	 * @author 효린
 	 */
-	@GetMapping("/findPwd")
+	@GetMapping("/findIdAndPwd")
 	private String getFindPwd() {
 
 		return "/user/findPwdForm";
 	}
+	
+	@GetMapping("/findId")
+	public String getfindId(@RequestParam String email, Model model) {
+		String username = userService.selectUsernameByEmail(email);
+		model.addAttribute("username", username);
+		return "/user/findIdComplete";
+	}
+	
+	
 
 	/** 비밀번호 찾기
 	 * @author 효린 
 	 * @return index페이지
 	 */
 	@PostMapping("/findPwd")
-	private String findPwd(FindPwdDto findPwdDto) {
+	public String findPwd(FindPwdDto findPwdDto, Model model) {
 
 		User user = userService.selectUserByUsernameAndEmail(findPwdDto);
 		// 임시 비밀번호 생성
@@ -177,7 +185,8 @@ public class UserController {
 		mailService.sendTempPassword(user);
 		// 비밀번호변경
 		userService.updateUserPwd(user);
-		return "redirect:/index";
+		model.addAttribute("email", findPwdDto.getEmail());
+		return "/user/findPwdComplete";
 	}
 	
 	private HttpEntity<MultiValueMap<String, String>> generateAuthCodeRequest(String code, String state) {
@@ -217,7 +226,6 @@ public class UserController {
 	@GetMapping("/naver/auth")
 	public String authNaver(@RequestParam String code, @RequestParam String state, Model model) {
 		ResponseEntity<NaverOAuthToken> token = requestAccessToken(generateAuthCodeRequest(code, state));
-		System.out.println(token);
 		HttpEntity<MultiValueMap<String, String>> entity = generateProfileRequest(token.getBody().getAccessToken());
 		String username =  requestProfile(entity).getBody().getResponse().getId();
 		User user = new User();

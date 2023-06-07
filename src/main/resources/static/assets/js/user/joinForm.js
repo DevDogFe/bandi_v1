@@ -83,7 +83,7 @@ $(document).ready(() => {
 	// 인증번호 일치여부 확인 (효린) 
 	function confirm(key) {
 		$("#confirm").on("click", () => {
-			if (response.data != $("#authKey").val()) {
+			if (key != $("#authKey").val()) {
 				alert("인증실패 확인 다시입력해주세요");
 			} else {
 				alert("인증 완료되었습니다");
@@ -106,4 +106,19 @@ $(document).ready(() => {
 			}
 		}
 	})
+
+
+
 })
+
+function alertJoin() {
+	if ($('#joinBtn').attr('type') == 'submit') {
+		if($('#passwordJ').val() == $('#passwordCheck').val()){
+			
+			alert('회원가입이 완료되었습니다. 로그인을 진행해주세요.');
+		} else {
+			alert('비밀번호와 비밀번호 확인의 값이 다릅니다.');
+			return false;
+		}
+	}
+}

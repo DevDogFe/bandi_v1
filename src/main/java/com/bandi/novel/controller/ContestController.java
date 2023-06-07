@@ -278,7 +278,6 @@ public class ContestController {
 					isSectionCookie = true;
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
-						System.out.println(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
 						cookie.setMaxAge(60 * 60 * 24);
 						response.addCookie(cookie);
 						novelService.sectionViewsPlus(sectionId);

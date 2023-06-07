@@ -10,7 +10,7 @@
 				<section class="main-form" style="width: 100%;">
 					<div class="registration-form">
 						<h1>회원 가입</h1>
-						<form action="/user" method="post" class="form">
+						<form action="/user" method="post" class="form"  onsubmit="return alertJoin()">
 							<div class="input-box">
 								<label>아이디</label> <input type="text" id="usernameJ" name="username" placeholder="Enter full name" required />
 								<div id="usernameCheck"></div>
@@ -19,7 +19,7 @@
 								<label>비밀번호</label> <input type="password" id="passwordJ" name="password" placeholder="Enter password" required />
 							</div>
 							<div class="input-box">
-								<label>비밀번호 확인</label> <input type="password" placeholder="Enter password" required />
+								<label>비밀번호 확인</label> <input type="password" id="passwordCheck" name="passwordCheck" placeholder="Enter password" required />
 							</div>
 							<div class="input-box">
 								<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name" required />
@@ -56,5 +56,5 @@
 					</div>
 				</section>
 			</div>
-	<script type="text/javascript" src="/assets/js/joinForm.js"></script>
+	<script type="text/javascript" src="/assets/js/user/joinForm.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>

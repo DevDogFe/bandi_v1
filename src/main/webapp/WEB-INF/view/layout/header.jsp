@@ -53,7 +53,7 @@
 								<button type="button" id="loginBtn" class="btn btn-primary">Login</button>
 							</div>
 							<div>
-								<a href="/user">회원가입</a> <a href="/findPwd">비밀번호 찾기</a>
+								<a href="/user">회원가입</a>&nbsp;&nbsp; <a href="/findIdAndPwd" onclick="window.open(this.href, '_blank', 'width=500, height=600'); return false;">아이디/비밀번호 찾기</a>
 							</div>
 						</div>
 						<div class="d-flex justify-content-between external--login--btn">

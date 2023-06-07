@@ -61,7 +61,6 @@ public class ReportController {
 	@GetMapping("/reportList")
 	public String getReportList(Model model) {
 		List<AdminReportDto> reportList = reportService.selectReport();
-		System.out.println(reportList.toString());
 		model.addAttribute("reportList", reportList);
 		return "/admin/adminReport";
 	}

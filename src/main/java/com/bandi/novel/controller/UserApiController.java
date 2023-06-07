@@ -97,6 +97,11 @@ public class UserApiController {
 		return new ResponseDto<Boolean>(HttpStatus.OK, msg, true, result);
 	}
 
+	/**
+	 * 로그인
+	 * @param loginDto
+	 * @return
+	 */
 	@PostMapping("/api/login")
 	public ResponseDto<String> loginProc(@RequestBody LoginDto loginDto) {
 		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
