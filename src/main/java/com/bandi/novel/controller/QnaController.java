@@ -56,7 +56,7 @@ public class QnaController {
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("faqCategorylist", faqCategorylist);
 		model.addAttribute("qnaPageUtil", qnaPageUtil);
-		return "/cs/qna";
+		return "/cs/qnaList";
 	}
 
 	/**

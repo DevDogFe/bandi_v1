@@ -115,7 +115,7 @@
 				<span class="board-info-wrap">
 				<span class="profile-info-wrap">
 				<span class="profile-preview-wrap"></span> <span class="info-inner">
-				<span class="name">${application.username} (${application.username})</span>
+				<span class="name">${application.username} (${application.tel})</span>
 				<span class="date">${application.createdAt()}</span>
 				</span>
 				<span class=“btn-right-wrap”>
@@ -134,7 +134,6 @@
 			
 			</section>
 		</div>
-<!-- --------------------- -->
  		</div>
 	</div>
 	<footer>

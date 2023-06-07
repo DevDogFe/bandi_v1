@@ -83,33 +83,9 @@ public class ApplicationController {
 		 * application.setUserId(principal.getId());
 		 */
 		System.out.println(applicationFromDto);
-		// 파일 업로드
-		MultipartFile file = applicationFromDto.getFile();
-		if (file.isEmpty() == false) {
-			if (file.getSize() > Define.MAX_FILE_SIZE) {
-				throw new CustomRestfulException("파일 크기제한 (20MB)", HttpStatus.BAD_REQUEST);
-			}
-			try {
-				String saveDirectory = Define.UPLOAD_DIRECTORY;
-				File dir = new File(saveDirectory);
-				if (dir.exists() == false) {
-					dir.mkdirs();
-				}
-				UUID uuid = UUID.randomUUID();
-				String fileName = uuid + "_" + file.getOriginalFilename();
-				String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
-				File destination = new File(uploadPath);
-				file.transferTo(destination);
-				applicationFromDto.setOriginFilename(file.getOriginalFilename());
-				applicationFromDto.setUploadFilename(fileName);
-
-			} catch (Exception e) {
-				e.getStackTrace();
-			}
-		}
 		applicationFromDto.setUserId(1);
 		applicationService.insertApplication(applicationFromDto);
-		return "redirect:/application/list";
+		return "redirect:/index";
 	}
 
 	/**

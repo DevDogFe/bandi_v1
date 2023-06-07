@@ -7,15 +7,16 @@ $(document).ready(() => {
 		}).done((response) => {
 			$(".faq--table").remove();
 			let faqList;
+			let data = response.data
 
-			for (i = 0; i < response.length; i++) {
+			for (i = 0; i < data.length; i++) {
 
 				faqList +=
 					`<tr class="faq--table">
-	                    <td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="\${response[i].id}" ></td>
-	                    <td class="faq--table">\${response[i].question}</td>
-	                    <td class="faq--table">\${response[i].answer}</td>                    
-	                    <td class="faq--table"><a href="/admin/faq/update/\${response[i].id}"><button>수정</button></a></td>
+	                    <td style="width: 100px;"><input type="checkbox" id="check--id" name="check--id" value="${data[i].id}" ></td>
+	                    <td class="faq--table">${data[i].question}</td>
+	                    <td class="faq--table">${data[i].answer}</td>                    
+	                    <td class="faq--table"><a href="/admin/faq/update/\${data[i].id}"><button>수정</button></a></td>
 	                    </tr>`;
 			}
 			$("#faqListBody").append(faqList);
@@ -46,7 +47,6 @@ $(document).ready(() => {
 			alert("삭제할 글을 선택해주세요");
 		});
 	});
-
 
 	/* function checkAll(){
 		 if($("#check--All").is("checked")){

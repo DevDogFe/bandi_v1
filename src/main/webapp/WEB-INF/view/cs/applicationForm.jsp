@@ -3,32 +3,24 @@
 <!DOCTYPE html>
 <html>
 <style>
-/* .qna--header--form {
-	width: 500px;
+form button{
+	background-color: #3b6bc9;
+	border-radius: 3px;
+	color: #fff;
+	border: none;
+	width: 80px;
+	height: 35px;
 }
 
-
-.qna--button {
+.apply--form{
 	display: flex;
-	justify-content: flex-end;
-	margin-left: 10px;
+	justify-content: space-between;
 }
-
-.qna--title {
+.apply--title{
 	height: 40px;
-	width:400px;
-	margin-top: 20px;
-	border-radius: 5px;
+	width: 400px;
 }
 
-.qna--category{
-	height: 40px;
-	border-radius: 5px;
-}
-
-.qna--button button{
-	margin-right: 10px;
-} */
 </style>
 <head>
 <meta charset="UTF-8">
@@ -69,18 +61,14 @@
 				</nav>
 			</header>
 			<%-- <%@include file="../layout/header.jsp"%> --%>
-			<form action="/application/write" method="post" enctype="multipart/form-data">
-				<input type="text" name="title">
+			<form action="/application/write" method="post" >
+				<div class="apply--form">
+				<input type="text" name="title" placeholder="제목을 입력해주세요">
 				<button type="submit">연재신청</button>
-				<textarea id="summernote" name="content" style="height: 60vh" placeholder="내용을 입력해주세요"></textarea>
-				<!-- 파일업로드 -->
-				<div class="custom-file">
-					<input type="file" class="custom-file-input" id="customFile" name="file" accept=".jpg, .jpeg, .png, .hwp"> <label class="custom-file-label" for="customFile"></label>
 				</div>
+				<textarea id="summernote" name="content" style="height: 60vh" placeholder="내용을 입력해주세요"></textarea>
 				<label> 연락처</label> <input type="text" name="tel">
-
 			</form>
-			<!--<a href="#">임시저장</a>  -->
 
 			<script type="text/javascript">
 				$('#summernote').summernote({
@@ -92,11 +80,6 @@
 					lang : 'ko-KR',
 					// 크기 조절 기능 삭제
 					disableResizeEditor : true,
-					callbacks : {
-						onInit : function(c) {
-							c.editable.html('');
-						}
-					}
 				});
 			</script>
 </body>

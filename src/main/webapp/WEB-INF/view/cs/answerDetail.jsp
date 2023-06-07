@@ -4,6 +4,14 @@
 	crossorigin="anonymous">
 <!DOCTYPE html>
 <style>
+
+#board-detail {
+	border-bottom: none;
+}
+
+.board-detail-wrap{
+	border-bottom: none;
+}
 </style>
 <html>
 <head>
@@ -60,9 +68,9 @@
 				<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span
 								class="name">${question.username}</span> <span class="date">${question.createdAt()}</span>
 						</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”>
-									<button type="button" class="btn-modify">삭제</button>
+									<button type="button" class="btn-modify" onclick="location.href='/qna/question/delete/${question.id}'">삭제</button>
 							</span> <span class="list-wrap">
-									<button type="submit" class="btn-list">목록</button>
+									<button type="button" class="btn-list" onclick="location.href='/qna/list'">목록</button>
 							</span>
 						</span>
 					</span> <span class="board-contents"> <span id="_board-contents"> ${question.content} </span>
@@ -71,16 +79,20 @@
 				</span>
 
 				<!-- 답 -->
-				<!-- 답다비답다바답닫답답ㄷ -->
-				<div class="reply">
-					<div>
-						<div class="comments-content">
-							<div class="comment-item">
-								<div class="mt-2">
-									<p class="comment-text">${answer.content}</p>
-								</div>
-							</div>
-						</div>
+				<div class="board-detail">
+					<h3 class="board-title">
+						<span>답</span>
+					</h3>
+				</div>
+				<span class="board-detail-wrap" >
+				<span class="board-info-wrap"> 
+				<span class="board-contents">
+				<span id="_board-contents">${answer.content}</span>
+					</span>
+
+				</span>
+
+				</span>
 			</section>
 </body>
 </html>

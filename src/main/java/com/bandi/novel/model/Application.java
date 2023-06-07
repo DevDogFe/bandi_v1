@@ -15,8 +15,6 @@ public class Application {
 	private String tel;
 	private String title;
 	private String content;
-	private String originFileName;
-	private String uploadFileName;
 	
 	private Timestamp createdAt;
 	

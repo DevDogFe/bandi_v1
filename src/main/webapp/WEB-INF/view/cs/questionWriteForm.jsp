@@ -28,11 +28,20 @@
 	justify-content: flex-end;
 	margin-top: 10px;
 	height: 50px;
+	
 }
 
-.qna--button a {
-	font-style: none;
+.qna--button button{
+	background-color: #3b6bc9;
+	border-radius: 3px;
+	color: #fff;
+	border: none;
+	width: 80px;
+	height: 35px;
+	margin-right: 10px;
+	margin-top: 10px;
 }
+
 
 
 </style>
@@ -90,34 +99,26 @@
 					</div>
 
 					<div class="qna--button">
-						<button class="btn btn-outline-primary">
-							<a href="/faq/list">자주묻는질문</a>
+						<button type="button" class="faq--button" onclick="location.href='/faq/list'">
+							FAQ
 						</button>
-						<button type="submit" class="btn btn-outline-primary">등록</button>
+						<button type="submit">등록</button>
 					</div>
 
 				</div>
 
 				<textarea id="summernote" class="summernote" name="content"></textarea>
 			</form>
-			<!-- 비밀글 -->
-			<!-- <input type="checkbox" name="isSecret"> <input type="text" name="password"> -->
 
 			<script type="text/javascript">
 				$('#summernote').summernote({
 					placeholder : "내용을 입력 해주세요",
-					tabsize : 2,
 					height : 500,
 					// 에디터 로딩후 포커스를 맞출지 여부
 					focus : true,
 					lang : 'ko-KR',
 					// 크기 조절 기능 삭제
 					disableResizeEditor : true,
-					callbacks : {
-						onInit : function(c) {
-							c.editable.html('');
-						}
-					}
 				});
 			</script>
 </body>

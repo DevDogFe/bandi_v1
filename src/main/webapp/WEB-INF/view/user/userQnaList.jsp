@@ -39,14 +39,19 @@
 
 .main-header{
 	display: flex;
+	justify-content: space-between;
 	
 }
 
 .qna--button button{
-	display: flex;
-	justify-content: flex-end; 
-	
+	background-color: #3b6bc9;
+	border-radius: 3px;
+	color: #fff;
+	border: none;
+	width: 80px;
+	height: 35px; 
 }
+
 </style>
 <body>
 	<div class="container">
@@ -100,11 +105,11 @@
 				</section>
 				<section class="main">
 					<div class="report-list">
-						<div class="main-header">
+						<div class="main-header ">
 							<h3 class="mb-2">1:1 문의 조회</h3>
 
 							 <div class="qna--button"> 
-								<button><a href="/qna/write">문의하기</a></button>
+								<button onclick="location.href='/qna/write'">문의하기</button>
 							 </div> 
 						</div>
 						<c:choose>
@@ -156,8 +161,9 @@
 												<c:if test="${question.answer != null}">
 													<tr class="qna--answer">
 														<td></td>
-														<td colspan="2"><a href="/qna/answer/${qna.id}">[RE]: ${question.title}</a></td>
-														<td>${qna.answerCreatedAt()}</td>
+														<td><a href="/qna/answer/${question.id}">[RE]: ${question.title}</a></td>
+														<td>${question.answerCreatedAt()}</td>
+														<td></td>
 													</tr>
 												</c:if>
 											</tbody>
