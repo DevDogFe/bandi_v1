@@ -25,11 +25,5 @@ public class BoardApiController {
 		return response;
 	}
 	
-	// 파일 삭제
-	@DeleteMapping("/api/deletefile/{id}")
-	public ResponseDto<Integer> deleteFileProc(@PathVariable Integer id) {
-		ResponseDto<Integer> response = boardService.deleteFile(id);
-		return response;
-	}
 	
 }

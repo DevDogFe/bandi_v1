@@ -80,6 +80,4 @@
 					disableResizeEditor : true,
 				});
 			</script>
-</body>
-</html>
-
+		<%@include file="/WEB-INF/view/layout/footer.jsp"%>

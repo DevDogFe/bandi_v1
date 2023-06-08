@@ -27,6 +27,4 @@ public interface BoardRepository {
 	int updateViewById(Integer boardId);
 	// 게시물 검색 
 	List<BoardDto> selectSearchList(BoardSearchDto boardSearchDto);
-	// 방금 등록한 게시물 boardId 가져오기
-	Integer selectBoardIdByDTO(BoardDto boardDto);
 }
