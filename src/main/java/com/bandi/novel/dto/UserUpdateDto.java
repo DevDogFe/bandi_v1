@@ -27,8 +27,5 @@ public class UserUpdateDto {
 	@NotBlank
 	@Size(min = 3, max = 10)
 	private String nickName;
-	@NotBlank
-	@Email
-	private String email;
 	
 }
