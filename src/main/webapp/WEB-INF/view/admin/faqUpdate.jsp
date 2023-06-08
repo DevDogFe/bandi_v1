@@ -40,7 +40,7 @@
 
 			<!-- faq detail -->
 			<section class="flex-grow-1">
-				<form action="/admin/faq" method="post" class="faq--form--container">
+				<form action="/admin/faq/update/${faq.faqCategoryId}" method="post" class="faq--form--container">
 					<div class="qna--header--form">
 						<div class="qna--title-form">
 							<input type="text" class="qna--title" name="question" value=" ${faq.question}">
