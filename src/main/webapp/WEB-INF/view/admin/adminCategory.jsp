@@ -60,22 +60,24 @@
 						</div>
 					</form>
 				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">카테고리</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<c:forEach var="list" items="${categoryList}">
-						<tbody id="categoryList" class="category">
+				<div class="scroll">
+					<table class="table">
+						<thead>
 							<tr>
-								<td>${list.categoryName}</td>
-								<td><button class="delete-category" onclick="deleteCategory(${list.id})">삭제</button></td>
+								<th scope="col">카테고리</th>
+								<th scope="col"></th>
 							</tr>
-						</tbody>
-					</c:forEach>
-				</table>
+						</thead>
+						<c:forEach var="list" items="${categoryList}">
+							<tbody id="categoryList" class="category">
+								<tr>
+									<td>${list.categoryName}</td>
+									<td><button class="delete-category" onclick="deleteCategory(${list.id})">삭제</button></td>
+								</tr>
+							</tbody>
+						</c:forEach>
+					</table>
+				</div>
 			</section>
 		<%@include file="/WEB-INF/view/layout/footer.jsp"%>
 	<script type="text/javascript" src="/assets/js/admin/adminCategory.js"></script>

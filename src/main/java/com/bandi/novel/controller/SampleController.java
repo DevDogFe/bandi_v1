@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
+import com.bandi.novel.dto.response.ContestDto;
 import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
+import com.bandi.novel.dto.response.NovelDto;
 import com.bandi.novel.dto.response.NovleRecordSectionDto;
 import com.bandi.novel.dto.response.RankPageDto;
 import com.bandi.novel.dto.response.RecommendFavoritesDto;
@@ -94,10 +96,13 @@ public class SampleController {
 		}
 		List<RankPageDto> totalNovelBest = recommendService.selectTotalRankToFavorite(15);
 		model.addAttribute("novelList3", totalNovelBest);
+
 		List<RankPageDto> freeNovelBest = recommendService.selectRankToFavorite(2, 15);
 		model.addAttribute("novelList4", freeNovelBest);
-		
-		
+
+		List<NovelDto> contestNovelList = novelService.selectContestNovelListByLimit();
+		model.addAttribute("contestNovelList", contestNovelList);
+
 		
 		return "/main";
 	}

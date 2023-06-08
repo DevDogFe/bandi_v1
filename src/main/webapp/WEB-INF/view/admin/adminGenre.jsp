@@ -42,6 +42,7 @@
 						<button type="submit" id="button-add">등록</button>
 					</div>
 				</form>
+				<div class="scroll">
 				<table class="table">
 					<thead>
 						<tr>
@@ -58,6 +59,7 @@
 						</tbody>
 					</c:forEach>
 				</table>
+				</div>
 			</section>
 		<%@include file="/WEB-INF/view/layout/footer.jsp"%>
 <script type="text/javascript" src="/assets/js/admin/adminGenre.js"></script>

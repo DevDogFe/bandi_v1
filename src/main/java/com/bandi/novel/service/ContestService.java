@@ -115,7 +115,7 @@ public class ContestService {
 	}
 	
 	/**
-	 * 공모전 게시판 아이디 조회
+	 * 공모전 소설 아이디 조회
 	 * @return 공모전 
 	 */
 	@Transactional
@@ -127,7 +127,7 @@ public class ContestService {
 	}
 	
 	/**
-	 * 공모전 게시판 리스트 조회
+	 * 공모전 소설 리스트 조회
 	 * @return 공모전 
 	 */
 	@Transactional
@@ -139,7 +139,7 @@ public class ContestService {
 	}
 	
 	/**
-	 * 공모전 게시판 리스트 검색 조회
+	 * 공모전 소설 리스트 검색 조회
 	 * @return 공모전 
 	 */
 	@Transactional

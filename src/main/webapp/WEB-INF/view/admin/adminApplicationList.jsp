@@ -39,29 +39,30 @@
 			<!-- application List -->
 			<section>
 				<div class="admin--apply--container">
-
-					<table class="table">
-						<thead>
-							<tr>
-								<th>NO</th>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>연락처</th>
-								<th>작성일</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="application" items="${applicationList}">
+					<div class="scroll">
+						<table class="table">
+							<thead>
 								<tr>
-									<td>${application.id}</td>
-									<td><a href="/admin/applicationDetail/${application.id}">${application.title}</a></td>
-									<td>${application.username}</td>
-									<td>${application.tel}</td>
-									<td>${application.createdAt()}</td>
+									<th>NO</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>연락처</th>
+									<th>작성일</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach var="application" items="${applicationList}">
+									<tr>
+										<td>${application.id}</td>
+										<td><a href="/admin/applicationDetail/${application.id}">${application.title}</a></td>
+										<td>${application.username}</td>
+										<td>${application.tel}</td>
+										<td>${application.createdAt()}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 					<!-- page -->
 <%-- 					<div class="apply--page mt-2">
 						<div>
