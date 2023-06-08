@@ -70,11 +70,9 @@ public class ReportController {
 	public String getReportDetail(@PathVariable Integer id, Model model, HttpServletRequest request, HttpServletResponse response) {
 		Report report = reportService.selectReportDetailById(id);
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(report.getBoardId());
-		List<BoardFile> fileList = boardService.selectFileList(id);
 		reportService.updateProceed(id);
 		model.addAttribute("report", report);
 		model.addAttribute("boardDetail", boardDetail);
-		model.addAttribute("fileList", fileList);
 		return "/admin/reportDetailPopup";
 	}
 }
