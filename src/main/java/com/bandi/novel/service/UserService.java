@@ -42,6 +42,7 @@ public class UserService {
 	@Transactional
 	public ResponseDto<User> loginByUsernameAndPassword(LoginDto loginDto) {
 		User userEntity = userRepository.selectByUsername(loginDto.getUsername());
+		System.out.println(userEntity);
 		if (userEntity == null) {
 			return new ResponseDto<User>(HttpStatus.INTERNAL_SERVER_ERROR, "아이디가 없습니다.", false, null);
 		}

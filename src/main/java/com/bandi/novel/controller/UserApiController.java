@@ -128,16 +128,13 @@ public class UserApiController {
 		
 		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
 		User principal = resUser.getData();
-		System.out.println(loginDto);
 		Cookie cookie = null;
 		if ("on".equals(loginDto.getRemember())) {
 			cookie = new Cookie("id", loginDto.getUsername());
 			cookie.setMaxAge(60 * 60 * 24 * 7);
 			response.addCookie(cookie);
-			System.out.println(cookie.getName() + " / " + cookie.getValue() + " / " + cookie.getMaxAge());
 		} else {
 			Cookie[] cookies = request.getCookies();
-			System.out.println("11111111");
 			if (cookies != null) {
 				for (Cookie c : cookies) {
 					if (c.getName().equals("id")) {
@@ -149,6 +146,9 @@ public class UserApiController {
 			}
 		}
 		session.setAttribute("principal", principal);
+		if(!resUser.getIsSuccess()) {
+			return new ResponseDto<Cookie>(HttpStatus.OK, resUser.getMessage(), false, cookie);
+		}
 
 		return new ResponseDto<Cookie>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, cookie);
 	}
