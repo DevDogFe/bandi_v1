@@ -69,8 +69,9 @@
 							<!-- 답 TODO-->
 							<c:if test="${qna.answer != null}">
 								<tr class="qna--answer">
-									<td colspan="2"><a href="/qna/answer/${qna.id}">[RE]: ${qna.title}</a></td>
 									<td></td>
+									<td></td>
+									<td><a href="/qna/answer/${qna.id}">[RE]: ${qna.title}</a></td>
 									<td>관리자</td>
 									<td>${qna.answerCreatedAt()}</td>
 								</tr>

@@ -26,7 +26,6 @@ import com.bandi.novel.dto.BoardReplyDto;
 import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
-import com.bandi.novel.model.BoardFile;
 import com.bandi.novel.model.BoardReply;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.model.User;
@@ -36,8 +35,6 @@ import com.bandi.novel.service.BoardService;
 import com.bandi.novel.utils.BoardPageUtil;
 import com.bandi.novel.utils.BoardReplyPageUtil;
 import com.bandi.novel.utils.Define;
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @Controller
 @RequestMapping("/board")
@@ -83,7 +80,6 @@ public class BoardController {
 		if(boardSearchDto.getCategoryId() != null) {
 			model.addAttribute("categoryId", boardSearchDto.getCategoryId());
 		}
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("boardList", boardPageUtil);
 		model.addAttribute("boardTypeList", boardTypeList);
@@ -153,7 +149,6 @@ public class BoardController {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<BoardReplyDto> replyList = boardReplyService.selectBoardReplyListByBoardId(id);
-		List<BoardFile> fileList = boardService.selectFileList(id);
 		BoardReplyPageUtil replyPageUtil = new BoardReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
 		if(principal != null) {
 			boolean isLike = boardLikeService.selectLikeByUserIdAndBoardId(principal.getId(), id);
@@ -195,7 +190,6 @@ public class BoardController {
 		boardDetail.setViews(boardDetail.getViews() + 1);
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("replyList", replyPageUtil);
-		model.addAttribute("fileList", fileList);
 		return "/board/boardDetail";
 	}
 
@@ -209,11 +203,9 @@ public class BoardController {
 			throw new CustomRestfulException(Define.UNAUTHED, HttpStatus.BAD_REQUEST); 
 		}
 		List<CategorySelectDto> categoryList = boardService.selectCategory(boardDetail.getBoardTypeId());
-		List<BoardFile> fileList = boardService.selectFileList(id);
 		boardDetail.setContent(boardDetail.getContent().replaceAll("<br>", "\r\n"));
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("fileList", fileList);
 		return "/board/boardUpdate";
 	}
 

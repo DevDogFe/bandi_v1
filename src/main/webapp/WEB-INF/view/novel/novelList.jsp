@@ -45,7 +45,7 @@
 				<div class="work-box">
 					<div class="cover">
 						<c:choose>
-							<c:when test="${detail.cover != null }">
+							<c:when test="${novel.cover != null }">
 								<a href="/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></a>
 							</c:when>
 							<c:otherwise>

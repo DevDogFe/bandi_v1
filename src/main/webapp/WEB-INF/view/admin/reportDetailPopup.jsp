@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>신고 확인</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <style>
 body {
@@ -19,6 +20,7 @@ body {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 17px;
 }
+
 .form-card {
 	width: 26rem;
 	gap: 1rem;
@@ -38,6 +40,7 @@ input[type='text'], textarea {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 17px;
 }
+
 .ok, .delete {
 	cursor: pointer;
 	font-size: 0.9rem;
@@ -58,13 +61,33 @@ input[type='text'], textarea {
 			type="hidden" id="boardId" value="${boardDetail.id}"> <label for="exampleFormControlInput1" class="form-label">작성자 ${boardDetail.username} </label> <label for="exampleFormControlInput1"
 			class="form-label">등록일 ${boardDetail.createdAt()} </label> <label for="exampleFormControlInput1" class="form-label">카테고리 ${boardDetail.categoryName} </label> <label
 			for="exampleFormControlTextarea1" class="form-label">내용</label><br>
-		<c:forEach var="file" items="${fileList}">
-			<img src="/bandi/uploads/${file.encodedFileName}" style="max-width: 300px; max-height: 300px;">
-		</c:forEach>
 		<textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content" readonly="readonly">${boardDetail.content}
 		</textarea>
 		<button class="ok" onclick="window.close(); opener.location.reload();">확인</button>
-		<button type="submit" class="delete" onclick="location.href='/board/delete/${boardDetail.id}'; window.close(); opener.location.reload();">삭제</button>
+		<button type="submit" class="delete" onclick="deleteBoard(${boardDetail.id})">삭제</button>
 	</div>
+	<script type="text/javascript">
+	function deleteBoard(boardId){
+		console.log(boardId);
+		$.ajax({
+			type: "DELETE",
+			url: "/api/board/delete/" + boardId
+		}).done((response) => {
+			
+			if (response.data == 1) {
+				alert("삭제되었습니다.");
+				opener.location.reload();
+				window.close(); 
+				
+			} else {
+				alert(response.message);
+			}
+		}).fail((error) => {
+			console.log(error);
+			alert("요청을 처리할 수 없습니다.");
+		});
+		
+	}
+	</script>
 </body>
 </html>

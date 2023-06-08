@@ -278,28 +278,28 @@
 			</div>
 			<div class="recommend-list">
 				<c:if test="${!empty genreList }">
-				<h3 class="recommend-header">
-					<a>${genreList.get(0).genreName } 추천작</a>
-				</h3>
-				<ul>
-					<c:forEach items="${genreList }" var="novel">
-						<li><a class="recommend-item">
-								<div class="recommend-img">
-									<c:choose>
-										<c:when test="${novel.cover != null }">
-											<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
-										</c:when>
-										<c:otherwise>
-											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
-										</c:otherwise>
-									</c:choose>
-								</div>
-								<div class="recommend-desc">
-									<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
-								</div>
-						</a></li>
-					</c:forEach>
-				</ul>
+					<h3 class="recommend-header">
+						<a>${genreList.get(0).genreName } 추천작</a>
+					</h3>
+					<ul>
+						<c:forEach items="${genreList }" var="novel">
+							<li><a class="recommend-item">
+									<div class="recommend-img">
+										<c:choose>
+											<c:when test="${novel.cover != null }">
+												<a href="/novel/detail/${novel.id }"><img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }"></a>
+											</c:when>
+											<c:otherwise>
+												<a href="/novel/detail/${novel.id }"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="recommend-desc">
+										<a href="/novel/detail/${novel.id }"><span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span></a>
+									</div>
+							</a></li>
+						</c:forEach>
+					</ul>
 				</c:if>
 			</div>
 		</div>
