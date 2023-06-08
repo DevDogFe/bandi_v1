@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/view/layout/header.jsp"%>
+<%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <!-- 작성한 css는 항상 밑에 있어야함 -->
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/admin/admin.css" />
@@ -40,6 +40,7 @@
 	<!-- Q&A List -->
 	<section>
 		<div class="admin--qna--container">
+			<div class="scroll">
 			<table class="table">
 				<div class="qna--btn--list">
 					<button class="qnaList--btn" value="-1">전체</button>
@@ -75,6 +76,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			</div>
 		</div>
 	</section>
 </div>

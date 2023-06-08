@@ -9,6 +9,7 @@
 		from application_tb as a 
 		inner join user_tb as u	
 		on a.user_id = u.id
+		order by id desc
 	</select>
 
 	<!-- 마이페이지 -->

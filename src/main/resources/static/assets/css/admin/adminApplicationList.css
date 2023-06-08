@@ -19,6 +19,149 @@
 	justify-content: center;
 }
 
-.page-link{
+.page-link {
 	color: #546E7A;
 }
+
+.search-form {
+	display: flex;
+	justify-content: space-between;
+}
+
+.board {
+	display: flex;
+	margin-top: 30px;
+}
+
+.search {
+	position: relative;
+	width: 300px;
+}
+
+input {
+	font-size: 15px;
+	color: #222222;
+	width: 300px;
+	border: none;
+	border-bottom: solid #aaaaaa 1px;
+	padding-bottom: 10px;
+	margin-top: 20px;
+	position: relative;
+	background: none;
+	z-index: 5;
+	position: relative;
+}
+
+input::placeholder {
+	color: #aaaaaa;
+}
+
+input:focus {
+	outline: none;
+}
+
+.search-span {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0%;
+	background-color: #666;
+	width: 0;
+	height: 2px;
+	border-radius: 2px;
+	transition: 0.5s;
+}
+
+.search label {
+	position: absolute;
+	color: #aaa;
+	left: 10px;
+	font-size: 20px;
+	bottom: 8px;
+	transition: all .2s;
+}
+
+input:focus ~ .searchlabel, input:valid ~ searchlabel {
+	font-size: 16px;
+	bottom: 40px;
+	color: #666;
+	font-weight: bold;
+}
+
+input:focus ~ search-span, input:valid ~ search-span {
+	width: 100%;
+}
+
+#button-add {
+	font-size: 20px;
+	width: 60px;
+	height: 35px;
+	border: none;
+	color: #ffffff;
+	background-color: #546E7A;
+	cursor: pointer;
+	margin-left: 10px;
+	margin-top: 20px;
+	border-radius: 3px;
+}
+
+.selectbox {
+	border-radius: 8px;
+	width: 80px;
+	height: 30px;
+	font-size: 18px;
+	margin-top: 30px;
+	margin-right: 10px;
+	text-align: center;
+}
+
+.category-list button {
+	border: none;
+	background: none;
+	font-size: 20px;
+	margin-left: 20px;
+	margin-top: 30px;
+	margin-bottom: 5px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.category-list button:hover {
+	border-bottom: 3px solid #036;
+}
+
+table.table {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	width: 920px;
+	margin-left: 20px;
+}
+
+table.table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #036;
+	border-bottom: 3px solid #036;
+}
+
+table.table td {
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	font-size: 17px;
+}
+
+.delete-category {
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.delete-category:hover {
+	font-weight: bold;
+	color: #3b6bc9;
+}
+

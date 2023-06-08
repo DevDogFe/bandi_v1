@@ -2,6 +2,7 @@ package com.bandi.novel.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bandi.novel.dto.ApplicationFromDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Application;
+import com.bandi.novel.model.User;
 import com.bandi.novel.service.ApplicationService;
+import com.bandi.novel.utils.Define;
 
 /**
  * 연재문의
@@ -31,18 +34,17 @@ public class ApplicationController {
 
 	@Autowired
 	private ApplicationService applicationService;
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * @return 연재문의 내역
 	 */
 	@GetMapping("/list")
 	public String getList(Model model) {
-		/*
-		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		 * List<Application> applyList =
-		 * applicationService.readApplicationByUserId(principal.getId());
-		 */
-		List<Application> application = applicationService.selectApplicationByUserId(1);
+
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		List<Application> application = applicationService.selectApplicationByUserId(principal.getId());
 		model.addAttribute("application", application);
 
 		return "/cs/applicationList";
@@ -51,7 +53,6 @@ public class ApplicationController {
 	@GetMapping("/detail/{id}")
 	public String getApplicationDetail(@PathVariable Integer id, Model model) {
 
-		// User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		Application application = applicationService.selectApplicationById(id);
 		model.addAttribute("application", application);
 
@@ -84,14 +85,10 @@ public class ApplicationController {
 			throw new CustomRestfulException(sb.toString(), HttpStatus.BAD_REQUEST);
 		}
 
-		/*
-		 * User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		 * application.setUserId(principal.getId());
-		 */
-
-		applicationFromDto.setUserId(1);
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		applicationFromDto.setUserId(principal.getId());
 		applicationService.insertApplication(applicationFromDto);
-		return "redirect:/index";
+		return "redirect://qna/list";
 	}
 
 	/**
