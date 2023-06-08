@@ -15,11 +15,15 @@
 	</div>
 	<span class="board-detail-wrap"> <span class="board-info-wrap"> <span class="profile-info-wrap"> <span class="profile-preview-wrap"></span> <span class="info-inner"> <span
 					class="name">${boardDetail.username}</span> <span class="date">${boardDetail.createdAt()}</span> <span class="date">${boardDetail.categoryName}</span>
-			</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”> <c:if test="${principal.id == boardDetail.userId }">
-							<button type="submit" class="btn-delete" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
-							<button class="btn-report" id="report-btn" onclick="popup()">신고</button>
-							<button type="button" class="btn-modify" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
-						</c:if> <c:if test="${principal != null }">
+			</span> <span class=“btn-right-wrap”> <span class=“modify-wrap”> <c:choose>
+							<c:when test="${principal.id == boardDetail.userId }">
+								<button type="submit" class="btn-delete" onclick="location.href='/board/delete/${boardDetail.id}'">삭제</button>
+								<button class="btn-report" id="report-btn" onclick="location.href='/board/update/${boardDetail.id}'">수정</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="	btn-modify" onclick="popup()">신고</button>
+							</c:otherwise>
+						</c:choose> <c:if test="${principal != null }">
 							<c:choose>
 								<c:when test="${isLike}">
 									<button type="button" id="unlike" class="heart">
@@ -41,8 +45,7 @@
 						<button type="submit" class="btn-list" onclick="location.href='/board/list'">목록</button>
 				</span>
 			</span>
-		</span> <span class="board-contents"> <span id="_board-contents"> ${boardDetail.content}
-			</span>
+		</span> <span class="board-contents"> <span id="_board-contents"> ${boardDetail.content} </span>
 		</span>
 	</span>
 	</span>

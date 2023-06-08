@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/assets/css/cs/faqList.css" />
 <link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
 <link rel="stylesheet" href="/assets/css/cs/csCategory.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <section>
 	<div class="cs--container">
 		<div class="cs--container--title">

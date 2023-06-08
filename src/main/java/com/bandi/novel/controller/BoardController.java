@@ -1,9 +1,6 @@
 package com.bandi.novel.controller;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +23,6 @@ import com.bandi.novel.dto.BoardReplyDto;
 import com.bandi.novel.dto.BoardSearchDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
-import com.bandi.novel.model.BoardFile;
 import com.bandi.novel.model.BoardReply;
 import com.bandi.novel.model.BoardType;
 import com.bandi.novel.model.User;
@@ -36,8 +32,6 @@ import com.bandi.novel.service.BoardService;
 import com.bandi.novel.utils.BoardPageUtil;
 import com.bandi.novel.utils.BoardReplyPageUtil;
 import com.bandi.novel.utils.Define;
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @Controller
 @RequestMapping("/board")
@@ -83,7 +77,6 @@ public class BoardController {
 		if(boardSearchDto.getCategoryId() != null) {
 			model.addAttribute("categoryId", boardSearchDto.getCategoryId());
 		}
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("boardList", boardPageUtil);
 		model.addAttribute("boardTypeList", boardTypeList);
@@ -110,34 +103,6 @@ public class BoardController {
 	// 게시물 쓰기
 	@PostMapping("/write/{boardTypeId}")
 	public String createBoardProc(BoardDto boardDto) {
-		ArrayList<String> fileNames = new ArrayList<>();
-		ArrayList<String> rawFileNames = new ArrayList<>();
-		for(int i = 0; i < boardDto.getFiles().length; i++) {
-			if(!boardDto.getFiles()[i].isEmpty()) {
-				if(boardDto.getFiles()[i].getSize() > Define.MAX_FILE_SIZE) {
-					
-				}
-				try {
-					String saveDirectory = Define.UPLOAD_DIRECTORY;
-					File dir = new File(saveDirectory);
-					if(dir.exists() == false) {
-						dir.mkdirs();
-					}
-					UUID uuid = UUID.randomUUID();
-					String rawFileName = boardDto.getFiles()[i].getOriginalFilename();
-					String fileName = uuid + "_" + rawFileName;
-					rawFileNames.add(rawFileName);
-					fileNames.add(fileName);
-					String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
-					File destination = new File(uploadPath);
-					boardDto.getFiles()[i].transferTo(destination);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		boardDto.setFileName(fileNames);
-		boardDto.setRawFileName(rawFileNames);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		String content = boardDto.getContent().replaceAll("\r\n", "<br>");
 		boardDto.setContent(content);
@@ -153,7 +118,6 @@ public class BoardController {
 		BoardDetailDto boardDetail = boardService.selectBoardDetailById(id);
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		List<BoardReplyDto> replyList = boardReplyService.selectBoardReplyListByBoardId(id);
-		List<BoardFile> fileList = boardService.selectFileList(id);
 		BoardReplyPageUtil replyPageUtil = new BoardReplyPageUtil(replyList.size(), 10, currentPage, 5, replyList);
 		if(principal != null) {
 			boolean isLike = boardLikeService.selectLikeByUserIdAndBoardId(principal.getId(), id);
@@ -195,7 +159,6 @@ public class BoardController {
 		boardDetail.setViews(boardDetail.getViews() + 1);
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("replyList", replyPageUtil);
-		model.addAttribute("fileList", fileList);
 		return "/board/boardDetail";
 	}
 
@@ -209,11 +172,9 @@ public class BoardController {
 			throw new CustomRestfulException(Define.UNAUTHED, HttpStatus.BAD_REQUEST); 
 		}
 		List<CategorySelectDto> categoryList = boardService.selectCategory(boardDetail.getBoardTypeId());
-		List<BoardFile> fileList = boardService.selectFileList(id);
 		boardDetail.setContent(boardDetail.getContent().replaceAll("<br>", "\r\n"));
 		model.addAttribute("boardDetail", boardDetail);
 		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("fileList", fileList);
 		return "/board/boardUpdate";
 	}
 
@@ -221,36 +182,8 @@ public class BoardController {
 	@PostMapping("/updateProc/{id}")
 	public String updateBoardProc(BoardDto boardDto) {
 		// User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		ArrayList<String> fileNames = new ArrayList<>();
-		ArrayList<String> rawFileNames = new ArrayList<>();
-		for(int i = 0; i < boardDto.getFiles().length; i++) {
-			if(!boardDto.getFiles()[i].isEmpty()) {
-				if(boardDto.getFiles()[i].getSize() > Define.MAX_FILE_SIZE) {
-					
-				}
-				try {
-					String saveDirectory = Define.UPLOAD_DIRECTORY;
-					File dir = new File(saveDirectory);
-					if(dir.exists() == false) {
-						dir.mkdirs();
-					}
-					UUID uuid = UUID.randomUUID();
-					String rawFileName = boardDto.getFiles()[i].getOriginalFilename();
-					String fileName = uuid + "_" + rawFileName;
-					rawFileNames.add(rawFileName);
-					fileNames.add(fileName);
-					String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
-					File destination = new File(uploadPath);
-					boardDto.getFiles()[i].transferTo(destination);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
 		String content = boardDto.getContent().replaceAll("\r\n", "<br>");
 		boardDto.setContent(content);
-		boardDto.setFileName(fileNames);
-		boardDto.setRawFileName(rawFileNames);
 		boardService.updateBoard(boardDto);
 		return "redirect:/board/list";
 	}
