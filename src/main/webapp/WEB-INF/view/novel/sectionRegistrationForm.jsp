@@ -66,13 +66,20 @@
 								</div>
 								<div class="right-box-detail">
 									<div class="right-detail-desc">
-										<div class="desc-title">${lastNovel.title}</div>
 										<c:choose>
-											<c:when test="${lastNovel.serviceTypeId != 3}">
-												<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+											<c:when test="${lastNovel == null}">
+												<div class="desc-title">소설 조회 <br> 기록이 없습니다.</div>
 											</c:when>
 											<c:otherwise>
-												<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+												<div class="desc-title">${lastNovel.title}</div>
+												<c:choose>
+													<c:when test="${lastNovel.serviceTypeId != 3}">
+														<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+													</c:when>
+													<c:otherwise>
+														<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -86,6 +93,7 @@
 							<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
 						</div>
 						<div class="recommend-list">
+							<c:if test="${!empty genreList }">
 							<h3 class="recommend-header">
 								<a>${genreList.get(0).genreName } 추천작</a>
 							</h3>
@@ -108,6 +116,7 @@
 									</a></li>
 								</c:forEach>
 							</ul>
+							</c:if>
 						</div>
 					</div>
 				</aside>

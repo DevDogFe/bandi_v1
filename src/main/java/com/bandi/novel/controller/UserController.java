@@ -95,7 +95,7 @@ public class UserController {
 		}
 		userService.insertUser(joinDto);
 		
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class UserController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "f2f5ec106cf03cddc10930e8d7c58d68");
-		params.add("redirect_uri", "http://localhost/auth/kakao/callback");
+		params.add("redirect_uri", "http://192.168.0.82/auth/kakao/callback");
 		params.add("code", code);
 
 		HttpEntity<MultiValueMap<String, String>> kakaoReqEntity = new HttpEntity<MultiValueMap<String, String>>(params,
@@ -128,7 +128,7 @@ public class UserController {
 		}
 		session.setAttribute(Define.PRINCIPAL, principal);
 
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 
 	// accessToken에서 사용자 정보 뽑아내는 메서드
@@ -259,7 +259,7 @@ public class UserController {
 			return "/user/joinFormForNaver";
 		}
 		session.setAttribute(Define.PRINCIPAL, principal);
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 	
 }

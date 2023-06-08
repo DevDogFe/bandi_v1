@@ -214,19 +214,15 @@ public class PayController {
 	public String KakaoPayReadyController(@PathVariable Integer serviceTypeId, KakaoPayRequestDto dto,
 			HttpServletResponse response) {
 
-		// 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		if (!((payService.selectUserGold(principal.getId()) - dto.getTotalAmount()) >= 0)) {
-			PrintWriter out;
-			response.setContentType("text/html;charset=UTF-8");
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('금액이 부족합니다.'); location.href='/payment/charge'</script>");
-				out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		/*
+		 * // 유저 골드 확인하고 금액보다 적으면 골드 충전 페이지로 이동 User principal = (User)
+		 * session.getAttribute(Define.PRINCIPAL); if
+		 * (!((payService.selectUserGold(principal.getId()) - dto.getTotalAmount()) >=
+		 * 0)) { PrintWriter out; response.setContentType("text/html;charset=UTF-8");
+		 * try { out = response.getWriter(); out.
+		 * println("<script>alert('금액이 부족합니다.'); location.href='/payment/charge'</script>"
+		 * ); out.flush(); } catch (IOException e) { e.printStackTrace(); } }
+		 */
 
 		URI uri = UriComponentsBuilder.fromUriString("https://kapi.kakao.com").path("/v1/payment/ready").encode()
 				.build().toUri();
@@ -242,10 +238,10 @@ public class PayController {
 
 		if (dto.getIsRental() != null) {
 			// 성공 시 redirect url
-			params.add("approval_url", "http://localhost/payment/kakao/rental/success/" + dto.getNovelId() + "/"
+			params.add("approval_url", "http://192.168.0.82/payment/kakao/rental/success/" + dto.getNovelId() + "/"
 					+ dto.getSectionId() + "/" + serviceTypeId);
 		} else {
-			params.add("approval_url", "http://localhost/payment/kakao/purchase/success/" + dto.getNovelId() + "/"
+			params.add("approval_url", "http://192.168.0.82/payment/kakao/purchase/success/" + dto.getNovelId() + "/"
 					+ dto.getSectionId() + "/" + serviceTypeId);
 		}
 
@@ -279,7 +275,7 @@ public class PayController {
 		params.add("item_name", dto.getItemName()); // 상품명
 		params.add("quantity", dto.getQuantity().toString()); // 주문 수량
 		params.add("total_amount", dto.getTotalAmount().toString()); // 총금액
-		params.add("approval_url", "http://localhost/payment/kakao/gold/success"); // 성공 시 redirect url
+		params.add("approval_url", "http://192.168.0.82/payment/kakao/gold/success"); // 성공 시 redirect url
 
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
 
@@ -308,6 +304,8 @@ public class PayController {
 		payService.purchaseNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(), sectionId);
 		// 유저 결제 회차 삽입 !!!!!!
 		payService.insertUserLibrary(principal.getId(), sectionId);
+		
+		
 
 		return "redirect:/section/read/" + novelId + "/" + sectionId + "/" + serviceTypeId;
 	}
@@ -327,6 +325,8 @@ public class PayController {
 		// 유저 골드 사용 대여 처리
 		payService.rentalNovel(principal.getId(), kakaoSinglePayment.getAmount().getTotal(), sectionId);
 
+		
+		
 		return "redirect:/section/read/" + novelId + "/" + sectionId + "/" + serviceTypeId;
 	}
 
@@ -378,8 +378,8 @@ public class PayController {
 		params.add("partner_user_id", "partner_user_id");
 		params.add("vat_amount", "0"); // 부가세
 		params.add("tax_free_amount", "0"); // 상품 비과세 금액
-		params.add("fail_url", "http://localhost/payment/kakao/fail"); // 실패 시 redirect url
-		params.add("cancel_url", "http://localhost/payment/kakao/cancel"); // 취소 시 redirect url
+		params.add("fail_url", "http://192.168.0.82/payment/kakao/fail"); // 실패 시 redirect url
+		params.add("cancel_url", "http://192.168.0.82/payment/kakao/cancel"); // 취소 시 redirect url
 
 		return params;
 	}

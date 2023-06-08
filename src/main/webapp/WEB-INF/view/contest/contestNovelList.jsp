@@ -62,6 +62,7 @@
 					</div>
 					<div class="col-auto">
 						<input type="text" id="search" name="search" class="form-control">
+						<input type="hidden" id="contestId" name="contestId" class="form-control" value="${contestId}">
 					</div>
 					<div class="col-auto">
 						<button type="submit" class="btn btn-primary">검색</button>
@@ -77,8 +78,8 @@
 	      			<div class="work-box">
 						<div class="cover">
 							<c:choose>
-								<c:when test="${detail.cover != null }">
-									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></a>
+								<c:when test="${novel.cover != null }">
+									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }"></a>
 								</c:when>
 								<c:otherwise>
 									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a>

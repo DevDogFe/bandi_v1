@@ -91,10 +91,10 @@
 								<div class="cover">
 									<c:choose>
 										<c:when test="${detail.cover != null }">
-											<img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }">
+											<div class="detail-cover"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></div>
 										</c:when>
 										<c:otherwise>
-											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+											 <div class="detail-cover"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></div>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -281,13 +281,20 @@
 								
 								<div class="right-box-detail">
 									<div class="right-detail-desc">
-										<div class="desc-title">${lastNovel.title}</div>
 										<c:choose>
-											<c:when test="${lastNovel.serviceTypeId != 3}">
-												<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+											<c:when test="${lastNovel == null}">
+												<div class="desc-title">소설 조회 <br> 기록이 없습니다.</div>
 											</c:when>
 											<c:otherwise>
-												<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+												<div class="desc-title">${lastNovel.title}</div>
+												<c:choose>
+													<c:when test="${lastNovel.serviceTypeId != 3}">
+														<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+													</c:when>
+													<c:otherwise>
+														<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -364,7 +371,7 @@
     $("#flipbook").bind("turning", function(event, page, view) {
   	  	
     	if(mode=="middle"){
-  	  		$(".book-font").css('font-size','20px');
+  	  		$(".book-font").css('font-size','18px');
   	  		$(".book-font").css('line-height','normal');
   	  		$(".book-cover").css('font-size','30px');
   	  	}else if(mode=='small'){
@@ -454,7 +461,7 @@
 			flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
-	      	$(".book-font").css('font-size','20px');
+	      	$(".book-font").css('font-size','18px');
 	      	$(".book-font").css('line-height','normal');
 	      	$(".book-cover").css('font-size','30px');
 	      	$(flipbookEL).css('margin-top','0%');
