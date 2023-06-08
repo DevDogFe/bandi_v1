@@ -218,6 +218,7 @@ public class ContestController {
 		model.addAttribute("serviceType", "공모전");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "contest/novel/list");
+		model.addAttribute("contestId", contestId);
 
 		return "/contest/contestNovelList";
 	}

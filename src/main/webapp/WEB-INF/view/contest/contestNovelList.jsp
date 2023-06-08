@@ -42,7 +42,7 @@
       	<div class="top-wrap-content">      	
       		<div class="top-wrap-nav">
       			<div class="novel-type"><h1>공모전 소설</h1></div>
-      			<div class="sort-type"><a href="?sort=default">최신순 </a><a href="?sort=favorite"> 즐겨찾기순 </a><a href="?sort=score"> 평점순 </a></div>
+      			<div class="sort-type"><a href="?contestId=${contestId}&sort=default">최신순 </a><a href="?contestId=${contestId}&sort=favorite"> 즐겨찾기순 </a><a href="?contestId=${contestId}&sort=score"> 평점순 </a></div>
       		</div>
       		<form action="/${map }" method="get">
 				<div class="row g-3 mt-4 align-items-center">
