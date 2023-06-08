@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link rel="stylesheet" href="/assets/css/cs/answerDetail.css" />
 
-<form action="/application/write" method="post">
+<form class="mt-5" action="/application/write" method="post">
 	<div class="apply--form mb-3 d-flex justify-content-between">
 		<input type="text" name="title" class="flex-grow-1 text--box" placeholder="제목을 입력해주세요" required="required">
 		<button type="submit" class="app--btn">연재신청</button>
