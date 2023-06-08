@@ -42,7 +42,7 @@
       	<div class="top-wrap-content">      	
       		<div class="top-wrap-nav">
       			<div class="novel-type"><h1>공모전 소설</h1></div>
-      			<div class="sort-type"><a href="?sort=default">최신순 </a><a href="?sort=favorite"> 즐겨찾기순 </a><a href="?sort=score"> 평점순 </a></div>
+      			<div class="sort-type"><a href="?contestId=${contestId}&sort=default">최신순 </a><a href="?contestId=${contestId}&sort=favorite"> 즐겨찾기순 </a><a href="?contestId=${contestId}&sort=score"> 평점순 </a></div>
       		</div>
       		<form action="/${map }" method="get">
 				<div class="row g-3 mt-4 align-items-center">
@@ -62,6 +62,7 @@
 					</div>
 					<div class="col-auto">
 						<input type="text" id="search" name="search" class="form-control">
+						<input type="hidden" id="contestId" name="contestId" class="form-control" value="${contestId}">
 					</div>
 					<div class="col-auto">
 						<button type="submit" class="btn btn-primary">검색</button>
@@ -77,8 +78,8 @@
 	      			<div class="work-box">
 						<div class="cover">
 							<c:choose>
-								<c:when test="${detail.cover != null }">
-									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></a>
+								<c:when test="${novel.cover != null }">
+									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }"></a>
 								</c:when>
 								<c:otherwise>
 									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a>

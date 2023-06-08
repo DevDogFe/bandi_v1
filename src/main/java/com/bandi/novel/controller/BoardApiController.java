@@ -5,11 +5,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bandi.novel.dto.BoardDetailDto;
 import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.User;
@@ -34,7 +32,6 @@ public class BoardApiController {
 		ResponseDto<Integer> response = boardReplyService.deleteBoardReplyById(id);
 		return response;
 	}
-
 
 	// 관리자 게시물 삭제
 	@DeleteMapping("/api/board/delete/{id}")

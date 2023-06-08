@@ -102,12 +102,71 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
+<<<<<<< HEAD
 								<div class="recommend-desc">
 									<a href="/novel/detail/${novel.id }"><span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span></a>
 								</div>
 						</a></li>
 					</c:forEach>
 				</ul>
+=======
+								<div class="right-box-detail">
+									<div class="right-detail-desc">
+										<c:choose>
+											<c:when test="${lastNovel == null}">
+												<div class="desc-title">소설 조회 <br> 기록이 없습니다.</div>
+											</c:when>
+											<c:otherwise>
+												<div class="desc-title">${lastNovel.title}</div>
+												<c:choose>
+													<c:when test="${lastNovel.serviceTypeId != 3}">
+														<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+													</c:when>
+													<c:otherwise>
+														<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="right-banner">
+							<a href="/payment/charge"><img src="/assets/images/main/gold-charge.png"></a>
+						</div>
+						<div class="right-banner">
+							<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
+						</div>
+						<div class="recommend-list">
+							<c:if test="${!empty genreList }">
+							<h3 class="recommend-header">
+								<a>${genreList.get(0).genreName } 추천작</a>
+							</h3>
+							<ul>
+								<c:forEach items="${genreList }" var="novel">
+									<li><a class="recommend-item">
+											<div class="recommend-img">
+												<c:choose>
+													<c:when test="${novel.cover != null }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+													</c:when>
+													<c:otherwise>
+														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="recommend-desc">
+												<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
+											</div>
+									</a></li>
+								</c:forEach>
+							</ul>
+							</c:if>
+						</div>
+					</div>
+				</aside>
+>>>>>>> 05da886db2b298bce9870ebf9586c12089b727a6
 			</div>
 		</div>
 	</aside>

@@ -35,10 +35,8 @@ public class BoardService {
 		// board_tb에 저장
 		int result = boardRepository.insertBoard(boardDto);
 		// 위에서 저장할 때 자동생성된 boardId 끌어오기
-		Integer boardId = boardRepository.selectBoardIdByDTO(boardDto);
-
-		boardDto.setId(boardId);
-		if (result != 1) {
+		
+		if(result != 1) {
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -83,7 +81,8 @@ public class BoardService {
 	public int updateBoard(BoardDto boardDto) {
 		int result = boardRepository.updateBoard(boardDto);
 
-		if (result != 1) {
+		
+		if(result != 1) {
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return result;
@@ -98,6 +97,16 @@ public class BoardService {
 		}
 		return new ResponseDto<Integer>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, result);
 	}
+	
+	
+	// 게시물 검색
+	@Transactional
+	public List<BoardDto> searchList(BoardSearchDto boardSearchDto) {
+		
+		return boardRepository.selectSearchList(boardSearchDto);
+	}
+	
+	
 
 	// 게시물 조회수 증가
 	@Transactional
@@ -105,13 +114,5 @@ public class BoardService {
 		boardRepository.updateViewById(boardId);
 	}
 
-	// 게시물 검색
-	@Transactional
-	public List<BoardDto> searchList(BoardSearchDto boardSearchDto) {
-
-		return boardRepository.selectSearchList(boardSearchDto);
-	}
-
-	// 파일 조회
 
 }

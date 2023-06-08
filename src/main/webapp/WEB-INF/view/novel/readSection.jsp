@@ -110,6 +110,7 @@
 							<span><img src="/assets/images/main/user-line.png">${favorite}</span><span><img src="/assets/images/main/star-line.png">109</span>
 						</div>
 					</div>
+<<<<<<< HEAD
 				</div>
 			</div>
 			<div class="top-wrap">
@@ -117,6 +118,83 @@
 					<div class="top-wrap-nav">
 						<div class="novel-type">
 							<h1>${section.title}</h1>
+=======
+				</aside>
+				<section class="novel-content">
+					<div class="novel-content-item">
+						<div class="detail-box">
+							<div class="work-box">
+								<div class="cover">
+									<c:choose>
+										<c:when test="${detail.cover != null }">
+											<div class="detail-cover"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></div>
+										</c:when>
+										<c:otherwise>
+											 <div class="detail-cover"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></div>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="detail">
+									<div class="desc">
+										<a><div class="detail-title">
+												<img class="icon" src="/assets/images/main/medal-line.png">${detail.title}
+											</div></a> <a><div class="detail-aurthor">
+												<img class="icon" src="/assets/images/main/pencil-line.png">작가 | ${detail.nickName}
+											</div></a> <a><div class="detail-intro">${detail.overview}</div></a>
+									</div>
+									<div class="scale">
+										<span><img src="/assets/images/main/user-line.png">${favorite}</span><span><img
+											src="/assets/images/main/star-line.png">109</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="top-wrap">
+							<div class="top-wrap-content">
+								<div class="top-wrap-nav">
+									<div class="novel-type">
+										<h1>${section.title}</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="novel-viewer">
+							<div id="book-body">
+								<div class="d-flex justify-content-end col-md-12">
+									<button type="button" class="btn btn-outline-secondary fullscreen" onclick="openFullScreenMode()">확대</button>
+									<button type="button" class="btn btn-outline-secondary close-fullscreen" onclick="closeFullScreenMode()">축소</button>
+								</div>
+								<div class="wrapper">
+									<div class="aspect">
+										<div class="aspect-inner">
+											<div id="flipbook" class="flipbook">
+												<div class="page page-cover">
+													<h1 class="book-cover">${section.title}</h1>
+												</div>
+												<div class="page">
+													<h1 class="book-cover">(주)반디</h1>
+												</div>
+												<c:forEach items="${subStringList}" var="subString" varStatus="vs">
+													<div class="page">
+														<p class="book-font">${subString}</p>
+													</div>
+												</c:forEach>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-3">
+							<c:if test="${section.prevTitle != '이전글이 없습니다'}">
+								<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.prevId}/${serviceTypeId}'" class="btn btn-primary btn-sm shadow-none">이전글:
+									${section.prevTitle}</button>
+							</c:if>
+							<c:if test="${section.nextTitle != '다음글이 없습니다'}">
+								<button type="button" onclick="location.href='/section/read/${section.novelId}/${section.nextId}/${serviceTypeId}'" class="btn btn-primary btn-sm shadow-none">다음글:
+									${section.nextTitle}</button>
+							</c:if>
+>>>>>>> 05da886db2b298bce9870ebf9586c12089b727a6
 						</div>
 					</div>
 				</div>
@@ -288,6 +366,7 @@
 							</c:choose>
 						</div>
 					</div>
+<<<<<<< HEAD
 				</div>
 			</div>
 			<div class="right-banner">
@@ -311,6 +390,49 @@
 											</c:when>
 											<c:otherwise>
 												<a href="/novel/detail/${novel.id }"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a>
+=======
+				</section>
+				<aside class="right-sidebar">
+					<div class="right-sidebar-contents">
+						<div class="my-info">
+							<div class="username">${principal.nickName} 님</div>
+							<div class="info-category">
+								<span><img src="/assets/images/main/user-line.png">내정보</span> <span><img src="/assets/images/main/thumb-up-line.png">알림</span> <span><img
+									src="/assets/images/main/star-line.png">구매목록</span>
+							</div>
+							<div class="gold-info">
+								<div>보유골드</div>
+								<span class="blue-span">${gold}</span>
+							</div>
+							<div class="right-box">
+								<div class="right-box-cover">
+									<c:choose>
+										<c:when test="${lastNovel.cover != null }">
+											<a><img alt="이미지 기간만료" src="/bandi/uploads/${lastNovel.cover}"></a>
+										</c:when>
+										<c:otherwise>
+											<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
+								
+								<div class="right-box-detail">
+									<div class="right-detail-desc">
+										<c:choose>
+											<c:when test="${lastNovel == null}">
+												<div class="desc-title">소설 조회 <br> 기록이 없습니다.</div>
+											</c:when>
+											<c:otherwise>
+												<div class="desc-title">${lastNovel.title}</div>
+												<c:choose>
+													<c:when test="${lastNovel.serviceTypeId != 3}">
+														<a href="/section/read/${lastNovel.novelId}/${lastNovel.sectionId}/${lastNovel.serviceTypeId}"><div class="desc-title">바로가기</div></a>
+													</c:when>
+													<c:otherwise>
+														<a href="/contest/novel/read/${lastNovel.novelId}/${lastNovel.sectionId}"><div class="desc-title">바로가기</div></a>
+													</c:otherwise>
+												</c:choose>
+>>>>>>> 05da886db2b298bce9870ebf9586c12089b727a6
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -360,7 +482,7 @@
     $("#flipbook").bind("turning", function(event, page, view) {
   	  	
     	if(mode=="middle"){
-  	  		$(".book-font").css('font-size','20px');
+  	  		$(".book-font").css('font-size','18px');
   	  		$(".book-font").css('line-height','normal');
   	  		$(".book-cover").css('font-size','30px');
   	  	}else if(mode=='small'){
@@ -450,7 +572,7 @@
 			flipbookEL.style.width = '';
 	      	flipbookEL.style.height = '';
 	      	$(flipbookEL).turn('size', flipbookEL.clientWidth, flipbookEL.clientHeight);
-	      	$(".book-font").css('font-size','20px');
+	      	$(".book-font").css('font-size','18px');
 	      	$(".book-font").css('line-height','normal');
 	      	$(".book-cover").css('font-size','30px');
 	      	$(flipbookEL).css('margin-top','0%');

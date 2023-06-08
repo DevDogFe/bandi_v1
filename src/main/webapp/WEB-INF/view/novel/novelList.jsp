@@ -46,7 +46,11 @@
 					<div class="cover">
 						<c:choose>
 							<c:when test="${novel.cover != null }">
+<<<<<<< HEAD
 								<a href="/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${detail.cover }"></a>
+=======
+								<a href="/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }"></a>
+>>>>>>> 05da886db2b298bce9870ebf9586c12089b727a6
 							</c:when>
 							<c:otherwise>
 								<a href="/novel/detail/${novel.id}"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a>

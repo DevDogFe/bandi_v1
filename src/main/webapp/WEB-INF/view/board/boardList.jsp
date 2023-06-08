@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/assets/css/reset.css" />
 <link rel="stylesheet" href="/assets/css/list.css" />
 <link rel="stylesheet" href="/assets/css/board/boardList.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 			<section>
 				<div class="search-list-form">
 					<form action="/board/list/${boardTypeId}" method="get">

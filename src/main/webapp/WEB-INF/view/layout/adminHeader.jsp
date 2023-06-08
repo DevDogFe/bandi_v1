@@ -59,9 +59,9 @@
 							</div>
 						</div>
 						<div class="d-flex justify-content-between external--login--btn">
-							<a href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://localhost/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
+							<a href="https://kauth.kakao.com/oauth/authorize?client_id=f2f5ec106cf03cddc10930e8d7c58d68&redirect_uri=http://192.168.0.82/auth/kakao/callback&response_type=code"> <img alt="카카오로그인"
 								src="/assets/images/kakao_login/ko/kakao_login_medium_narrow.png">
-							</a> <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=BbvLPxHgxKiCdntADysv&redirect_uri=http://localhost/naver/auth&state=test"><img height="50"
+							</a> <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=BbvLPxHgxKiCdntADysv&redirect_uri=http://192.168.0.82/naver/auth&state=test"><img height="50"
 								src="/assets/images/naver_login/btnG.png" /></a>
 						</div>
 					</form>
@@ -87,7 +87,7 @@
 							<c:otherwise>
 								<c:choose>
 									<c:when test="${\"kakao\".equals(principal.external)}">
-										<a href="https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://localhost/logout">로그아웃</a>
+										<a href="https://kauth.kakao.com/oauth/logout?client_id=f2f5ec106cf03cddc10930e8d7c58d68&logout_redirect_uri=http://192.168.0.82/logout">로그아웃</a>
 									</c:when>
 									<c:otherwise>
 										<a href="/logout">로그아웃</a>

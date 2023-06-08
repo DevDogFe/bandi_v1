@@ -21,9 +21,6 @@ import lombok.Data;
 	private Integer categoryId;
 	private String categoryName;
 	private Timestamp createdAt;
-	private MultipartFile[] files;
-	private List<String> fileName;
-	private List<String> rawFileName;
 	
 	public String createdAt() {
 		return TimestampFormat.format(createdAt);
