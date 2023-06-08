@@ -103,4 +103,5 @@
 				</div>
 			</aside>
       	</div>
+      	<script src="/assets/js/gold/chargeGold.js"></script>
       <%@include file="/WEB-INF/view/layout/footer.jsp"%>
