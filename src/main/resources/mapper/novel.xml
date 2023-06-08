@@ -1123,6 +1123,41 @@
 		SET service_type_id = #{serviceTypeId}
 		WHERE id = #{novelId}
 	</update>
-
+	
+	<select id="selectContestNovelsByLimit" resultType="com.bandi.novel.dto.response.NovelDto">
+		SELECT n.*, u.nick_name, g.name AS genre_name, g.id AS genre_id, favoriteCount, score
+		FROM novel_tb AS n
+		LEFT JOIN user_tb AS u
+		ON
+		n.user_id = u.id
+		LEFT JOIN genre_tb AS
+		g
+		ON n.genre_id = g.id
+		LEFT JOIN
+		(
+		SELECT count(user_id) AS favoriteCount, novel_id
+		FROM user_favorite_tb
+		GROUP BY novel_id
+		) AS uf
+		ON n.id = uf.novel_id
+		LEFT JOIN
+		(
+		SELECT novel_id, avg(score) AS score FROM
+		novel_section_tb AS ns
+		LEFT JOIN
+		(
+		SELECT avg(score) AS score, section_id
+		FROM score_tb
+		GROUP BY section_id
+		) AS sc
+		ON ns.id = sc.section_id
+		GROUP BY ns.novel_id
+		)
+		AS ns
+		ON n.id = ns.novel_id
+		WHERE
+		n.service_type_id = 3
+		ORDER BY n.id DESC LIMIT 6;
+	</select>
 	<!-- -->
 </mapper>

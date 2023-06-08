@@ -39,23 +39,25 @@
 						</div>
 						<c:choose>
 							<c:when test=" ${empty questionList } ">
-								<table class="table">
-									<thead>
-										<tr>
-											<th scope="cols">카테고리</th>
-											<th scope="cols">제목</th>
-											<th scope="cols">작성일자</th>
-											<th scope="cols">처리결과</th>
-										</tr>
-									</thead>
-									<tbody class="reportList">
-										<tr>
-											<td>문의내역이 없습니다.</td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
-								</table>
+								<div class="scroll">
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="cols">카테고리</th>
+												<th scope="cols">제목</th>
+												<th scope="cols">작성일자</th>
+												<th scope="cols">처리결과</th>
+											</tr>
+										</thead>
+										<tbody class="reportList">
+											<tr>
+												<td>문의내역이 없습니다.</td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</c:when>
 							<c:otherwise>
 								<div class="scroll">
@@ -102,4 +104,3 @@
 				</section>
 			</div>
 		<%@include file="/WEB-INF/view/layout/footer.jsp"%>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

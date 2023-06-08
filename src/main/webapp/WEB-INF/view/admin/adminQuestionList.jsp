@@ -41,41 +41,43 @@
 	<!-- Q&A List -->
 	<section>
 		<div class="admin--qna--container">
-			<table class="table">
-				<div class="qna--btn--list">
-					<button class="qnaList--btn" value="-1">전체</button>
-					<button class="qnaList--btn" value="0">미처리</button>
-					<button class="qnaList--btn" value="1">처리완료</button>
-				</div>
-				<thead>
-					<tr>
-						<th>카테고리</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일자</th>
-						<th>처리상태</th>
-					</tr>
-				</thead>
-				<tbody id="qnaListBody">
-					<c:forEach var="question" items="${questionList}">
-						<tr id="qna" class="qna--table">
-							<td class="qna--table" style="width: 220px;">${question.categoryName}</td>
-							<td class="qna--table"><a href="/admin/question/${question.id}">${question.title}</a></td>
-							<td class="qna--table">${question.username}</td>
-							<td class="qna--table">${question.createdAt()}</td>
-
-							<c:choose>
-								<c:when test="${question.proceed == 0}">
-									<td class="qna--table">미처리</td>
-								</c:when>
-								<c:otherwise>
-									<td class="qna--table">처리</td>
-								</c:otherwise>
-							</c:choose>
+			<div class="scroll">
+				<table class="table">
+					<div class="qna--btn--list">
+						<button class="qnaList--btn" value="-1">전체</button>
+						<button class="qnaList--btn" value="0">미처리</button>
+						<button class="qnaList--btn" value="1">처리완료</button>
+					</div>
+					<thead>
+						<tr>
+							<th>카테고리</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일자</th>
+							<th>처리상태</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody id="qnaListBody">
+						<c:forEach var="question" items="${questionList}">
+							<tr id="qna" class="qna--table">
+								<td class="qna--table" style="width: 220px;">${question.categoryName}</td>
+								<td class="qna--table"><a href="/admin/question/${question.id}">${question.title}</a></td>
+								<td class="qna--table">${question.username}</td>
+								<td class="qna--table">${question.createdAt()}</td>
+	
+								<c:choose>
+									<c:when test="${question.proceed == 0}">
+										<td class="qna--table">미처리</td>
+									</c:when>
+									<c:otherwise>
+										<td class="qna--table">처리</td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 </div>

@@ -479,54 +479,25 @@
 	<div class="inner">
 		<div class="testimonial-content">
 			<h2>
-				태그 <b>추천</b> 작품
+				공모전 <b>추천</b> 작품
 			</h2>
 			<hr>
 			<div class="mySlider">
-				<div>
-					<p class="client">
-						<img src="/assets/images/main/ai1.jpg"> <span><b>나 혼자만 강화술사</b></span>
-					</p>
-					<p class="comment">세상에 강화템은 많지만 오직 나만이 강화할 수 있다.</p>
-					<p class="comment">세상에 강화템은 많지만 오직 나만이 강화할 수 있다.</p>
-
-				</div>
-				<div>
-					<p class="client">
-						<img src="/assets/images/main/ai2.jpg"> <span><b>내 집에 영약 광산이 열렸다</b></span>
-					</p>
-					<p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt voluptates velit doloribus, iure dolores porro commodi, ipsa corrupti dolorem alias libero quasi enim vero
-						tempora et sit in, quaerat consequuntur.</p>
-				</div>
-				<div>
-					<p class="client">
-						<img src="/assets/images/main/ai3.jpg"> <span><b>해고 후 상속 대박</b></span>
-					</p>
-					<p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt voluptates velit doloribus, iure dolores porro commodi, ipsa corrupti dolorem alias libero quasi enim vero
-						tempora et sit in, quaerat consequuntur.</p>
-				</div>
-				<div>
-					<p class="client">
-						<img src="/assets/images/main/ai1.jpg"> <span><b>나 혼자만 강화술사</b></span>
-					</p>
-					<p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt voluptates velit doloribus, iure dolores porro commodi, ipsa corrupti dolorem alias libero quasi enim vero
-						tempora et sit in, quaerat consequuntur.</p>
-				</div>
-				<div>
-					<p class="client">
-						<img src="/assets/images/main/ai2.jpg"> <span><b>내 집에 영약 광산이 열렸다</b></span>
-					</p>
-					<p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt voluptates velit doloribus, iure dolores porro commodi, ipsa corrupti dolorem alias libero quasi enim vero
-						tempora et sit in, quaerat consequuntur.</p>
-				</div>
-				<div>
-					<p class="client">
-						<img src="/assets/images/main/ai3.jpg"> <span><b>해고 후 상속 대박</b></span>
-					</p>
-					<p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt voluptates velit doloribus, iure dolores porro commodi, ipsa corrupti dolorem alias libero quasi enim vero
-						tempora et sit in, quaerat consequuntur.</p>
-				</div>
-
+				<c:forEach items="${contestNovelList}" var="novel" varStatus="vs">
+					<div>
+						<p class="client">
+							<c:choose>
+								<c:when test="${novel.cover != null }">
+									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover}"></a><span><b>${novel.title}</b></span>
+								</c:when>
+								<c:otherwise>
+									<a href="/contest/novel/detail/${novel.id}"><img alt="이미지 없음" src="/assets/images/noimg.jpg"></a><span><b>${novel.title}</b></span>
+								</c:otherwise>
+							</c:choose>
+						</p>
+						<p class="comment">${novel.overview}</p>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

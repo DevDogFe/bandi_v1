@@ -51,6 +51,8 @@ public interface NovelRepository {
 	
 	// 공모전소설 전체
 	List<NovelDto> selectContestNovels(String sort);
+	// 공모전소설 최신 리스트
+	List<NovelDto> selectContestNovelsByLimit();
 
 	// 유료소설 검색
 	List<NovelDto> selectPayNovelsByGenreIdAndName(@Param("genreId") Integer genreId,@Param("search") String search, @Param("sort") String sort);

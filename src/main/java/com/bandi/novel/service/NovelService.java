@@ -133,6 +133,17 @@ public class NovelService {
 
 		return novelRepository.selectContestNovels(sort);
 	}
+	
+	/**
+	 * 공모전소설 리스트
+	 * 
+	 * @return
+	 */
+	@Transactional
+	public List<NovelDto> selectContestNovelListByLimit() {
+
+		return novelRepository.selectContestNovelsByLimit();
+	}
 
 	/**
 	 * 소설 조회

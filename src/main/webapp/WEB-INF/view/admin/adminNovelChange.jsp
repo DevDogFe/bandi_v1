@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminUserrole.css" />
-
 <style type="text/css">
 .search-btn {
 	font-size: 20px;
@@ -49,7 +48,7 @@
 				</div>
 			</section>
 			<section>
-				<div class="search-user-form scroll">
+				<div class="search-user-form">
 					<div class="search-user">
 						<div class="search">
 							<input id="search-input" type="text" name="keyword"><span class="search-span"></span>
@@ -57,20 +56,22 @@
 						<button type="button" id="search-btn" class="search-btn">검색</button>
 					</div>
 				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">소설 제목</th>
-							<th scope="col">이름</th>
-							<th scope="col">서비스 타입</th>
-							<th scope="col">변경할 타입</th>
-							<th scope="col">수정</th>
-							<th scope="col">삭제</th>
-						</tr>
-					</thead>
-					<tbody id="novelList" class="novelList">
-					</tbody>
-				</table>
+				<div class="scroll">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">소설 제목</th>
+								<th scope="col">이름</th>
+								<th scope="col">서비스 타입</th>
+								<th scope="col">변경할 타입</th>
+								<th scope="col">수정</th>
+								<th scope="col">삭제</th>
+							</tr>
+						</thead>
+						<tbody id="novelList" class="novelList">
+						</tbody>
+					</table>
+				</div>
 			</section>
 		<%@include file="/WEB-INF/view/layout/footer.jsp"%>
 	<script type="text/javascript" src="/assets/js/admin/adminNovelChange.js"></script>

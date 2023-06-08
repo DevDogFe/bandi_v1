@@ -13,46 +13,50 @@
 				</div>
 				<c:choose>
 					<c:when test="${empty purchaseList }">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="cols">날짜</th>
-									<th scope="cols">제목</th>
-									<th scope="cols">회차</th>
-									<th scope="cols">금액</th>
-								</tr>
-							</thead>
-							<tbody class="reportList">
-								<tr>
-									<td>구매 기록이 없습니다.</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
-					</c:when>
-					<c:otherwise>
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="cols">날짜</th>
-									<th scope="cols">제목</th>
-									<th scope="cols">회차</th>
-									<th scope="cols">금액</th>
-								</tr>
-							</thead>
-							<c:forEach items="${purchaseList }" var="purchase" begin="0" end="2">
+						<div class="scroll">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="cols">날짜</th>
+										<th scope="cols">제목</th>
+										<th scope="cols">회차</th>
+										<th scope="cols">금액</th>
+									</tr>
+								</thead>
 								<tbody class="reportList">
 									<tr>
-										<td><a href="">${purchase.createdAt()}</a></td>
-										<td><a href="">${purchase.novelTitle}</a></td>
-										<td><a href="">${purchase.sectionTitle}</a></td>
-										<td><a href="">${purchase.price}</a></td>
+										<td>구매 기록이 없습니다.</td>
+										<td></td>
+										<td></td>
+										<td></td>
 									</tr>
 								</tbody>
-							</c:forEach>
-						</table>
+							</table>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="scroll">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="cols">날짜</th>
+										<th scope="cols">제목</th>
+										<th scope="cols">회차</th>
+										<th scope="cols">금액</th>
+									</tr>
+								</thead>
+								<c:forEach items="${purchaseList }" var="purchase" begin="0" end="2">
+									<tbody class="reportList">
+										<tr>
+											<td><a href="">${purchase.createdAt()}</a></td>
+											<td><a href="">${purchase.novelTitle}</a></td>
+											<td><a href="">${purchase.sectionTitle}</a></td>
+											<td><a href="">${purchase.price}</a></td>
+										</tr>
+									</tbody>
+								</c:forEach>
+							</table>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</div>

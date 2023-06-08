@@ -24,7 +24,7 @@ public interface ContestNovelRepository {
 	List<ContestNovelDto> selectContestNovelList(@Param("contestId") Integer countestId, @Param("sort") String sort);
 
 	List<ContestNovel> selectContestNovelListByContestId(Integer contestId);
-
+	
 	// 검색 조회
 	List<ContestNovelDto> selectContestNovelsByGenreIdAndName(@Param("genreId") Integer genreId,
 			@Param("search") String search, @Param("contestId") Integer countestId, @Param("sort") String sort);
