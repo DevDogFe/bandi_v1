@@ -30,6 +30,8 @@ public interface RecommendRepository {
 	
 	// 인기장르의 인기소설 조회
 	List<RecommendFavoritesDto> selectBestNovelOfBestGenre();
+	// 인기장르의 소설 조회
+	List<RecommendFavoritesDto> selectNovelOfBestGenre();
 	
 		
 	/**

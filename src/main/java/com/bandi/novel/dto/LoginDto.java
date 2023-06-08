@@ -14,5 +14,6 @@ public class LoginDto {
 	@NotBlank
 	@Size(min = 3, max = 20)
 	private String password;
+	private String remember;
 	
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bandi.novel.dto.AgeGenderRecommendDto;
-import com.bandi.novel.dto.response.ContestDto;
 import com.bandi.novel.dto.response.ContestNovelDto;
 import com.bandi.novel.dto.response.MainRecommendDto;
 import com.bandi.novel.dto.response.NovelDetailDto;
@@ -51,7 +50,6 @@ public class SampleController {
 	private PayService payService;
 	@Autowired
 	private RecommendService recommendService;
-	
 
 	@GetMapping("/index")
 	public String sample(Model model) {
@@ -75,15 +73,15 @@ public class SampleController {
 	}
 
 	// 템플릿 예시
-	@GetMapping({"/main", "/"})
+	@GetMapping({ "/main", "/" })
 	public String main(Model model) {
 
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		
-		
+
 		if (principal != null) {
-			
-			List<RecommendFavoritesDto> novelByGenreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+
+			List<RecommendFavoritesDto> novelByGenreList = recommendService
+					.selectNovelByFavoriteGenre(principal.getId());
 			List<MainRecommendDto> totalRecommendList = recommendService
 					.selectTotalRecommendedNovels(new AgeGenderRecommendDto(principal.getId(), principal.getGender(),
 							new GenerationUtil(principal.getGeneration())));
@@ -92,7 +90,7 @@ public class SampleController {
 		} else {
 			List<RankPageDto> payNovelBest = recommendService.selectRankToFavorite(1, 6);
 			model.addAttribute("novelList1", payNovelBest);
-			
+
 		}
 		List<RankPageDto> totalNovelBest = recommendService.selectTotalRankToFavorite(15);
 		model.addAttribute("novelList3", totalNovelBest);
@@ -103,7 +101,6 @@ public class SampleController {
 		List<NovelDto> contestNovelList = novelService.selectContestNovelListByLimit();
 		model.addAttribute("contestNovelList", contestNovelList);
 
-		
 		return "/main";
 	}
 
@@ -147,10 +144,10 @@ public class SampleController {
 
 		return "/cssLayout/cssNovelList";
 	}
-	
+
 	@GetMapping("/novelDetail/{novelId}")
 	public String getNovelDetail(Model model, @PathVariable Integer novelId) {
-		
+
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		// 소설 세부 정보
 		NovelDetailDto novelDetailDto = novelService.selectNovelDetailById(novelId);
@@ -160,9 +157,8 @@ public class SampleController {
 		List<NovleRecordSectionDto> sectionList = userNovelRecordService.selectNovelRecord(principal.getId(), novelId);
 		// 소설 구매, 대여 여부 리스트
 		List<UserPurchaseRentalRecord> paymentList = payService.selectUserPaymentRecord(principal.getId(), novelId);
-		
+
 		List<RecommendFavoritesDto> recommendList = recommendService.selectOtherRecommendedNovelByNovelId(novelId);
-		
 
 		// 즐겨찾기 여부
 		if (principal != null) {
@@ -189,19 +185,19 @@ public class SampleController {
 
 		return "/cssLayout/cssReadSection";
 	}
-	
+
 	@GetMapping("/novelRegistration")
 	public String getNovelRegistration() {
 
 		return "/cssLayout/cssNovelRegistration";
 	}
-	
+
 	@GetMapping("/sectionRegistration")
 	public String getSectionRegistration() {
 
 		return "/cssLayout/cssSectionRegistration";
 	}
-	
+
 	@GetMapping("/userRegistration")
 	public String getUserRegistration() {
 
@@ -210,150 +206,147 @@ public class SampleController {
 
 	@GetMapping("/admin")
 	public String getAdmin() {
-		
+
 		return "/cssLayout/cssAdminPage";
 	}
 
 	@GetMapping("/boardDetail")
 	public String getDetail() {
-		
+
 		return "/cssLayout/cssdetail";
 	}
 
 	@GetMapping("/cssContestNovelList")
-	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage, 
+	public String getContestNovelList(Model model, @RequestParam(defaultValue = "1") Integer currentPage,
 			@RequestParam(required = false) Integer genreId, @RequestParam(required = false) String search,
-			@RequestParam(defaultValue = "1") Integer contestId,
-			@RequestParam(defaultValue = "default") String sort) {
-		
-		if("".equals(search)) {
+			@RequestParam(defaultValue = "1") Integer contestId, @RequestParam(defaultValue = "default") String sort) {
+
+		if ("".equals(search)) {
 			search = null;
 		}
-		
-		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId,search,contestId,sort);
+
+		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId, search,
+				contestId, sort);
 		List<Genre> genreList = novelService.selectGenreList();
-		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList,contestNovelList.size(), 20, currentPage, 5);
+		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList, contestNovelList.size(), 20, currentPage, 5);
 		model.addAttribute("contestNovelList", novelPageUtil);
 		model.addAttribute("serviceType", "공모전");
 		model.addAttribute("genreList", genreList);
 		model.addAttribute("map", "contest/novel/list");
-		
+
 		return "/cssLayout/cssContestNovelList";
 	}
-	
+
 	@GetMapping("/cssContestList")
 	public String getContestList(Model model) {
-		
+
 		return "/cssLayout/cssContestList";
 	}
-	
+
 	// 공모전 디테일
 	@GetMapping("/cssContestDetail/{id}")
 	public String getContestDetail(@PathVariable Integer id, Model model) {
-		
+
 		Contest contest = contestService.selectContestById(id);
-		model.addAttribute("contest",contest);
-		
+		model.addAttribute("contest", contest);
+
 		return "/cssLayout/cssContestDetail";
 	}
-	
+
 	@GetMapping("/cssContestRegistration")
 	public String getContestRegistraion() {
-		
+
 		return "/cssLayout/cssContestRegistration";
 	}
-	
+
 	// 충전 페이지!
 	@GetMapping("/cssGoldCharge")
 	public String getGoldCharge() {
-		
+
 		return "/cssLayout/cssGoldCharge";
 	}
-	
+
 	@GetMapping("/cssUserPay")
 	public String getUserPay() {
-		
+
 		return "/cssLayout/cssUserPay";
 	}
-	
-	//	관리자 소설 타입 변경!
+
+	// 관리자 소설 타입 변경!
 	@GetMapping("/cssAdminNovelChange")
 	public String getAdminNovelChange() {
-		
+
 		return "/cssLayout/cssAdminNovelChange";
 	}
-	
+
 	@GetMapping("/sidebar")
 	public String getMypageSidebar() {
-		
+
 		return "/cssLayout/cssMypageSidebar";
 	}
-	
+
 	// 마이페이지 골드 충전 기록
 	@GetMapping("/cssMypageGoldRecord")
 	public String getMypageGoldRecord(Model model) {
-		
+
 		return "/cssLayout/cssMypageGoldRecord";
 	}
-	
+
 	// 마이페이지 소설 구매 기록
 	@GetMapping("/cssMypageNovelPurchase")
 	public String getMypageNovelPurchase(Model model) {
-		
+
 		return "/cssLayout/cssMypageNovelPurchase";
 	}
-	
+
 	// 마이페이지 소설 구매 기록
 	@GetMapping("/cssMypageNovelRental")
 	public String getMypageNovelRental(Model model) {
-		
+
 		return "/cssLayout/cssMypageNovelRental";
 	}
-	
-	// 마이페이지 내작품 
+
+	// 마이페이지 내작품
 	@GetMapping("/cssMypageNovelList")
 	public String getMypageNovelList(Model model) {
-		
+
 		return "/cssLayout/cssMypageNovelList";
 	}
-	
-	// 마이페이지 즐겨찾기 
+
+	// 마이페이지 즐겨찾기
 	@GetMapping("/cssMypageFavoriteNovel")
 	public String getMypageFavoriteNovel(Model model) {
-			
+
 		return "/cssLayout/cssMypageFavoriteNovel";
 	}
-	
-	// 마이페이지 내 정보 
+
+	// 마이페이지 내 정보
 	@GetMapping("/cssMypageUserInfo")
 	public String getMypageUserInfo(Model model) {
-				
+
 		return "/cssLayout/cssMypageUserInfo";
 	}
-	
-	// 마이페이지 내 정보 수정 
+
+	// 마이페이지 내 정보 수정
 	@GetMapping("/cssMypageUserUpdate")
 	public String getMypageUserUpdate(Model model) {
-					
+
 		return "/cssLayout/cssMypageUserUpdate";
 	}
-	
+
 	@GetMapping("/cssNovelDetail")
 	public String getCssNovelDetail() {
 		return "/cssLayout/cssNovelDetail";
 	}
-	
+
 	@GetMapping("/cssReadSection")
 	public String getCssReadSection() {
 		return "/cssLayout/cssReadSection";
 	}
-	
+
 	@GetMapping("/cssNovelRegistration")
 	public String getCssNovelRegistration() {
 		return "/cssLayout/cssNovelRegistration";
 	}
-	
-	
-	
+
 }
-	

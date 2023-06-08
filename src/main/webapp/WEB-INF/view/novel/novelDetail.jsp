@@ -277,6 +277,7 @@
 				<a href="/main"><img src="/assets/images/main/author-banner.png"></a>
 			</div>
 			<div class="recommend-list">
+				<c:if test="${!empty genreList }">
 				<h3 class="recommend-header">
 					<a>${genreList.get(0).genreName } 추천작</a>
 				</h3>
@@ -299,6 +300,7 @@
 						</a></li>
 					</c:forEach>
 				</ul>
+				</c:if>
 			</div>
 		</div>
 	</aside>

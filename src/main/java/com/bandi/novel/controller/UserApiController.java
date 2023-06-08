@@ -1,5 +1,8 @@
 package com.bandi.novel.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -44,6 +47,7 @@ public class UserApiController {
 	 */
 	@PutMapping("/update")
 	public ResponseDto<Boolean> updateProc(@Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) {
+		System.out.println(userUpdateDto);
 		if (bindingResult.hasErrors()) {
 			StringBuilder sb = new StringBuilder();
 			bindingResult.getAllErrors().forEach(error -> {
@@ -113,7 +117,7 @@ public class UserApiController {
 	 * @return
 	 */
 	@PostMapping("/api/login")
-	public ResponseDto<String> loginProc(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult) {
+	public ResponseDto<Cookie> loginProc(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
 		if (bindingResult.hasErrors()) {
 			StringBuilder sb = new StringBuilder();
 			bindingResult.getAllErrors().forEach(error -> {
@@ -124,9 +128,29 @@ public class UserApiController {
 		
 		ResponseDto<User> resUser = userService.loginByUsernameAndPassword(loginDto);
 		User principal = resUser.getData();
+		System.out.println(loginDto);
+		Cookie cookie = null;
+		if ("on".equals(loginDto.getRemember())) {
+			cookie = new Cookie("id", loginDto.getUsername());
+			cookie.setMaxAge(60 * 60 * 24 * 7);
+			response.addCookie(cookie);
+			System.out.println(cookie.getName() + " / " + cookie.getValue() + " / " + cookie.getMaxAge());
+		} else {
+			Cookie[] cookies = request.getCookies();
+			System.out.println("11111111");
+			if (cookies != null) {
+				for (Cookie c : cookies) {
+					if (c.getName().equals("id")) {
+						c.setMaxAge(0);
+						response.addCookie(c);
+						break;
+					}
+				}
+			}
+		}
 		session.setAttribute("principal", principal);
 
-		return new ResponseDto<String>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, resUser.getData().getId() + "");
+		return new ResponseDto<Cookie>(HttpStatus.OK, Define.REQUEST_SUCCESS, true, cookie);
 	}
 
 	/**

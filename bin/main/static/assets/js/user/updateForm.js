@@ -29,7 +29,6 @@ $(document).ready(() => {
 
 	// 닉네임 중복확인
 	$("#nickName").on("keyup", () => {
-		console.log('111111');
 		$.ajax({
 			type: "GET",
 			url: "/api/nickName?nickName=" + $("#nickName").val()

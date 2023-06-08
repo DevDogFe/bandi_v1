@@ -39,13 +39,14 @@
 				<div class="modal-body">
 					<form action="/login" method="post">
 						<div class="mb-3">
-							<label for="username" class="form-label">ID</label> <input type="text" class="form-control" name="username" id="usernameL" required="required" value="qwe">
+							<label for="username" class="form-label">ID</label> <input type="text" class="form-control" name="username" id="usernameL" required="required" value="${cookie.id.value }">
 						</div>
 						<div class="mb-3">
-							<label for="password" class="form-label">Password</label> <input type="password" class="form-control" name="password" id="passwordL" required="required" value="123">
+							<label for="password" class="form-label">Password</label> <input type="password" class="form-control" name="password" id="passwordL" required="required">
 						</div>
 						<div class="mb-3 form-check">
-							<input type="checkbox" class="form-check-input" id="exampleCheck1"> <label class="form-check-label" for="exampleCheck1">Check me out</label>
+							
+							<input type="checkbox" class="form-check-input" id="remember" name="remember" <c:if test="${cookie.id != null }"> checked="checked"</c:if>> <label class="form-check-label" for="exampleCheck1">Check me out</label>
 						</div>
 						<div class="mb-3 d-flex justify-content-between">
 							<div>

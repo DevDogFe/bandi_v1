@@ -3,7 +3,8 @@ $(document).ready(() => {
 		console.log($("#usernameL").val() + "/" + $("#passwordL").val());
 		let data = {
 			username: $("#usernameL").val(),
-			password: $("#passwordL").val()
+			password: $("#passwordL").val(),
+			remember: $("#remember").val()
 		};
 
 		$.ajax({
@@ -13,7 +14,9 @@ $(document).ready(() => {
 			data: JSON.stringify(data),
 			dataType: "json"
 		}).done((response) => {
-			if (response.data) {
+			
+			if (response.isSuccess) {
+				document.cookie = response.data.name + '=' + response.data.value;
 				location.reload();
 			} else {
 				alert(response.message);

@@ -354,8 +354,12 @@ public class NovelController {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("sectionCookie")) {
 					isSectionCookie = true;
+					System.out.println("cookieV: " + cookie.getValue()); 
 					if (!cookie.getValue().contains("[" + userId + "_" + sectionId + "]")) {
+						System.out.println(cookie.getValue().contains("[" + userId + "_" + sectionId + "]")); 
+						System.out.println("111: " + "[" + userId + "_" + sectionId + "]");
 						cookie.setValue(cookie.getValue() + "[" + userId + "_" + sectionId + "]");
+						System.out.println(cookie.getName() + "/" + cookie.getValue());
 						cookie.setMaxAge(60 * 60 * 24);
 						response.addCookie(cookie);
 						novelService.sectionViewsPlus(sectionId);
