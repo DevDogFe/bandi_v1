@@ -94,6 +94,8 @@ public class SampleController {
 		}
 		List<RankPageDto> totalNovelBest = recommendService.selectTotalRankToFavorite(15);
 		model.addAttribute("novelList3", totalNovelBest);
+		List<RankPageDto> freeNovelBest = recommendService.selectRankToFavorite(2, 15);
+		model.addAttribute("novelList4", freeNovelBest);
 		
 		
 		

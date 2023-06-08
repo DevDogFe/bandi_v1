@@ -226,250 +226,85 @@
 	</div>
 	<div class="list-body">
 		<ul>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
+			<c:forEach items="${novelList4 }" var="novel" begin="0" end="4">
+				<li class="li-item"><a href="#" class="li-link">
+						<div class="li-thumbnail">
+							<c:choose>
+								<c:when test="${novel.cover != null }">
+									<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+								</c:when>
+								<c:otherwise>
+									<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div class="li-info-area">
+							<p>
+								<span class="li-title">${novel.title }</span>
+							</p>
+							<p>
+								<span class="li-desc">${novel.genreName }</span>
+							</p>
+							<p>
+								<span class="li-desc"><i class='bx bxs-star'></i> ${novel.favoriteCount }</span>
+							</p>
+						</div>
+				</a></li>
+			</c:forEach>
 		</ul>
 		<ul>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
+			<c:forEach items="${novelList4 }" var="novel" begin="5" end="9">
+				<li class="li-item"><a href="#" class="li-link">
+						<div class="li-thumbnail">
+							<c:choose>
+								<c:when test="${novel.cover != null }">
+									<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+								</c:when>
+								<c:otherwise>
+									<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div class="li-info-area">
+							<p>
+								<span class="li-title">${novel.title }</span>
+							</p>
+							<p>
+								<span class="li-desc">${novel.genreName }</span>
+							</p>
+							<p>
+								<span class="li-desc"><i class='bx bxs-star'></i> ${novel.favoriteCount }</span>
+							</p>
+						</div>
+				</a></li>
+			</c:forEach>
 		</ul>
 		<ul>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
-			<li class="li-item"><a href="#" class="li-link">
-					<div class="li-thumbnail">
-						<img alt="" src="/assets/images/main/bandi-copy-banner2.jpg">
-					</div>
-					<div class="li-info-area">
-						<p>
-							<span class="li-title">대뜸 착각당했다 괴물 천재배우로FSDFSFDSFSF</span>
-						</p>
-						<p>
-							<span class="li-desc">꾸르미르</span>
-						</p>
-						<p>
-							<span class="li-desc">조회수 810</span>
-						</p>
-					</div>
-			</a></li>
+			<c:forEach items="${novelList4 }" var="novel" begin="10" end="14">
+				<li class="li-item"><a href="#" class="li-link">
+						<div class="li-thumbnail">
+							<c:choose>
+								<c:when test="${novel.cover != null }">
+									<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+								</c:when>
+								<c:otherwise>
+									<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div class="li-info-area">
+							<p>
+								<span class="li-title">${novel.title }</span>
+							</p>
+							<p>
+								<span class="li-desc">${novel.genreName }</span>
+							</p>
+							<p>
+								<span class="li-desc"><i class='bx bxs-star'></i> ${novel.favoriteCount }</span>
+							</p>
+						</div>
+				</a></li>
+			</c:forEach>
 		</ul>
 	</div>
 </section>
