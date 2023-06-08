@@ -71,10 +71,8 @@ public class QnaController {
 	 */
 	@GetMapping("/userList")
 	public String list(Model model) {
-
-		// List<Question> questionList =
-		// qnaService.readQuestionByUserId(principal.getId);
-		List<Question> questionList = qnaService.selectQuestionByUserId(1);		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		List<Question> questionList = qnaService.selectQuestionByUserId(principal.getId());		
 		model.addAttribute("questionList", questionList);
 
 		return "/user/userQnaList";

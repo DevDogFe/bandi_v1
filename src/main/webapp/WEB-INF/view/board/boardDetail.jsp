@@ -41,9 +41,7 @@
 						<button type="submit" class="btn-list" onclick="location.href='/board/list'">목록</button>
 				</span>
 			</span>
-		</span> <span class="board-contents"> <span id="_board-contents"> <c:forEach var="file" items="${fileList}">
-						<img src="/bandi/uploads/${file.encodedFileName}" style="max-width: 300px; max-height: 300px;">
-					</c:forEach>${boardDetail.content}
+		</span> <span class="board-contents"> <span id="_board-contents"> ${boardDetail.content}
 			</span>
 		</span>
 	</span>
