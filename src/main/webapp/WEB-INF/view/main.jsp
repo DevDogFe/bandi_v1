@@ -37,7 +37,9 @@
 					<h2>유료 웹소설 베스트</h2>
 				</c:when>
 				<c:otherwise>
+					<c:if test="${!empty novelList1 }">
 					<h2>${novelList1.get(0).genreName}장르인기소설</h2>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 			<div class="row"></div>
@@ -318,6 +320,7 @@
 			</h2>
 			<hr>
 			<div class="mySlider">
+				<c:if test="${!empty contestNovelList }"></c:if>
 				<c:forEach items="${contestNovelList}" var="novel" varStatus="vs">
 					<div>
 						<p class="client">
