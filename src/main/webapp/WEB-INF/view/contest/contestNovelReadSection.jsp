@@ -182,7 +182,7 @@
 								<div class="bg-light comment-form p-2">
 									<div class="comment-header ms-1">
 										<h5 class="me-2">댓글</h5>
-										<span>11</span>
+										<span>${replyList.size() }</span>
 									</div>
 									<form action="/novel/reply?serviceTypeId=${serviceTypeId}" method="post">
 										<div class="d-flex flex-row align-items-start">
@@ -217,7 +217,7 @@
 													<div class="bg-white p-2">
 														<div class="d-flex flex-row user-info">
 															<div class="d-flex flex-column justify-content-start ml-2">
-																<span class="d-block font-weight-bold name">${reply.username} </span> <span class="date text-black-50">${reply.createdAt() }</span>
+																<span class="d-block font-weight-bold name">${reply.nickName} </span> <span class="date text-black-50">${reply.createdAt() }</span>
 															</div>
 														</div>
 													</div>

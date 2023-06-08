@@ -48,5 +48,5 @@
 	</section>
 
 </div>
-<script type="text/javascript" src="/assets/js/joinFormForExternal.js"></script>
+<script type="text/javascript" src="/assets/js/user/joinFormForExternal.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>

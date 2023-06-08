@@ -90,9 +90,9 @@
 								<c:when test="${principal.userRole == 1}">
 									<div class=" align-self-center">
 										<ul>
-											<li><label for="title" class="form-label">시작일</label> <input type="text" id="title" name="beginCreatedAt" class="form-control" required="required" value="${contest.beginCreatedAt}">
+											<li><label for="title" class="form-label">시작일</label> <input type="text" id="title" name="beginCreatedAt" class="form-control" required="required" value="${contest.beginCreatedAt()}">
 											</li>
-											<li><label for="title" class="form-label">종료일</label> <input type="text" id="title" name="endCreatedAt" class="form-control" required="required" value="${contest.endCreatedAt}">
+											<li><label for="title" class="form-label">종료일</label> <input type="text" id="title" name="endCreatedAt" class="form-control" required="required" value="${contest.endCreatedAt()}">
 											</li>
 											<li><label for="title" class="form-label">제목</label> <input type="text" id="title" name="title" class="form-control" required="required" value="${contest.title}"></li>
 											<li><label for="overview" class="form-label">모집 요강</label> <textarea id="overview" name="content" class="form-control" required="required" rows="10">${contest.content}</textarea></li>
@@ -102,9 +102,9 @@
 								<c:otherwise>
 									<div class=" align-self-center">
 										<ul>
-											<li><label for="title" class="form-label">시작일</label> <input type="text" id="title" name="beginCreatedAt" class="form-control " required="required" value="${contest.beginCreatedAt}"
+											<li><label for="title" class="form-label">시작일</label> <input type="text" id="title" name="beginCreatedAt" class="form-control " required="required" value="${contest.beginCreatedAt()}"
 												readonly></li>
-											<li><label for="title" class="form-label">종료일</label> <input type="text" id="title" name="endCreatedAt" class="form-control" required="required" value="${contest.endCreatedAt}"
+											<li><label for="title" class="form-label">종료일</label> <input type="text" id="title" name="endCreatedAt" class="form-control" required="required" value="${contest.endCreatedAt()}"
 												readonly></li>
 											<li><label for="title" class="form-label">제목</label> <input type="text" id="title" name="title" class="form-control" required="required" value="${contest.title}" readonly></li>
 											<li><label for="overview" class="form-label">모집 요강</label> <textarea id="overview" name="content" class="form-control" required="required" rows="10" readonly>${contest.content}</textarea>

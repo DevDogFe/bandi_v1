@@ -54,7 +54,7 @@ $(document).ready(() => {
 			} else {
 				alert("인증 완료되었습니다");
 				$("#email").attr('readonly', true);
-				if (usernameOk && nickNameOk) {
+				if (nickNameOk) {
 					$("#joinBtn").prop("type", "submit");
 				}
 			}
