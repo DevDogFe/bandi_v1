@@ -103,6 +103,10 @@ public class RecommendService {
 		if(list == null || list.size() < 6) {
 			// 유저 즐겨찾기 없을시 인기장르의 인기소설
 			list = recommendRepository.selectBestNovelOfBestGenre();
+			if(list == null) {
+				list = recommendRepository.selectNovelOfBestGenre();
+			}
+			
 		}
 		
 		return list;

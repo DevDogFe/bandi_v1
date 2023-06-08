@@ -82,6 +82,9 @@ public class SampleController {
 		if (principal != null) {
 			
 			List<RecommendFavoritesDto> novelByGenreList = recommendService.selectNovelByFavoriteGenre(principal.getId());
+			if(novelByGenreList == null) {
+				
+			}
 			List<MainRecommendDto> totalRecommendList = recommendService
 					.selectTotalRecommendedNovels(new AgeGenderRecommendDto(principal.getId(), principal.getGender(),
 							new GenerationUtil(principal.getGeneration())));

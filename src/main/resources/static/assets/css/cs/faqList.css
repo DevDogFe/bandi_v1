@@ -49,9 +49,11 @@
 
 .category--line {
 	justify-content: space-between;
+	cursor: pointer;
 }
 
 .faq--page {
 	display: flex;
 	justify-content: center;
 }
+

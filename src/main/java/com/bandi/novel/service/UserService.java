@@ -29,8 +29,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private AuthRepository authRepository;
-	@Autowired
 	private HttpSession session;
 	@Autowired
 	private UserGoldRepository userGoldRepository;
