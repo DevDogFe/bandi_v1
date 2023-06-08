@@ -1,67 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>반디</title>
-<script src="/assets/js/jquery.min.js"></script>
-
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<%@include file="/WEB-INF/view/layout/header.jsp"%>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<link href="/assets/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/cs/answerDetail.css" />
 
-</head>
-<body>
-	<div class="container">
-		<div class="inner">
-			<header>
-				<div class="banner">
-					<div class="lnb">
-						<a href="#none"><em>for</em> member</a> <a href="#none">로그인</a> <a href="#none">회원가입</a>
-					</div>
-				</div>
-				<nav>
-					<div class="logo">
-						<a href="#none"><img src="/assets/images/main/bandi-logo3.png"></a>
-					</div>
-					<ul class="gnb">
-						<li><a href="#none">HOME</a></li>
-						<li><a href="#none">소설</a></li>
-						<li><a href="#none">공모전</a></li>
-						<li class="dropdown"><a href="#none" class="dropbtn">게시판</a></li>
-						<li><a href="#none">고객지원</a></li>
-						<li><a href="#none">마이페이지</a></li>
-					</ul>
-				</nav>
-			</header>
-			<%-- <%@include file="../layout/header.jsp"%> --%>
-			<form action="/application/write" method="post" >
-				<div class="apply--form">
-				<input type="text" name="title" placeholder="제목을 입력해주세요" required="required">
-				<button type="submit">연재신청</button>
-				</div>
-				<textarea id="summernote" name="content" style="height: 60vh" placeholder="내용을 입력해주세요" required="required"></textarea>
-				<label> 연락처</label> <input type="text" name="tel">
-			</form>
+<form class="mt-5" action="/application/write" method="post">
+	<div class="apply--form mb-3 d-flex justify-content-between">
+		<input type="text" name="title" class="flex-grow-1 text--box" placeholder="제목을 입력해주세요" required="required">
+		<button type="submit" class="app--btn">연재신청</button>
+	</div>
+	<textarea id="summernote" name="content" style="height: 60vh" placeholder="내용을 입력해주세요" required="required"></textarea>
+	<div class="mt-3">
+		<label>연락처 </label>&nbsp;&nbsp; <input type="text" name="tel" class="text--box">
+	</div>
+</form>
 
-			<script type="text/javascript">
-				$('#summernote').summernote({
-					placeholder : "내용을 입력 해주세요",
-					tabsize : 2,
-					height : 500,
-					// 에디터 로딩후 포커스를 맞출지 여부
-					focus : true,
-					lang : 'ko-KR',
-					// 크기 조절 기능 삭제
-					disableResizeEditor : true,
-				});
-			</script>
-</body>
-</html>
+<script type="text/javascript">
+	$('#summernote').summernote({
+		placeholder : "내용을 입력 해주세요",
+		tabsize : 2,
+		height : 500,
+		// 에디터 로딩후 포커스를 맞출지 여부
+		focus : true,
+		lang : 'ko-KR',
+		// 크기 조절 기능 삭제
+		disableResizeEditor : true,
+	});
+</script>
+<%@include file="/WEB-INF/view/layout/footer.jsp"%>
