@@ -13,7 +13,7 @@
 			<form action="/user" method="post" class="form">
 				<input type="hidden" name="username" value="${user.username}"> <input type="hidden" name="password" value="${user.password}"> <input type="hidden" name="external" value="kakao">
 				<div class="input-box">
-					<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name" required />
+					<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name (3-20자)" required />
 					<div id="nickNameCheck"></div>
 				</div>
 				<div class="input-box">

@@ -1,22 +1,4 @@
 $(document).ready(() => {
-	$("#addContestForm").css('display', 'none');
-	$("#serviceTypeId").on("change", function() {
-		if ($(this).val() == 3) {
-			$("#addContestForm").show();
-			// 서비스 타입 공모전 선택 시 contestId에 기본값 설정
-			$("#contestId").val($("#contestOptionId1").val());
-		} else {
-			$("#addContestForm").hide();
-			$("#contestId").val(0);
-		}
-	});
-
-	$("#contestFormId").on("change", () => {
-
-		let contestOptionId = $("#contestFormId").val();
-		// input값 변경으로 공모전 id post 하기
-		$("#contestId").val($("#contestOptionId" + contestOptionId).val());
-	});
 	// 아이디 중복확인
 	let usernameOk = false;
 	let nickNameOk = false;
