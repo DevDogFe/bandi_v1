@@ -54,7 +54,7 @@ $(document).ready(() => {
 			} else {
 				alert("인증 완료되었습니다");
 				$("#email").attr('readonly', true);
-				if (usernameOk && nickNameOk) {
+				if (nickNameOk) {
 					$("#joinBtn").prop("type", "submit");
 				}
 			}
@@ -71,3 +71,15 @@ $(document).ready(() => {
 		}
 	})
 })
+
+function alertJoin() {
+	if ($('#joinBtn').attr('type') == 'submit') {
+		if ($('#passwordJ').val() == $('#passwordCheck').val()) {
+
+			alert('회원가입이 완료되었습니다. 로그인을 진행해주세요.');
+		} else {
+			alert('비밀번호와 비밀번호 확인의 값이 다릅니다.');
+			return false;
+		}
+	}
+}

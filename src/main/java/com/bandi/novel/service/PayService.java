@@ -137,6 +137,23 @@ public class PayService {
 	}
 	
 	/**
+	 * 소설 결제 구매
+	 * @return 
+	 */
+	@Transactional
+	public void purchasePayNovel(Integer userId, Integer amount,Integer sectionId) {
+
+		// 유저 구매 기록(user_purchase_tb)
+		UserPurchase userPurchase = new UserPurchase();
+		userPurchase.setUserId(userId);
+		userPurchase.setSectionId(sectionId);
+		userPurchase.setPrice(amount);
+		
+		userPurchaseRepository.insertPuchaseRecord(userPurchase);
+		//
+	}
+	
+	/**
 	 * 소설 대여
 	 * @return 
 	 */
@@ -151,6 +168,23 @@ public class PayService {
 			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+		// 유저 대여 기록(user_rental_tb)
+		UserRental userRental = new UserRental();
+		userRental.setUserId(userId);
+		userRental.setSectionId(sectionId);
+		userRental.setPrice(amount);
+		
+		userRentalRepository.insertRentalRecord(userRental);
+		//
+	}
+	
+	/**
+	 * 소설 결제 대여
+	 * @return 
+	 */
+	@Transactional
+	public void rentalPayNovel(Integer userId, Integer amount,Integer sectionId) {
+
 		// 유저 대여 기록(user_rental_tb)
 		UserRental userRental = new UserRental();
 		userRental.setUserId(userId);

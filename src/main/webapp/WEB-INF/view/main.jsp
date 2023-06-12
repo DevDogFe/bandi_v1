@@ -103,7 +103,7 @@
 	<div class="list-body">
 		<ul>
 			<c:forEach items="${novelList3 }" var="novel" begin="0" end="4">
-				<li class="li-item"><a href="#" class="li-link">
+				<li class="li-item"><a href="/novel/detail/${novel.id}" class="li-link">
 						<div class="li-thumbnail">
 							<c:choose>
 								<c:when test="${novel.cover != null }">
@@ -130,7 +130,7 @@
 		</ul>
 		<ul>
 			<c:forEach items="${novelList3 }" var="novel" begin="5" end="9">
-				<li class="li-item"><a href="#" class="li-link">
+				<li class="li-item"><a href="/novel/detail/${novel.id}" class="li-link">
 						<div class="li-thumbnail">
 							<c:choose>
 								<c:when test="${novel.cover != null }">
@@ -157,7 +157,7 @@
 		</ul>
 		<ul>
 			<c:forEach items="${novelList3 }" var="novel" begin="10" end="14">
-				<li class="li-item"><a href="#" class="li-link">
+				<li class="li-item"><a href="/novel/detail/${novel.id}" class="li-link">
 						<div class="li-thumbnail">
 							<c:choose>
 								<c:when test="${novel.cover != null }">
@@ -229,7 +229,7 @@
 	<div class="list-body">
 		<ul>
 			<c:forEach items="${novelList4 }" var="novel" begin="0" end="4">
-				<li class="li-item"><a href="#" class="li-link">
+				<li class="li-item"><a href="/novel/detail/${novel.id}" class="li-link">
 						<div class="li-thumbnail">
 							<c:choose>
 								<c:when test="${novel.cover != null }">
@@ -256,7 +256,7 @@
 		</ul>
 		<ul>
 			<c:forEach items="${novelList4 }" var="novel" begin="5" end="9">
-				<li class="li-item"><a href="#" class="li-link">
+				<li class="li-item"><a href="/novel/detail/${novel.id}" class="li-link">
 						<div class="li-thumbnail">
 							<c:choose>
 								<c:when test="${novel.cover != null }">
@@ -283,7 +283,7 @@
 		</ul>
 		<ul>
 			<c:forEach items="${novelList4 }" var="novel" begin="10" end="14">
-				<li class="li-item"><a href="#" class="li-link">
+				<li class="li-item"><a href="/novel/detail/${novel.id}" class="li-link">
 						<div class="li-thumbnail">
 							<c:choose>
 								<c:when test="${novel.cover != null }">

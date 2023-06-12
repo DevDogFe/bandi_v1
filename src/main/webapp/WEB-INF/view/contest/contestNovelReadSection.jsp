@@ -182,7 +182,7 @@
 								<div class="bg-light comment-form p-2">
 									<div class="comment-header ms-1">
 										<h5 class="me-2">댓글</h5>
-										<span>11</span>
+										<span>${replyList.content.size() }</span>
 									</div>
 									<form action="/novel/reply?serviceTypeId=${serviceTypeId}" method="post">
 										<div class="d-flex flex-row align-items-start">
@@ -217,7 +217,7 @@
 													<div class="bg-white p-2">
 														<div class="d-flex flex-row user-info">
 															<div class="d-flex flex-column justify-content-start ml-2">
-																<span class="d-block font-weight-bold name">${reply.username} </span> <span class="date text-black-50">${reply.createdAt() }</span>
+																<span class="d-block font-weight-bold name">${reply.nickName} </span> <span class="date text-black-50">${reply.createdAt() }</span>
 															</div>
 														</div>
 													</div>
@@ -319,17 +319,17 @@
 											<div class="recommend-img">
 												<c:choose>
 													<c:when test="${novel.cover != null }">
-														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }">
+														<img alt="이미지 기간만료" src="/bandi/uploads/${novel.cover }" style="width: 100%; height: 100%;">
 													</c:when>
 													<c:otherwise>
-														<img alt="이미지 없음" src="/assets/images/noimg.jpg">
+														<a href="/novel/detail/${novel.id }"> <img alt="이미지 없음" src="/assets/images/noimg.jpg" style="width: 100%; height: 100%;"></a>
 													</c:otherwise>
 												</c:choose>
 											</div>
 											<div class="recommend-desc">
 												<span>${novel.genreName} </span> <span class="bold-font">${novel.title}</span> <span>${novel.nickName}</span>
-											</div>
-									</a></li>
+									
+											</div></a></li>
 								</c:forEach>
 							</ul>
 						</div>

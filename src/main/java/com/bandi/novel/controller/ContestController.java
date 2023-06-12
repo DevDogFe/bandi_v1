@@ -212,6 +212,7 @@ public class ContestController {
 
 		List<ContestNovelDto> contestNovelList = contestService.selectContestNovelListBySearch(genreId, search,
 				contestId, sort);
+		System.out.println(contestNovelList.get(0).toString());
 		List<Genre> genreList = novelService.selectGenreList();
 		NovelPageUtil novelPageUtil = new NovelPageUtil(contestNovelList, contestNovelList.size(), 20, currentPage, 5);
 		model.addAttribute("contestNovelList", novelPageUtil);

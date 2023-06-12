@@ -13,7 +13,7 @@
 			<form action="/user" method="post" class="form">
 				<input type="hidden" name="username" value="${user.username}"> <input type="hidden" name="password" value="${user.password}"> <input type="hidden" name="external" value="naver">
 				<div class="input-box">
-					<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name" required />
+					<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name (3-20자)" required />
 					<div id="nickNameCheck"></div>
 				</div>
 				<div class="input-box">
@@ -42,10 +42,10 @@
 						</div>
 					</div>
 				</div>
-				<button class="submit-button" id="joinBtn" type="button">등록</button>
+				<button class="submit-button" id="joinBtn" onsubmit="alertJoin()" type="button">등록</button>
 			</form>
 		</div>
 	</section>
 </div>
-<script type="text/javascript" src="/assets/js/joinFormForExternal.js"></script>
+<script type="text/javascript" src="/assets/js/user/joinFormForExternal.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>

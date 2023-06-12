@@ -1,6 +1,5 @@
 $(document).ready(() => {
 	$("#loginBtn").on("click", () => {
-		console.log($("#usernameL").val() + "/" + $("#passwordL").val());
 		let data = {
 			username: $("#usernameL").val(),
 			password: $("#passwordL").val(),

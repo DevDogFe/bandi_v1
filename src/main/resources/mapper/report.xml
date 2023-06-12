@@ -4,8 +4,8 @@
 <mapper namespace="com.bandi.novel.repository.ReportRepository">
 	
 	<insert id="insert">
-		INSERT INTO report_tb (user_id, board_id, content, category_id, proceed)
-		VALUES (#{userId}, #{boardId}, #{content}, #{categoryId}, #{proceed})
+		INSERT INTO report_tb (user_id, board_id, content, category_id)
+		VALUES (#{userId}, #{boardId}, #{content}, #{categoryId})
 	</insert>
 	
 	<select id="selectAll" resultType="com.bandi.novel.dto.AdminReportDto">

@@ -22,7 +22,7 @@
 								<label>비밀번호 확인</label> <input type="password" id="passwordCheck" name="passwordCheck" placeholder="Enter password" required />
 							</div>
 							<div class="input-box">
-								<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name" required />
+								<label>닉네임</label> <input type="text" id="nickName" name="nickName" placeholder="Enter full name (3-20자)" required />
 								<div id="nickNameCheck"></div>
 							</div>
 							<div class="input-box">

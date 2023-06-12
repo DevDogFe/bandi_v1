@@ -23,7 +23,7 @@
 			</div>
 		</c:forEach>
 		<div class="form-group">
-			<textarea id="overview" name="overview" class="textarea" required="required" rows="5" placeholder="신고사유를 입력하세요."></textarea>
+			<textarea id="overview" name="content" class="textarea" required="required" rows="5" placeholder="신고사유를 입력하세요."></textarea>
 		</div>
 		<div class="btn">
 			<button type="submit" class="btn-report">신고하기</button>
