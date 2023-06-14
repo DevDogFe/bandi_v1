@@ -22,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.bandi.novel.dto.FindPwdDto;
 import com.bandi.novel.dto.JoinDto;
-import com.bandi.novel.dto.JoinDtoForExternal;
 import com.bandi.novel.dto.NaverOAuthToken;
 import com.bandi.novel.dto.OAuthToken;
 import com.bandi.novel.dto.OAuthUserInfo;
@@ -82,8 +81,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/user")
-	public String joinProc(@Valid JoinDtoForExternal joinDto, BindingResult bindingResult) {
-		System.out.println(joinDto);
+	public String joinProc(@Valid JoinDto joinDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			StringBuilder sb = new StringBuilder();
 			bindingResult.getAllErrors().forEach(error -> {

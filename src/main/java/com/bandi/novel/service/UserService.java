@@ -10,14 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bandi.novel.dto.FindPwdDto;
 import com.bandi.novel.dto.JoinDto;
-import com.bandi.novel.dto.JoinDtoForExternal;
 import com.bandi.novel.dto.LoginDto;
 import com.bandi.novel.dto.UserUpdateDto;
 import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
-import com.bandi.novel.model.AuthKey;
 import com.bandi.novel.model.User;
-import com.bandi.novel.repository.AuthRepository;
 import com.bandi.novel.repository.UserGoldRepository;
 import com.bandi.novel.repository.UserRepository;
 import com.bandi.novel.utils.Define;
@@ -96,26 +93,7 @@ public class UserService {
 		}
 
 	}
-	/*
-	* 회원가입 처리
-	* 
-	* @param joinDto
-	*/
-	@Transactional
-	public void insertUser(JoinDtoForExternal joinDto) {
-		joinDto.setPassword(passwordEncoder.encode(joinDto.getPassword()));
-		int result = userRepository.insertUser(joinDto);
-		
-		if (result != 1) {
-			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		User userEntity = userRepository.selectByUsername(joinDto.getUsername());
-		result = userGoldRepository.insertByUserId(userEntity.getId());
-		if (result != 1) {
-			throw new CustomRestfulException(Define.REQUEST_FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-	}
+	
 
 	/**
 	 * 회원정보 수정

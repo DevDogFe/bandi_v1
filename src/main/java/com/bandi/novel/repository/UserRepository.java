@@ -27,8 +27,6 @@ public interface UserRepository {
 	public User selectByUsername(String username);
 
 	public int insertUser(JoinDto joinDto);
-	
-	public int insertUser(JoinDtoForExternal joinDto);
 
 	public int updateUser(UserUpdateDto userUpdateDto);
 

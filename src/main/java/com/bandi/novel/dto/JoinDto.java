@@ -17,8 +17,6 @@ public class JoinDto {
 	@NotBlank
 	@Size(min = 3, max = 20)
 	private String password;
-	@NotBlank
-	@Size(min = 3, max = 20)
 	private String passwordCheck;
 	@NotBlank
 	@Size(min = 3, max = 20)
