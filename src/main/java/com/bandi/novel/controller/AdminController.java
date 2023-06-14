@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bandi.novel.dto.AnswerUpdateDto;
 import com.bandi.novel.dto.CategorySelectDto;
 import com.bandi.novel.dto.UserRoleDto;
 import com.bandi.novel.dto.UserSearchDto;
 import com.bandi.novel.dto.response.BestSectionDto;
-import com.bandi.novel.dto.response.ResponseDto;
 import com.bandi.novel.handler.exception.CustomRestfulException;
 import com.bandi.novel.model.Answer;
 import com.bandi.novel.model.Application;

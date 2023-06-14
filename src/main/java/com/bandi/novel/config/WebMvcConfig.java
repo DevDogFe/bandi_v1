@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.bandi.novel.handler.AdminAuthIntercepter;
 import com.bandi.novel.handler.AuthIntercepter;
-import com.bandi.novel.handler.AuthorAuthIntercepter;
 import com.bandi.novel.utils.Define;
 
 @Configuration

@@ -1,9 +1,6 @@
 package com.bandi.novel.dto;
 
 import java.sql.Timestamp;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bandi.novel.utils.TimestampFormat;
 
