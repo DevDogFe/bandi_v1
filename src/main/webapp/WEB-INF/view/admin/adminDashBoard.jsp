@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/adminHeader.jsp"%>
 <link rel="stylesheet" href="/assets/css/admin/adminDashboard.css" />
+
 </div>
 <div class="sectind-flex">
 	<section>
@@ -83,5 +84,6 @@
 			</div>
 		</div>
 	</section>
-	<%@include file="/WEB-INF/view/layout/footer.jsp"%>
-	<script type="text/javascript" src="/assets/js/admin/adminDashBoard.js"></script>
+</div>
+<script type="text/javascript" src="/assets/js/admin/adminDashBoard.js"></script>
+<%@include file="/WEB-INF/view/layout/footer.jsp"%>

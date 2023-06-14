@@ -47,7 +47,7 @@ public class ReportController {
 	
 	// 신고등록
 	@PostMapping("/reportPopup")
-	public String createReportProc(Report report) {
+	public String reportProc(Report report) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		String content = report.getContent().replaceAll("\r\n", "<br>");
 		report.setUserId(principal.getId());
