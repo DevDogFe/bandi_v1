@@ -11,12 +11,12 @@
 ## 🕰️ 개발 기간
 - 23.05.15일 - 23.06.07일 총 24일
 
-## 시연영상 <a href="https://www.youtube.com/watch?v=Rk62IlzpeMM" >(유튜브 링크)</a>
+## ✅ 시연영상 <a href="https://www.youtube.com/watch?v=Rk62IlzpeMM" >(유튜브 링크)</a>
 
 ## 🧑‍🤝‍🧑 멤버구성 (4명)
 ![팀원 소개](https://github.com/DevDogFe/bandi_v1/assets/125328301/e70cb4b5-4faa-4e96-922b-22ac7abd92d5)
 
-## 기술스택
+## ⚙️ 기술스택
 ### Backend
 - jdk : 11.0.17
 - lombok
@@ -67,11 +67,11 @@ implementation 'org.springframework.boot:spring-boot-starter-mail'
 ```
 
 
-## ERD & 테이블 명세서
+## 🙋‍♀️ ERD & 테이블 명세서
 테이블 명세서<a href="https://docs.google.com/spreadsheets/d/1m_ARw78GDXOBfCcHcgeFqTYF-r_rrqpB1SlbBKp3tiA/edit#gid=0" >https://docs.google.com/spreadsheets/d/1m_ARw78GDXOBfCcHcgeFqTYF-r_rrqpB1SlbBKp3tiA/edit#gid=0</a>  
   ![image](https://github.com/DevDogFe/bandi_v1/assets/125328301/3b97bc85-cb80-40cf-beec-1dceb53eb043)
 
-## SiteMap
+## ⚒️ SiteMap
 <br>
 
 <table>
