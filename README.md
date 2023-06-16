@@ -143,6 +143,12 @@ implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 <br>
 
+#### 게시판(자유, 추천, 팬아트, 홍보)
+- 카테고리별 글 작성
+- 페이징 및 검색기능
+- 댓글
+- 좋아요 및 신고
+
 #### 소설(유료, 무료, 공모전)
 - 소설 리스트 조회(최신순, 평점순, 즐겨찾기순) 및 검색(장르별 검색, 키워드 검색)
 - 소설 상세 조회(소설 상세 정보, 회차 리스트 조회, 다른 소설 추천리스트 팝업)
@@ -178,27 +184,6 @@ implementation 'org.springframework.boot:spring-boot-starter-mail'
 </table>
 
 <br>
-
-#### 게시판(자유, 추천, 팬아트, 홍보)
-- 카테고리별 글 작성
-- 페이징 및 검색기능
-- 댓글
-- 좋아요 및 신고
-<br>
-
-<table>
-<tr>
-  <td>게시판 신고 기능</td>
-  <td>공모전 CRUD</td>
-</tr>
-<tr>
-  <td><img src="https://github.com/DevDogFe/bandi_v1/assets/125328301/962c309b-ee39-453a-841e-ea0554b113da"></td>
-  <td><img src="https://github.com/DevDogFe/bandi_v1/assets/125328301/0535b28e-ef01-4b1c-80d6-61f5b048ba28"></td>
-</tr>
-</table>
-
-<br>
-
 
 #### CS(Q&A, FAQ, 제휴문의)
 - 게시판 형식의 Q&A
