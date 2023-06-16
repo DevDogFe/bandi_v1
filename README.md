@@ -162,7 +162,7 @@ implementation 'org.springframework.boot:spring-boot-starter-mail'
   <td>소설 등록</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/DevDogFe/bandi_v1/assets/125328301/e28c6134-44b0-4c65-9e5d-c05411b913da"></td>
+  <td><img src="https://github.com/DevDogFe/bandi_v1/assets/125328301/5cc64c2c-6e4b-449b-9eed-2a368d92ac1d"></td>
   <td><img src="https://github.com/DevDogFe/bandi_v1/assets/125328301/6dca5670-10ab-4595-b01b-971562bb1a31"></td>
 </tr>
 <tr>
